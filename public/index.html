@@ -3,96 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 🔍 وسم السيو والربط بمحرك بحث جوجل (SEO Tags) -->
-    <title>مؤسسة البقمي للخدمات المتكاملة وحلول الشحن الدولي</title>
-    <meta name="description" content="منصة مؤسسة البقمي الإلكترونية لتقديم طلبات الخدمات اللوجستية، الشحن الدولي من السعودية إلى مصر، وتخليص المعاملات والاستشارات الفورية بأعلى كفاءة.">
-    <meta name="keywords" content="مؤسسة البقمي, شحن من السعودية لمصر, تخليص معاملات, خدمات لوجستية, طلب عرض سعر, شحن بضائع">
-    <meta name="robots" content="index, follow">
-    
+    <title id="siteTitle">مؤسسة البقمي للخدمات المتكاملة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
         :root { --royal-gold: #D4AF37; --gold-dark: #AA7C11; --gold-light: #F3E5AB; --bg-deep: #0B0F17; --bg-surface: #131A26; --bg-input: #1C2636; --text-main: #F5F6F8; --text-muted: #94A3B8; --white: #FFFFFF; --success: #10B981; --warning: #F59E0B; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--bg-deep); color: var(--text-main); line-height: 1.6; }
         header { background-color: rgba(11, 15, 23, 0.95); border-bottom: 2px solid var(--royal-gold); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
-        .logo-placeholder { border: 2px solid var(--royal-gold); padding: 8px 20px; color: var(--royal-gold); font-weight: 900; font-size: 1.4rem; border-radius: 4px; }
-        .main-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        .hero-section { text-align: center; padding: 80px 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); }
-        .hero-section h1 { font-size: 2.5rem; color: var(--royal-gold); margin-bottom: 15px; font-weight: 900; }
-        .grid-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-top: 40px; }
-        .custom-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .box-title { color: var(--royal-gold); font-size: 1.4rem; margin-bottom: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); padding-bottom: 10px; text-align: center; }
+        .logo-box { border: 2px solid var(--royal-gold); padding: 8px 25px; color: var(--royal-gold); font-weight: 900; font-size: 1.5rem; border-radius: 4px; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(212,175,55,0.3); background: rgba(212,175,55,0.02); }
+        .hero-section { text-align: center; padding: 100px 20px; background-position: center !important; background-size: cover !important; border-bottom: 1px solid rgba(212, 175, 55, 0.15); transition: background 0.5s ease; }
+        .hero-section h1 { font-size: 2.8rem; color: var(--royal-gold); margin-bottom: 20px; font-weight: 900; text-shadow: 0 3px 15px rgba(0,0,0,0.8); }
+        .hero-section p { font-size: 1.25rem; color: var(--white); max-width: 850px; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.9); font-weight: 600; }
+        .main-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .custom-card { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 35px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .card-heading { color: var(--royal-gold); font-size: 1.5rem; margin-bottom: 25px; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding-bottom: 12px; text-align: center; font-weight: 700; }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; color: var(--gold-light); margin-bottom: 8px; font-weight: 600; }
-        .form-control { width: 100%; padding: 12px 15px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 4px; color: var(--white); font-size: 1rem; }
-        .form-control:focus { border-color: var(--royal-gold); outline: none; }
-        .btn-royal { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); padding: 12px 30px; border: none; border-radius: 4px; font-size: 1.05rem; font-weight: 700; cursor: pointer; width: 100%; transition: all 0.3s; }
-        .btn-royal:hover { opacity: 0.95; }
-        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; }
+        .form-control { width: 100%; padding: 14px 15px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 4px; color: var(--white); font-size: 1rem; }
+        .form-control:focus { border-color: var(--royal-gold); outline: none; box-shadow: 0 0 10px rgba(212,175,55,0.2); }
+        .btn-royal { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); padding: 14px 30px; border: none; border-radius: 4px; font-size: 1.1rem; font-weight: 900; cursor: pointer; width: 100%; transition: all 0.3s; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); }
+        .btn-royal:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); }
+        .status-badge { display: inline-block; padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 900; }
         .status-waiting { background-color: rgba(245, 158, 11, 0.2); color: var(--warning); }
         .status-done { background-color: rgba(16, 185, 129, 0.2); color: var(--success); }
-        .result-item { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 6px; margin-top: 15px; border-right: 3px solid var(--royal-gold); }
-        footer { text-align: center; padding: 30px; background-color: var(--bg-surface); border-top: 1px solid rgba(212, 175, 55, 0.2); color: var(--text-muted); margin-top: 60px; }
-        @media (max-width: 768px) { .hero-section h1 { font-size: 1.8rem; } header { flex-direction: column; gap: 15px; text-align: center; } }
+        .offer-box { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 6px; margin-top: 15px; border-right: 4px solid var(--royal-gold); animation: fadeIn 0.4s ease; }
+        footer { text-align: center; padding: 35px; background-color: var(--bg-surface); border-top: 1px solid rgba(212, 175, 55, 0.2); color: var(--text-muted); font-weight: 600; margin-top: 80px; }
+        @media (max-width: 768px) { .hero-section h1 { font-size: 1.9rem; } header { flex-direction: column; gap: 12px; text-align: center; } .grid-layout { grid-template-columns: 1fr; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo-placeholder">مؤسسة البقمي</div>
-        <div style="color: var(--text-muted); font-size: 0.9rem;">المنصة الذكية للطلبات وعروض الأسعار الفورية</div>
+        <div class="logo-box" id="siteLogo">مؤسسة البقمي</div>
+        <div style="color: var(--gold-light); font-weight: 700; font-size: 0.95rem;">بوابة الخدمات والمناقصات اللوجستية الفورية</div>
     </header>
 
-    <div class="hero-section">
-        <h1>مؤسسة البقمي للخدمات المتكاملة</h1>
-        <p style="color: var(--text-muted);">أدخل تفاصيل طلبك أو شحنتك، وسيقوم فريقنا بدراسة المعاملة وتقديم أفضل عرض سعر ومدة تنفيذ لك خلال دقائق معدودة.</p>
+    <div class="hero-section" id="heroBg">
+        <h1 id="heroTitle">مؤسسة البقمي للخدمات والحلول المتكاملة</h1>
+        <p id="heroDesc">نقدم أرقى الخدمات بلمسة ذهبية ملكية تلبي تطلعاتكم وتواكب أرقى المعايير في المملكة.</p>
     </div>
 
     <div class="main-container">
-        <div class="grid-sections">
-            <!-- صندوق تقديم الطلب -->
-            <div class="custom-box">
-                <h3 class="box-title">📥 تقديم طلب جديد (بدون مسبق دفع)</h3>
-                <form id="newRequestForm" onsubmit="event.preventDefault(); sendClientRequest();">
+        <div class="grid-layout">
+            <div class="custom-card">
+                <h3 class="card-heading">📥 تقديم طلب تسعير أو نقل جديد</h3>
+                <form id="bookingForm" onsubmit="event.preventDefault(); submitClientRequest();">
                     <div class="form-group">
-                        <label>الاسم الكريم</label>
-                        <input type="text" id="cName" class="form-control" required placeholder="مثال: محمد أشرف">
+                        <label>الاسم بالكامل</label>
+                        <input type="text" id="clientName" class="form-control" placeholder="أدخل اسمك الكريم" required>
                     </div>
                     <div class="form-group">
-                        <label>رقم الجوال لتلقي العرض</label>
-                        <input type="tel" id="cPhone" class="form-control" required placeholder="05xxxxxxxx">
+                        <label>رقم الجوال النشط</label>
+                        <input type="tel" id="clientPhone" class="form-control" placeholder="05xxxxxxxx" required>
                     </div>
                     <div class="form-group">
-                        <label>نوع الخدمة المطلوبة</label>
-                        <select id="cType" class="form-control" required>
-                            <option value="شحن دولي وسريع">شحن ونقل دولي لوجيستي</option>
-                            <option value="تخليص معاملات وأوراق">تخليص معاملات وتأسيس</option>
-                            <option value="خدمات استثمارية مخصصة">خدمات استثمارية وتجارية</option>
+                        <label>تصنيف الخدمة المعاملة</label>
+                        <select id="serviceType" class="form-control" required>
+                            <option value="شحن دولي وسريع">شحن ونقل دولي بري وبحري وجوي</option>
+                            <option value="تخليص معاملات وأوراق">تخليص معاملات وتأسيس الشركات والقوافل</option>
+                            <option value="خدمات استثمارية مخصصة">خدمات استثمارية وحلول تجارية كبرى</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>اكتب تفاصيل طلبك بدقة (المكان، الكمية، إلخ)</label>
-                        <textarea id="cDetails" class="form-control" rows="4" required placeholder="مثال: أريد نقل شحنة بضائع ملابس من الرياض بمستودع الفلان إلى القاهرة بجمهورية مصر العربية، الوزن التقريبي 150 كيلو، كم يستغرق وقت وما هو السعر المتوقع؟"></textarea>
+                        <label>حيثيات وتفاصيل الطلب بدقة (مثال: الشحن من وإلى)</label>
+                        <textarea id="details" class="form-control" rows="4" placeholder="اكتب تفاصيل طلبك بدقة، مثال: أريد نقل شحنة بضائع من الرياض إلى القاهرة بمصر، الوزن المقدر 200 كيلو..." required></textarea>
                     </div>
-                    <button type="submit" class="btn-royal">إرسال الطلب لتقدير السعر 🚀</button>
+                    <button type="submit" class="btn-royal">إرسال الطلب لغرفة التسعير الفوري 🚀</button>
                 </form>
             </div>
 
-            <!-- صندوق الاستعلام عن السعر -->
-            <div class="custom-box">
-                <h3 class="box-title">🔍 الاستعلام ومتابعة العروض بالرقم</h3>
-                <p style="color: var(--text-muted); font-size:0.9rem; margin-bottom:20px; text-align:center;">أدخل رقم جوالك المسجل لاستدعاء ردود الإدارة وعروض الأسعار لطلباتك فوراً.</p>
+            <div class="custom-card">
+                <h3 class="card-heading">🔍 فحص العروض ومتابعة التسعير بالرقم</h3>
+                <p style="color: var(--text-muted); text-align: center; font-size: 0.9rem; margin-bottom: 25px;">أدخل رقم جوالك المسجل لاسترجاع ومتابعة عروض الأسعار والردود الصادرة من الإدارة.</p>
                 <div class="form-group">
-                    <label>رقم الجوال الخاص بك</label>
-                    <input type="tel" id="searchPhone" class="form-control" placeholder="أدخل رقم الجوال هنا">
+                    <label>رقم جوالك المسجل</label>
+                    <input type="tel" id="searchPhone" class="form-control" placeholder="أدخل رقم الجوال للفحص">
                 </div>
-                <button type="button" class="btn-royal" onclick="checkMyOffers()">تحقق من عروض الإدارة 👁️</button>
-                <div id="statusResultOutput" style="margin-top:20px;"></div>
+                <button type="button" class="btn-royal" onclick="searchOffers()">استدعاء الردود وعروض الأسعار 👁️</button>
+                <div id="searchResults" style="margin-top: 25px;"></div>
             </div>
         </div>
     </div>
 
-    <footer><p>جميع الحقوق محفوظة © مؤسسة البقمي للخدمات المتكاملة 2026</p></footer>
+    <footer id="siteFooter">جميع الحقوق محفوظة © مؤسسة البقمي للخدمات المتكاملة 2026</footer>
     <script src="script.js"></script>
 </body>
 </html>
