@@ -3,98 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الأدمن المعزولة | مؤسسة البقمي</title>
+    <title>لوحة تسعير وإدارة الطلبات الواردة | مؤسسة البقمي</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
-        :root { --royal-gold: #D4AF37; --gold-dark: #AA7C11; --gold-light: #F3E5AB; --bg-deep: #0B0F17; --bg-surface: #131A26; --bg-input: #1C2636; --text-main: #F5F6F8; --text-muted: #94A3B8; --white: #FFFFFF; --danger: #EF4444; }
+        :root { --royal-gold: #D4AF37; --gold-dark: #AA7C11; --gold-light: #F3E5AB; --bg-deep: #070a12; --bg-surface: #0f1624; --bg-input: #172237; --text-main: #F5F6F8; --text-muted: #94A3B8; --white: #FFFFFF; --danger: #EF4444; --success: #10B981; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--bg-deep); color: var(--text-main); padding-bottom: 60px; }
+        body { background-color: var(--bg-deep); color: var(--text-main); }
         header { background-color: var(--bg-surface); border-bottom: 2px solid var(--royal-gold); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .workspace { max-width: 1400px; margin: 40px auto; padding: 0 20px; display: flex; gap: 30px; flex-wrap: wrap; }
-        .admin-sidebar { flex: 1; min-width: 280px; max-width: 320px; background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 20px; height: fit-content; }
-        .admin-main-panel { flex: 3; min-width: 320px; background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 30px; }
-        .form-row { display: flex; gap: 20px; flex-wrap: wrap; }
-        .form-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; margin-bottom: 15px; }
-        .form-control { width: 100%; padding: 12px 15px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 4px; color: var(--white); }
-        .fields-builder { background: rgba(0,0,0,0.2); border: 1px dashed rgba(212, 175, 55, 0.3); padding: 20px; border-radius: 6px; margin-bottom: 25px; }
-        .builder-row { display: flex; gap: 15px; background: rgba(212, 175, 55, 0.04); padding: 10px; border-radius: 4px; margin-bottom: 8px; justify-content: space-between; align-items: center; }
-        .btn-royal-sm { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); border: none; padding: 12px 20px; border-radius: 4px; font-weight: 700; cursor: pointer; }
-        .btn-danger-sm { background: var(--danger); color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 20px; border: 1px solid rgba(212, 175, 55, 0.1); border-radius: 6px; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { padding: 14px; text-align: right; border-bottom: 1px solid rgba(212, 175, 55, 0.1); }
-        th { background-color: rgba(212, 175, 55, 0.08); color: var(--royal-gold); }
+        .analytics-grid { max-width: 1300px; margin: 30px auto 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card-analytic { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 20px; text-align: right; border-right: 4px solid var(--royal-gold); }
+        .card-analytic.success { border-right-color: var(--success); }
+        .card-analytic h5 { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px; }
+        .card-analytic h2 { font-size: 1.8rem; font-weight: 900; }
+        .main-panel { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
+        .table-responsive { width: 100%; overflow-x: auto; background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        th, td { padding: 15px; text-align: right; border-bottom: 1px solid rgba(212, 175, 55, 0.1); }
+        th { background-color: rgba(212, 175, 55, 0.05); color: var(--royal-gold); }
+        .pricing-inputs-container { display: flex; flex-direction: column; gap: 8px; width: 240px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; }
+        .input-sm { padding: 8px; background: var(--bg-input); border: 1px solid rgba(212,175,55,0.3); border-radius: 4px; color: white; font-size: 0.85rem; }
+        .btn-update { background: var(--success); color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+        @media (max-width: 768px) { .analytics-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <header>
-        <div style="color: var(--royal-gold); font-weight:900; font-size:1.3rem;">👑 بوابة الإدارة المعزولة لمؤسسة البقمي</div>
-        <a href="/" target="_blank" style="color:var(--royal-gold); text-decoration:none; font-weight:700;">👁️ معاينة الموقع الرئيسي</a>
+        <div style="color: var(--royal-gold); font-weight:900; font-size:1.3rem;">👑 غُرفة إدارة وتسعير طلبات مؤسسة البقمي</div>
+        <a href="/" target="_blank" style="color:var(--royal-gold); text-decoration:none; font-size:0.95rem;">👁️ فتح واجهة العميل</a>
     </header>
 
-    <div class="workspace">
-        <div class="admin-sidebar">
-            <h4 style="color: var(--royal-gold); margin-bottom:10px;">لوحة البيانات الذكية</h4>
-            <p style="font-size:0.9rem; color:var(--text-muted);">تخزين مباشر آمن عبر ملفات السيرفر الفورية ($JSON$).</p>
+    <div class="analytics-grid">
+        <div class="card-analytic">
+            <h5>إجمالي عداد زيارات الموقع</h5>
+            <h2 id="vCounter">0</h2>
         </div>
+        <div class="card-analytic success">
+            <h5>طلبات بانتظار عروض الأسعار</h5>
+            <h2 id="pendingCounter">0 طلب</h2>
+        </div>
+        <div class="card-analytic">
+            <h5>إجمالي الطلبات المستلمة</h5>
+            <h2 id="totalCounter">0</h2>
+        </div>
+    </div>
 
-        <div class="admin-main-panel">
-            <h3>إنشاء وإضافة خدمة استثمارية جديدة</h3>
-            <form id="adminServiceForm" onsubmit="event.preventDefault(); saveNewServiceFromAdmin();">
-                <div class="form-group">
-                    <label style="color: var(--gold-light); margin-bottom:5px;">اسم الخدمة</label>
-                    <input type="text" id="adminSrvName" class="form-control" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label style="color: var(--gold-light); margin-bottom:5px;">السعر (ريال)</label>
-                        <input type="number" id="adminSrvPrice" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label style="color: var(--gold-light); margin-bottom:5px;">مدة التنفيذ المتوقعة</label>
-                        <input type="text" id="adminSrvTime" class="form-control" required placeholder="مثال: 3-5 أيام">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label style="color: var(--gold-light); margin-bottom:5px;">تفاصيل ووصف الخدمة</label>
-                    <textarea id="adminSrvDesc" class="form-control" rows="3" required></textarea>
-                </div>
-
-                <div class="fields-builder">
-                    <h5 style="color: var(--royal-gold); margin-bottom: 10px;">🛠️ باني الحقول المخصصة (تطلب من العميل عند الحجز):</h5>
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                        <input type="text" id="customFieldName" class="form-control" style="flex:2; min-width:150px;" placeholder="مثال: رقم السجل التجاري">
-                        <select id="customFieldType" class="form-control" style="flex:1; min-width:120px;">
-                            <option value="نصي">حقل نصي ممتد</option>
-                            <option value="رقمي">حقل أرقام فقط</option>
-                            <option value="مرفق ملف">رفع وثيقة أو ملف</option>
-                        </select>
-                        <button type="button" class="btn-royal-sm" onclick="addFieldToCurrentBuffer()">+ إدراج</button>
-                    </div>
-                    <div id="bufferedFieldsContainer" style="margin-top:15px;"></div>
-                </div>
-                <button type="submit" class="btn-royal-sm" style="width:100%;">🚀 حفظ الخدمة ونشرها فوراً</button>
-            </form>
-
-            <h3 style="margin-top: 50px; color: var(--royal-gold);">📦 جرد الخدمات المنشورة حالياً</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr><th>الخدمة</th><th>السعر</th><th>المدة</th><th>الحقول المطلوبة</th><th>التحكم</th></tr>
-                    </thead>
-                    <tbody id="adminServicesTableBody"></tbody>
-                </table>
-            </div>
-
-            <h3 style="margin-top: 50px; color: var(--royal-gold);">📥 طلبات الحجز والمعاملات الواردة</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr><th>رقم الطلب</th><th>العميل</th><th>رقم الجوال</th><th>الخدمة المطلوبة</th><th>البيانات المرفوعة والمرفقات</th><th>الإجراء</th></tr>
-                    </thead>
-                    <tbody id="adminBookingsTableBody"></tbody>
-                </table>
-            </div>
+    <div class="main-panel">
+        <h3 style="color: var(--royal-gold); margin-bottom: 20px;">📦 كشف طلبات العملاء اللوجستية وتفاصيل الشحن</h3>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>رقم وتاريخ المعاملة</th>
+                        <th>اسم العميل والجوال</th>
+                        <th>التصنيف المطلوب</th>
+                        <th>تفاصيل وحيثيات طلب العميل</th>
+                        <th>تحديد عرض السعر وأيام العمل (الرد الفوري)</th>
+                        <th>العرض الحالي</th>
+                        <th>إجراءات الحذف</th>
+                    </tr>
+                </thead>
+                <tbody id="adminRequestsTableBody"></tbody>
+            </table>
         </div>
     </div>
 
