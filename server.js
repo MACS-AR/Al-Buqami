@@ -5,22 +5,37 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// ⚠️ ضع رابط قاعدة بيانات Firebase الخاص بك هنا (تأكد من وجود / في النهاية)
+// 🔗 رابط قاعدة بيانات الفايربيز الخاص بك
 const FIREBASE_URL = "https://sr-test-c9e06-default-rtdb.firebaseio.com/";
 
+// دالات الاتصال والتحكم بالفايربيز
 async function firebaseFetch(endpoint) {
     try {
         const response = await fetch(`${FIREBASE_URL}${endpoint}.json`);
         const data = await response.json();
-        if (!data) return [];
-        return Object.keys(data).map(key => ({ id: key, ...data[key] })).reverse();
-    } catch (error) { return []; }
+        if (!data) return null;
+        if (typeof data === 'object' && !Array.isArray(data)) {
+            return Object.keys(data).map(key => ({ id: key, ...data[key] })).reverse();
+        }
+        return data;
+    } catch (error) { return null; }
 }
 
 async function firebaseSave(endpoint, data) {
     try {
-        await fetch(`${FIREBASE_URL}${endpoint}.json`, {
+        const res = await fetch(`${FIREBASE_URL}${endpoint}.json`, {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        return await res.json();
+    } catch (error) { return null; }
+}
+
+async function firebaseSet(endpoint, data) {
+    try {
+        await fetch(`${FIREBASE_URL}${endpoint}.json`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
@@ -46,11 +61,37 @@ async function firebaseDelete(endpoint, id) {
     } catch (error) { return false; }
 }
 
-// إتاحة الملفات العامة
+// المجلدات الثابتة
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin-panel', express.static(path.join(__dirname, 'admin-panel')));
 
-// إحصائيات الزيارات
+// ================= نظام إدارة محتوى الموقع (CMS) =================
+app.get('/api/site-settings', async (req, res) => {
+    let settings = await firebaseFetch('settings');
+    if (!settings || Array.isArray(settings)) {
+        // الإعدادات الافتراضية الملكية الفاخرة المعتمدة بناءً على النص واللوجو المختار
+        const defaultSettings = {
+            logoText: "مؤسسة البقمي",
+            heroTitle: "مؤسسة البقمي للخدمات والحلول المتكاملة",
+            heroDesc: "نقدم أرقى الخدمات بلمسة ذهبية ملكية تلبي تطلعاتكم وتواكب أرقى المعايير في المملكة.",
+            bgUrl: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=1200",
+            footerText: "جميع الحقوق محفوظة © مؤسسة البقمي للخدمات المتكاملة 2026"
+        };
+        await firebaseSet('settings', defaultSettings);
+        return res.json(defaultSettings);
+    }
+    // إذا كانت مصفوفة بسبب دالة التحويل، نأخذ أول عنصر أو نرجع الكائن الأصلي
+    const rawResponse = await fetch(`${FIREBASE_URL}settings.json`);
+    const cleanObject = await rawResponse.json();
+    res.json(cleanObject);
+});
+
+app.post('/api/site-settings/update', async (req, res) => {
+    await firebaseSet('settings', req.body);
+    res.json({ success: true });
+});
+
+// ================= نظام الزيارات والطلبات الواردة =================
 app.get('/api/visits', async (req, res) => {
     try {
         const response = await fetch(`${FIREBASE_URL}visits.json`);
@@ -69,10 +110,9 @@ app.post('/api/visits/increment', async (req, res) => {
     } catch { res.json({ success: false }); }
 });
 
-// الحجوزات والطلبات المفتوحة
 app.get('/api/bookings', async (req, res) => {
     const bookings = await firebaseFetch('bookings');
-    res.json(bookings);
+    res.json(bookings || []);
 });
 
 app.post('/api/bookings', async (req, res) => {
@@ -82,25 +122,18 @@ app.post('/api/bookings', async (req, res) => {
         clientPhone: req.body.clientPhone,
         serviceType: req.body.serviceType,
         details: req.body.details,
-        status: "قيد المراجعة", 
+        status: "قيد المراجعة",
         adminPrice: "لم يحدد بعد",
         adminDuration: "تحت الدراسة",
-        adminNotes: "جاري مراجعة طلبك وتحديد التكلفة الإجمالية من قبل الإدارة.",
+        adminNotes: "جاري مراجعة طلبك وتحديد التكلفة من قبل الإدارة.",
         date: new Date().toLocaleDateString('ar-SA')
     };
     await firebaseSave('bookings', newBooking);
     res.status(201).json({ success: true, bookingId: newBooking.bookingId });
 });
 
-// تحديث طلب العميل من قبل الأدمن (إضافة السعر والموعد)
 app.patch('/api/bookings/:id', async (req, res) => {
-    const updateData = {
-        status: "تم تقديم العرض",
-        adminPrice: req.body.adminPrice,
-        adminDuration: req.body.adminDuration,
-        adminNotes: req.body.adminNotes
-    };
-    await firebaseUpdate('bookings', req.params.id, updateData);
+    await firebaseUpdate('bookings', req.params.id, req.body);
     res.json({ success: true });
 });
 
@@ -109,7 +142,7 @@ app.delete('/api/bookings/:id', async (req, res) => {
     res.json({ success: true });
 });
 
-// روابط التوجيه
+// توجيهات المسارات الثابتة
 app.get('/dashboard-gate', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin-panel', 'admin.html'));
 });
@@ -118,4 +151,4 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => console.log(`Server connected.`));
+app.listen(PORT, () => console.log(`Server is perfectly deployed on port ${PORT}`));
