@@ -1,107 +1,82 @@
-const adminApiEngine = {
-    getServices: async () => {
-        const res = await fetch('/api/services');
-        return await res.json();
-    },
-    addService: async (data) => {
-        await fetch('/api/services', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-    },
-    deleteService: async (id) => {
-        await fetch(`/api/services/${id}`, { method: 'DELETE' });
-    },
-    getBookings: async () => {
-        const res = await fetch('/api/bookings');
-        return await res.json();
-    },
-    deleteBooking: async (id) => {
-        await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
-    }
-};
+async function refreshAdminDashboard() {
+    const tbody = document.getElementById('adminRequestsTableBody');
+    if(!tbody) return;
+    tbody.innerHTML = '';
 
-let bufferedFields = [];
+    // جلب عداد الزيارات والطلبات
+    const vRes = await fetch('/api/visits');
+    const vData = await vRes.json();
+    document.getElementById('vCounter').innerText = vData.count;
 
-window.addFieldToCurrentBuffer = function() {
-    const nameInput = document.getElementById('customFieldName');
-    const typeSelect = document.getElementById('customFieldType');
-    if(!nameInput || !nameInput.value.trim()) return;
+    const res = await fetch('/api/bookings');
+    const bookings = await res.json();
     
-    bufferedFields.push({ name: nameInput.value.trim(), type: typeSelect.value });
-    nameInput.value = '';
-    renderBufferedFields();
-};
+    document.getElementById('totalCounter').innerText = bookings.length;
+    const pendingJobs = bookings.filter(b => b.status === "قيد المراجعة");
+    document.getElementById('pendingCounter').innerText = pendingJobs.length + " طلب";
 
-window.removeBufferedField = function(idx) {
-    bufferedFields.splice(idx, 1);
-    renderBufferedFields();
-};
-
-function renderBufferedFields() {
-    const container = document.getElementById('bufferedFieldsContainer');
-    if(!container) return;
-    container.innerHTML = '';
-    bufferedFields.forEach((f, idx) => {
-        const d = document.createElement('div');
-        d.className = 'builder-row';
-        d.innerHTML = `<span>📍 ${f.name} (${f.type})</span><button type="button" class="btn-danger-sm" onclick="removeBufferedField(${idx})">إزالة</button>`;
-        container.appendChild(d);
-    });
-}
-
-window.saveNewServiceFromAdmin = function() {
-    const name = document.getElementById('adminSrvName').value;
-    const price = document.getElementById('adminSrvPrice').value;
-    const time = document.getElementById('adminSrvTime').value;
-    const desc = document.getElementById('adminSrvDesc').value;
-
-    adminApiEngine.addService({ name, price, time, description: desc, customFields: bufferedFields })
-    .then(() => {
-        alert('تم حفظ ونشر الخدمة الجديدة وتحديث ملفات التخزين بنجاح!');
-        document.getElementById('adminServiceForm').reset();
-        bufferedFields = [];
-        renderBufferedFields();
-        refreshTables();
-    });
-};
-
-window.deleteSrv = function(id) {
-    if(confirm('هل أنت متأكد من حذف هذه الخدمة نهائياً من السيرفر؟')) {
-        adminApiEngine.deleteService(id).then(() => refreshTables());
+    if(bookings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">لا يوجد أي طلبات واردة حالياً في قاعدة البيانات.</td></tr>';
+        return;
     }
-};
 
-window.deleteBooking = function(id) {
-    if(confirm('هل تريد مسح معاملة هذا الحجز؟')) {
-        adminApiEngine.deleteBooking(id).then(() => refreshTables());
-    }
-};
-
-async function refreshTables() {
-    const srvTbody = document.getElementById('adminServicesTableBody');
-    const bTbody = document.getElementById('adminBookingsTableBody');
-    if(!srvTbody || !bTbody) return;
-
-    srvTbody.innerHTML = '';
-    bTbody.innerHTML = '';
-
-    const services = await adminApiEngine.getServices();
-    services.forEach(s => {
-        const tr = document.createElement('tr');
-        const fieldsStr = s.customFields && s.customFields.length > 0 ? s.customFields.map(f=>f.name).join('، ') : 'أساسي';
-        tr.innerHTML = `<td><b>${s.name}</b></td><td>${s.price} ريال</td><td>${s.time}</td><td>${fieldsStr}</td><td><button class="btn-danger-sm" onclick="deleteSrv('${s.id}')">حذف</button></td>`;
-        srvTbody.appendChild(tr);
-    });
-
-    const bookings = await adminApiEngine.getBookings();
     bookings.forEach(b => {
         const tr = document.createElement('tr');
-        const customStr = b.customData && b.customData.length > 0 ? b.customData.map(d=>`<b>${d.fieldName}:</b> ${d.value}`).join(' | ') : 'بيانات أساسية';
-        tr.innerHTML = `<td><code>${b.id}</code></td><td>${b.clientName}</td><td>${b.clientPhone}</td><td>${b.serviceName}</td><td>${customStr}</td><td><button class="btn-danger-sm" onclick="deleteBooking('${b.id}')">إزالة الطلب</button></td>`;
-        bTbody.appendChild(tr);
+        tr.innerHTML = `
+            <td><code>${b.bookingId}</code><br><small style="color:var(--text-muted);">${b.date}</small></td>
+            <td><b>${b.clientName}</b><br><a href="tel:${b.clientPhone}" style="color:var(--royal-gold); text-decoration:none;">${b.clientPhone}</a></td>
+            <td><span style="color:var(--gold-light);">${b.serviceType}</span></td>
+            <td style="max-width:300px; white-space: normal; word-wrap: break-word;"><small>${b.details}</small></td>
+            <td>
+                <div class="pricing-inputs-container">
+                    <input type="text" id="price_${b.id}" class="input-sm" placeholder="مثال: 1500 ريال سعودي">
+                    <input type="text" id="duration_${b.id}" class="input-sm" placeholder="مثال: 4 أيام عمل">
+                    <input type="text" id="notes_${b.id}" class="input-sm" placeholder="ملاحظات إضافية أو شروط">
+                    <button class="btn-update" onclick="submitPricingProposal('${b.id}')">إرسال عرض السعر لـلعميل ✓</button>
+                </div>
+            </td>
+            <td>
+                <div style="font-size:0.85rem;">
+                    <b>الحالة:</b> ${b.status}<br>
+                    <b>السعر:</b> ${b.adminPrice}<br>
+                    <b>الوقت:</b> ${b.adminDuration}
+                </div>
+            </td>
+            <td>
+                <button class="btn-danger-sm" onclick="deleteJob('${b.id}')">مسح السجل</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
     });
 }
 
-window.onload = refreshTables;
+async function submitPricingProposal(id) {
+    const price = document.getElementById(`price_${id}`).value.trim();
+    const duration = document.getElementById(`duration_${id}`).value.trim();
+    const notes = document.getElementById(`notes_${id}`).value.trim() || "تمت دراسة طلبك بنجاح.";
+
+    if(!price || !duration) {
+        alert('يرجى تحديد السعر الإجمالي وعدد أيام العمل أولاً للعميل.');
+        return;
+    }
+
+    const res = await fetch(`/api/bookings/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ adminPrice: price, adminDuration: duration, adminNotes: notes })
+    });
+    const result = await res.json();
+    if(result.success) {
+        alert('تم إرسال ونشر عرض السعر والمدة المقدرة للعميل بنجاح!');
+        refreshAdminDashboard();
+    }
+}
+
+async function deleteJob(id) {
+    if(confirm('هل تود إزالة معاملة هذا العميل تماماً؟')) {
+        await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
+        refreshAdminDashboard();
+    }
+}
+
+window.onload = refreshAdminDashboard;
