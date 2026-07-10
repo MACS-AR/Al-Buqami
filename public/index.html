@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مؤسسة البقمي للخدمات المتكاملة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+        :root { --royal-gold: #D4AF37; --gold-dark: #AA7C11; --gold-light: #F3E5AB; --bg-deep: #0B0F17; --bg-surface: #131A26; --bg-input: #1C2636; --text-main: #F5F6F8; --text-muted: #94A3B8; --white: #FFFFFF; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg-deep); color: var(--text-main); line-height: 1.6; }
+        header { background-color: rgba(11, 15, 23, 0.95); border-bottom: 2px solid var(--royal-gold); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .logo-placeholder { border: 2px solid var(--royal-gold); padding: 8px 20px; color: var(--royal-gold); font-weight: 900; font-size: 1.4rem; border-radius: 4px; background: rgba(212, 175, 55, 0.03); }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav ul li a { color: var(--text-main); text-decoration: none; font-weight: 700; transition: all 0.3s; }
+        nav ul li a:hover, nav ul li a.active { color: var(--royal-gold); }
+        .hero-section { text-align: center; padding: 120px 20px; background: linear-gradient(rgba(11, 15, 23, 0.8), rgba(11, 15, 23, 0.95)), url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=1200') no-repeat center center/cover; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+        .hero-section h1 { font-size: 3rem; color: var(--royal-gold); margin-bottom: 20px; font-weight: 900; }
+        .hero-section p { font-size: 1.3rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 30px auto; }
+        .btn-royal { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); padding: 14px 40px; border: none; border-radius: 4px; font-size: 1.1rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
+        .btn-royal:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); }
+        .main-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+        .section-title { text-align: center; color: var(--royal-gold); font-size: 2rem; font-weight: 900; margin-bottom: 40px; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 3px; background: var(--royal-gold); margin: 15px auto 0 auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .service-card { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s; }
+        .service-card:hover { transform: translateY(-5px); border-color: var(--royal-gold); }
+        .service-card h3 { color: var(--royal-gold); font-size: 1.4rem; margin-bottom: 15px; }
+        .service-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1; }
+        .service-meta { border-top: 1px solid rgba(212, 175, 55, 0.1); padding-top: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; }
+        .service-price { color: var(--gold-light); font-weight: 700; }
+        .booking-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 40px; max-width: 700px; margin: 0 auto; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: var(--gold-light); margin-bottom: 8px; font-weight: 600; }
+        .form-control { width: 100%; padding: 12px 15px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 4px; color: var(--white); font-size: 1rem; }
+        .form-control:focus { border-color: var(--royal-gold); outline: none; }
+        #dynamicFieldsContainer { background: rgba(0,0,0,0.15); padding: 15px; border-radius: 6px; margin-bottom: 20px; border-right: 3px solid var(--royal-gold); display: none; }
+        footer { text-align: center; padding: 40px; background-color: var(--bg-surface); border-top: 1px solid rgba(212, 175, 55, 0.2); color: var(--text-muted); margin-top: 100px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-placeholder">مؤسسة البقمي</div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">الرئيسية</a></li>
+                <li><a href="#services">الخدمات الاستثمارية</a></li>
+                <li><a href="#booking">طلب حجز</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero-section">
+        <h1>مؤسسة البقمي للخدمات والحلول المتكاملة</h1>
+        <p>نقدم أرقى الخدمات بلمسة ذهبية ملكية تلبي تطلعاتكم وتواكب أرقى المعايير في المملكة.</p>
+        <a href="#booking" class="btn-royal">اطلب خدمتك الآن</a>
+    </div>
+
+    <div class="main-container" id="services">
+        <h2 class="section-title">خدماتنا المتاحة</h2>
+        <div class="services-grid" id="servicesContainer"></div>
+    </div>
+
+    <div class="main-container" id="booking">
+        <h2 class="section-title">تقديم طلب حجز إلكتروني</h2>
+        <div class="booking-box">
+            <form id="clientBookingForm" onsubmit="event.preventDefault(); submitClientBooking();">
+                <div class="form-group">
+                    <label>اسم العميل الكريم</label>
+                    <input type="text" id="clientName" class="form-control" required placeholder="أدخل اسمك الكامل">
+                </div>
+                <div class="form-group">
+                    <label>رقم الجوال للتواصل</label>
+                    <input type="tel" id="clientPhone" class="form-control" required placeholder="05xxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label>اختر الخدمة المطلوبة</label>
+                    <select id="clientServiceSelect" class="form-control" onchange="handleServiceSelectionChange()" required>
+                        <option value="">-- الرجاء اختيار خدمة --</option>
+                    </select>
+                </div>
+                <div id="dynamicFieldsContainer">
+                    <h4 style="color: var(--royal-gold); margin-bottom: 15px;">متطلبات إضافية خاصة بالخدمة:</h4>
+                    <div id="dynamicFieldsInputs"></div>
+                </div>
+                <button type="submit" class="btn-royal" style="width: 100%; margin-top: 10px;">إرسال طلب الحجز</button>
+            </form>
+        </div>
+    </div>
+
+    <footer><p>جميع الحقوق محفوظة © مؤسسة البقمي للخدمات المتكاملة 2026</p></footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
