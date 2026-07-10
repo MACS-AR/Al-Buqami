@@ -1,8 +1,8 @@
 async function loadAdminWorkspace() {
     const tbody = document.getElementById('adminTableBody');
     if(!tbody) return;
-    
-    // 1. جلب إعدادات محتوى الموقع وملئها بالـ Inputs لكي يعدلها الأدمن بأي وقت
+
+    // جلب إعدادات الـ CMS
     try {
         const cmsRes = await fetch('/api/site-settings');
         const cmsData = await cmsRes.json();
@@ -13,55 +13,94 @@ async function loadAdminWorkspace() {
             document.getElementById('cmsDesc').value = cmsData.heroDesc;
             document.getElementById('cmsFooter').value = cmsData.footerText;
         }
-    } catch(e) { console.log("CMS load error", e); }
+    } catch(e) { console.log(e); }
 
-    // 2. جلب إحصائيات الزوار والطلبات
+    // جلب الزيارات وإجمالي الطلبات
     const vRes = await fetch('/api/visits');
     const vData = await vRes.json();
     document.getElementById('visitsCounter').innerText = vData.count;
 
     const res = await fetch('/api/bookings');
     const bookings = await res.json();
-    
     document.getElementById('totalCounter').innerText = bookings.length;
-    const pending = bookings.filter(b => b.status === "قيد المراجعة");
-    document.getElementById('pendingCounter').innerText = pending.length + " طلب";
 
     tbody.innerHTML = '';
     if(bookings.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">لا يوجد أي طلبات واردة في السجل حالياً.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">لا توجد طلبات مخزنة حالياً في الفايربيز.</td></tr>';
         return;
     }
 
-    // 3. بناء جدول الطلبات لتسعيرها
+    // بناء الجدول وعرض خانات القبول والتسعير لكل طلب بشكل مستقل
     bookings.forEach(item => {
+        let statusClass = 'status-pending';
+        if(item.status === "تم قبول الطلب") statusClass = 'status-accepted';
+        if(item.status === "تم رفض الطلب") statusClass = 'status-rejected';
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td><code>${item.bookingId}</code><br><small style="color:var(--text-muted);">${item.date}</small></td>
-            <td><b>${item.clientName}</b><br><a href="tel:${item.clientPhone}" style="color:var(--royal-gold); text-decoration:none; font-weight:bold;">${item.clientPhone}</a></td>
-            <td><span style="color:var(--gold-light); font-weight:bold;">${item.serviceType}</span></td>
-            <td style="max-width:320px; white-space:normal; word-wrap:break-word;"><small>${item.details}</small></td>
+            <td><b>${item.clientName}</b><br><span style="color:var(--royal-gold);">${item.clientPhone}</span></td>
+            <td><small>${item.serviceType}</small></td>
+            <td style="max-width:250px; white-space:normal; word-wrap:break-word;"><small>${item.details}</small></td>
             <td>
-                <div class="pricing-deck">
-                    <input type="text" id="p_${item.id}" class="form-control" style="padding:6px; font-size:0.85rem;" placeholder="مثال: 2000 ريال سعودي">
-                    <input type="text" id="d_${item.id}" class="form-control" style="padding:6px; font-size:0.85rem;" placeholder="مثال: 3 أيام عمل">
-                    <input type="text" id="n_${item.id}" class="form-control" style="padding:6px; font-size:0.85rem;" placeholder="ملاحظات أو شروط الشحن">
-                    <button class="btn-update" onclick="publishPriceProposal('${item.id}')">إرسال عرض السعر للعميل ✓</button>
+                <div class="action-box">
+                    <label style="font-size:0.8rem; color:var(--gold-light);">تحديد حالة المعاملة:</label>
+                    <select id="status_${item.id}" class="form-control" style="padding:4px; font-size:0.85rem;">
+                        <option value="تم قبول الطلب" ${item.status === 'تم قبول الطلب' ? 'selected' : ''}>إقرار وقبول الطلب ✓</option>
+                        <option value="تم رفض الطلب" ${item.status === 'تم رفض الطلب' ? 'selected' : ''}>اعتذار ورفض الطلب ✕</option>
+                    </select>
+                    <input type="text" id="price_${item.id}" class="form-control" style="padding:4px; font-size:0.85rem;" placeholder="التكلفة (مثال: 3500 ريال)">
+                    <input type="text" id="days_${item.id}" class="form-control" style="padding:4px; font-size:0.85rem;" placeholder="الوقت (مثال: 5 أيام عمل)">
+                    <input type="text" id="papers_${item.id}" class="form-control" style="padding:4px; font-size:0.85rem;" placeholder="الأوراق المطلوبة والتفاصيل">
+                    <input type="text" id="notes_${item.id}" class="form-control" style="padding:4px; font-size:0.85rem;" placeholder="ملاحظات إضافية للعميل">
+                    <button class="btn-accept" onclick="processOrder('${item.id}')">💾 اعتماد الرد وبثه للفايربيز</button>
                 </div>
             </td>
             <td>
-                <div style="font-size:0.85rem; line-height:1.4;">
-                    <b>الحالة:</b> <span style="color:var(--royal-gold);">${item.status}</span><br>
+                <div style="font-size:0.85rem; line-height:1.5;">
+                    <b>الحالة:</b> <span class="status-pill ${statusClass}">${item.status}</span><br>
                     <b>السعر:</b> ${item.adminPrice}<br>
-                    <b>المدة:</b> ${item.adminDuration}
+                    <b>المدة:</b> ${item.adminDuration}<br>
+                    <b>الأوراق:</b> <span style="color:var(--text-muted);">${item.requiredPapers || 'لا يوجد'}</span><br>
+                    <b>ملاحظات:</b> <span style="color:var(--text-muted);">${item.adminNotes || 'لا يوجد'}</span>
                 </div>
             </td>
             <td>
-                <button class="btn-danger" onclick="removeRequest('${item.id}')">حذف</button>
+                <button class="btn-danger" onclick="deleteOrder('${item.id}')">مسح</button>
             </td>
         `;
         tbody.appendChild(tr);
     });
+}
+
+// دالة إرسال التحديث والقبول والتسعير والأوراق للفايربيز
+async function processOrder(id) {
+    const status = document.getElementById(`status_${id}`).value;
+    const price = document.getElementById(`price_${id}`).value.trim() || "لم يحدد";
+    const days = document.getElementById(`days_${id}`).value.trim() || "تحت الدراسة";
+    const papers = document.getElementById(`papers_${id}`).value.trim() || "لا يتطلب أوراق إضافية";
+    const notes = document.getElementById(`notes_${id}`).value.trim() || "تمت مراجعة طلبك من قبل الإدارة.";
+
+    const updateData = {
+        status: status,
+        adminPrice: price,
+        adminDuration: days,
+        requiredPapers: papers,
+        adminNotes: notes
+    };
+
+    const res = await fetch(`/api/bookings/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData)
+    });
+    const result = await res.json();
+    if(result.success) {
+        alert('تم حفظ البيانات وتحديث حالة الطلب والتسعيرة بنجاح بالفايربيز!');
+        loadAdminWorkspace();
+    } else {
+        alert('حدث خطأ أثناء التحديث، تأكد من اتصال الفايربيز.');
+    }
 }
 
 async function updateCmsSettings() {
@@ -80,40 +119,13 @@ async function updateCmsSettings() {
     });
     const resData = await res.json();
     if(resData.success) {
-        alert('تم تعديل وحفظ نصوص وتصميم ومظهر الموقع بنجاح على الفايربيز وتحديثه للعملاء لايف!');
+        alert('تم تحديث نصوص وتصميم الموقع بنجاح!');
         loadAdminWorkspace();
     }
 }
 
-async function publishPriceProposal(id) {
-    const price = document.getElementById(`p_${id}`).value.trim();
-    const duration = document.getElementById(`d_${id}`).value.trim();
-    const notes = document.getElementById(`n_${id}`).value.trim() || "تمت دراسة الطلب وإصدار الفاتورة المقدرة.";
-
-    if(!price || !duration) {
-        alert('يرجى كتابة عرض السعر والمدة الزمنية للعميل أولاً.');
-        return;
-    }
-
-    const res = await fetch(`/api/bookings/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            status: "تم تقديم العرض",
-            adminPrice: price,
-            adminDuration: duration,
-            adminNotes: notes
-        })
-    });
-    const result = await res.json();
-    if(result.success) {
-        alert('تم اعتماد وبث عرض السعر والرد على جوال العميل بنجاح تام!');
-        loadAdminWorkspace();
-    }
-}
-
-async function removeRequest(id) {
-    if(confirm('هل تود مسح سجل معاملة هذا العميل من الفايربيز؟')) {
+async function deleteOrder(id) {
+    if(confirm('هل تريد حذف هذا الطلب نهائياً من قاعدة البيانات؟')) {
         await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
         loadAdminWorkspace();
     }
