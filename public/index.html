@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="siteTitle">مؤسسة البقمي للخدمات اللوجستية وحلول الشحن الدولي</title>
-    <meta name="description" content="مؤسسة البقمي للخدمات اللوجستية المتكاملة، نتميز بتقديم خدمات الشحن الدولي البري، البحري، والجوي، والتخليص الجمركي من المملكة العربية السعودية إلى مصر وشتى أنحاء العالم بأعلى معايير الأمان والسرعة.">
-    <meta name="keywords" content="مؤسسة البقمي, إعمار للخدمات اللوجستية, شحن من السعودية لمصر, تخليص جمركي, نقل بري, شحن بحري, طلب عرض سعر">
+    <title id="siteTitle">شركة مؤسسة البقمي اللوجستية | سلسلة إمداد أسرع، تكلفة أقل، تسليم أدق</title>
+    <meta name="description" content="نقدم في مؤسسة البقمي حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي. مهمتنا تسريع سلسلة الإمداد وتقليل التكاليف.">
+    <meta name="keywords" content="مؤسسة البقمي, حلول لوجستية, الشحن والنقل, إدارة المخزون, التخليص الجمركي, التوزيع المحلي والدولي">
     <meta name="robots" content="index, follow">
     
     <style>
@@ -23,58 +23,76 @@
             --success: #10B981; 
             --warning: #F59E0B; 
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
         body { background-color: var(--bg-deep); color: var(--text-main); line-height: 1.6; }
         
-        /* الهيدر الاحترافي على طراز شركات اللوجستية الكبرى */
-        header { background-color: rgba(6, 11, 19, 0.95); border-bottom: 2px solid var(--royal-gold); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
-        .logo-container { display: flex; align-items: center; gap: 15px; }
-        .logo-img { height: 55px; border-radius: 4px; border: 1px solid var(--royal-gold); box-shadow: 0 0 15px rgba(212,175,55,0.2); object-fit: contain; }
-        .logo-text { color: var(--royal-gold); font-weight: 900; font-size: 1.6rem; text-shadow: 0 2px 10px rgba(212,175,55,0.3); letter-spacing: 0.5px; }
+        /* شريط علوي للمعلومات وتوقيت العمل والتواصل المباشر */
+        .top-bar { background-color: #03060a; padding: 6px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; border-bottom: 1px solid rgba(214,175,55,0.1); color: var(--text-muted); }
+        .top-bar-links a { color: var(--gold-light); text-decoration: none; margin-right: 15px; font-weight: 600; }
+        .top-bar-links a:hover { color: var(--royal-gold); }
 
-        /* قسم الهيرو الاستعراضي الفخم - خلفية لوجستية مظلمة ومتحركة */
+        /* الهيدر الرئيسي للموقع وقائمة التنقل المستوحاة بالكامل */
+        header { background-color: rgba(6, 11, 19, 0.95); border-bottom: 2px solid var(--royal-gold); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { height: 50px; border-radius: 4px; border: 1px solid var(--royal-gold); object-fit: contain; }
+        .logo-text { color: var(--royal-gold); font-weight: 900; font-size: 1.5rem; text-shadow: 0 2px 10px rgba(212,175,55,0.2); }
+        
+        nav { display: flex; gap: 20px; align-items: center; }
+        nav a { color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; }
+        nav a:hover { color: var(--royal-gold); }
+        .btn-nav-order { background: transparent; color: var(--royal-gold); border: 1px solid var(--royal-gold); padding: 6px 16px; border-radius: 4px; font-weight: 700; text-decoration: none; transition: all 0.3s; }
+        .btn-nav-order:hover { background: var(--royal-gold); color: var(--bg-deep); }
+
+        /* قسم الهيرو الاستعراضي والتعريفي المطابق لنص موقع إعمار */
         .hero-section { 
             text-align: center; 
-            padding: 140px 20px; 
-            position: relative;
-            background: linear-gradient(rgba(6, 11, 19, 0.75), rgba(6, 11, 19, 0.9)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.2); 
+            padding: 120px 20px; 
+            background: linear-gradient(rgba(6, 11, 19, 0.8), rgba(6, 11, 19, 0.95)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            border-bottom: 1px solid rgba(214, 175, 55, 0.15); 
         }
-        .hero-section h1 { font-size: 3.2rem; color: var(--royal-gold); margin-bottom: 25px; font-weight: 900; text-shadow: 0 3px 15px rgba(0,0,0,0.9); }
-        .hero-section p { font-size: 1.35rem; color: #E2E8F0; max-width: 900px; margin: 0 auto 30px auto; text-shadow: 0 2px 10px rgba(0,0,0,0.9); font-weight: 600; }
+        .hero-section h1 { font-size: 2.8rem; color: var(--royal-gold); margin-bottom: 15px; font-weight: 900; text-shadow: 0 3px 15px rgba(0,0,0,0.8); }
+        .hero-section p { font-size: 1.25rem; color: #E2E8F0; max-width: 850px; margin: 0 auto 25px auto; font-weight: 600; }
+        .hero-tagline { color: var(--gold-light); font-size: 1.1rem; font-weight: 700; margin-bottom: 30px; letter-spacing: 0.5px; }
         
-        /* شارات المميزات السريعة */
-        .hero-badges { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
-        .hero-badge-item { background: rgba(214, 175, 55, 0.1); border: 1px solid var(--royal-gold); padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; color: var(--gold-light); font-weight: bold; }
+        .hero-actions { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn-hero-primary { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); padding: 12px 30px; border-radius: 4px; font-weight: 900; text-decoration: none; font-size: 1rem; box-shadow: 0 4px 15px rgba(212,175,55,0.2); }
+        .btn-hero-secondary { background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.2); padding: 12px 30px; border-radius: 4px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: background 0.3s; }
+        .btn-hero-secondary:hover { background: rgba(255,255,255,0.1); border-color: var(--royal-gold); }
 
-        .main-container { max-width: 1300px; margin: 50px auto; padding: 0 20px; }
+        .main-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
         
-        /* قسم استعراض خدمات النقل والشحن على طريقة Emaar LGS */
+        /* قسم من نحن / النبذة المباشرة للموقع */
+        .about-box { background-color: var(--bg-surface); border: 1px solid rgba(214,175,55,0.1); padding: 40px; border-radius: 8px; margin-bottom: 60px; text-align: center; }
+        .about-box h3 { color: var(--royal-gold); font-size: 1.8rem; margin-bottom: 15px; font-weight: 800; }
+        .about-box p { color: #CBD5E1; font-size: 1.1rem; max-width: 950px; margin: 0 auto; text-align: justify; text-align-last: center; }
+
+        /* عناوين الأقسام */
         .section-headline { text-align: center; margin-bottom: 40px; }
         .section-headline h2 { color: var(--royal-gold); font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
-        .section-headline p { color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+        .section-headline p { color: var(--text-muted); font-size: 1rem; }
 
-        .services-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        .service-promo-card { background-color: var(--bg-surface); border: 1px solid rgba(214, 175, 55, 0.12); border-radius: 8px; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .service-promo-card:hover { transform: translateY(-5px); border-color: var(--royal-gold); }
-        .service-card-img { width: 100%; height: 210px; object-fit: cover; border-bottom: 2px solid rgba(214, 175, 55, 0.2); }
-        .service-card-body { padding: 25px; }
-        .service-card-body h4 { color: var(--royal-gold); font-size: 1.3rem; margin-bottom: 12px; font-weight: 700; }
-        .service-card-body p { color: #CBD5E1; font-size: 0.95rem; text-align: justify; }
+        /* شبكة الخدمات الثلاثية المتطابقة والمكتوبة بالكامل */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 70px; }
+        .service-card { background-color: var(--bg-surface); border: 1px solid rgba(214, 175, 55, 0.12); border-radius: 6px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s; }
+        .service-card:hover { transform: translateY(-4px); border-color: var(--royal-gold); }
+        .service-card-content h4 { color: var(--royal-gold); font-size: 1.3rem; margin-bottom: 15px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .service-card-content p { color: #CBD5E1; font-size: 0.95rem; text-align: justify; margin-bottom: 20px; }
+        .btn-learn-more { color: var(--gold-light); text-decoration: none; font-size: 0.9rem; font-weight: bold; border-bottom: 1px dashed var(--gold-light); align-self: flex-start; transition: color 0.3s; }
+        .btn-learn-more:hover { color: var(--royal-gold); border-color: var(--royal-gold); }
 
-        /* منطقة بوابات العمليات وتقديم الطلبات */
+        /* منطقة بوابات العمليات المباشرة والربط (تقديم طلبات / استعلام عروض) */
         .grid-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; margin-top: 20px; }
-        .custom-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
+        .custom-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 45px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
         .custom-box::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 4px; background: linear-gradient(to left, var(--royal-gold), var(--gold-dark)); border-radius: 8px 8px 0 0; }
-        .box-title { color: var(--royal-gold); font-size: 1.6rem; margin-bottom: 25px; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding-bottom: 15px; text-align: center; font-weight: 700; }
+        .box-title { color: var(--royal-gold); font-size: 1.5rem; margin-bottom: 25px; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding-bottom: 15px; text-align: center; font-weight: 700; }
         
-        .form-group { margin-bottom: 22px; }
+        .form-group { margin-bottom: 20px; }
         .form-group label { display: block; color: var(--gold-light); margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
-        .form-control { width: 100%; padding: 14px 15px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 4px; color: var(--white); font-size: 1rem; transition: all 0.3s; }
-        .form-control:focus { border-color: var(--royal-gold); outline: none; box-shadow: 0 0 12px rgba(212,175,55,0.25); background-color: rgba(23, 33, 50, 0.8); }
+        .form-control { width: 100%; padding: 13px 15px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 4px; color: var(--white); font-size: 1rem; transition: all 0.3s; }
+        .form-control:focus { border-color: var(--royal-gold); outline: none; box-shadow: 0 0 10px rgba(212,175,55,0.25); }
         
-        .btn-royal { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); padding: 15px 30px; border: none; border-radius: 4px; font-size: 1.15rem; font-weight: 900; cursor: pointer; width: 100%; transition: all 0.3s; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); }
-        .btn-royal:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(212, 175, 55, 0.45); }
+        .btn-royal { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); padding: 14px 30px; border: none; border-radius: 4px; font-size: 1.1rem; font-weight: 900; cursor: pointer; width: 100%; transition: all 0.3s; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); }
+        .btn-royal:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); }
         
         .status-badge { display: inline-block; padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 900; }
         .status-waiting { background-color: rgba(245, 158, 11, 0.2); color: var(--warning); }
@@ -83,79 +101,109 @@
         
         .result-item { background: rgba(6, 11, 19, 0.6); padding: 22px; border-radius: 6px; margin-top: 15px; border-right: 5px solid var(--royal-gold); border: 1px solid rgba(212,175,55,0.15); animation: fadeIn 0.4s ease; }
         
-        /* فوتر فخم يليق بالمؤسسة */
-        footer { text-align: center; padding: 40px; background-color: var(--bg-surface); border-top: 2px solid var(--royal-gold); color: var(--text-muted); font-weight: 600; margin-top: 100px; }
+        /* فوتر غني بمعلومات الاتصال وساعات العمل والبريد */
+        footer { background-color: var(--bg-surface); border-top: 2px solid var(--royal-gold); padding: 50px 5% 30px 5%; margin-top: 100px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h5 { color: var(--royal-gold); font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; }
+        .footer-col p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; display: flex; flex-direction: column; }
+        .footer-col ul li span { color: var(--white); font-weight: 600; }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 25px; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
         
         @media (max-width: 768px) { 
-            .hero-section h1 { font-size: 2.1rem; } 
+            .hero-section h1 { font-size: 2rem; } 
             header { flex-direction: column; gap: 15px; text-align: center; } 
+            nav { flex-wrap: wrap; justify-content: center; gap: 12px; }
+            .top-bar { flex-direction: column; gap: 8px; text-align: center; }
             .grid-sections { grid-template-columns: 1fr; } 
-            .services-cards-grid { grid-template-columns: 1fr; }
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
+
+    <!-- 🌐 شريط الاتصال السريع وساعات العمل المأخوذة لايف من فحص الفهرس -->
+    <div class="top-bar">
+        <div>🕒 من الأحد إلى السبت: من الساعة 09:00 صباحاً - وحتى الساعة 19:00 مساءً</div>
+        <div class="top-bar-links">
+            <a href="mailto:info@elc-company.com">📧 info@elc-company.com</a>
+            <a href="tel:+966533388480">📞 +966-533388480</a>
+        </div>
+    </div>
+
+    <!-- 👑 هيدر التنقل الكامل والأزرار المتطابقة -->
     <header>
         <div class="logo-container">
             <img id="siteLogoImg" src="" alt="لوجو المؤسسة" class="logo-img" style="display: none;">
             <div class="logo-text" id="siteLogoText">مؤسسة البقمي</div>
         </div>
-        <div style="color: var(--gold-light); font-weight: 700; font-size: 1rem; border: 1px solid rgba(214,175,55,0.3); padding: 5px 15px; border-radius: 4px; background: rgba(214,175,55,0.05);">بوابة الخدمات اللوجستية وعروض الأسعار الفورية</div>
+        <nav>
+            <a href="#">الرئيسية</a>
+            <a href="#about-sec">من نحن</a>
+            <a href="#services-sec">الخدمات</a>
+            <a href="#portal-sec" class="btn-nav-order">طلب عرض سعر فوري 📄</a>
+        </nav>
     </header>
 
-    <!-- الهيرو المستوحى من واجهة إعمار اللوجستية الكبرى -->
+    <!-- 🚛 قسم الهيرو التعريفي المتطابق بالنصوص والأزرار -->
     <div class="hero-section" id="heroBg">
-        <h1 id="heroTitle">مؤسسة البقمي للخدمات اللوجستية وحلول الشحن الدولي</h1>
-        <p id="heroDesc">نربط الأسواق ونقرب المسافات بأكبر أسطول نقل بري، بحري، وجوي متكامل يغطي المملكة العربية السعودية، جمهورية مصر العربية، والخليج العربي بأعلى كفاءة وتأمين شامل.</p>
-        <div class="hero-badges">
-            <div class="hero-badge-item">⚡ شحن سريع وآمن</div>
-            <div class="hero-badge-item">⚓ تغطية بحرية وبرية شاملة</div>
-            <div class="hero-badge-item">📁 تخليص جمركي متكامل</div>
+        <h1 id="heroTitle">مؤسسة البقمي للخدمات اللوجستية</h1>
+        <p id="heroDesc">نقدم حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي.</p>
+        <div class="hero-tagline">حلول لوجستية تُنجز أعمالك بلا تأخير من المستودع إلى الوجهة - تنفيذ دقيق وتخليص سريع وتوزيع موثوق</div>
+        <div class="hero-actions">
+            <a href="#portal-sec" class="btn-hero-primary">احصل على عرض سعر الآن 🚀</a>
+            <a href="#services-sec" class="btn-hero-secondary">استكشف خدماتنا 🔍</a>
         </div>
     </div>
 
     <div class="main-container">
         
-        <!-- قسم استعراض كروت الخدمات الاحترافية (Promo Cards) على طراز emaarlgs -->
-        <div class="section-headline">
-            <h2>شركاؤكم في النجاح واللوجستيات</h2>
-            <p>نقدم منظومة متكاملة من حلول النقل والشحن والتخليص التي تضمن وصول استثماراتكم وبضائعكم بأمان تام في أسرع وقت.</p>
+        <!-- 🎯 قسم من نحن المتطابق بالنص الأصلي -->
+        <div class="about-box" id="about-sec">
+            <h3>من نحن في مؤسسة البقمي</h3>
+            <p>نقدم حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي. مهمتنا تسريع سلسلة الإمداد لعملائنا وتقليل التكاليف دون المساس بجودة الخدمة. نتميّز بتتبع دقيق للشحنات، وشبكة تشغيل مرنة، وفريق دعم موثوق يضمن وصول المنتجات بأمان وفي الوقت المحدد.</p>
         </div>
 
-        <div class="services-cards-grid">
-            <!-- الكارت الأول: الشحن البري والجوي -->
-            <div class="service-promo-card">
-                <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=600&q=80" alt="الشحن البري اللوجستي" class="service-card-img">
-                <div class="service-card-body">
-                    <h4>🚛 خدمات النقل البري والترانزيت الدولي</h4>
-                    <p>نمتلك أسطولاً متطوراً من الشاحنات، المبردات، وحاملات البضائع الثقيلة المجهزة بأحدث أنظمة التتبع؛ لتأمين النقل البري المباشر من كافة مدن المملكة وموانئها إلى مصر والخليج بكفاءة لا تضاهى.</p>
+        <!-- 🛠️ قسم الخدمات الثلاثي المتطابق بنصوص الفحص والتدقيق -->
+        <div class="section-headline" id="services-sec">
+            <h2>الخدمات اللوجستية المتخصصة</h2>
+            <p>نصمم خدماتنا بدقة متناهية لتواكب متطلبات أعمالكم وتسرع قوافلكم</p>
+        </div>
+
+        <div class="services-grid">
+            <!-- الخدمة الأولى -->
+            <div class="service-card">
+                <div class="service-card-content">
+                    <h4>🚛 الشحن والنقل المحلي والدولي</h4>
+                    <p>خدمات شحن مرنة براً وبحراً وجواً مع تتبع للشحنات لضمان وصول آمن وفي الوقت المحدد لضمان استقرار وسرعة أعمالكم وعملياتكم التجارية.</p>
                 </div>
+                <a href="#portal-sec" class="btn-learn-more">طلب الخدمة والتسعير ←</a>
             </div>
 
-            <!-- الكارت الثاني: الشحن البحري والجمركي -->
-            <div class="service-promo-card">
-                <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=600&q=80" alt="الشحن البحري" class="service-card-img">
-                <div class="service-card-body">
-                    <h4>⚓ الشحن البحري وتعبئة الحاويات FCL / LCL</h4>
-                    <p>عبر شراكاتنا الاستراتيجية مع كبرى الخطوط الملاحية العالمية، نقدم خدمات حجز الحاويات الكاملة والمجمعة، مع توفير ساحات تخزين آمنة وحلول شحن بحري متميزة تربط الموانئ السعودية بالموانئ المصرية بدقة متناهية.</p>
+            <!-- الخدمة الثانية -->
+            <div class="service-card">
+                <div class="service-card-content">
+                    <h4>📦 إدارة المخزون والمستودعات</h4>
+                    <p>استلام وفرز وتخزين وتجهيز طلبات بكفاءة أعلى لتقليل الهدر وتحسين توافر المنتجات داخل مستودعاتنا المؤمنة بالكامل ومراقبة المخزون باحترافية.</p>
                 </div>
+                <a href="#portal-sec" class="btn-learn-more">طلب الخدمة والتسعير ←</a>
             </div>
 
-            <!-- الكارت الثالث: التخليص الجمركي والمعاملات -->
-            <div class="service-promo-card">
-                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="تخليص جمركي وأوراق" class="service-card-img">
-                <div class="service-card-body">
-                    <h4>💼 التخليص الجمركي واستخراج شهادات المنشأ</h4>
-                    <p>فريقنا من المخلصين الجمركيين المحترفين على أتم الاستعداد لإنهاء كافة المعاملات والمستندات، الفحص الجمركي، وإصدار شهادات المطابقة والتأسيس لتسريع عبور شحناتكم من المنافذ دون أي تأخير.</p>
+            <!-- الخدمة الثالثة -->
+            <div class="service-card">
+                <div class="service-card-content">
+                    <h4>💼 التخليص الجمركي وخدمات الاستيراد والتصدير</h4>
+                    <p>نقدّم خدمات احترافية في الاستيراد والتصدير والتخليص الجمركي لتسريع دخول الشحنات وتقليل التأخير والغرامات، مع متابعة دقيقة للإجراءات وشفافية في تحديث حالة الشحنات.</p>
                 </div>
+                <a href="#portal-sec" class="btn-learn-more">طلب الخدمة والتسعير ←</a>
             </div>
         </div>
 
-        <!-- قسم العمليات الرئيسي (تقديم الطلبات ومتابعة الإدارة مع الفايربيز) -->
-        <div class="section-headline">
-            <h2>بوابة المعاملات وعروض الأسعار الفورية</h2>
-            <p>قدّم طلبك الآن مجاناً وبدون أي دفع مسبق، وسيقوم فريق الإدارة لدينا بتسعير طلبك وتحديد موعد الإنجاز فوراً.</p>
+        <!-- 📥 بوابات العمليات المباشرة (الربط البرمجي الكامل مع السيرفر والفايربيز) -->
+        <div class="section-headline" id="portal-sec">
+            <h2>منصة طلب عروض الأسعار والمعاملات الفورية</h2>
+            <p>أرسل طلبك الآن برقم جوالك وسيتم الرد وحساب التكلفة والرد حياً من الإدارة</p>
         </div>
 
         <div class="grid-sections">
@@ -174,14 +222,14 @@
                     <div class="form-group">
                         <label>نوع الخدمة والمسار المطلوب</label>
                         <select id="cType" class="form-control" required>
-                            <option value="شحن دولي وسريع">شحن ونقل دولي (بري / بحري / جوي)</option>
-                            <option value="تخليص معاملات وأوراق">تخليص جمركي وإنهاء معاملات الاستيراد والتصدير</option>
-                            <option value="خدمات استثمارية مخصصة">تأسيس شركات وحلول سلاسل الإمداد اللوجستية كبرى</option>
+                            <option value="شحن دولي وسريع">الشحن والنقل المحلي والدولي (براً وبحراً وجواً)</option>
+                            <option value="إدارة المخزون والمستودعات">إدارة المخزون وتخزين وتجهيز طلبات المستودعات</option>
+                            <option value="تخليص معاملات وأوراق">التخليص الجمركي وخدمات الاستيراد والتصدير الاحترافية</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>اكتب تفاصيل طلبك بدقة (نوع البضاعة، الوزن، بلد المنشأ والوصول)</label>
-                        <textarea id="cDetails" class="form-control" rows="4" required placeholder="مثال: أريد نقل حاوية بضائع ملابس بوزن 15 طن من ميناء جدة الإسلامي إلى ميناء دمياط، مع التخليص الجمركي..."></textarea>
+                        <label>اكتب تفاصيل طلبك بدقة (نوع البضائع، الكمية، مسار الوجهة المستهدفة)</label>
+                        <textarea id="cDetails" class="form-control" rows="4" required placeholder="مثال: أريد فحص شحنة وتخزينها، أو نقل حاوية برية من الرياض إلى الوجهة المستهدفة مع التخليص الجمركي..."></textarea>
                     </div>
                     <button type="submit" class="btn-royal">إرسال الطلب لتقدير السعر فوراً 🚀</button>
                 </form>
@@ -190,7 +238,7 @@
             <!-- صندوق المتابعة الحية -->
             <div class="custom-box">
                 <h3 class="box-title">🔍 الاستعلام ومتابعة العروض بالرقم</h3>
-                <p style="color: var(--text-muted); font-size:0.95rem; margin-bottom:25px; text-align:center;">أدخل رقم جوالك المسجل لاستدعاء ردود الإدارة، التسعير، والمستندات المطلوبة لمعاملتك حياً من الفايربيز.</p>
+                <p style="color: var(--text-muted); font-size:0.95rem; margin-bottom:25px; text-align:center;">أدخل رقم جوالك المسجل لاستدعاء عروض الأسعار والملاحظات وقرارات الإدارة لمعاملتك حياً لايف.</p>
                 <div class="form-group">
                     <label>رقم الجوال الخاص بك</label>
                     <input type="tel" id="searchPhone" class="form-control" placeholder="أدخل رقم الجوال وبث النتائج">
@@ -199,9 +247,38 @@
                 <div id="statusResultOutput" style="margin-top:25px;"></div>
             </div>
         </div>
+
     </div>
 
-    <footer id="siteFooter">جميع الحقوق محفوظة © مؤسسة البقمي للخدمات اللوجستية المتكاملة 2026</footer>
+    <!-- 🌐 الفوتر الغني بالمعلومات وساعات العمل والأرقام الأصلية مستبدلة بالكامل لكم -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h5>مؤسسة البقمي للخدمات اللوجستية</h5>
+                <p>سلسلة إمداد أسرع، تكلفة أقل، تسليم أدق لضمان ريادة وسرعة أعمالك من المستودعات وحتى الوجهات المحددة.</p>
+            </div>
+            <div class="footer-col">
+                <h5>أقسام الوصول السريع</h5>
+                <ul>
+                    <li><a href="#" style="color:var(--text-muted); text-decoration:none;">الرئيسية</a></li>
+                    <li><a href="#about-sec" style="color:var(--text-muted); text-decoration:none;">من نحن في المؤسسة</a></li>
+                    <li><a href="#services-sec" style="color:var(--text-muted); text-muted; text-decoration:none;">الخدمات والحلول اللوجستية</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>قنوات الاتصال المباشر</h5>
+                <ul>
+                    <li>📞 هاتف الدعم الأول: <span>+966-533388480</span></li>
+                    <li>📞 هاتف الدعم الثاني: <span>+966-535599535</span></li>
+                    <li>📧 البريد الإلكتروني الرسمي: <span>info@elc-company.com</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" id="siteFooter">
+            جميع الحقوق محفوظة © مؤسسة البقمي للخدمات اللوجستية المتكاملة 2026
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
