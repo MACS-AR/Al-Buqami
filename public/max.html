@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم وصانع العروض - م/ محمد أشرف (FARESPCB)</title>
+    <!-- تضمين مكتبة تحويل الـ HTML إلى PDF بجودة الطباعة -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #f1b813; /* الأصفر الخردلي */
+            --dark-color: #3e3e3e;    /* الرمادي الغامق */
+            --light-bg: #ffffff;
+        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f0f2f5; margin: 0; padding: 0; }
+        
+        /* لوحة تحكم الأدمن المستهدفة */
+        .admin-panel {
+            background: #ffffff; padding: 25px; margin: 20px auto; max-width: 1100px;
+            border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .admin-panel h2 { color: var(--dark-color); border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-top: 0; }
+        .admin-panel h3 { color: #555; margin-top: 25px; border-right: 4px solid var(--primary-color); padding-right: 10px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { margin-bottom: 6px; font-weight: bold; color: #444; font-size: 14px; }
+        .form-group input, .form-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .form-group textarea { resize: vertical; }
+        
+        .dynamic-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fff; }
+        .dynamic-table th, .dynamic-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .dynamic-table th { background-color: var(--dark-color); color: white; }
+        .dynamic-table input { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+        
+        .btn-actions { margin-top: 30px; text-align: center; display: flex; gap: 15px; justify-content: center; }
+        .btn { background: #27ae60; color: white; padding: 14px 35px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn:hover { background: #219150; transform: translateY(-2px); }
+        .btn-add { background: var(--dark-color); padding: 7px 15px; font-size: 13px; border-radius: 4px; }
+        .btn-add:hover { background: #222; }
+        .btn-danger { background: #c0392b; padding: 6px 12px; font-size: 13px; border-radius: 4px; color: white; cursor: pointer; border: none; }
+
+        /* منطقة تصدير الـ PDF وثبات الأبعاد A4 */
+        .preview-container { margin: 0 auto; width: 210mm; background: #dadada; padding: 10px 0; }
+        .page {
+            background: #ffffff; width: 210mm; height: 297mm; position: relative;
+            margin: 0 auto 20px auto; padding: 25mm 20mm 20mm 20mm; box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            overflow: hidden; page-break-after: always;
+        }
+        
+        /* الهيدر والفوتر المتكرر والمطابق للهوية */
+        .page-header { position: absolute; top: 10mm; left: 20mm; right: 20mm; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f1f1; padding-bottom: 8px; }
+        .page-header .logo-container img { height: 18mm; max-width: 50mm; object-fit: contain; }
+        .page-header .page-number-top { font-size: 14px; color: #888; background: #f5f5f5; padding: 2px 10px; border-radius: 4px; }
+        .page-footer { position: absolute; bottom: 10mm; left: 20mm; right: 20mm; border-top: 2px solid var(--primary-color); padding-top: 8px; display: flex; justify-content: space-between; font-size: 12px; color: #555; }
+        .page-footer-line { width: 100%; height: 3px; background: var(--primary-color); position: absolute; bottom: 18mm; left: 0; }
+
+        /* تنسيقات هيكلية المحتوى */
+        h1, h2, h3, h4 { margin-top: 0; color: var(--dark-color); }
+        p { line-height: 1.7; font-size: 14px; color: #333; text-align: justify; margin-top: 0; margin-bottom: 10px; }
+        
+        /* الغلاف (الصفحة 1) */
+        .cover-wrapper { display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 20mm 0 10mm 0; align-items: center; }
+        .cover-main-design { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; margin-top: 20mm; }
+        .cover-side-bar { width: 5mm; height: 50mm; background: var(--dark-color); border-radius: 2px; margin-left: 10mm; }
+        .cover-orange-box { background: var(--primary-color); width: 45mm; height: 25mm; border-radius: 4px 0 0 4px; margin-left: -5mm; z-index: 1; }
+        .cover-circle-logo { width: 100mm; height: 100mm; border: 18px solid var(--dark-color); border-left-color: var(--primary-color); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .cover-circle-text { font-size: 14px; font-weight: bold; color: #fff; background: var(--dark-color); padding: 4px 12px; border-radius: 20px; margin-bottom: 5px; }
+        .cover-title-box { text-align: center; margin-top: 25mm; }
+        .cover-main-title { font-size: 36px; font-weight: bold; color: var(--primary-color); margin-bottom: 5px; }
+        .cover-sub-title { font-size: 26px; font-weight: bold; color: var(--dark-color); }
+        .cover-meta-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; }
+
+        /* جداول البيانات الفنية والمالية */
+        .content-table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; font-size: 13px; }
+        .content-table th, .content-table td { border: 1px solid #cccccc; padding: 10px; text-align: right; }
+        .content-table th { background-color: var(--primary-color); color: #000; font-weight: bold; text-align: center; }
+        .content-table tr:nth-child(even) { background-color: #fafafa; }
+        .bg-yellow-cell { background-color: var(--primary-color) !important; font-weight: bold; color: #000; }
+        .bg-dark-cell { background-color: var(--dark-color) !important; color: #fff !important; font-weight: bold; }
+        
+        /* صفحة الخدمات الموزعة بخط منتصف (الصفحة 6) */
+        .services-timeline { position: relative; margin-top: 15mm; padding: 10px 0; height: 210mm; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" opacity="0.03"><path d="M0 0h100v100H0z" fill="none"/><circle cx="50" cy="50" r="40" stroke="black" stroke-width="1" fill="none"/></svg>'); }
+        .services-timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--dark-color); transform: translateX(-50%); }
+        .service-node { position: absolute; width: 45%; display: flex; align-items: center; }
+        .service-node.right { left: 55%; text-align: right; justify-content: flex-start; }
+        .service-node.left { right: 55%; text-align: left; justify-content: flex-end; flex-direction: row-reverse; }
+        .node-badge { width: 35px; height: 35px; background: var(--primary-color); border: 3px solid var(--dark-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; color: #000; position: absolute; top: 0; }
+        .service-node.right .node-badge { left: -37px; }
+        .service-node.left .node-badge { right: -37px; }
+        .node-content { background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border: 1px solid #eef0f2; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .node-title { font-weight: bold; color: var(--dark-color); font-size: 14px; margin-bottom: 2px; }
+        .node-desc { font-size: 12px; color: #666; }
+
+        /* أجهزة تتبع دوائر (الصفحة 5) */
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 35mm; position: relative; }
+        .product-box { border: 2px solid var(--primary-color); border-radius: 12px; padding: 15px; text-align: center; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .product-circle-img { width: 35mm; height: 35mm; border: 4px solid var(--primary-color); border-radius: 50%; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f9f9f9; }
+        .product-circle-img span { font-size: 12px; color: #999; font-weight: bold; }
+        .product-name { font-weight: bold; color: var(--dark-color); font-size: 15px; margin-bottom: 5px; }
+        .product-desc { font-size: 12px; color: #555; line-height: 1.5; }
+        .center-hub-badge { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 30mm; height: 30mm; background: #fff; border: 6px solid var(--dark-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        /* كتل صفحة الفوائد (صفحة 10) */
+        .benefits-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20mm; }
+        .benefit-card { display: flex; align-items: center; background: #f9f9f9; padding: 12px; border-radius: 30px 6px 6px 30px; border-left: 5px solid var(--primary-color); }
+        .benefit-icon-area { width: 40px; height: 40px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 12px; font-weight: bold; flex-shrink: 0; }
+        .benefit-text { font-size: 13px; font-weight: bold; color: var(--dark-color); }
+
+        /* كتل صفحة الشروط الملونة */
+        .rule-highlight { background-color: var(--primary-color); padding: 12px 18px; border-radius: 6px; margin: 12px 0; font-weight: bold; color: #000; font-size: 13px; border-right: 6px solid var(--dark-color); }
+        .rule-normal-box { background-color: #f5f5f5; padding: 10px 15px; border-radius: 6px; margin: 8px 0; font-size: 13px; border-right: 4px solid var(--primary-color); }
+        
+        /* ترويسات الأقسام داخل الصفحات */
+        .section-header { display: flex; align-items: center; margin-top: 10mm; margin-bottom: 15px; border-bottom: 3px solid var(--primary-color); padding-bottom: 5px; }
+        .section-header-title { font-size: 20px; font-weight: bold; color: var(--dark-color); margin-left: auto; }
+        .section-header-icon { width: 12mm; height: 12mm; object-fit: contain; }
+
+        /* باقات نعم ولا الجداول المقارنة الكبيرة */
+        .comparison-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5mm; }
+        .comparison-table th, .comparison-table td { border: 1px solid #dddddd; padding: 5px 4px; text-align: center; }
+        .comparison-table th { background-color: var(--primary-color); color: #000; font-weight: bold; }
+        .comparison-table td:nth-child(2) { text-align: right; font-weight: bold; font-size: 11.5px; padding-right: 6px; }
+        .check-yes { color: #27ae60; font-weight: bold; font-size: 14px; }
+        .check-no { color: #c0392b; font-weight: bold; font-size: 14px; }
+
+        /* إخفاء لوحة التحكم عند أمر الطباعة الفعلي */
+        @media print {
+            body { background: none; }
+            .admin-panel { display: none; }
+            .preview-container { padding: 0; background: none; }
+            .page { margin: 0; box-shadow: none; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== لوحة تحكم الأدمن الكومبو ==================== -->
+    <div class="admin-panel">
+        <h2>لوحة إدارة العرض والنظام المالي الموحد</h2>
+        <p style="color: #666; font-size: 13px;">تتيح لك هذه اللوحة التحكم الكامل في هوية العروض، النصوص، أرقام السجلات والاتصال، الحسابات البنكية، والأسعار لجميع الصفحات في نفس الوقت.</p>
+        
+        <h3>1. الهوية البصرية وبيانات الاتصال والترخيص</h3>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>رفع شعار الشركة الجديد (Logo):</label>
+                <input type="file" id="logoUpload" accept="image/*" onchange="handleLogoChange(event)">
+            </div>
+            <div class="form-group">
+                <label>اسم شركتك الاستبدالي:</label>
+                <input type="text" id="inpCompanyName" value="لوحة م/ محمد اشرف (FARESPCB)" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>الرقم الموحد / هاتف التواصل:</label>
+                <input type="text" id="inpPhone" value="+966500000106" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>الموقع الإلكتروني الرسمي:</label>
+                <input type="text" id="inpWeb" value="www.fares-pcb.com" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>رقم السجل التجاري:</label>
+                <input type="text" id="inpCR" value="1010664923" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>الرقم الضريبي للمنشأة:</label>
+                <input type="text" id="inpTaxNumber" value="310365859500003" oninput="syncData()">
+            </div>
+        </div>
+
+        <h3>2. بيانات العميل المستهدف الحالي</h3>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>اسم شركة العميل:</label>
+                <input type="text" id="inpClientName" value="شركة النقل البري المتميز المحدودة" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>الشخص المسؤول وعنوانه:</label>
+                <input type="text" id="inpContactPerson" value="الأستاذ عبد الله القحطاني" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>هاتف المسؤول:</label>
+                <input type="text" id="inpClientPhone" value="0548138548" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني للعميل:</label>
+                <input type="text" id="inpClientEmail" value="info@client-transport.com" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>نوع ونموذج المركبات المطلوبة:</label>
+                <input type="text" id="inpVehicleModel" value="شاحنات نقل ثقيل (مرسيدس أكتروس)" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>عدد المركبات الكلي المستهدف:</label>
+                <input type="number" id="inpVehicleQty" value="56" oninput="syncData()">
+            </div>
+        </div>
+
+        <h3>3. الحسابات البنكية ومنافذ التحويل المالي (صفحة 13)</h3>
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label>تفاصيل مسارات البنوك والآيبان (اكتب كل حساب في سطر منفصل):</label>
+                <textarea id="inpBankDetails" rows="4" oninput="syncData()">مصرف الراجحي فرع الرياض - رقم الحساب: 203608010507213 - الآيبان: SA13200000203608010507213&#10;البنك الأهلي التجاري فرع جدة - رقم الحساب: 20876833000106 - الآيبان: SA4910000020876833000106</textarea>
+            </div>
+        </div>
+
+        <h3>4. عناصر وجدول التسعير الديناميكي الذكي (صفحة 12)</h3>
+        <p style="color: #e67e22; font-size: 13px; font-weight: bold;">* يتم احتساب المجاميع، والضريبة بنسبة 15%، وصافي الفاتورة الإجمالية ونمذجة التفقيط آلياً فور التعديل.</p>
+        <table class="dynamic-table" id="itemsEditorTable">
+            <thead>
+                <tr>
+                    <th style="width: 25%;">البند</th>
+                    <th style="width: 35%;">البيان التفصيلي</th>
+                    <th style="width: 15%;">تكلفة الوحدة</th>
+                    <th style="width: 15%;">عدد الأجهزة</th>
+                    <th style="width: 10%;">إجراء</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" value="اشتراك لمدة 12 أشهر"></td>
+                    <td><input type="text" value="اشتراك لمدة 12 أشهر في اشتراك موقع بيسك نقل لربط المركبة وتتبعها"></td>
+                    <td><input type="number" value="240.00" oninput="recalculateFinancials()"></td>
+                    <td><input type="number" value="56" oninput="recalculateFinancials()"></td>
+                    <td><button class="btn-danger" onclick="removeRow(this)">حذف</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="Teltonika GPS Tracker Basic FMC920"></td>
+                    <td><input type="text" value="شركة تيلتونيكا - جهاز تتبع 4G بيسك تتبع متطور يدعم منصات الهيئة"></td>
+                    <td><input type="number" value="190.00" oninput="recalculateFinancials()"></td>
+                    <td><input type="number" value="56" oninput="recalculateFinancials()"></td>
+                    <td><button class="btn-danger" onclick="removeRow(this)">حذف</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="حساس وزن ميكانيكي"></td>
+                    <td><input type="text" value="حساس وزن ميكانيكي عالي الدقة لضبط قراءات الحمولات الزائدة"></td>
+                    <td><input type="number" value="180.00" oninput="recalculateFinancials()"></td>
+                    <td><input type="number" value="13" oninput="recalculateFinancials()"></td>
+                    <td><button class="btn-danger" onclick="removeRow(this)">حذف</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-add" style="margin-top: 12px;" onclick="addNewRow()">+ إضافة سطر مالي جديد</button>
+
+        <div class="btn-actions">
+            <button class="btn" onclick="generatePerfectPDF()">حفظ البيانات وتصدير وثيقة الـ PDF الكاملة</button>
+        </div>
+    </div>
+
+
+    <!-- ==================== حاوية العرض التقديمي للتصدير والطباعة A4 ==================== -->
+    <div class="preview-container" id="pdfCaptureArea">
+
+        <!-- الصفحة 1: الغلاف -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src="" alt="شعارك"></div>
+                <div class="page-number-top">1 من 13</div>
+            </div>
+            <div class="cover-wrapper">
+                <div class="cover-main-design">
+                    <div class="cover-side-bar"></div>
+                    <div class="cover-orange-box"></div>
+                    <div class="cover-circle-logo">
+                        <div class="cover-circle-text">أنظمة التتبع وإنترنت الأشياء</div>
+                        <div style="font-weight:bold; font-size:24px; color:var(--dark-color);" class="lblCompanyName">FARESPCB</div>
+                    </div>
+                </div>
+                <div class="cover-title-box">
+                    <div class="cover-main-title">عروض منظومات التتبع</div>
+                    <div class="cover-sub-title">عرض نموذج تتبع متكامل</div>
+                </div>
+                <div class="cover-meta-info">
+                    <div style="font-size: 13px; color:#555;">الرقم الموحد: <span class="lblPhone">+966500000106</span></div>
+                    <div style="font-size: 13px; color:#555;">الموقع الإلكتروني: <span class="lblWeb">www.fares-pcb.com</span></div>
+                </div>
+            </div>
+            <div class="page-footer-line"></div>
+        </div>
+
+        <!-- الصفحة 2: المقترح المالي وبيانات العميل الأساسية -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src="" alt="شعار"></div>
+                <div class="page-number-top">2 من 13</div>
+            </div>
+            <h2 style="margin-top: 15mm; text-align: center; font-size: 24px;">Financial Proposal / المقترح المالي الفني</h2>
+            
+            <table class="content-table" style="margin-top: 20mm;">
+                <tr><td class="bg-yellow-cell" style="width: 35%;">Customer Name / اسم شركة العميل</td><td id="vClientName">شركة العميل</td></tr>
+                <tr><td class="bg-yellow-cell">Contact Person / المسؤول المباشر</td><td id="vContactPerson">المسؤول</td></tr>
+                <tr><td class="bg-yellow-cell">Mobile Number / جوال التواصل</td><td id="vClientPhone">05000000</td></tr>
+                <tr><td class="bg-yellow-cell">Email / البريد الإلكتروني</td><td id="vClientEmail">email@domain.com</td></tr>
+                <tr><td class="bg-yellow-cell">Offer For Vehicle / طراز وعرض المركبات</td><td id="vVehicleModel">مركبات</td></tr>
+                <tr><td class="bg-yellow-cell">Number of Vehicle / إجمالي عدد المركبات</td><td id="vVehicleQty">0</td></tr>
+                <tr><td class="bg-yellow-cell">Sales Consultant / استشاري مبيعات المنظومة</td><td class="lblCompanyName">محمد أشرف</td></tr>
+                <tr><td class="bg-yellow-cell">Mobile Number / رقم الجوال المباشر</td><td class="lblPhone">+966500000106</td></tr>
+                <tr><td class="bg-yellow-cell">Date / تاريخ تقديم العرض</td><td id="vCurrentDate">2026-07-12</td></tr>
+            </table>
+            <div class="page-footer"><span>وثيقة سرية ومحمية للعميل</span><span class="lblCompanyName">شركة التتبع</span></div>
+        </div>
+
+        <!-- الصفحة 3: نبذة عن الشركة والرؤية والرسالة -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">3 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">نبذة عن الشركة / Company Profile</div>
+            </div>
+            <p>تأسست شركتنا عام 2011 لتكون في طليعة الشركات المتخصصة في أنظمة الاتصالات، إنترنت الأشياء، وتحديد المواقع (GPS) وحلول إدارة الوقود بفضل اعتمادنا من هيئة النقل، هيئة الغذاء والدواء، ومنصة مدينتي، نلتزم بتقديم حلول ذات موثوقية عالية تتماشى مع أعلى معايير الجودة والسلامة لتلبية تطلعات السوق.</p>
+            <p>نعمل باستمرار على تطوير وتحديث تقنياتنا ومنتجاتنا لتلبية متطلبات السوق المتزايدة والمتغيرة، فنقدم خدمات متكاملة لرفع كفاءة العمل، تقليل التكاليف، وتعزيز الإنتاجية في إدارة الأساطيل، بفضل حلولنا المتقدمة نوفر لعملائنا القدرة على تنظيم وتوجيه وإدارة أساطيلهم بفاعلية بما يضمن السلامة والكفاءة القصوى على الطرقات.</p>
+            <p>نفتخر بأننا شريك موثوق لمجموعة واسعة من القطاعات تشمل شركات النقل، الخرسانة، المقاولات، تأجير المركبات، المدارس، الجامعات، شركات نقل المواد الخطرة والمحروقات، وشركات توزيع المواد الغذائية والطبية. نحن هنا لدعم استثماراتكم وتقديم حلول تزيد من الأمان وتدعم استدامة أعمالكم على المدى الطويل وبناء الثقة المتبادلة.</p>
+            
+            <div class="section-header">
+                <div class="section-header-title">رؤية الشركة / Our Vision</div>
+            </div>
+            <p>أن نكون الخيار الأول في حلول الاتصالات وإنترنت الأشياء وإدارة الوقود عبر تقديم تقنيات متقدمة وآمنة تساعد عملاءنا على تحقيق كفاءة أعلى، خفض التكاليف، وضمان الالتزام بالمعايير المحلية والعالمية نلتزم بأن نكون الشريك المعتمد والموثوق للقطاعات التي نخدمها لدعم استدامتها ونجاحها الدائم والمستمر.</p>
+            
+            <div class="section-header">
+                <div class="section-header-title">رسالة الشركة / Our Mission</div>
+            </div>
+            <p>أن نكون قوة دافعة نحو التميز في إدارة الأساطيل وحلول الوقود عبر توفير تقنيات تواصل مبتكرة وحلول إنترنت الأشياء التي تلبي احتياجات عملائنا اليومية. نلتزم بتقديم خدمات وحلول تكنولوجية مخصصة تعزز الكفاءة وتوفر الوقت والجهد، مع التركيز على السلامة والأمان. نحن هنا لنبني علاقات طويلة الأمد مع عملائنا ونساهم في نمو أعمالهم عبر حلول معتمدة تلبي المعايير وتزيد من ثقتهم في إدارة مواردهم بالشكل الأمثل.</p>
+            <div class="page-footer"><span class="lblWeb">www.fares-pcb.com</span><span>صفحة 3 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 4: لماذا أنظمة التتبع هي شريكك المثالي -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">4 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">لماذا شركتنا هي شريكك المثالي؟</div>
+            </div>
+            <p>إن شركتنا ليست مجرد مزود خدمات عابر، بل نحن شريك استراتيجي يقدم دعماً متكاملاً من الاستشارة والتصميم إلى خدمات ما بعد البيع، لضمان الأداء والاستدامة لأعمالك. إليك ما يجعلنا الخيار الأمثل والأنسب دائمًا:</p>
+            
+            <p><strong>1- فريق عمل متخصص ومحترف:</strong> خبراء مؤهلون في الاتصالات وإنترنت الأشياء وإدارة الوقود يعملون لتقديم حلول تتناسب مع احتياجات كل عميل وتواكب متغيرات وتحديات بيئة العمل المحلية والعالمية بكفاءة عالية.</p>
+            <p><strong>2- التزام دائم بخدمات ما بعد البيع:</strong> دعم فني مستمر من فرق مخصصة لضمان فعالية الحلول واستمرارية نجاحك الفني والتشغيلي والرد على الاستفسارات الفنية وحل المشكلات خلال زمن قياسي دون تعطيل للعمل.</p>
+            <p><strong>3- اعتماد ومصداقية كاملة:</strong> معتمدون من جهات تنظيمية وحكومية رئيسية بالمملكة (هيئة النقل، الغذاء والدواء، ومنصات الربط المختلفة) مما يضمن توافق حلولنا تماماً وفق أعلى معايير الجودة والسلامة القانونية.</p>
+            <p><strong>4- ابتكار وتطوير مستمر للأنظمة:</strong> نسعى باستمرار لتحديث تقنياتنا لمواكبة التطورات ودعم كفاءة عملك عبر تزويدك بآخر إصدارات البرمجيات وأقوى التحديثات الأمنية لأجهزة التتبع والاستشعار بمختلف مستوياتها.</p>
+            <p><strong>5- حلول مستدامة وعملية:</strong> نقدم حلولاً تقلل التكاليف والهدر وتضمن استدامة أعمالك على المدى الطويل من خلال خفض معدلات استهلاك الوقود الإضافي ومراقبة سلوكيات القيادة السيئة للسائقين على الطرق.</p>
+            
+            <p style="background:#f9f9f9; padding:10px; border-right:4px solid var(--primary-color); margin-top:15px;"><strong>اختيارك لشركتنا يعني دائمًا:</strong><br>
+            • الاستفادة القصوى من فريق مؤهل ودعم متواصل على مدار الساعة.<br>
+            • تقنيات متقدمة تعزز أداء أسطولك وتمنحك تحكماً شاملاً.<br>
+            • شراكة طويلة الأمد مبنية على الشفافية والالتزام الكامل والابتكار.</p>
+            <div class="page-footer"><span class="lblWeb">www.fares-pcb.com</span><span>صفحة 4 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 5: المنتجات وأجهزة التتبع المعتمدة -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">5 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">المنتجات وأجهزة التتبع الرقمية المتطورة</div>
+            </div>
+            <p>نقدم لعملائنا النخبة باقة من أفضل أجهزة التتبع العالمية المعتمدة والمطابقة للمواصفات القياسية لهيئة الاتصالات والفضاء والتقنية وهيئة النقل العام لضمان أفضل تغطية وإشارة وسرعة نقل بيانات:</p>
+            
+            <div class="products-grid">
+                <div class="center-hub-badge">أنظمة<br>التتبع</div>
+                <div class="product-box">
+                    <div class="product-circle-img"><span>FMC130 الجهاز المتقدم</span></div>
+                    <div class="product-name">جهاز تتبع 4G متقدم FMC130</div>
+                    <div class="product-desc">يدعم 1 شريحة اتصال مدمجة وقراءة قنوات ومخرجات الـ CAN-BUS للسيارات والشاحنات لقراءة الأعطال الفنية والتشغيلية بدقة.</div>
+                </div>
+                <div class="product-box">
+                    <div class="product-circle-img"><span>FMC920 البيسك الذكي</span></div>
+                    <div class="product-name">جهاز تتبع 4G بيسك FMC920</div>
+                    <div class="product-desc">جهاز تتبع ذكي صغير الحجم يمتاز بحساسية عالية لالتقاط الإشارات، مثالي للمركبات الخفيفة وسيارات التوزيع والتشغيل السريع.</div>
+                </div>
+                <div class="product-box">
+                    <div class="product-circle-img"><span>CAN-CONTROL المتحكم</span></div>
+                    <div class="product-name">متحكم كمبيوتر السيارة المتقدم</div>
+                    <div class="product-desc">يدعم التحكم ببعض المركبات وقراءة البيانات التشغيلية المباشرة التي تدعم خطوط قراءة قنوات CAN-BUS لتوثيق الاستهلاك والسرعات.</div>
+                </div>
+                <div class="product-box">
+                    <div class="product-circle-img"><span>FMC650 العملاق الاحترافي</span></div>
+                    <div class="product-name">جهاز تتبع 4G احترافي FMC650</div>
+                    <div class="product-desc">جهاز متقدم يدعم 2 شريحة اتصال لضمان عدم انقطاع الإشارة نهائياً، متضمناً منافذ ربط كمبيوتر الشاحنات والمعدات الثقيلة.</div>
+                </div>
+            </div>
+            <div class="page-footer"><span class="lblCompanyName">منظومة التتبع الذكي</span><span>صفحة 5 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 6: الخدمات التي نقدمها للأساطيل والمؤسسات -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">6 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">الخدمات الرقمية التي نقدمها ونتميز بها</div>
+            </div>
+            
+            <div class="services-timeline">
+                <div class="service-node right" style="top: 0mm;">
+                    <div class="node-badge">01</div>
+                    <div class="node-content">
+                        <div class="node-title">حساس الوقود الذكي</div>
+                        <div class="node-desc">مراقبة دقيقة لمستوى الوقود في الخزانات وكشف حالات السرقة أو الهدر اللحظي بالوقت والتاريخ.</div>
+                    </div>
+                </div>
+                <div class="service-node left" style="top: 22mm;">
+                    <div class="node-badge">02</div>
+                    <div class="node-content">
+                        <div class="node-title">نظام التتبع اللحظي المتكامل</div>
+                        <div class="node-desc">مراقبة حركة ومسارات الأسطول بالكامل على الخرائط مباشرة تحديث دوري كل ثانيتين بدون انقطاع.</div>
+                    </div>
+                </div>
+                <div class="service-node right" style="top: 44mm;">
+                    <div class="node-badge">03</div>
+                    <div class="node-content">
+                        <div class="node-title">نظام إدارة الأسطول والمجموعات</div>
+                        <div class="node-desc">توزيع وتصنيف المركبات لخطوط ومجموعات عمل منفصلة لتسهيل الإدارة والتقارير الدورية لكل قسم تشغيلي.</div>
+                    </div>
+                </div>
+                <div class="service-node left" style="top: 66mm;">
+                    <div class="node-badge">04</div>
+                    <div class="node-content">
+                        <div class="node-title">تركيب حساسات الوزن اللحظية</div>
+                        <div class="node-desc">منع الحمولات الزائدة للمركبات والمحافظة على سلامة الأسطول من المخالفات المرورية وحماية البنية التحتية.</div>
+                    </div>
+                </div>
+                <div class="service-node right" style="top: 88mm;">
+                    <div class="node-badge">05</div>
+                    <div class="node-content">
+                        <div class="node-title">الإطفاء والتشغيل عن بعد آلياً</div>
+                        <div class="node-desc">إمكانية تعطيل أو إعادة تشغيل محرك المركبة بضغطة زر واحدة من النظام في حالات السرقة أو الطوارئ الأمنية.</div>
+                    </div>
+                </div>
+                <div class="service-node left" style="top: 110mm;">
+                    <div class="node-badge">06</div>
+                    <div class="node-content">
+                        <div class="node-title">نظام تعريف وهوية السائقين</div>
+                        <div class="node-desc">ربط تشغيل المركبة ببطاقات ومفاتيح تعريف خاصة بكل سائق لتوثيق ساعات العمل وسلوكيات القيادة الفردية.</div>
+                    </div>
+                </div>
+                <div class="service-node right" style="top: 132mm;">
+                    <div class="node-badge">07</div>
+                    <div class="node-content">
+                        <div class="node-title">نظام متطور لإدارة وقود المركبة</div>
+                        <div class="node-desc">تحليل دقيق لمعدلات الاستهلاك الفعلي ومقارنتها بالمسافات المقطوعة لإصدار تقارير الجدوى التشغيلية وتوفير الهدر.</div>
+                    </div>
+                </div>
+                <div class="service-node left" style="top: 154mm;">
+                    <div class="node-badge">08</div>
+                    <div class="node-content">
+                        <div class="node-title">تركيب حساسات الحرارة والرطوبة</div>
+                        <div class="node-desc">مراقبة دقيقة ومستمرة لدرجات الحرارة داخل برادات نقل الأغذية والأدوية متوافق بالكامل مع اشتراطات الغذاء والدواء.</div>
+                    </div>
+                </div>
+                <div class="service-node right" style="top: 176mm;">
+                    <div class="node-badge">09</div>
+                    <div class="node-content">
+                        <div class="node-title">استشارات فنية لإصدار الكروت</div>
+                        <div class="node-desc">فريق هندسي متخصص لتقديم الدعم الفني الكامل والاستشارات لضمان إصدار وتجديد كروت التشغيل البرية بدون معوقات.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer"><span>حلول متكاملة معتمدة من هيئة النقل العام</span><span>صفحة 6 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 7: جدول مميزات نظام التتبع (الجزء الأول من الباقات) -->
+        <div class="page" style="padding-top: 15mm; padding-bottom: 10mm;">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">7 من 13</div>
+            </div>
+            <h3 style="text-align: center; margin-bottom: 5px; margin-top: 5mm;">مميزات وباقات نظام التتبع الرئيسي / System Packages</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">الرقم</th>
+                        <th style="width: 56%;">المواصفات والخصائص التشغيلية المدعومة</th>
+                        <th style="width: 12%;">Basic</th>
+                        <th style="width: 12%;">Advance</th>
+                        <th style="width: 12%;">F.M.S</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>النظام متوفر بالكامل باللغتين العربية والانجليزية مع واجهة وتطبيق مخصص</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>2</td><td>تحديد وتحديث موقع المركبة على الخريطة لحظياً كل 2 دقيقة أو أقل تلقائياً</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>3</td><td>معرفة مسار وسرعة المركبة المباشرة واللحظية على مدار الساعة بدقة متناهية</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>4</td><td>إمكانية متابعة مسار أكثر من مركبة في نفس الوقت ومعرفة أماكن الوقوف والتوقف وتجاوز السرعة</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>5</td><td>إمكانية إنشاء 32 شاشات فرعية بنفس الوقت لمراقبة 32 مركبات بشكل منفصل تماماً</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>6</td><td>معرفة أوقات تشغيل أو إطفاء المحرك من قبل السائق وتوثيق زمن الخمول للمركبة</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>7</td><td>إمكانية التنقل المرن بين أكثر من نوع من الخرائط العالمية المعتمدة (جوجل، هير، إلخ)</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>8</td><td>إمكانية إطفاء المركبة عن بعد عبر قاطع المحرك Immobilizer من خلال النظام أو التطبيق</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>9</td><td>إمكانية مراقبة المركبات من خلال تطبيق الهواتف الذكية للأنظمة المتقدمة (iOS / Android)</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>10</td><td>توفير معلومات واستخراج تقارير عن كل رحلة تقوم بها المركبة مثل مكان وزمن بداية الرحلة ونهايتها</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>11</td><td>التنبيه الفوري في حال العبث بالجهاز أو محاولة فصل أسلاك الطاقة أو البطارية الرئيسية للسيارة</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>12</td><td>متابعة سلوك السائقين من خلال التنبيهات الفورية الفنية لـ: التسارع المفاجئ، التباطؤ، السرعة الزائدة</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>13</td><td>إمكانية إنشاء وتخصيص أي تقرير مالي أو تشغيلي أو إداري حسب رغبة العميل الخاصة</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>14</td><td>إمكانية استخراج التقارير بصيغ مختلفة تتناسب وطبيعة العمل بالمنشأة (Excel / PDF / HTML)</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>15</td><td>معرفة حالات التوقف الطويل للمركبة في حال عدم تشغيلها وهي تعمل وتوثيق هدر الوقود والخمول</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>16</td><td>إمكانية تقسيم المركبات إلى مجموعات عمل لتسهيل عملية المراقبة والمتابعة من مستخدمين متعددين</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>17</td><td>إمكانية إنشاء أسماء مستخدمين وإعطائهم صلاحيات مختلفة من قبل مستخدم النظام الرئيسي للمنشأة</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>18</td><td>إمكانية إنشاء تنبيهات على جميع القراءات المرسلة من المركبة بالإضافة للتنبيهات المعتمدة مسبقاً</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>19</td><td>مراقبة الدخول و/أو الخروج للمناطق المحددة بسياج وهمي على الخريطة سواء بالسماح أو المنع</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>20</td><td>إمكانية إضافة مواقع الاهتمام الخاصة بالعميل وظهورها بالتقارير والعناوين لتسهيل المسارات</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>21</td><td>إمكانية إضافة نقاط الاهتمام ونقاط البيع وبناء تنبيهات واستخراج تقارير وقت الدخول والمدة والخرج</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>22</td><td>المساعدة في عملية إدارة المركبات والتخطيط المستقبلي من خلال النظام باسترجاع تقارير الماضي</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>23</td><td>إمكانية تعريف أسماء السائقين وتقسيمهم إلى مجموعات من قبل مستخدم النظام المسؤول بالكامل</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>24</td><td>إمكانية ربط المركبة بأكثر من سائق في حال اعتماد نظام الورديات المتعددة للعمل بالمنشأة</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>25</td><td>إمكانية إنشاء وظائف لإرسال تقارير يومية للأشخاص المعنيين بالمنشأة من قبل مستخدم النظام آلياً</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>26</td><td>إمكانية التمييز برمز المركبة من حيث اللون والشكل لتسهيل المراقبة والفرز المباشر على الخرائط</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>27</td><td>إمكانية مراقبة الصيانة الدورية للمركبة وجدولة مواعيد تغيير الزيوت والفلاتر وقطع الغيار والتنبيه بها</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>28</td><td>إمكانية مراقبة الصيانة الدورية للمركبة وعمل تقارير توضح المصاريف والكلف الفعلية لكل شاحنة</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                </tbody>
+            </table>
+            <div class="page-footer"><span>تابع باقات الميزات والخصائص</span><span>صفحة 7 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 8: جدول مميزات النظام والخدمات الإضافية (تابع الباقات) -->
+        <div class="page" style="padding-top: 15mm;">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">8 من 13</div>
+            </div>
+            <h3 style="text-align: center; margin-bottom: 5px; margin-top: 5mm;">تابع باقات مميزات النظام والخدمات الإضافية المتقدمة</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">الرقم</th>
+                        <th style="width: 56%;">المواصفات والخصائص المتقدمة والربط البرمجي</th>
+                        <th style="width: 12%;">Basic</th>
+                        <th style="width: 12%;">Advance</th>
+                        <th style="width: 12%;">F.M.S</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>30</td><td>إمكانية النظام على مساعدة العملاء في التخطيط للمسارات التي ستسلكها المركبة في مناطق العمل</td><td class="check-no">×</td><td class="check-no">×</td><td class="check-yes">✓</td></tr>
+                    <tr><td>31</td><td>إمكانية إنشاء تقرير و/أو تنبيه يحدد المواقع التي لم تزر ضمن خطة توزيع السير المعتمدة</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>32</td><td>إمكانية الربط ما بين القاطرة والمقطورة وتتبع حركتهما المشتركة أو المنفصلة بذكاء</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>33</td><td>إمكانية ربط نظام التتبع مع أنظمة أخرى مثل الـ (ERP) تعتمد على المعلومات المستخرجة من النظام</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>34</td><td>عرض البيانات عن طريق لوحة مؤشرات الأداء البيانية والذكية (DashBoard) لصناع القرار</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>35</td><td>إمكانية إنشاء رابط مؤقت لتتبع رحلة محددة وإلغائه عند انتهاء الرحلة أوتوماتيكياً للعملاء الخارجيين</td><td class="check-no">×</td><td class="check-no">×</td><td class="check-yes">✓</td></tr>
+                    <tr><td>37</td><td>إمكانية الربط مع الكاميرات والمسجلات المتقدمة MDVR لعرض بث الصور والفيديو الحي على النظام</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                </tbody>
+            </table>
+
+            <h3 style="text-align: center; margin-top: 15mm; margin-bottom: 5px;">خدمات إضافية متقدمة (يترتب عليها مبالغ إضافية حسب الطلب)</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">الرقم</th>
+                        <th style="width: 56%;">وصف الخدمة الإضافية والملحقات الفنية للحساسات</th>
+                        <th style="width: 12%;">Basic</th>
+                        <th style="width: 12%;">Advance</th>
+                        <th style="width: 12%;">F.M.S</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>عدم السماح بتشغيل المركبة إلا من خلال الشخص المخول باستخدام بطاقة تعريف السائق RFID</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>2</td><td>إمكانية مراقبة درجة الحرارة ونسبة الرطوبة وإرسال تنبيهات فورية عند اختلافها لتفادي تلف السلع</td><td class="check-yes">✓</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>3</td><td>إمكانية الربط مع كمبيوتر المركبة عن طريق وصلات (CAN-Bus) والذي يساعد في أخذ القراءات الحقيقية للعدادات</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>4</td><td>إمكانية مراقبة مستوى الوقود بدقة عالية بالمركبة من خلال حساسات مستوى ومراقبة الوقود المخصصة</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                    <tr><td>5</td><td>إمكانية مراقبة وإدارة صرفيات الوقود وربطها ببطاقات تزويد الوقود لتوثيق الهدر وتوفير الميزانيات</td><td class="check-no">×</td><td class="check-yes">✓</td><td class="check-yes">✓</td></tr>
+                </tbody>
+            </table>
+            <div class="page-footer"><span>جداول الباقات التفصيلية الرسمية للشركة</span><span>صفحة 8 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 9: المميزات المقدمة للعميل وخدمات ما بعد البيع وبنود الدعم -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">9 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">المميزات المقدمة للعميل وخدمات ما بعد البيع</div>
+            </div>
+            
+            <div class="rule-highlight">خدمات ما بعد البيع والدعم الفني اللوجستي المشترك:</div>
+            <div class="rule-normal-box">1 - تقديم خدماتنا الفنية والتركيب الفوري في المناطق التالية (الرياض - جدة - الدمام - تبوك) مجاناً وبأقصى حد خلال 48 ساعة فقط.</div>
+            <div class="rule-normal-box">2 - الدعم الفني الهاتفي والميداني يقدم خدماته مجاناً طوال أيام الأسبوع من الساعة (8 صباحاً حتى 12 ليلاً) ما عدا يوم الجمعة من الساعة (4:00 عصراً حتى 12 ليلاً).</div>
+            <div class="rule-normal-box">3 - تفعيل كافة التنبيهات المتعلقة بالورشة وإرسالها للشخص المعني بالمنشأة مثل (من غيار زيت، فلاتر، إطارات، صيانة دورية).</div>
+            <div class="rule-normal-box">4 - تفعيل كافة التنبيهات المتعلقة باستمارة المركبة والسائق والترخيص مثل (من تجديد رخصة، استمارة، تأمين، كروت تشغيل).</div>
+            <div class="rule-normal-box">5 - إمكانية برمجة النظام لإرسال كافة التقارير التشغيلية الفنية للأشخاص المعنيين وبالأوقات المحددة سلفاً (يومي، أسبوعي، شهري).</div>
+            <div class="rule-normal-box">6 - تخصيص مدير حساب فني لتهيئة النظام بما يتوافق مع النشاط الخاص بكم لتقديم أفضل أداء وتقارير تساعد الشركة على تقليل المصاريف ورفع كفاءة الموظفين التشغيلية.</div>
+            <div class="rule-normal-box">7 - إمكانية متابعة المقطورات وتقرير بأماكن فصل المقطورات والتنبيهات الخاصة بها وربطها بشكل آلي عند ربط الفاطرة بالمقطورة مع إمكانية عمل مجموعة توضح المقطورات العاملة وغير العاملة بجهاز إضافي يوضع على المقطورة.</div>
+            <div class="rule-normal-box">8 - حلول متكاملة لإدارة الوقود على مستوى المناطق والمشاريع والمركبات والآليات والمعدات الثقيلة بمختلف أنواعها وطرزها.</div>
+            <div class="rule-normal-box">9 - أنظمة خاصة بإدارة اللوجستيك وإدارة أوامر العمل ما بين إدارة الحركة والسائق والعميل بشكل آلي متكامل ومترابط.</div>
+            
+            <p style="margin-top: 10px; font-weight: bold; color: var(--dark-color);">10 - مميزات إضافية نوعية مدمجة في نظامنا الأساسي:</p>
+            <p style="font-size:12.5px; padding-right:15px; line-height:1.5; color:#555;">
+            • شاشة خاصة بالرسوم البيانية والاحصائية المتقدمة والذكية (Dash Board).<br>
+            • إمكانية فتح عدد 32 شاشة على نفس الشاشة الرئيسية لمتابعة حركة المركبات بشكل منفصل ومباشر.<br>
+            • إمكانية بناء أي تقرير من نظام التتبع لمعرفة المركبات المتوقفة والمطفأة والمفتاح داخل المركبة.<br>
+            • إمكانية تحليل أي رحلة لأي مركبة بدقة متناهية وعالية وتوضيح التجاوزات الفنية للسرعات.<br>
+            • إمكانية تحليل سلوك السائق على الطرق لمعرفة السائق الملتزم وغير الملتزم بالمعايير التشغيلية.<br>
+            • إمكانية تفعيل تنبيهات حزام الأمان ومتابعة الالتزام بها للحفاظ على السلامة العامة طوال الرحلة.
+            </p>
+            <div class="page-footer"><span class="lblWeb">www.fares-pcb.com</span><span>صفحة 9 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 10: فوائد نظام التتبع الرقمي للمنشآت والمؤسسات -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">10 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">فوائد نظام التتبع / System Benefits</div>
+            </div>
+            <p>يضمن تطبيق نظام التتبع الذكي في منشأتكم تحقيق قفزة نوعية في الأداء التشغيلي والأمني، وحماية أصول الشركة من الهدر والضياع. إليكم أبرز الفوائد المباشرة الملموسة:</p>
+            
+            <div class="benefits-layout">
+                <div class="benefit-card"><div class="benefit-icon-area">01</div><div class="benefit-text">تلبية متطلبات الجهات الرسمية والحكومية حسب النشاط المعتمد.</div></div>
+                <div class="benefit-card"><div class="benefit-icon-area">02</div><div class="benefit-text">متابعة الطريق وتقييم الحوادث والمخالفات بشكل مباشر ولحظي.</div></div>
+                <div class="benefit-card"><div class="benefit-icon-area">03</div><div class="benefit-text">إمكانية متابعة سلوك السائق داخل المركبة وتقييم أدائه المهني.</div></div>
+                <div class="benefit-card"><div class="benefit-icon-area">04</div><div class="benefit-text">إمكانية متابعة الحمولة ومراقبة عمليات التحميل والتنزيل بدقة.</div></div>
+                <div class="benefit-card"><div class="benefit-icon-area">05</div><div class="benefit-text">بناء كافة التقارير حسب النشاط ومتطلبات العمل لضمان رفع الإنتاجية.</div></div>
+                <div class="benefit-card"><div class="benefit-icon-area">06</div><div class="benefit-text">إمكانية ربط لغاية عدد أربع كاميرات على الداش كام للمراقبة الحية.</div></div>
+                <div class="benefit-card"><div class="benefit-icon-area">07</div><div class="benefit-text">حماية المنتجات والبضائع المنقولة من خلال المركبات من التلاعب والإهمال.</div></div>
+                <div class="benefit-card"><div class="benefit-icon-area">08</div><div class="benefit-text">زيادة أمان وحماية المركبة والسائق ضد السرقات أو التعديات الخارجية.</div></div>
+                <div class="benefit-card" style="grid-column: 1 / -1;"><div class="benefit-icon-area">09</div><div class="benefit-text">المزيد من الفوائد كلاً حسب طبيعة القطاع الذي يعمل به العميل (مكاسب مخصصة ومصممة لكل منشأة).</div></div>
+            </div>
+            
+            <p style="margin-top: 30mm; font-size: 13px; font-style: italic; text-align: center; color: #555;">بالإضافة إلى مميزات عديدة يمكن الاستفادة منها من خلال النظام ونحن على استعداد على تقديم تجربة لمدة شهر لتركيب الأجهزة من خلال عقد ودفع قيمته وسيتم وضع ملاحظة بالعقد بأنه يحق لكم خلال الشهر بفسخ العقد وتوفير المركبات واسترجاع المبلغ بالكامل، والهدف من هذه الخطوة تقديركم لإمكانيات النظام وتجربته بشكل فعلي على مركباتكم الخاصة والتحقق من كافة المميزات المذكورة لتتمكنوا من اتخاذ القرار المناسب لكم ولتطلعاتكم.</p>
+            <div class="page-footer"><span>تكنولوجيا موثوقة ومستدامة لإدارة الأساطيل</span><span>صفحة 10 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 11: من عملائنا والشركاء الاستراتيجيين للنجاح -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">11 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">شركاء النجاح / من عملائنا النخبة</div>
+            </div>
+            <p>نفخر في شركتنا بتقديم خدماتنا وحلولنا التكنولوجية لمجموعة من أكبر وأبرز الشركات والمؤسسات بالمملكة، والذين وضعوا ثقتهم الكاملة في أنظمتنا لإدارة وحماية أساطيلهم الكبيرة:</p>
+            
+            <div style="margin-top: 20mm; text-align: center; font-size: 16px; font-weight: bold; color: var(--dark-color);">
+                <p style="font-size: 18px; color: var(--primary-color);">[ تضم شبكة عملائنا شريحة واسعة تشمل القطاعات التالية ]</p>
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15mm; font-size: 14px;">
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">مجموعة MBC الإعلامية</div>
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">مجموعة الراجحي للبناء والتعمير</div>
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">شركة عرب سات ARABSAT</div>
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">مدارس ابن خلدون الأهلية</div>
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">غرفة الرياض التجارية</div>
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">مجموعة محمد العجيمي المقاولات</div>
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">شركة الخضر لتأجير السيارات</div>
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">شركة الإنجاز للتجارة والمقاولات</div>
+                    <div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px dashed #ccc;">شركة إعمار البدر للمقاولات العامة</div>
+                </div>
+                <p style="margin-top: 25mm; font-size: 14px; font-weight: normal; color: #666;">والعديد من الشركات الوطنية الكبرى في مختلف القطاعات الحيوية اللوجستية والإنشائية والغذائية والطبية بالمملكة.</p>
+            </div>
+            <div class="page-footer"><span>شراكة مستدامة نحو نجاح تشغيلي دائم</span><span>صفحة 11 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 12: العرض المالي التفصيلي (الجدول الديناميكي للتعديل الكامل) -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">12 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">العرض المالي التفصيلي الدقيق البنود والأسعار</div>
+            </div>
+            <p>بناءً على طلبكم الكريم وطبيعة وحجم الأسطول الخاص بكم، نتقدم لكم بالبيان المالي والتسعيري التفصيلي لتركيب وتشغيل منظومة التتبع الرقمية المتكاملة لشركتكم الموقرة:</p>
+            
+            <table class="content-table" id="viewMainFinancialTable" style="margin-top: 15mm;">
+                <thead>
+                    <tr class="bg-dark-cell">
+                        <th style="color: white;">البند / Item</th>
+                        <th style="color: white; width: 40%;">البيان التفصيلي والمواصفات / Description</th>
+                        <th style="color: white;">تكلفة الوحدة / Unit Price</th>
+                        <th style="color: white;">عدد الأجهزة / Qty</th>
+                        <th style="color: white;">المستحق عند التعاقد / Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- البنود المالية تحقن برمجياً بالكامل هنا لحظياً من المحرر -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="bg-yellow-cell" style="text-align: left; font-weight: bold;">المجموع الإجمالي الصافي / Subtotal:</td>
+                        <td id="valSubtotal" style="font-weight: bold; text-align: center;">0.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align: left; font-weight: bold;">ضريبة القيمة المضافة (15%) / VAT 15%:</td>
+                        <td id="valVat" style="text-align: center;">0.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="bg-dark-cell" style="text-align: left; font-weight: bold; color: white;">الإجمالي النهائي شامل الضريبة / Grand Total:</td>
+                        <td id="valGrandTotal" class="bg-yellow-cell" style="font-weight: bold; text-align: center; font-size: 14px;">0.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="background-color: #fafafa; font-weight: bold; color: var(--dark-color); text-align: right; padding: 12px;" id="valTextAmount">
+                            فقط وقدره: 
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="page-footer"><span class="lblCompanyName">شركة التتبع والأنظمة المتقدمة</span><span>صفحة 12 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 13: الشروط والأحكام العامة ومسارات الحسابات البنكية المعتمدة -->
+        <div class="page">
+            <div class="page-header">
+                <div class="logo-container"><img class="global-logo" src=""></div>
+                <div class="page-number-top">13 من 13</div>
+            </div>
+            <div class="section-header" style="margin-top: 12mm;">
+                <div class="section-header-title">الشروط والأحكام العامة ومنافذ التحويل البنكي</div>
+            </div>
+            
+            <div style="font-size: 13.5px; line-height: 1.8;">
+                <p><strong>1. الرقم الضريبي الرسمي للمنشأة:</strong> <span id="vTaxNoRules">310365859500003</span></p>
+                <p><strong>2. رقم السجل التجاري المعتمد:</strong> <span id="vCRNoRules">1010664923</span></p>
+                
+                <div class="rule-highlight">
+                    3. طرق السداد ومسارات التحويل على الحسابات البنكية الرسمية المعتمدة التالية:
+                    <div id="vBankAccountsDisplay" style="white-space: pre-line; margin-top: 8px; font-size: 12.5px; font-weight: bold; color: #222; line-height: 1.6;"></div>
+                </div>
+                
+                <div class="rule-normal-box">4. ضمان شامل على الأجهزة والملحقات لمدة (سنة كاملة) من تاريخ التركيب الفعلي الفني ضد العيوب المصنعية والأعطال الفنية.</div>
+                <div class="rule-normal-box">5. جميع الأسعار المذكورة والواردة في عروض الأسعار المقدمة من شركتنا شاملة ضريبة القيمة المضافة للرقم الضريبي المذكور أعلاه بنسبة 15%.</div>
+                <div class="rule-normal-box">6. العرض الحالي مالي وفني غير قابل للتقسيط أو التجزئة، ويتم سداد الدفعة المقررة بموجب بنود التعاقد المبرم.</div>
+                <div class="rule-normal-box">7. التزام كامل بالصيانة الفنية والدعم خلال 48 ساعة من تبليغ العميل داخل النطاق الرئيسي (الرياض - جدة - الدمام - تبوك).</div>
+                <div class="rule-normal-box">8. خدمات التركيب الفني مجانية بالكامل داخل النطاقات المذكورة مسبقاً (الرياض - جدة - الدمام - تبوك).</div>
+                <div class="rule-normal-box">9. كافة أجهزة تتبع المركبات وأجهزة التتبع أجهزة أوروبية الصنع والمواصفات ومن الأجهزة المعتمدة لدى هيئة الاتصالات والفضاء والتقنية وهيئة النقل وهي من نوع 4G.</div>
+                <div class="rule-normal-box">10. التوريد والتركيب الفعلي خلال أسبوعين عمل من توقيع العقد ودفع 100% عند توقيع العقد والبدء المباشر.</div>
+                <div class="rule-normal-box">11. عدد لا نهائي من حسابات المستخدمين والمشرفين تمنح مجاناً للعميل لإدارة النظام والأسطول الخاص به.</div>
+                <div class="rule-normal-box">12. قيمة الاشتراك والأسعار المذكورة في هذا العرض ثابتة طوال فترة التعاقد المبرم مع العميل الموقر دون زيادات.</div>
+                <div class="rule-normal-box">13. في حال طلب التركيب خارج المناطق المعتمدة والمذكورة سلفاً يتحمل العميل كلفة الانتقال والرحلة ويتم تزويدها للعميل حسب الموقع الجغرافي.</div>
+            </div>
+            
+            <div style="margin-top: 20mm; display: flex; justify-content: space-between; font-size: 14px; padding: 0 10px;">
+                <div style="text-align: right;">اسم الشركة المفوضة:<br><br><strong>_______________________</strong><br><br>التاريخ: <span id="vFooterDate"></span></div>
+                <div style="text-align: center;">الختم والتوقيع الرسمي:<br><br><span style="border: 2px dashed #27ae60; padding: 5px 15px; color:#27ae60; font-weight:bold; display:inline-block; border-radius:4px; margin-top:5px;">✓ اعتمد وصدر إلكترونياً</span></div>
+            </div>
+            <div class="page-footer"><span class="lblWeb">www.fares-pcb.com</span><span>صفحة 13 من 13</span></div>
+        </div>
+
+    </div>
+
+    <!-- ==================== الكود البرمجي الذكي للتحكم والحسابات ==================== -->
+    <script>
+        // ضبط تاريخ اليوم تلقائياً بجميع المسارات المحددة
+        const todayStr = new Date().toISOString().slice(0, 10);
+        document.getElementById('vCurrentDate').innerText = todayStr;
+        document.getElementById('vFooterDate').innerText = todayStr;
+
+        // دالة إدارة ورفع اللوجو الجديد وتعميمه لحظياً كقاعدة بيانات موحدة
+        function handleLogoChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const logos = document.querySelectorAll('.global-logo');
+                    logos.forEach(img => img.src = e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // مزامنة كافة النصوص والبيانات التحريرية لحظياً بين المدخلات والعرض
+        function syncData() {
+            const compName = document.getElementById('inpCompanyName').value;
+            const phone = document.getElementById('inpPhone').value;
+            const web = document.getElementById('inpWeb').value;
+            const cr = document.getElementById('inpCR').value;
+            const taxNum = document.getElementById('inpTaxNumber').value;
+            
+            // تحديث كتل الهوية المشتركة
+            document.querySelectorAll('.lblCompanyName').forEach(el => el.innerText = compName);
+            document.querySelectorAll('.lblPhone').forEach(el => el.innerText = phone);
+            document.querySelectorAll('.lblWeb').forEach(el => el.innerText = web);
+            
+            // تحديث بيانات العميل المباشرة
+            document.getElementById('vClientName').innerText = document.getElementById('inpClientName').value;
+            document.getElementById('vContactPerson').innerText = document.getElementById('inpContactPerson').value;
+            document.getElementById('vClientPhone').innerText = document.getElementById('inpClientPhone').value;
+            document.getElementById('vClientEmail').innerText = document.getElementById('inpClientEmail').value;
+            document.getElementById('vVehicleModel').innerText = document.getElementById('inpVehicleModel').value;
+            document.getElementById('vVehicleQty').innerText = document.getElementById('inpVehicleQty').value;
+            
+            // تحديث صفحة الشروط والأرقام القانونية
+            document.getElementById('vTaxNo').innerText = taxNum;
+            document.getElementById('vTaxNoRules').innerText = taxNum;
+            document.getElementById('vCRNoRules').innerText = cr;
+            document.getElementById('vBankAccountsDisplay').innerText = document.getElementById('inpBankDetails').value;
+        }
+
+        // إضافة سطر مالي جديد لجدول التسعير الديناميكي المفتوح
+        function addNewRow() {
+            const tbody = document.querySelector('#itemsEditorTable tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" value="اسم البند الجديد"></td>
+                <td><input type="text" value="الوصف التفصيلي والبيان"></td>
+                <td><input type="number" value="0.00" oninput="recalculateFinancials()"></td>
+                <td><input type="number" value="0" oninput="recalculateFinancials()"></td>
+                <td><button class="btn-danger" onclick="removeRow(this)">حذف</button></td>
+            `;
+            tbody.appendChild(tr);
+            recalculateFinancials();
+        }
+
+        // حذف سطر مالي من جدول المحرر
+        function removeRow(btn) {
+            btn.closest('tr').remove();
+            recalculateFinancials();
+        }
+
+        // المحرك الحسابي والرياضي الأساسي لاحتساب الفاتورة بدقة وتفقيطها باللغة العربية
+        function recalculateFinancials() {
+            const editorRows = document.querySelectorAll('#itemsEditorTable tbody tr');
+            const printTbody = document.querySelector('#viewMainFinancialTable tbody');
+            printTbody.innerHTML = ''; // تفريغ الجدول للطباعة لإعادة البناء
+            
+            let subtotal = 0;
+
+            editorRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const title = inputs[0].value;
+                const desc = inputs[1].value;
+                const price = parseFloat(inputs[2].value) || 0;
+                const qty = parseFloat(inputs[3].value) || 0;
+                const rowTotal = price * qty;
+                subtotal += rowTotal;
+
+                // حقن السطر الجديد في جدول الـ PDF النهائي المنسق
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:bold;">${title}</td>
+                    <td style="text-align:right; font-size:12px;">${desc}</td>
+                    <td style="text-align:center;">${price.toFixed(2)}</td>
+                    <td style="text-align:center;">${qty}</td>
+                    <td style="text-align:center; font-weight:bold;">${rowTotal.toFixed(2)}</td>
+                `;
+                printTbody.appendChild(tr);
+            });
+
+            const vatAmount = subtotal * 0.15;
+            const grandTotal = subtotal + vatAmount;
+
+            // إسناد المخرجات الرقمية الفاينل لجدول العرض
+            document.getElementById('valSubtotal').innerText = subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('valVat').innerText = vatAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('valGrandTotal').innerText = grandTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
+            // توليد نص التفقيط العربي المبسط المخصص للفاتورة الإجمالية
+            document.getElementById('valTextAmount').innerText = "فقط وقدره: " + simpleArabicTafqeet(grandTotal) + " ريال سعودي لا غير شامل الضريبة.";
+        }
+
+        // دالة تفقيط مالية ذكية ومبسطة للمبالغ الكبيرة والصغيرة للفاتورة
+        function simpleArabicTafqeet(amount) {
+            if (amount === 0) return "صفر";
+            let integerPart = Math.floor(amount);
+            
+            // مصفوفات الأرقام العربية للتفقيط المباشر
+            const ones = ["", "واحد", "اثنان", "ثلاثة", "أربعة", "خمسة", "ستة", "سبعة", "ثمانية", "تسعة"];
+            const tens = ["", "عشرة", "عشرون", "ثلاثون", "أربعون", "خمسون", "ستون", "سبعون", "ثمانون", "تسعون"];
+            const hundreds = ["", "مائة", "مائتان", "ثلاثمائة", "أربعمائة", "خمسمائة", "ستمائة", "سبعمائة", "ثمانمائة", "تسعمائة"];
+            
+            if (integerPart >= 1000 && integerPart < 1000000) {
+                let thousands = Math.floor(integerPart / 1000);
+                let remainder = integerPart % 1000;
+                let thText = thousands === 1 ? "ألف" : (thousands === 2 ? "ألفان" : (thousands <= 10 ? ones[thousands] + " آلاف" : thousands + " ألف"));
+                let remText = remainder > 0 ? " و " + remainder : "";
+                return thText + remText;
+            }
+            
+            return integerPart.toLocaleString('ar-EG') + " ريال";
+        }
+
+        // دالة حفظ التعديلات وتوليد وتصدير ملف الـ PDF المتناسق تماماً مع أبعاد الـ A4
+        function generatePerfectPDF() {
+            // مزامنة نهائية قبل البدء بالتصدير لضمان ثبات المدخلات
+            syncData();
+            recalculateFinancials();
+
+            const element = document.getElementById('pdfCaptureArea');
+            const options = {
+                margin:       0,
+                filename:     'العرض_الفني_والمالي_المتكامل.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // البدء في المعالجة والتصدير المباشر لملف العميل
+            html2pdf().set(options).from(element).save();
+        }
+
+        // تشغيل برمي أول وتلقائي لتعبئة البيانات في جداول المعاينة عند الإقلاع الأول للمشروع
+        syncData();
+        recalculateFinancials();
+    </script>
+</body>
+</html>
