@@ -68,7 +68,7 @@ app.get('/api/site-settings', async (req, res) => {
         if (!cleanObject) {
             const defaultSettings = {
                 logoText: "مؤسسة البقمي",
-                logoImgUrl: "/assets/logo.png", // هنا تضع مسار لوجو الـ GitHub الخاص بك لاحقاً
+                logoImgUrl: "public/assets/logo.png", // هنا تضع مسار لوجو الـ GitHub الخاص بك لاحقاً
                 heroTitle: "مؤسسة البقمي للخدمات والحلول المتكاملة",
                 heroDesc: "نقدم أرقى الخدمات بلمسة ذهبية ملكية تلبي تطلعاتكم وتواكب أرقى المعايير في المملكة.",
                 bgUrl: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=1200",
