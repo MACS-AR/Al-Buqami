@@ -1,0 +1,374 @@
+/* =======================================================
+   التنسيقات الموحدة والشاملة - لوحة FARESPCB ومنصة البقمي
+   ======================================================= */
+
+:root {
+    --brand-primary: #0070f3;
+    --brand-dark: #0b0f17;
+    --brand-success: #10b981;
+    --light-bg: #f4f6f8;
+    --card-background: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-element: #e5e7eb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--text-main);
+    padding: 30px 15px;
+}
+
+.invoice-container {
+    display: flex;
+    max-width: 1300px;
+    margin: 0 auto;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* --- لوحة إدخال البيانات الجانبية --- */
+.form-sidebar {
+    flex: 1;
+    background: var(--card-background);
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-element);
+}
+
+.sidebar-header {
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--light-bg);
+    padding-bottom: 15px;
+}
+
+.sidebar-header h2 {
+    color: var(--brand-dark);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.sidebar-header p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.input-block label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--brand-dark);
+}
+
+.input-block input {
+    padding: 12px;
+    border: 1px solid var(--border-element);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fafafa;
+    transition: all 0.2s ease-in-out;
+}
+
+.input-block input:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+}
+
+.section-divider {
+    text-align: center;
+    position: relative;
+    margin: 25px 0 15px 0;
+}
+
+.section-divider span {
+    background: #fff;
+    padding: 0 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    position: relative;
+    z-index: 2;
+}
+
+.section-divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--border-element);
+    z-index: 1;
+}
+
+.item-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.item-desc { flex: 2; }
+.item-qty { flex: 0.6; text-align: center; }
+.item-price { flex: 1; }
+
+.item-row input {
+    padding: 10px;
+    border: 1px solid var(--border-element);
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+/* الأزرار والإجراءات */
+button {
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    width: 100%;
+}
+
+.main-action-btn {
+    background-color: var(--brand-primary);
+    color: white;
+    padding: 14px;
+    font-size: 1rem;
+    margin-top: 15px;
+}
+
+.main-action-btn:hover {
+    background-color: #0056b8;
+    transform: translateY(-1px);
+}
+
+.secondary-action-btn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    padding: 10px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.secondary-action-btn:hover {
+    background-color: #e5e7eb;
+}
+
+/* --- مساحة العمل والمعاينة --- */
+.preview-workspace {
+    flex: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.download-pdf-btn {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 16px;
+    font-size: 1.1rem;
+    border: 1px solid #111;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.download-pdf-btn:hover {
+    background-color: #222222;
+    transform: translateY(-2px);
+}
+
+/* الورقة المصممة للفاتورة والـ PDF المطبوع */
+.invoice-paper-sheet {
+    background: white;
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.02);
+    border: 1px solid var(--border-element);
+    min-height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-logo-text {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: var(--brand-dark);
+}
+
+.main-logo-text span {
+    color: var(--brand-primary);
+}
+
+.sub-logo-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-family: monospace;
+    margin-top: -2px;
+}
+
+.platform-meta {
+    text-align: left;
+}
+
+.platform-meta h1 {
+    font-size: 1.5rem;
+    color: var(--brand-dark);
+    margin-bottom: 5px;
+}
+
+.platform-meta p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.platform-meta p span {
+    color: #000;
+    font-weight: 600;
+}
+
+.accent-bar {
+    height: 4px;
+    background: linear-gradient(to left, var(--brand-primary), var(--brand-dark));
+    margin: 25px 0;
+    border-radius: 2px;
+}
+
+.sheet-metadata {
+    display: flex;
+    justify-content: space-between;
+    background: #f9fafb;
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px dashed var(--border-element);
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.meta-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.meta-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--brand-dark);
+}
+
+/* جدول البيانات الاحترافي */
+.data-render-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 35px;
+}
+
+.data-render-table th {
+    background-color: #f3f4f6;
+    color: var(--brand-dark);
+    font-weight: 700;
+    padding: 14px;
+    text-align: right;
+    font-size: 0.95rem;
+    border-bottom: 2px solid var(--border-element);
+}
+
+.data-render-table td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border-element);
+    font-size: 1rem;
+    color: #374151;
+}
+
+.initial-placeholder-msg {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 50px 0 !important;
+    font-style: italic;
+}
+
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+
+/* كتلة ملخص الحسابات المالية للجدول */
+.financial-summary-block {
+    width: 45%;
+    margin-right: auto; /* سحب الإجمالي بالكامل إلى جهة اليسار في نظام محاذاة RTL */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.summary-item-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+.final-grand-total {
+    border-top: 2px solid var(--brand-dark);
+    padding-top: 12px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--brand-primary);
+}
+
+/* تذييل الفاتورة */
+.sheet-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px dashed var(--border-element);
+    padding-top: 20px;
+    margin-top: 40px;
+    line-height: 1.6;
+}
+
+/* --- قواعد المعالجة الشاملة أثناء التصدير للـ PDF أو الطباعة لـ Vercel --- */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    body {
+        padding: 0;
+        background: #ffffff;
+    }
+    .invoice-container {
+        display: block;
+    }
+    .invoice-paper-sheet {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+}
