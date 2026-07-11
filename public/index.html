@@ -31,7 +31,7 @@
         .top-bar-links a { color: var(--gold-light); text-decoration: none; margin-right: 15px; font-weight: 600; }
         .top-bar-links a:hover { color: var(--royal-gold); }
 
-        /* الهيدر الرئيسي للموقع وقائمة التنقل المستوحاة بالكامل */
+        /* الهيدر الرئيسي للموقع وقائمة التنقل */
         header { background-color: rgba(6, 11, 19, 0.95); border-bottom: 2px solid var(--royal-gold); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
         .logo-container { display: flex; align-items: center; gap: 12px; }
         .logo-img { height: 50px; border-radius: 4px; border: 1px solid var(--royal-gold); object-fit: contain; }
@@ -43,7 +43,7 @@
         .btn-nav-order { background: transparent; color: var(--royal-gold); border: 1px solid var(--royal-gold); padding: 6px 16px; border-radius: 4px; font-weight: 700; text-decoration: none; transition: all 0.3s; }
         .btn-nav-order:hover { background: var(--royal-gold); color: var(--bg-deep); }
 
-        /* قسم الهيرو الاستعراضي والتعريفي المطابق لنص موقع إعمار */
+        /* قسم الهيرو الاستعراضي */
         .hero-section { 
             text-align: center; 
             padding: 120px 20px; 
@@ -61,7 +61,7 @@
 
         .main-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
         
-        /* قسم من نحن / النبذة المباشرة للموقع */
+        /* قسم من نحن */
         .about-box { background-color: var(--bg-surface); border: 1px solid rgba(214,175,55,0.1); padding: 40px; border-radius: 8px; margin-bottom: 60px; text-align: center; }
         .about-box h3 { color: var(--royal-gold); font-size: 1.8rem; margin-bottom: 15px; font-weight: 800; }
         .about-box p { color: #CBD5E1; font-size: 1.1rem; max-width: 950px; margin: 0 auto; text-align: justify; text-align-last: center; }
@@ -71,7 +71,7 @@
         .section-headline h2 { color: var(--royal-gold); font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
         .section-headline p { color: var(--text-muted); font-size: 1rem; }
 
-        /* شبكة الخدمات الثلاثية المتطابقة والمكتوبة بالكامل */
+        /* شبكة الخدمات الثلاثية */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 70px; }
         .service-card { background-color: var(--bg-surface); border: 1px solid rgba(214, 175, 55, 0.12); border-radius: 6px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s; }
         .service-card:hover { transform: translateY(-4px); border-color: var(--royal-gold); }
@@ -80,7 +80,7 @@
         .btn-learn-more { color: var(--gold-light); text-decoration: none; font-size: 0.9rem; font-weight: bold; border-bottom: 1px dashed var(--gold-light); align-self: flex-start; transition: color 0.3s; }
         .btn-learn-more:hover { color: var(--royal-gold); border-color: var(--royal-gold); }
 
-        /* منطقة بوابات العمليات المباشرة والربط (تقديم طلبات / استعلام عروض) */
+        /* بوابات العمليات المباشرة */
         .grid-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; margin-top: 20px; }
         .custom-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 45px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
         .custom-box::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 4px; background: linear-gradient(to left, var(--royal-gold), var(--gold-dark)); border-radius: 8px 8px 0 0; }
@@ -99,9 +99,9 @@
         .status-accepted { background-color: rgba(16, 185, 129, 0.2); color: var(--success); }
         .status-rejected { background-color: rgba(239, 68, 68, 0.2); color: #EF4444; }
         
-        .result-item { background: rgba(6, 11, 19, 0.6); padding: 22px; border-radius: 6px; margin-top: 15px; border-right: 5px solid var(--royal-gold); border: 1px solid rgba(212,175,55,0.15); animation: fadeIn 0.4s ease; }
+        .result-item { background: rgba(6, 11, 19, 0.6); padding: 22px; border-radius: 6px; margin-top: 15px; border: 1px solid rgba(212,175,55,0.15); border-right: 5px solid var(--royal-gold); animation: fadeIn 0.4s ease; }
         
-        /* فوتر غني بمعلومات الاتصال وساعات العمل والبريد */
+        /* فوتر الموقع */
         footer { background-color: var(--bg-surface); border-top: 2px solid var(--royal-gold); padding: 50px 5% 30px 5%; margin-top: 100px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-bottom: 40px; }
         .footer-col h5 { color: var(--royal-gold); font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; }
@@ -123,16 +123,16 @@
 </head>
 <body>
 
-    <!-- 🌐 شريط الاتصال السريع وساعات العمل المأخوذة لايف من فحص الفهرس -->
+    <!-- 🌐 شريط الاتصال السريع وساعات العمل -->
     <div class="top-bar">
         <div>🕒 من الأحد إلى السبت: من الساعة 09:00 صباحاً - وحتى الساعة 19:00 مساءً</div>
         <div class="top-bar-links">
-            <a href="mailto:info@elc-company.com">📧 info@elc-company.com</a>
-            <a href="tel:+966533388480">📞 +966-533388480</a>
+            <a href="mailto:info@macs-company.com">📧 info@elc-company.com</a>
+            <a href="tel:+9660000000">📞 +966-00000000</a>
         </div>
     </div>
 
-    <!-- 👑 هيدر التنقل الكامل والأزرار المتطابقة -->
+    <!-- 👑 هيدر التنقل الكامل -->
     <header>
         <div class="logo-container">
             <img id="siteLogoImg" src="" alt="لوجو المؤسسة" class="logo-img" style="display: none;">
@@ -146,7 +146,7 @@
         </nav>
     </header>
 
-    <!-- 🚛 قسم الهيرو التعريفي المتطابق بالنصوص والأزرار -->
+    <!-- 🚛 قسم الهيرو التعريفي -->
     <div class="hero-section" id="heroBg">
         <h1 id="heroTitle">مؤسسة البقمي للخدمات اللوجستية</h1>
         <p id="heroDesc">نقدم حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي.</p>
@@ -159,13 +159,13 @@
 
     <div class="main-container">
         
-        <!-- 🎯 قسم من نحن المتطابق بالنص الأصلي -->
+        <!-- 🎯 قسم من نحن -->
         <div class="about-box" id="about-sec">
             <h3>من نحن في مؤسسة البقمي</h3>
             <p>نقدم حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي. مهمتنا تسريع سلسلة الإمداد لعملائنا وتقليل التكاليف دون المساس بجودة الخدمة. نتميّز بتتبع دقيق للشحنات، وشبكة تشغيل مرنة، وفريق دعم موثوق يضمن وصول المنتجات بأمان وفي الوقت المحدد.</p>
         </div>
 
-        <!-- 🛠️ قسم الخدمات الثلاثي المتطابق بنصوص الفحص والتدقيق -->
+        <!-- 🛠️ قسم الخدمات اللوجستية المتخصصة -->
         <div class="section-headline" id="services-sec">
             <h2>الخدمات اللوجستية المتخصصة</h2>
             <p>نصمم خدماتنا بدقة متناهية لتواكب متطلبات أعمالكم وتسرع قوافلكم</p>
@@ -185,7 +185,7 @@
             <div class="service-card">
                 <div class="service-card-content">
                     <h4>📦 إدارة المخزون والمستودعات</h4>
-                    <p>استلام وفرز وتخزين وتجهيز طلبات بكفاءة أعلى لتقليل الهدر وتحسين توافر المنتجات داخل مستودعاتنا المؤمنة بالكامل ومراقبة المخزون باحترافية.</p>
+                    <p>استلاف وفرز وتخزين وتجهيز طلبات بكفاءة أعلى لتقليل الهدر وتحسين توافر المنتجات داخل مستودعاتنا المؤمنة بالكامل ومراقبة المخزون باحترافية.</p>
                 </div>
                 <a href="#portal-sec" class="btn-learn-more">طلب الخدمة والتسعير ←</a>
             </div>
@@ -200,7 +200,7 @@
             </div>
         </div>
 
-        <!-- 📥 بوابات العمليات المباشرة (الربط البرمجي الكامل مع السيرفر والفايربيز) -->
+        <!-- 📥 منصة طلب عروض الأسعار -->
         <div class="section-headline" id="portal-sec">
             <h2>منصة طلب عروض الأسعار والمعاملات الفورية</h2>
             <p>أرسل طلبك الآن برقم جوالك وسيتم الرد وحساب التكلفة والرد حياً من الإدارة</p>
@@ -212,15 +212,15 @@
                 <h3 class="box-title">📥 تقديم طلب جديد (بدون مسبق دفع)</h3>
                 <form id="newRequestForm" onsubmit="event.preventDefault(); sendClientRequest();">
                     <div class="form-group">
-                        <label>الاسم الكريم بالكامل</label>
+                        <label for="cName">الاسم الكريم بالكامل</label>
                         <input type="text" id="cName" class="form-control" required placeholder="مثال: محمد أشرف">
                     </div>
                     <div class="form-group">
-                        <label>رقم الجوال لتلقي العرض</label>
+                        <label for="cPhone">رقم الجوال لتلقي العرض</label>
                         <input type="tel" id="cPhone" class="form-control" required placeholder="05xxxxxxxx أو 01xxxxxxxxx">
                     </div>
                     <div class="form-group">
-                        <label>نوع الخدمة والمسار المطلوب</label>
+                        <label for="cType">نوع الخدمة والمسار المطلوب</label>
                         <select id="cType" class="form-control" required>
                             <option value="شحن دولي وسريع">الشحن والنقل المحلي والدولي (براً وبحراً وجواً)</option>
                             <option value="إدارة المخزون والمستودعات">إدارة المخزون وتخزين وتجهيز طلبات المستودعات</option>
@@ -228,7 +228,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>اكتب تفاصيل طلبك بدقة (نوع البضائع، الكمية، مسار الوجهة المستهدفة)</label>
+                        <label for="cDetails">اكتب تفاصيل طلبك بدقة (نوع البضائع، الكمية، مسار الوجهة المستهدفة)</label>
                         <textarea id="cDetails" class="form-control" rows="4" required placeholder="مثال: أريد فحص شحنة وتخزينها، أو نقل حاوية برية من الرياض إلى الوجهة المستهدفة مع التخليص الجمركي..."></textarea>
                     </div>
                     <button type="submit" class="btn-royal">إرسال الطلب لتقدير السعر فوراً 🚀</button>
@@ -240,7 +240,7 @@
                 <h3 class="box-title">🔍 الاستعلام ومتابعة العروض بالرقم</h3>
                 <p style="color: var(--text-muted); font-size:0.95rem; margin-bottom:25px; text-align:center;">أدخل رقم جوالك المسجل لاستدعاء عروض الأسعار والملاحظات وقرارات الإدارة لمعاملتك حياً لايف.</p>
                 <div class="form-group">
-                    <label>رقم الجوال الخاص بك</label>
+                    <label for="searchPhone">رقم الجوال الخاص بك</label>
                     <input type="tel" id="searchPhone" class="form-control" placeholder="أدخل رقم الجوال وبث النتائج">
                 </div>
                 <button type="button" class="btn-royal" onclick="checkMyOffers()">تحقق من عروض الإدارة 👁️</button>
@@ -250,7 +250,7 @@
 
     </div>
 
-    <!-- 🌐 الفوتر الغني بالمعلومات وساعات العمل والأرقام الأصلية مستبدلة بالكامل لكم -->
+    <!-- 🌐 الفوتر -->
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
@@ -262,15 +262,15 @@
                 <ul>
                     <li><a href="#" style="color:var(--text-muted); text-decoration:none;">الرئيسية</a></li>
                     <li><a href="#about-sec" style="color:var(--text-muted); text-decoration:none;">من نحن في المؤسسة</a></li>
-                    <li><a href="#services-sec" style="color:var(--text-muted); text-muted; text-decoration:none;">الخدمات والحلول اللوجستية</a></li>
+                    <li><a href="#services-sec" style="color:var(--text-muted); text-decoration:none;">الخدمات والحلول اللوجستية</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h5>قنوات الاتصال المباشر</h5>
                 <ul>
-                    <li>📞 هاتف الدعم الأول: <span>+966-533388480</span></li>
-                    <li>📞 هاتف الدعم الثاني: <span>+966-535599535</span></li>
-                    <li>📧 البريد الإلكتروني الرسمي: <span>info@elc-company.com</span></li>
+                    <li>📞 هاتف الدعم الأول: <span>+966-000000000</span></li>
+                    <li>📞 هاتف الدعم الثاني: <span>+966-000000000</span></li>
+                    <li>📧 البريد الإلكتروني الرسمي: <span>info@macs-company.com</span></li>
                 </ul>
             </div>
         </div>
