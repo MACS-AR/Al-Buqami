@@ -3,29 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>غرفة التحكم والقبول والتسعير | مؤسسة البقمي</title>
+    <title>غرفة الإدارة والتحليلات الشاملة | مؤسسة البقمي</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
-        :root { --royal-gold: #D4AF37; --gold-dark: #AA7C11; --gold-light: #F3E5AB; --bg-deep: #070a12; --bg-surface: #0f1624; --bg-input: #172237; --text-main: #F5F6F8; --text-muted: #94A3B8; --white: #FFFFFF; --danger: #EF4444; --success: #10B981; }
+        :root { --royal-gold: #D4AF37; --gold-dark: #AA7C11; --gold-light: #F3E5AB; --bg-deep: #070a12; --bg-surface: #0f1624; --bg-input: #172237; --text-main: #F5F6F8; --text-muted: #94A3B8; --white: #FFFFFF; --danger: #EF4444; --success: #10B981; --blue: #3B82F6; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--bg-deep); color: var(--text-main); }
         header { background-color: var(--bg-surface); border-bottom: 2px solid var(--royal-gold); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .analytics-grid { max-width: 1400px; margin: 30px auto 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        
+        .analytics-grid { max-width: 1400px; margin: 30px auto 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
         .card-analytic { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 22px; border-right: 5px solid var(--royal-gold); }
+        .card-analytic.success { border-right-color: var(--success); }
+        .card-analytic.seo { border-right-color: var(--blue); }
+
         .workspace-grid { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
-        .control-panel-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .control-panel-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 30px; margin-bottom: 30px; }
         .panel-title { color: var(--royal-gold); font-size: 1.4rem; margin-bottom: 20px; font-weight: 700; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding-bottom: 10px; }
+        
         .form-group { display: flex; flex-direction: column; margin-bottom: 15px; }
         .form-group label { color: var(--gold-light); font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
-        .form-control { width: 100%; padding: 10px 12px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 4px; color: var(--white); font-size: 0.95rem; }
-        .btn-royal-sm { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); border: none; padding: 12px 25px; border-radius: 4px; font-weight: 900; cursor: pointer; transition: all 0.2s; }
+        .form-control { width: 100%; padding: 11px 12px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 4px; color: var(--white); font-size: 0.95rem; }
+        
+        .btn-royal-sm { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); border: none; padding: 12px 25px; border-radius: 4px; font-weight: 900; cursor: pointer; width: 100%; }
         .table-responsive { width: 100%; overflow-x: auto; margin-top: 20px; border: 1px solid rgba(212,175,55,0.15); border-radius: 8px; }
         table { width: 100%; border-collapse: collapse; min-width: 1100px; }
-        th, td { padding: 12px 15px; text-align: right; border-bottom: 1px solid rgba(212,175,55,0.1); font-size: 0.95rem; vertical-align: top; }
+        th, td { padding: 12px 15px; text-align: right; border-bottom: 1px solid rgba(212,175,55,0.1); }
         th { background-color: rgba(212,175,55,0.06); color: var(--royal-gold); }
-        .action-box { display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px dashed rgba(212,175,55,0.2); width: 260px; }
-        .btn-accept { background-color: var(--success); color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: 700; width: 100%; }
-        .btn-danger { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        
+        .action-box { display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; width: 260px; }
+        .btn-accept { background-color: var(--success); color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: 900; }
+        .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; }
         .status-pill { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
         .status-pending { background: rgba(245,158,11,0.2); color: #F59E0B; }
         .status-accepted { background: rgba(16,185,129,0.2); color: #10B981; }
@@ -34,69 +41,83 @@
 </head>
 <body>
     <header>
-        <div style="color: var(--royal-gold); font-weight:900; font-size:1.4rem;">👑 لوحة القيادة وإدارة طلبات الفايربيز المباشرة</div>
-        <a href="/" target="_blank" style="color:var(--royal-gold); text-decoration:none; font-weight:700; border: 1px solid var(--royal-gold); padding:8px 18px; border-radius:4px;">👁️ عرض موقع العميل</a>
+        <div style="color: var(--royal-gold); font-weight:900; font-size:1.4rem;">👑 لوحة تحكم وإدارة معاملات مؤسسة البقمي المتكاملة لايف</div>
+        <a href="/" target="_blank" style="color:var(--royal-gold); text-decoration:none; font-weight:700; border: 1px solid var(--royal-gold); padding:8px 18px; border-radius:4px;">👁️ فتح واجهة العميل</a>
     </header>
 
     <div class="analytics-grid">
         <div class="card-analytic">
-            <h5>عداد زيارات الموقع الكلي</h5>
-            <h2 id="visitsCounter">0</h2>
+            <h5>إجمالي عداد زيارات الموقع (لايف)</h5>
+            <h2 id="vCounter">0</h2>
+        </div>
+        <div class="card-analytic success">
+            <h5>طلبات بحاجة لتسعير ومراجعة</h5>
+            <h2 id="pendingCounter">0 طلب</h2>
         </div>
         <div class="card-analytic">
-            <h5>إجمالي الطلبات بـالفايربيز</h5>
+            <h5>إجمالي الطلبات المستلمة بالكامل</h5>
             <h2 id="totalCounter">0</h2>
+        </div>
+        <div class="card-analytic seo">
+            <h5>نسبة الظهور وقوة الـ SEO</h5>
+            <h2 id="seoScore">95%</h2>
         </div>
     </div>
 
     <div class="workspace-grid">
-        <!-- قسم تعديل محتوى الموقع -->
+        <!-- لوحة تعديل ونشر المحتوى واللوجو -->
         <div class="control-panel-box">
-            <h3 class="panel-title">🛠️ التحكم في نصوص وتصميم الموقع بالكامل</h3>
+            <h3 class="panel-title">🛠️ التحكم وتعديل الهوية البصرية، اللوجو والنصوص لايف</h3>
             <form id="cmsForm" onsubmit="event.preventDefault(); updateCmsSettings();">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px;">
                     <div class="form-group">
-                        <label>اسم المؤسسة (اللوجو)</label>
+                        <label>اسم المؤسسة الحالي</label>
                         <input type="text" id="cmsLogo" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>رابط الصورة الخلفية للموقع</label>
-                        <input type="text" id="cmsBg" class="form-control" required>
+                        <label>رابط مسار صورة اللوجو (المرفوع على GitHub)</label>
+                        <input type="text" id="cmsLogoImg" class="form-control" placeholder="مثال: /assets/logo.png">
                     </div>
                     <div class="form-group">
-                        <label>العنوان الرئيسي في المنتصف</label>
-                        <input type="text" id="cmsTitle" class="form-control" required>
+                        <label>رابط خلفية الموقع الرئيسي</label>
+                        <input type="text" id="cmsBg" class="form-control" required>
                     </div>
                 </div>
-                <div class="form-group" style="margin-top:10px;">
-                    <label>الوصف الرئيسي للموقع</label>
-                    <textarea id="cmsDesc" class="form-control" rows="2" required></textarea>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-top: 10px;">
+                    <div class="form-group">
+                        <label>العنوان الرئيسي العريض</label>
+                        <input type="text" id="cmsTitle" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نص الحقوق أسفل الصفحة (Footer)</label>
+                        <input type="text" id="cmsFooter" class="form-control" required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label>نص الحقوق في الأسفل</label>
-                    <input type="text" id="cmsFooter" class="form-control" required>
+                    <label>الوصف التعريفي للخدمات بالكامل (يظهر بالموقع ومحركات البحث)</label>
+                    <textarea id="cmsDesc" class="form-control" rows="2" required></textarea>
                 </div>
-                <button type="submit" class="btn-royal-sm" style="width:100%;">💾 حفظ وتحديث التصميم لايف</button>
+                <button type="submit" class="btn-royal-sm">💾 حفظ وبث التعديلات وتثبيت اللوجو والهوية على الفايربيز فوراً</button>
             </form>
         </div>
 
-        <!-- جدول التحكم في الطلبات وتسعيرها وقبولها -->
+        <!-- جدول معالجة الطلبات المستلمة والرد الاحترافي -->
         <div class="control-panel-box">
-            <h3 class="panel-title">📥 طلبات العملاء الواردة - التحكم والرد والتسعير</h3>
+            <h3 class="panel-title">📥 كشف ومعالجة طلبات ومعاملات العملاء وتوجيه الردود الفورية</h3>
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
-                            <th>رقم الطلب وتاريخه</th>
-                            <th>العميل وجواله</th>
-                            <th>الخدمة المطلوبة</th>
-                            <th>تفاصيل وحيثيات الطلب</th>
-                            <th>لوحة التحكم الإدارية (اتخاذ إجراء)</th>
-                            <th>الرد الحالي المخزن بالفايربيز</th>
+                            <th>المعاملة والتاريخ</th>
+                            <th>العميل والجوال</th>
+                            <th>التصنيف</th>
+                            <th>حيثيات وتفاصيل طلب العميل</th>
+                            <th>الرد والتسعير الاحترافي الحى</th>
+                            <th>العرض الحالي بالفايربيز</th>
                             <th>إجراء</th>
                         </tr>
                     </thead>
-                    <tbody id="adminTableBody"></tbody>
+                    <tbody id="adminRequestsTableBody"></tbody>
                 </table>
             </div>
         </div>
