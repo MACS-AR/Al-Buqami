@@ -15,13 +15,24 @@
         .lock-box { background: var(--bg-surface); border: 2px solid var(--royal-gold); padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 0 30px rgba(212,175,55,0.2); max-width: 400px; width: 90%; }
         
         header { background-color: var(--bg-surface); border-bottom: 2px solid var(--royal-gold); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .analytics-grid { max-width: 1400px; margin: 30px auto 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .card-analytic { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 22px; border-right: 5px solid var(--royal-gold); }
+        
+        /* أزرار التنقل الفاخرة بين الأقسام */
+        .admin-nav { max-width: 1400px; margin: 25px auto 0 auto; padding: 0 20px; display: flex; gap: 15px; flex-wrap: wrap; }
+        .nav-tab-btn { background: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.3); color: var(--text-main); padding: 12px 25px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; }
+        .nav-tab-btn:hover, .nav-tab-btn.active { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); font-weight: 900; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); }
+        
+        /* حاويات الأقسام */
+        .tab-content { display: none; max-width: 1400px; margin: 20px auto; padding: 0 20px; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+
+        .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .card-analytic { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 25px; border-right: 5px solid var(--royal-gold); cursor: pointer; transition: transform 0.2s; }
+        .card-analytic:hover { transform: translateY(-3px); }
         .card-analytic.success { border-right-color: var(--success); }
         .card-analytic.seo { border-right-color: var(--blue); }
+        .card-analytic h2 { font-size: 2.2rem; margin-top: 10px; color: #fff; }
 
-        .workspace-grid { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
-        .control-panel-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 30px; margin-bottom: 30px; }
+        .control-panel-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; padding: 30px; }
         .panel-title { color: var(--royal-gold); font-size: 1.4rem; margin-bottom: 20px; font-weight: 700; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding-bottom: 10px; }
         
         .form-group { display: flex; flex-direction: column; margin-bottom: 15px; }
@@ -29,26 +40,37 @@
         .form-control { width: 100%; padding: 11px 12px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 4px; color: var(--white); font-size: 0.95rem; }
         
         .btn-royal-sm { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); border: none; padding: 12px 25px; border-radius: 4px; font-weight: 900; cursor: pointer; width: 100%; }
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 20px; border: 1px solid rgba(212,175,55,0.15); border-radius: 8px; }
-        table { width: 100%; border-collapse: collapse; min-width: 1100px; }
-        th, td { padding: 12px 15px; text-align: right; border-bottom: 1px solid rgba(212,175,55,0.1); }
-        th { background-color: rgba(212,175,55,0.06); color: var(--royal-gold); }
         
-        .action-box { display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; width: 260px; }
-        .btn-accept { background-color: var(--success); color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: 900; }
-        .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; }
+        /* تصميم نظام كروت الطلبات الذكي */
+        .filter-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .filter-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.1); padding: 6px 15px; border-radius: 4px; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; }
+        .filter-btn.active { background: var(--royal-gold); color: var(--bg-deep); font-weight: bold; }
+
+        .requests-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
+        .request-card { background: var(--bg-surface); border: 1px solid rgba(212,175,55,0.12); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-header-info { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px dashed rgba(212,175,55,0.15); padding-bottom: 10px; margin-bottom: 12px; }
+        
+        .action-collapse-box { background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.2); padding: 15px; border-radius: 6px; margin-top: 15px; display: none; }
+        .btn-toggle-action { background: rgba(212,175,55,0.1); color: var(--royal-gold); border: 1px solid var(--royal-gold); padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; text-align: center; width: 100%; margin-top: 10px; }
+        .btn-toggle-action:hover { background: var(--royal-gold); color: var(--bg-deep); }
+
+        .btn-accept { background-color: var(--success); color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: 900; width: 100%; margin-top: 10px; }
+        .btn-delete { background: var(--danger); color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        
         .status-pill { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
         .status-pending { background: rgba(245,158,11,0.2); color: #F59E0B; }
         .status-accepted { background: rgba(16,185,129,0.2); color: #10B981; }
         .status-rejected { background: rgba(239,68,68,0.2); color: #EF4444; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div id="authOverlay">
         <div class="lock-box">
-            <h2 style="color: var(--royal-gold); margin-bottom: 15px; font-weight: 900;">🔐 النظام الأمني للمؤسسة</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">الرجاء إدخال رمز الأمان المصرح به لفتح لوحة التحكم وبث البيانات.</p>
+            <h2 style="color: var(--royal-gold); margin-bottom: 15px; font-weight: 900;">🔐 النظام الأمني للمقرات</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">الرجاء إدخال الرمز المصرح لفتح التحليلات وبث البيانات المباشرة.</p>
             <input type="password" id="adminPassInput" class="form-control" style="text-align: center; font-size: 1.3rem; letter-spacing: 5px; margin-bottom: 20px;" placeholder="••••••">
             <button class="btn-royal-sm" onclick="checkAdminGatePass()">تحقق ودخول اللوحة 🚀</button>
             <p id="gateError" style="color: var(--danger); margin-top: 10px; font-weight: bold; display: none;">❌ رمز الأمان غير صحيح!</p>
@@ -57,32 +79,59 @@
 
     <div id="adminMainContent" style="display: none;">
         <header>
-            <div style="color: var(--royal-gold); font-weight:900; font-size:1.4rem;">👑 لوحة تحكم وإدارة معاملات مؤسسة البقمي المتكاملة لايف</div>
+            <div style="color: var(--royal-gold); font-weight:900; font-size:1.4rem;">👑 الإدارة والتحليلات الشاملة | مؤسسة البقمي</div>
             <a href="/" target="_blank" style="color:var(--royal-gold); text-decoration:none; font-weight:700; border: 1px solid var(--royal-gold); padding:8px 18px; border-radius:4px;">👁️ فتح واجهة العميل</a>
         </header>
 
-        <div class="analytics-grid">
-            <div class="card-analytic">
-                <h5>إجمالي عداد زيارات الموقع (لايف)</h5>
-                <h2 id="vCounter">0</h2>
-            </div>
-            <div class="card-analytic success">
-                <h5>طلبات بحاجة لتسعير ومراجعة</h5>
-                <h2 id="pendingCounter">0 طلب</h2>
-            </div>
-            <div class="card-analytic">
-                <h5>إجمالي الطلبات المستلمة بالكامل</h5>
-                <h2 id="totalCounter">0</h2>
-            </div>
-            <div class="card-analytic seo">
-                <h5>نسبة الظهور وقوة الـ SEO</h5>
-                <h2 id="seoScore">95%</h2>
+        <div class="admin-nav">
+            <button class="nav-tab-btn active" id="btnTabAnalytics" onclick="switchAdminTab('analytics')">📊 الإحصائيات العامة</button>
+            <button class="nav-tab-btn" id="btnTabRequests" onclick="switchAdminTab('requests')">📥 كشف ومعالجة الطلبات</button>
+            <button class="nav-tab-btn" id="btnTabCms" onclick="switchAdminTab('cms')">🛠️ إعدادات وتعديل الموقع</button>
+        </div>
+
+        <div id="tabAnalytics" class="tab-content active">
+            <div class="analytics-grid">
+                <div class="card-analytic" onclick="switchAdminTab('analytics')">
+                    <h5>📈 إجمالي عداد زيارات الموقع (لايف)</h5>
+                    <h2 id="vCounter">0</h2>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">إجمالي تصفح العملاء لصفحاتك</p>
+                </div>
+                <div class="card-analytic success" onclick="switchAdminTab('requests')">
+                    <h5>⏳ طلبات معلقة تحت المراجعة</h5>
+                    <h2 id="pendingCounter">0 طلب</h2>
+                    <p style="color: var(--success); font-size: 0.8rem; margin-top: 10px;">اضغط هنا لفتح وتسعير الطلبات فوراً</p>
+                </div>
+                <div class="card-analytic" onclick="switchAdminTab('requests')">
+                    <h5>📂 مجموع الطلبات المستلمة</h5>
+                    <h2 id="totalCounter">0</h2>
+                    <p style="color: var(--royal-gold); font-size: 0.8rem; margin-top: 10px;">إجمالي الأرشيف داخل الفايربيز</p>
+                </div>
+                <div class="card-analytic seo" onclick="switchAdminTab('cms')">
+                    <h5>🎯 قوة وقراءة الـ SEO وجوجل</h5>
+                    <h2 id="seoScore">95%</h2>
+                    <p style="color: var(--blue); font-size: 0.8rem; margin-top: 10px;">يعتمد على الأرشفة والوصف التعريفي</p>
+                </div>
             </div>
         </div>
 
-        <div class="workspace-grid">
+        <div id="tabRequests" class="tab-content">
             <div class="control-panel-box">
-                <h3 class="panel-title">🛠️ التحكم وتعديل الهوية البصرية، اللوجو والنصوص لايف</h3>
+                <h3 class="panel-title">📥 طلبات ومعاملات العملاء المستلمة لايف</h3>
+                
+                <div class="filter-bar">
+                    <button class="filter-btn active" id="filter-all" onclick="setCardFilter('all')">كل المعاملات</button>
+                    <button class="filter-btn" id="filter-pending" onclick="setCardFilter('pending')">قيد المراجعة</button>
+                    <button class="filter-btn" id="filter-accepted" onclick="setCardFilter('accepted')">المقبولة</button>
+                </div>
+
+                <div class="requests-cards-grid" id="cardsContainer">
+                    </div>
+            </div>
+        </div>
+
+        <div id="tabCms" class="tab-content">
+            <div class="control-panel-box">
+                <h3 class="panel-title">🛠️ تعديل الهوية البصرية، اللوجو والنصوص لايف</h3>
                 <form id="cmsForm" onsubmit="event.preventDefault(); updateCmsSettings();">
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px;">
                         <div class="form-group">
@@ -112,43 +161,24 @@
                         <label>الوصف التعريفي للخدمات بالكامل (يظهر بالموقع ومحركات البحث)</label>
                         <textarea id="cmsDesc" class="form-control" rows="2" required></textarea>
                     </div>
-                    <button type="submit" class="btn-royal-sm">💾 حفظ وبث التعديلات وتثبيت اللوجو والهوية على الفايربيز فوراً</button>
+                    <button type="submit" class="btn-royal-sm">💾 حفظ وتثبيت الهوية على الفايربيز فوراً</button>
                 </form>
-            </div>
-
-            <div class="control-panel-box">
-                <h3 class="panel-title">📥 كشف ومعالجة طلبات ومعاملات العملاء وتوجيه الردود الفورية</h3>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>المعاملة والتاريخ</th>
-                                <th>العميل والجوال</th>
-                                <th>التصنيف</th>
-                                <th>حيثيات وتفاصيل طلب العميل</th>
-                                <th>الرد والتسعير الاحترافي الحى</th>
-                                <th>العرض الحالي بالفايربيز</th>
-                                <th>إجراء</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminRequestsTableBody"></tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
 
     <script>
         let isFirstLoad = true;
+        let globalBookings = [];
+        let currentFilter = "all";
         const SECRET_KEY = "171002";
 
-        // دالة التحقق من كلمة المرور المحددة
+        // تسجيل الدخول والأمان
         function checkAdminGatePass() {
             const userPass = document.getElementById('adminPassInput').value.trim();
             if(userPass === SECRET_KEY) {
                 document.getElementById('authOverlay').style.display = "none";
                 document.getElementById('adminMainContent').style.display = "block";
-                // بدء تشغيل بث العدادات والطلبات الحية فوراً بعد تخطي الأمان
                 initDashboard();
             } else {
                 const err = document.getElementById('gateError');
@@ -157,16 +187,38 @@
             }
         }
 
+        // تحويل الأقسام (Tabs)
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+            
+            if(tabName === 'analytics') {
+                document.getElementById('tabAnalytics').classList.add('active');
+                document.getElementById('btnTabAnalytics').classList.add('active');
+            } else if(tabName === 'requests') {
+                document.getElementById('tabRequests').classList.add('active');
+                document.getElementById('btnTabRequests').classList.add('active');
+            } else if(tabName === 'cms') {
+                document.getElementById('tabCms').classList.add('active');
+                document.getElementById('btnTabCms').classList.add('active');
+            }
+        }
+
+        // تصفية حية للبطاقات
+        function setCardFilter(filterType) {
+            currentFilter = filterType;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-${filterType}`).classList.add('active');
+            renderRequestCards();
+        }
+
         function initDashboard() {
             refreshAdminDashboard();
-            setInterval(refreshAdminDashboard, 5000); // ⏳ تحديث حي مستمر كل 5 ثوانٍ
+            setInterval(refreshAdminDashboard, 5000); // بث مستمر لايف كل 5 ثوانٍ
         }
 
         async function refreshAdminDashboard() {
-            const tbody = document.getElementById('adminRequestsTableBody');
-            if(!tbody) return;
-
-            // 1. جلب إعدادات المحتوى واللوجو لأول مرة فقط منعاً لتشويش الكتابة
+            // 1. جلب إعدادات النصوص مرة واحدة فقط منعاً لمسح الحقول أثناء الكتابة
             if (isFirstLoad) {
                 try {
                     const cmsRes = await fetch('/api/site-settings');
@@ -179,26 +231,24 @@
                         document.getElementById('cmsDesc').value = cmsData.heroDesc || '';
                         document.getElementById('cmsFooter').value = cmsData.footerText || '';
                     }
-                } catch(e) { console.log("CMS Load Error: ", e); }
+                } catch(e) { console.log(e); }
                 isFirstLoad = false;
             }
 
-            // 2. جلب تحليلات الزيارات والطلبات الحية بصورة مصلحة ومطابقة 100% لبنية الفايربيز
+            // 2. سحب عداد الزيارات والطلبات المباشرة
             try {
-                // جلب عداد الزيارات
                 const vRes = await fetch('/api/visits');
                 const vData = await vRes.json();
                 document.getElementById('vCounter').innerText = vData.count || 0;
 
-                // جلب طلبات الحجز
                 const res = await fetch('/api/bookings');
-                const bookings = await res.json();
+                globalBookings = await res.json();
                 
-                document.getElementById('totalCounter').innerText = bookings.length;
-                const pendingJobs = bookings.filter(b => b.status === "قيد المراجعة" || !b.status);
+                document.getElementById('totalCounter').innerText = globalBookings.length;
+                const pendingJobs = globalBookings.filter(b => b.status === "قيد المراجعة" || !b.status);
                 document.getElementById('pendingCounter').innerText = pendingJobs.length + " طلب";
 
-                // حساب قوة السيو لايف تلقائياً بناءً على الوصف المدخل وحجم ترافيك الموقع
+                // حساب محاكاة السيو
                 const descLength = document.getElementById('cmsDesc').value.length;
                 const seoScoreElement = document.getElementById('seoScore');
                 if (descLength > 70) {
@@ -209,76 +259,130 @@
                     seoScoreElement.style.color = "var(--danger)";
                 }
 
-                // حفظ قيم الـ Inputs المؤقتة التي يكتبها الأدمن حالياً حتى لا يمسحها التحديث كل 5 ثوانٍ
-                const activeInputs = {};
-                bookings.forEach(b => {
-                    // نعتمد حقل التمرير الأساسي id (المحول تلقائياً بالسيرفر) أو المعرف المباشر الفريد لقاعدة البيانات
-                    const targetId = b.id || b.bookingId;
-                    activeInputs[`status_${targetId}`] = document.getElementById(`status_${targetId}`)?.value;
-                    activeInputs[`price_${targetId}`] = document.getElementById(`price_${targetId}`)?.value;
-                    activeInputs[`days_${targetId}`] = document.getElementById(`days_${targetId}`)?.value;
-                    activeInputs[`papers_${targetId}`] = document.getElementById(`papers_${targetId}`)?.value;
-                    activeInputs[`notes_${targetId}`] = document.getElementById(`notes_${targetId}`)?.value;
-                });
+                // عرض وتحديث كروت المعاملات لايف في تبويب الطلبات
+                renderRequestCards();
 
-                tbody.innerHTML = '';
-                if(bookings.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">لا يوجد طلبات مخزنة حالياً في الفايربيز.</td></tr>';
-                    return;
-                }
+            } catch (e) { console.log(e); }
+        }
 
-                bookings.forEach(b => {
-                    const targetId = b.id || b.bookingId;
-                    let statusClass = 'status-pending';
-                    if(b.status === "تم قبول الطلب") statusClass = 'status-accepted';
-                    if(b.status === "تم رفض الطلب") statusClass = 'status-rejected';
+        // بناء كروت طلبات العملاء مع ميزة "الفتح والإغلاق" الفوري للتعديل والتسعير
+        function renderRequestCards() {
+            const container = document.getElementById('cardsContainer');
+            if(!container) return;
 
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><code>${b.bookingId || 'N/A'}</code><br><small style="color:var(--text-muted);">${b.date || ''}</small></td>
-                        <td><b>${b.clientName || 'بدون اسم'}</b><br><a href="tel:${b.clientPhone}" style="color:var(--royal-gold); text-decoration:none; font-weight:bold;">${b.clientPhone || ''}</a></td>
-                        <td><small>${b.serviceType || 'عام'}</small></td>
-                        <td style="max-width:260px; white-space: normal; word-wrap: break-word;"><small>${b.details || ''}</small></td>
-                        <td>
-                            <div class="action-box">
-                                <label style="font-size:0.8rem; color:var(--gold-light);">اتخاذ القرار المعاملاتي:</label>
-                                <select id="status_${targetId}" class="form-control" style="padding:4px; font-size:0.85rem;">
+            // حفظ البيانات التي يكتبها الإداري الآن حتى لا تطير أثناء التحديث التلقائي
+            const preservedInputs = {};
+            globalBookings.forEach(b => {
+                const targetId = b.id || b.bookingId;
+                preservedInputs[`status_${targetId}`] = document.getElementById(`status_${targetId}`)?.value;
+                preservedInputs[`price_${targetId}`] = document.getElementById(`price_${targetId}`)?.value;
+                preservedInputs[`days_${targetId}`] = document.getElementById(`days_${targetId}`)?.value;
+                preservedInputs[`papers_${targetId}`] = document.getElementById(`papers_${targetId}`)?.value;
+                preservedInputs[`notes_${targetId}`] = document.getElementById(`notes_${targetId}`)?.value;
+                preservedInputs[`display_${targetId}`] = document.getElementById(`box_${targetId}`)?.style.display;
+            });
+
+            // فلترة المصفوفة حسب الفلتر المختار
+            let filtered = globalBookings;
+            if(currentFilter === 'pending') filtered = globalBookings.filter(b => b.status === "قيد المراجعة" || !b.status);
+            if(currentFilter === 'accepted') filtered = globalBookings.filter(b => b.status === "تم قبول الطلب");
+
+            container.innerHTML = '';
+            if(filtered.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); text-align:center; grid-column: 1/-1; padding:20px;">لا توجد معاملات تطابق هذا الفرز حالياً.</p>';
+                return;
+            }
+
+            filtered.forEach(b => {
+                const targetId = b.id || b.bookingId;
+                let statusClass = 'status-pending';
+                if(b.status === "تم قبول الطلب") statusClass = 'status-accepted';
+                if(b.status === "تم رفض الطلب") statusClass = 'status-rejected';
+
+                const card = document.createElement('div');
+                card.className = 'request-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header-info">
+                            <div>
+                                <span style="font-size:0.8rem; color:var(--text-muted);">رقم المعاملة:</span>
+                                <code style="color:var(--royal-gold); font-weight:bold; display:block;">${b.bookingId || 'N/A'}</code>
+                            </div>
+                            <span class="status-pill ${statusClass}">${b.status || 'قيد المراجعة'}</span>
+                        </div>
+                        <p style="margin-bottom:8px; font-size:1.05rem;"><b>العميل:</b> ${b.clientName || 'بدون اسم'}</p>
+                        <p style="margin-bottom:8px; font-size:0.9rem;"><b>الجوال:</b> <a href="tel:${b.clientPhone}" style="color:var(--white); text-decoration:none; font-weight:bold; border-bottom:1px dashed #fff;">${b.clientPhone || ''}</a></p>
+                        <p style="margin-bottom:8px; font-size:0.85rem; color:var(--gold-light);"><b>التصنيف:</b> ${b.serviceType || 'عام'}</p>
+                        <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:4px; font-size:0.85rem; margin-top:10px; color:#ddd; border-right:3px solid var(--royal-gold);">
+                            <b>شرح الطلب:</b> ${b.details || ''}
+                        </div>
+                        
+                        <div style="margin-top:12px; font-size:0.85rem; background:rgba(212,175,55,0.05); padding:8px; border-radius:4px;">
+                            <div>💰 <b>السعر الحالي:</b> ${b.adminPrice || 'لم يحدد بعد'}</div>
+                            <div>⏱️ <b>المدة:</b> ${b.adminDuration || 'تحت الدراسة'}</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn-toggle-action" onclick="toggleActionBox('${targetId}')">✏️ فتح وتحديث المعاملة</button>
+                        
+                        <div class="action-collapse-box" id="box_${targetId}">
+                            <div class="form-group">
+                                <label>حالة القرار العاجل:</label>
+                                <select id="status_${targetId}" class="form-control" style="padding:5px;">
                                     <option value="تم قبول الطلب" ${b.status === 'تم قبول الطلب' ? 'selected' : ''}>إقرار وقبول الطلب ✓</option>
                                     <option value="تم رفض الطلب" ${b.status === 'تم رفض الطلب' ? 'selected' : ''}>اعتذار ورفض الطلب ✕</option>
                                 </select>
-                                <input type="text" id="price_${targetId}" class="form-control" style="padding:4px; font-size:0.85rem;" placeholder="التكلفة الإجمالية للخدمة">
-                                <input type="text" id="days_${targetId}" class="form-control" style="padding:4px; font-size:0.85rem;" placeholder="مدة العمل المقدرة">
-                                <input type="text" id="papers_${targetId}" class="form-control" style="padding:4px; font-size:0.85rem;" placeholder="المستندات المطلوبة">
-                                <input type="text" id="notes_${targetId}" class="form-control" style="padding:4px; font-size:0.85rem;" placeholder="ملاحظة وتوجيه الإدارة">
-                                <button class="btn-accept" onclick="submitPricingProposal('${targetId}')">بث وتحديث الرد بالفايربيز ✓</button>
                             </div>
-                        </td>
-                        <td>
-                            <div style="font-size:0.85rem; line-height:1.5;">
-                                <b>الحالة:</b> <span class="status-pill ${statusClass}">${b.status || 'قيد المراجعة'}</span><br>
-                                <b>السعر:</b> <span style="color:#FFF;">${b.adminPrice || 'لم يحدد بعد'}</span><br>
-                                <b>المدة:</b> <span style="color:#FFF;">${b.adminDuration || 'تحت الدراسة'}</span><br>
-                                <b>الأوراق:</b> <small style="color:var(--text-muted);">${b.requiredPapers || 'جاري المراجعة'}</small><br>
-                                <b>ملاحظات:</b> <small style="color:var(--text-muted);">${b.adminNotes || 'جاري مراجعة طلبك'}</small>
+                            <div class="form-group">
+                                <label>التكلفة المقدرة (ريال):</label>
+                                <input type="text" id="price_${targetId}" class="form-control" style="padding:6px;" placeholder="مثال: 2500 ريال">
                             </div>
-                        </td>
-                        <td>
-                            <button class="btn-delete" onclick="deleteJob('${targetId}')">إزالة</button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
+                            <div class="form-group">
+                                <label>مدة وتوقيت الإنجاز:</label>
+                                <input type="text" id="days_${targetId}" class="form-control" style="padding:6px;" placeholder="مثال: 5 أيام عمل">
+                            </div>
+                            <div class="form-group">
+                                <label>المستندات المطلوبة من العميل:</label>
+                                <input type="text" id="papers_${targetId}" class="form-control" style="padding:6px;" placeholder="مثال: صورة الهوية أو السجل">
+                            </div>
+                            <div class="form-group">
+                                <label>توجيه وملاحظة الإدارة:</label>
+                                <input type="text" id="notes_${targetId}" class="form-control" style="padding:6px;" placeholder="اكتب ردك هنا للعميل">
+                            </div>
+                            <button class="btn-accept" onclick="submitPricingProposal('${targetId}')">💾 بث وتحديث الرد لايف</button>
+                        </div>
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; font-size:0.8rem; color:var(--text-muted);">
+                            <span>📅 ${b.date || ''}</span>
+                            <button class="btn-delete" onclick="deleteJob('${targetId}')">🗑️ حذف</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
 
-                    // استعادة الكلمات المدخلة فوراً التي كتبها الأدمن لمنع مسح الحقول أثناء الـ Refresh التلقائي
-                    if(activeInputs[`price_${targetId}`] !== undefined && document.getElementById(`price_${targetId}`)) {
-                        if(!document.getElementById(`price_${targetId}`).value) document.getElementById(`price_${targetId}`).value = activeInputs[`price_${targetId}`];
-                        if(!document.getElementById(`days_${targetId}`).value) document.getElementById(`days_${targetId}`).value = activeInputs[`days_${targetId}`];
-                        if(!document.getElementById(`papers_${targetId}`).value) document.getElementById(`papers_${targetId}`).value = activeInputs[`papers_${targetId}`];
-                        if(!document.getElementById(`notes_${targetId}`).value) document.getElementById(`notes_${targetId}`).value = activeInputs[`notes_${targetId}`];
-                    }
-                });
-            } catch (e) { console.log("Dashboard Live Stream Error: ", e); }
+                // استرجاع المدخلات والكتابة وحالة فتح وإغلاق الكارت فوراً لمنع التشويش أثناء الريدلوود التلقائي
+                if (preservedInputs[`price_${targetId}`] !== undefined) {
+                    if(!document.getElementById(`price_${targetId}`).value) document.getElementById(`price_${targetId}`).value = preservedInputs[`price_${targetId}`];
+                    if(!document.getElementById(`days_${targetId}`).value) document.getElementById(`days_${targetId}`).value = preservedInputs[`days_${targetId}`];
+                    if(!document.getElementById(`papers_${targetId}`).value) document.getElementById(`papers_${targetId}`).value = preservedInputs[`papers_${targetId}`];
+                    if(!document.getElementById(`notes_${targetId}`).value) document.getElementById(`notes_${targetId}`).value = preservedInputs[`notes_${targetId}`];
+                    if(preservedInputs[`display_${targetId}`]) document.getElementById(`box_${targetId}`).style.display = preservedInputs[`display_${targetId}`];
+                }
+            });
         }
 
+        // دالة فتح وإغلاق لوحة التحديث لكل كارت طلب على حدة
+        function toggleActionBox(id) {
+            const box = document.getElementById(`box_${id}`);
+            if(box.style.display === "block") {
+                box.style.display = "none";
+            } else {
+                box.style.display = "block";
+            }
+        }
+
+        // حفظ إعدادات المحتوى وتعديل نصوص واجهة العميل واللوجو
         async function updateCmsSettings() {
             const updatedData = {
                 logoText: document.getElementById('cmsLogo').value.trim(),
@@ -296,17 +400,18 @@
             });
             const resData = await res.json();
             if(resData.success) {
-                alert('تم حفظ الهوية وتحديث قاعدة بيانات الفايربيز حياً للعملاء بنجاح!');
+                alert('تم تعديل واجهة العميل وتحديث نصوص ولوجو الموقع بالكامل وبثها حياً!');
                 refreshAdminDashboard();
             }
         }
 
+        // إرسال الرد الفوري والتسعير للفايربيز
         async function submitPricingProposal(id) {
             const status = document.getElementById(`status_${id}`).value;
             const price = document.getElementById(`price_${id}`).value.trim() || "لم يحدد بعد";
             const duration = document.getElementById(`days_${id}`).value.trim() || "تحت الدراسة";
             const papers = document.getElementById(`papers_${id}`).value.trim() || "لا يتطلب مستندات إضافية";
-            const notes = document.getElementById(`notes_${id}`).value.trim() || "تمت دراسة وتلبية طلبك بنجاح من قبل إدارة المؤسسة.";
+            const notes = document.getElementById(`notes_${id}`).value.trim() || "تمت دراسة طلبك بنجاح من قبل إدارة المؤسسة.";
 
             const res = await fetch(`/api/bookings/${id}`, {
                 method: 'PATCH',
@@ -321,13 +426,15 @@
             });
             const result = await res.json();
             if(result.success) {
-                alert('تمت المزامنة وحفظ الرد الاحترافي حياً على الفايربيز!');
+                alert('تم إقرار الرد وبث التكلفة لايف لحساب العميل بنجاح!');
+                document.getElementById(`box_${id}`).style.display = "none"; // إغلاق لوحة التحكم بعد الحفظ لإبقاء الواجهة نظيفة
                 refreshAdminDashboard();
             }
         }
 
+        // مسح المعاملة نهائياً
         async function deleteJob(id) {
-            if(confirm('هل تود إزالة وتطهير معاملة هذا العميل نهائياً من الفايربيز؟')) {
+            if(confirm('هل أنت متأكد من مسح وحذف هذه المعاملة نهائياً من الفايربيز؟')) {
                 await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
                 refreshAdminDashboard();
             }
