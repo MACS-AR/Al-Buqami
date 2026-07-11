@@ -34,7 +34,8 @@
         /* الهيدر الرئيسي للموقع وقائمة التنقل */
         header { background-color: rgba(6, 11, 19, 0.95); border-bottom: 2px solid var(--royal-gold); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
         .logo-container { display: flex; align-items: center; gap: 12px; }
-        .logo-img { height: 50px; border-radius: 4px; border: 1px solid var(--royal-gold); object-fit: contain; }
+        /* تم إلغاء الحواف والمربع الذهبي تماماً بناءً على طلبك */
+        .logo-img { height: 50px; object-fit: contain; background: transparent; border: none; border-radius: 0; }
         .logo-text { color: var(--royal-gold); font-weight: 900; font-size: 1.5rem; text-shadow: 0 2px 10px rgba(212,175,55,0.2); }
         
         nav { display: flex; gap: 20px; align-items: center; }
@@ -61,10 +62,16 @@
 
         .main-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
         
-        /* قسم من نحن */
-        .about-box { background-color: var(--bg-surface); border: 1px solid rgba(214,175,55,0.1); padding: 40px; border-radius: 8px; margin-bottom: 60px; text-align: center; }
-        .about-box h3 { color: var(--royal-gold); font-size: 1.8rem; margin-bottom: 15px; font-weight: 800; }
-        .about-box p { color: #CBD5E1; font-size: 1.1rem; max-width: 950px; margin: 0 auto; text-align: justify; text-align-last: center; }
+        /* قسم من نحن والتفاصيل الجديدة المضافة بالحرف */
+        .about-box { background-color: var(--bg-surface); border: 1px solid rgba(214,175,55,0.1); padding: 45px; border-radius: 8px; margin-bottom: 40px; text-align: right; }
+        .about-box h3 { color: var(--royal-gold); font-size: 1.8rem; margin-bottom: 20px; font-weight: 800; text-align: center; }
+        .about-p-block { color: #CBD5E1; font-size: 1.1rem; text-align: justify; margin-bottom: 15px; text-indent: 15px; }
+
+        /* قسم المنافذ الجمركية المطور والمقسم لتصميم جذاب */
+        .ports-section { background: rgba(14, 22, 36, 0.7); border: 1px solid rgba(214,175,55,0.15); border-radius: 8px; padding: 40px 30px; margin-bottom: 60px; }
+        .ports-section h4 { color: var(--royal-gold); font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(214,175,55,0.15); padding-bottom: 10px; }
+        .ports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+        .port-item { background: var(--bg-input); padding: 12px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 10px; border-right: 3px solid var(--royal-gold); }
 
         /* عناوين الأقسام */
         .section-headline { text-align: center; margin-bottom: 40px; }
@@ -127,8 +134,8 @@
     <div class="top-bar">
         <div>🕒 من الأحد إلى السبت: من الساعة 09:00 صباحاً - وحتى الساعة 19:00 مساءً</div>
         <div class="top-bar-links">
-            <a href="mailto:info@macs-company.com">📧 info@elc-company.com</a>
-            <a href="tel:+9660000000">📞 +966-00000000</a>
+            <a href="mailto:info@elc-company.com">📧 info@elc-company.com</a>
+            <a href="tel:+966533388480">📞 +966-533388480</a>
         </div>
     </div>
 
@@ -159,10 +166,48 @@
 
     <div class="main-container">
         
-        <!-- 🎯 قسم من نحن -->
+        <!-- 🎯 قسم من نحن (مدمج به نصك الكامل بالحرف وتنسيق جذاب) -->
         <div class="about-box" id="about-sec">
-            <h3>من نحن في مؤسسة البقمي</h3>
-            <p>نقدم حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي. مهمتنا تسريع سلسلة الإمداد لعملائنا وتقليل التكاليف دون المساس بجودة الخدمة. نتميّز بتتبع دقيق للشحنات، وشبكة تشغيل مرنة، وفريق دعم موثوق يضمن وصول المنتجات بأمان وفي الوقت المحدد.</p>
+            <h3>شريكك اللوجستي المعتمد بالمملكة</h3>
+            
+            <p class="about-p-block">نقدم حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي. مهمتنا تسريع سلسلة الإمداد لعملائنا وتقليل التكاليف دون المساس بجودة الخدمة. نتميّز بتتبع دقيق للشحنات، وشبكة تشغيل مرنة، وفريق دعم موثوق يضمن وصول المنتجات بأمان وفي الوقت المحدد.</p>
+            
+            <p class="about-p-block">إذا كنت تبحث عن مخلص جمركي معتمد ينجز معاملاتك بسرعة ودقة واحترافية، فأنت في المكان الصحيح. ففي عالم التجارة الدولية، لم يعد التخليص الجمركي مجرد إجراء روتيني، بل أصبح أحد أهم العوامل التي تؤثر على سرعة وصول الشحنات، وتقليل التكاليف، وضمان انسيابية عمليات الاستيراد والتصدير دون تأخير أو عوائق.</p>
+            
+            <p class="about-p-block">ومع التطور الكبير الذي يشهده القطاع اللوجستي في المملكة العربية السعودية، وارتفاع حجم حركة التجارة عبر المنافذ البرية والبحرية والجوية، أصبحت الحاجة إلى مخلص جمركي يمتلك الخبرة والمعرفة بالأنظمة الجمركية أكثر أهمية من أي وقت مضى. فالمخلص الجمركي المحترف لا يقتصر دوره على إنهاء الإجراءات، بل يعمل على مراجعة المستندات، وتصنيف البضائع وفق البنود الجمركية، والتنسيق مع الجهات الحكومية، وتسريع الإفراج عن الشحنات، بما يضمن وصولها بأعلى درجات الكفاءة والالتزام.</p>
+
+            <p class="about-p-block">ومن خلال فريق متخصص يمتلك خبرة واسعة في الأنظمة الجمركية السعودية، نحرص على تقديم حلول متكاملة تشمل التخليص الجمركي، وإنهاء جميع الإجراءات النظامية، والتنسيق مع الجهات ذات العلاقة، ومتابعة الشحنات حتى الإفراج عنها وتسليمها، بما يحقق أعلى مستويات السرعة والدقة والموثوقية.</p>
+
+            <p class="about-p-block">وانطلاقًا من مستهدفات رؤية السعودية 2030، التي تهدف إلى جعل المملكة مركزًا لوجستيًا عالميًا يربط بين آسيا وأوروبا وأفريقيا، أصبح الاعتماد على مخلص جمركي محترف شريكًا استراتيجيًا يساهم في تسريع الأعمال، وخفض التكاليف، وتعزيز كفاءة سلاسل الإمداد، ودعم نمو أعمال الشركات والمستثمرين داخل المملكة وخارجها.</p>
+        </div>
+
+        <!-- ⚓ قسم شبكة المنافذ الجمركية المطور (مأخوذ من نصك بالحرف) -->
+        <div class="ports-section">
+            <h4 style="text-align: center;">🌐 خدمات التخليص الجمركي في جميع المنافذ الجمركية بالمملكة</h4>
+            
+            <h4 style="font-size:1.1rem; border:none; margin-bottom:15px;">🚢 المنافذ البحرية:</h4>
+            <div class="ports-grid" style="margin-bottom: 30px;">
+                <div class="port-item">⚓ ميناء جدة الإسلامي</div>
+                <div class="port-item">⚓ ميناء الملك عبدالعزيز بالدمام</div>
+                <div class="port-item">⚓ ميناء الجبيل التجاري</div>
+                <div class="port-item">⚓ ميناء الملك فهد الصناعي بالجبيل</div>
+                <div class="port-item">⚓ ميناء الملك فهد الصناعي بينبع</div>
+                <div class="port-item">⚓ ميناء ينبع التجاري</div>
+                <div class="port-item">⚓ ميناء جازان</div>
+                <div class="port-item">⚓ ميناء رأس الخير</div>
+                <div class="port-item">⚓ ميناء ضباء</div>
+            </div>
+
+            <h4 style="font-size:1.1rem; border:none; margin-bottom:15px;">🚛 المنافذ البرية والجافة:</h4>
+            <div class="ports-grid">
+                <div class="port-item">🛑 منفذ الحديثة</div>
+                <div class="port-item">🛑 منفذ البطحاء</div>
+                <div class="port-item">🛑 منفذ حالة عمار</div>
+                <div class="port-item">🛑 منفذ الرقعي</div>
+                <div class="port-item">🛑 منفذ جديدة عرعر</div>
+                <div class="port-item">🛑 منفذ الخفجي</div>
+                <div class="port-item">🛑 منفذ الوديعة</div>
+            </div>
         </div>
 
         <!-- 🛠️ قسم الخدمات اللوجستية المتخصصة -->
@@ -185,7 +230,7 @@
             <div class="service-card">
                 <div class="service-card-content">
                     <h4>📦 إدارة المخزون والمستودعات</h4>
-                    <p>استلاف وفرز وتخزين وتجهيز طلبات بكفاءة أعلى لتقليل الهدر وتحسين توافر المنتجات داخل مستودعاتنا المؤمنة بالكامل ومراقبة المخزون باحترافية.</p>
+                    <p>استلام وفرز وتخزين وتجهيز طلبات بكفاءة أعلى لتقليل الهدر وتحسين توافر المنتجات داخل مستودعاتنا المؤمنة بالكامل ومراقبة المخزون باحترافية.</p>
                 </div>
                 <a href="#portal-sec" class="btn-learn-more">طلب الخدمة والتسعير ←</a>
             </div>
@@ -225,60 +270,4 @@
                             <option value="شحن دولي وسريع">الشحن والنقل المحلي والدولي (براً وبحراً وجواً)</option>
                             <option value="إدارة المخزون والمستودعات">إدارة المخزون وتخزين وتجهيز طلبات المستودعات</option>
                             <option value="تخليص معاملات وأوراق">التخليص الجمركي وخدمات الاستيراد والتصدير الاحترافية</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cDetails">اكتب تفاصيل طلبك بدقة (نوع البضائع، الكمية، مسار الوجهة المستهدفة)</label>
-                        <textarea id="cDetails" class="form-control" rows="4" required placeholder="مثال: أريد فحص شحنة وتخزينها، أو نقل حاوية برية من الرياض إلى الوجهة المستهدفة مع التخليص الجمركي..."></textarea>
-                    </div>
-                    <button type="submit" class="btn-royal">إرسال الطلب لتقدير السعر فوراً 🚀</button>
-                </form>
-            </div>
-
-            <!-- صندوق المتابعة الحية -->
-            <div class="custom-box">
-                <h3 class="box-title">🔍 الاستعلام ومتابعة العروض بالرقم</h3>
-                <p style="color: var(--text-muted); font-size:0.95rem; margin-bottom:25px; text-align:center;">أدخل رقم جوالك المسجل لاستدعاء عروض الأسعار والملاحظات وقرارات الإدارة لمعاملتك حياً لايف.</p>
-                <div class="form-group">
-                    <label for="searchPhone">رقم الجوال الخاص بك</label>
-                    <input type="tel" id="searchPhone" class="form-control" placeholder="أدخل رقم الجوال وبث النتائج">
-                </div>
-                <button type="button" class="btn-royal" onclick="checkMyOffers()">تحقق من عروض الإدارة 👁️</button>
-                <div id="statusResultOutput" style="margin-top:25px;"></div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- 🌐 الفوتر -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h5>مؤسسة البقمي للخدمات اللوجستية</h5>
-                <p>سلسلة إمداد أسرع، تكلفة أقل، تسليم أدق لضمان ريادة وسرعة أعمالك من المستودعات وحتى الوجهات المحددة.</p>
-            </div>
-            <div class="footer-col">
-                <h5>أقسام الوصول السريع</h5>
-                <ul>
-                    <li><a href="#" style="color:var(--text-muted); text-decoration:none;">الرئيسية</a></li>
-                    <li><a href="#about-sec" style="color:var(--text-muted); text-decoration:none;">من نحن في المؤسسة</a></li>
-                    <li><a href="#services-sec" style="color:var(--text-muted); text-decoration:none;">الخدمات والحلول اللوجستية</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>قنوات الاتصال المباشر</h5>
-                <ul>
-                    <li>📞 هاتف الدعم الأول: <span>+966-000000000</span></li>
-                    <li>📞 هاتف الدعم الثاني: <span>+966-000000000</span></li>
-                    <li>📧 البريد الإلكتروني الرسمي: <span>info@macs-company.com</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom" id="siteFooter">
-            جميع الحقوق محفوظة © مؤسسة البقمي للخدمات اللوجستية المتكاملة 2026
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
+                  
