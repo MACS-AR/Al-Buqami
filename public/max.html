@@ -3,848 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم وصانع العروض - م/ محمد أشرف (FARESPCB)</title>
+    <title>لوحة التحكم الملكية - FARESPCB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --primary-color: #f1b813; 
-            --dark-color: #3e3e3e;    
-            --light-bg: #ffffff;
+            --bg-dark: #121212;
+            --card-dark: #1a1a1a;
+            --gold-primary: #d4af37;
+            --gold-glow: #f1b317;
+            --gold-dark: #aa8416;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --border-gold: rgba(212, 175, 55, 0.3);
         }
-        
-        /* تصفير عام وضبط الصندوق لمنع زيادة الأبعاد */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        }
-        
-        body { background-color: #f0f2f5; padding: 20px 0; }
-        
-        /* لوحة التحكم للأدمن */
-        .admin-panel {
-            background: #ffffff; padding: 25px; margin: 0 auto 30px auto; max-width: 1100px;
-            border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .admin-panel h2 { color: var(--dark-color); border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 15px; }
-        .admin-panel h3 { color: #555; margin-top: 25px; margin-bottom: 15px; border-right: 4px solid var(--primary-color); padding-right: 10px; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group.full-width { grid-column: 1 / -1; }
-        .form-group label { margin-bottom: 6px; font-weight: bold; color: #444; font-size: 14px; }
-        .form-group input, .form-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-        
-        .dynamic-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fff; }
-        .dynamic-table th, .dynamic-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
-        .dynamic-table th { background-color: var(--dark-color); color: white; }
-        .dynamic-table input { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
-        
-        .btn-actions { margin-top: 30px; text-align: center; display: flex; gap: 15px; justify-content: center; }
-        .btn { background: #27ae60; color: white; padding: 14px 35px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn:hover { background: #219150; transform: translateY(-2px); }
-        .btn-add { background: var(--dark-color); padding: 7px 15px; font-size: 13px; border-radius: 4px; }
-        .btn-danger { background: #c0392b; padding: 6px 12px; font-size: 13px; border-radius: 4px; color: white; cursor: pointer; border: none; }
-
-        /* حاوية العرض لمنع الصفحات البيضاء (أبعاد A4 حقيقية ومغلقة) */
-        .preview-container { margin: 0 auto; width: 210mm; background: #dadada; padding: 10px 0; }
-        
-        .page {
-            background: #ffffff; 
-            width: 210mm; 
-            height: 297mm; 
-            position: relative;
-            margin: 0 auto 20px auto; 
-            padding: 30mm 20mm 25mm 20mm; /* حماية منطقة الهيدر والفوتر */
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            overflow: hidden; 
-            page-break-after: always;
-            page-break-inside: avoid;
-        }
-        
-        /* الهيدر والفوتر المدمج */
-        .page-header { position: absolute; top: 10mm; left: 20mm; right: 20mm; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f1f1; padding-bottom: 8px; height: 15mm; }
-        .page-header .logo-container img { height: 12mm; max-width: 45mm; object-fit: contain; }
-        .page-header .brand-identity-text { font-size: 18px; font-weight: bold; color: var(--dark-color); }
-        .page-header .brand-identity-text span { color: var(--primary-color); }
-        .page-header .page-number-top { font-size: 13px; color: #888; background: #f5f5f5; padding: 2px 10px; border-radius: 4px; }
-        
-        .page-footer { position: absolute; bottom: 12mm; left: 20mm; right: 20mm; border-top: 2px solid var(--primary-color); padding-top: 8px; display: flex; justify-content: space-between; font-size: 11px; color: #555; }
-        .page-footer-line { width: 100%; height: 4px; background: var(--primary-color); position: absolute; bottom: 18mm; left: 0; }
-
-        h1, h2, h3, h4 { color: var(--dark-color); margin-bottom: 10px; }
-        p { line-height: 1.6; font-size: 14px; color: #333; text-align: justify; margin-bottom: 12px; }
-        
-        /* تصميم الغلاف الاحترافي (الصفحة 1) */
-        .cover-wrapper { display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 15mm 0 5mm 0; align-items: center; }
-        .cover-main-design { display: flex; align-items: center; justify-content: center; width: 100%; position: relative; margin-top: 15mm; }
-        .cover-side-bar { width: 6mm; height: 55mm; background: var(--dark-color); border-radius: 3px; margin-left: 10mm; }
-        .cover-orange-box { background: var(--primary-color); width: 45mm; height: 25mm; border-radius: 4px 0 0 4px; margin-left: -6mm; z-index: 1; }
-        .cover-circle-logo { width: 90mm; height: 90mm; border: 16px solid var(--dark-color); border-left-color: var(--primary-color); border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .cover-circle-text { font-size: 13px; font-weight: bold; color: #fff; background: var(--dark-color); padding: 4px 14px; border-radius: 20px; margin-bottom: 8px; }
-        .cover-title-box { text-align: center; margin-top: 20mm; }
-        .cover-main-title { font-size: 34px; font-weight: bold; color: var(--primary-color); margin-bottom: 5px; }
-        .cover-sub-title { font-size: 24px; font-weight: bold; color: var(--dark-color); }
-        .cover-meta-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; }
-
-        /* الجداول والتنسيقات الفنية داخل الصفحات */
-        .content-table { width: 100%; border-collapse: collapse; margin-top: 12px; margin-bottom: 12px; font-size: 13px; }
-        .content-table th, .content-table td { border: 1px solid #cccccc; padding: 8px 10px; text-align: right; }
-        .content-table th { background-color: var(--primary-color); color: #000; font-weight: bold; text-align: center; }
-        .content-table tr:nth-child(even) { background-color: #fafafa; }
-        .bg-yellow-cell { background-color: var(--primary-color) !important; font-weight: bold; color: #000; text-align: center !important; }
-        
-        /* التايم لاين والخدمات (الصفحة 6) */
-        .services-timeline { position: relative; margin-top: 10mm; padding: 5px 0; height: 200mm; }
-        .services-timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: var(--dark-color); transform: translateX(-50%); }
-        .service-node { position: absolute; width: 44%; display: flex; align-items: center; }
-        .service-node.right { left: 56%; text-align: right; justify-content: flex-start; }
-        .service-node.left { right: 56%; text-align: left; justify-content: flex-end; flex-direction: row-reverse; }
-        .node-badge { width: 32px; height: 32px; background: var(--primary-color); border: 3px solid var(--dark-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; color: #000; position: absolute; top: 2px; }
-        .service-node.right .node-badge { left: -36px; }
-        .service-node.left .node-badge { right: -36px; }
-        .node-content { background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border: 1px solid #eef0f2; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .node-title { font-weight: bold; color: var(--dark-color); font-size: 14px; margin-bottom: 2px; }
-        .node-desc { font-size: 12px; color: #666; }
-
-        /* شبكة أجهزة التتبع (الصفحة 5) */
-        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 25mm; position: relative; }
-        .product-box { border: 2px solid var(--primary-color); border-radius: 12px; padding: 12px; text-align: center; background: #fff; }
-        .product-circle-img { width: 32mm; height: 32mm; border: 4px solid var(--primary-color); border-radius: 50%; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; background: #f9f9f9; }
-        .product-circle-img span { font-size: 11px; color: #888; font-weight: bold; }
-        .product-name { font-weight: bold; color: var(--dark-color); font-size: 14px; margin-bottom: 4px; }
-        .product-desc { font-size: 12px; color: #555; line-height: 1.4; }
-        .center-hub-badge { position: absolute; top: 43%; left: 50%; transform: translate(-50%, -50%); width: 26mm; height: 26mm; background: #fff; border: 5px solid var(--dark-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 5; font-size: 13px; }
-
-        /* صفحة الفوائد (صفحة 10) */
-        .benefits-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15mm; }
-        .benefit-card { display: flex; align-items: center; background: #f9f9f9; padding: 10px; border-radius: 30px 6px 6px 30px; border-left: 5px solid var(--primary-color); }
-        .benefit-icon-area { width: 36px; height: 36px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; font-weight: bold; flex-shrink: 0; font-size: 13px; }
-        .benefit-text { font-size: 12.5px; font-weight: bold; color: var(--dark-color); line-height: 1.4; }
-
-        /* كتل صفحة الشروط */
-        .rule-highlight { background-color: var(--primary-color); padding: 10px 15px; border-radius: 6px; margin: 10px 0; font-weight: bold; color: #000; font-size: 13px; border-right: 6px solid var(--dark-color); }
-        .rule-normal-box { background-color: #f5f5f5; padding: 10px 15px; border-radius: 6px; margin: 8px 0; font-size: 13px; border-right: 4px solid var(--primary-color); }
-        
-        .section-header { display: flex; align-items: center; margin-top: 5mm; margin-bottom: 12px; border-bottom: 3px solid var(--primary-color); padding-bottom: 5px; }
-        .section-header-title { font-size: 18px; font-weight: bold; color: var(--dark-color); margin-left: auto; }
-
-        /* جدول باقات نعم ولا المقارن */
-        .comparison-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 5mm; }
-        .comparison-table th, .comparison-table td { border: 1px solid #dddddd; padding: 6px 4px; text-align: center; }
-        .comparison-table th { background-color: var(--primary-color); color: #000; font-weight: bold; }
-        .comparison-table td:nth-child(2) { text-align: right; font-weight: bold; font-size: 11px; padding-right: 6px; }
-        .check-yes { color: #27ae60; font-weight: bold; font-size: 13px; }
-        .check-no { color: #c0392b; font-weight: bold; font-size: 13px; }
-
-        .text-center { text-align: center !important; }
-        .text-left { text-align: left !important; }
-
-        /* منع التصدير التلقائي للوحة التحكم في ملف الـ PDF */
-        @media print {
-            .admin-panel { display: none !important; }
-            .preview-container { padding: 0; background: none; }
-            .page { margin: 0; box-shadow: none; page-break-after: always; }
-        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-dark); color: var(--text-light); margin: 0; padding: 20px; direction: rtl; }
+        .dashboard-container { max-width: 1200px; margin: 0 auto; background: var(--card-dark); border: 2px solid var(--gold-primary); border-radius: 15px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); padding: 30px; position: relative; }
+        .main-header { text-align: center; border-bottom: 2px double var(--gold-primary); padding-bottom: 20px; margin-bottom: 30px; }
+        .main-header h1 { color: var(--gold-glow); font-size: 32px; font-weight: 900; margin: 0; text-shadow: 0px 2px 10px rgba(241, 179, 23, 0.3); }
+        .section-box { border: 1px solid var(--border-gold); border-radius: 8px; padding: 20px; margin-bottom: 25px; background: rgba(0, 0, 0, 0.2); }
+        .section-title { color: var(--gold-primary); font-size: 18px; font-weight: 700; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid var(--border-gold); padding-bottom: 8px; }
+        .grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        label { color: var(--gold-primary); font-weight: 600; font-size: 14px; }
+        input { background-color: #222; border: 1px solid var(--border-gold); color: var(--text-light); padding: 12px; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 14px; }
+        input:focus { outline: none; border-color: var(--gold-glow); background-color: #2a2a2a; }
+        .pricing-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .pricing-table th { background-color: #2a220a; color: var(--gold-glow); border: 1px solid var(--border-gold); padding: 12px; font-weight: 700; }
+        .pricing-table td { border: 1px solid var(--border-gold); padding: 10px; background: #181818; text-align: center; }
+        .pricing-table input { width: 90%; padding: 8px; text-align: center; }
+        .btn-container { text-align: center; margin-top: 30px; }
+        .btn-submit { background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 50%, var(--gold-glow) 100%); color: #121212; border: none; padding: 15px 45px; font-size: 18px; font-weight: 900; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(18, 18, 18, 0.9); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
+        .spinner { width: 60px; height: 60px; border: 5px solid #222; border-top: 5px solid var(--gold-glow); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #pdfRenderZone { position: absolute; left: -9999px; top: -9999px; width: 210mm; background: white; }
+        .pdf-page-wrapper { width: 210mm; height: 297mm; page-break-after: always; overflow: hidden; position: relative; }
+        iframe { width: 210mm; height: 297mm; border: none; overflow: hidden; }
     </style>
 </head>
 <body>
 
-    <!-- لوحة التحكم الإدارية الذكية للتحكم بالقيم والمحتويات الحية -->
-    <div class="admin-panel">
-        <h2>لوحة إدارة العرض والنظام المالي الموحد - مؤسسة البقمي</h2>
-        <p style="color: #666; font-size: 13px;">تتيح لك هذه اللوحة التحكم الكامل في هوية العروض، النصوص، أرقام السجلات والاتصال، الحسابات البنكية، والأسعار لجميع الصفحات في نفس الوقت.</p>
-        
-        <h3>1. الهوية البصرية وبيانات الاتصال والترخيص</h3>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>رفع شعار الشركة الجديد (Logo):</label>
-                <input type="file" id="logoUpload" accept="image/*" onchange="handleLogoChange(event)">
-            </div>
-            <div class="form-group">
-                <label>اسم شركتك المعتمد:</label>
-                <input type="text" id="inpCompanyName" value="مؤسسة البقمي للخدمات والحلول المتكاملة" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>الرقم الموحد / هاتف التواصل:</label>
-                <input type="text" id="inpPhone" value="+966500000106" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>الموقع الإلكتروني الرسمي:</label>
-                <input type="text" id="inpWeb" value="www.al-baqami.com" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>رقم السجل التجاري:</label>
-                <input type="text" id="inpCR" value="1010664923" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>الرقم الضريبي للمنشأة:</label>
-                <input type="text" id="inpTaxNumber" value="310365859500003" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>نسبة الضريبة المضافة (%):</label>
-                <input type="number" id="inpTaxRate" value="15" min="0" max="100" oninput="recalculateFinancials()">
+    <div class="dashboard-container">
+        <div class="main-header">
+            <h1>لوحة التحكم المحدثة لإصدار العروض الفنية</h1>
+            <p>تخصيص كامل للهوية والشعار والأقسام المالية الحية للمشروع</p>
+        </div>
+
+        <!-- إعدادات الهوية والشعار -->
+        <div class="section-box">
+            <div class="section-title">✦ تخصيص مسار الهوية والشعار الموحد</div>
+            <div class="input-group">
+                <label>رابط أو مسار شعار الشركة (Logo URL):</label>
+                <input type="text" id="companyLogoUrl" value="https://via.placeholder.com/150x60/f1b317/000000?text=YOUR+LOGO" style="direction: ltr;">
             </div>
         </div>
 
-        <h3>2. بيانات العميل المستهدف الحالي</h3>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>اسم شركة العميل:</label>
-                <input type="text" id="inpClientName" value="شركة النقل البري المتميز المحدودة" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>الشخص المسؤول وعنوانه:</label>
-                <input type="text" id="inpContactPerson" value="الأستاذ عبد الله القحطاني" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>هاتف المسؤول:</label>
-                <input type="text" id="inpClientPhone" value="0548138548" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>البريد الإلكتروني للعميل:</label>
-                <input type="text" id="inpClientEmail" value="info@client-transport.com" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>نوع ونموذج المركبات المطلوبة:</label>
-                <input type="text" id="inpVehicleModel" value="شاحنات نقل نقل ثقيل (مرسيدس أكتروس)" oninput="syncData()">
-            </div>
-            <div class="form-group">
-                <label>عدد المركبات الكلي المستهدف:</label>
-                <input type="number" id="inpVehicleQty" value="56" oninput="syncData()">
+        <!-- بيانات العميل المحدثة (صفحة 2) -->
+        <div class="section-box">
+            <div class="section-title">✦ بيانات العميل والتعاقد (تحديث صفحة 2)</div>
+            <div class="grid-inputs">
+                <div class="input-group">
+                    <label>اسم العميل / الشركة:</label>
+                    <input type="text" id="customerName" value="شركة ومؤسسة البقمي للمقاولات">
+                </div>
+                <div class="input-group">
+                    <label>الشخص المسؤول (Contact Person):</label>
+                    <input type="text" id="contactPerson" value="م / محمد البقمي">
+                </div>
+                <div class="input-group">
+                    <label>رقم جوال العميل:</label>
+                    <input type="text" id="customerMobile" value="+966 500 000 000">
+                </div>
+                <div class="input-group">
+                    <label>البريد الإلكتروني للعميل:</label>
+                    <input type="text" id="customerEmail" value="info@albuqami.com">
+                </div>
+                <div class="input-group">
+                    <label>نوع العرض المطلوب (Offer For Vehicle):</label>
+                    <input type="text" id="vehicleOffer" value="Teltonika GPS Basic Protocol">
+                </div>
+                <div class="input-group">
+                    <label>عدد السيارات الكلي:</label>
+                    <input type="number" id="vehicleCount" value="56" oninput="syncQuantities()">
+                </div>
+                <div class="input-group">
+                    <label>مستشار المبيعات المسؤول:</label>
+                    <input type="text" id="salesConsultant" value="المهندس أشرف">
+                </div>
+                <div class="input-group">
+                    <label>جوال مستشار المبيعات:</label>
+                    <input type="text" id="salesMobile" value="+966 555 555 555">
+                </div>
+                <div class="input-group">
+                    <label>تاريخ إصدار العرض:</label>
+                    <input type="date" id="offerDate" value="2026-07-12">
+                </div>
             </div>
         </div>
 
-        <h3>3. الحسابات البنكية ومنافذ التحويل المالي (صفحة 13)</h3>
-        <div class="form-grid">
-            <div class="form-group full-width">
-                <label>تفاصيل مسارات البنوك والآيبان (اكتب كل حساب في سطر منفصل):</label>
-                <textarea id="inpBankDetails" rows="3" oninput="syncData()">مصرف الراجحي فرع الرياض - رقم الحساب: 203608010507213 - الآيبان: SA13200000203608010507213&#10;البنك الأهلي التجاري فرع جدة - رقم الحساب: 20876833000106 - الآيبان: SA4910000020876833000106</textarea>
+        <!-- تفاصيل العرض المالي المستهدف (صفحة 12) -->
+        <div class="section-box">
+            <div class="section-title">✦ تفاصيل بنود العرض المالي الذكي (تحديث صفحة 12)</div>
+            <div style="overflow-x: auto;">
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>البند والبيان الفني</th>
+                            <th>سعر الوحدة (ريال)</th>
+                            <th>الكمية / العدد</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>اشتراك منصة تتبع لمدة 12 شهر (بيسك نقل)</td>
+                            <td><input type="number" id="p1_rate" value="240"></td>
+                            <td><input type="number" id="p1_qty" value="56"></td>
+                        </tr>
+                        <tr>
+                            <td>جهاز تتبع Teltonika GPS Basic 4G أوروبي</td>
+                            <td><input type="number" id="p2_rate" value="190"></td>
+                            <td><input type="number" id="p2_qty" value="56"></td>
+                        </tr>
+                        <tr>
+                            <td>حساس وزن ميكانيكي متطور ومعاير</td>
+                            <td><input type="number" id="p3_rate" value="180"></td>
+                            <td><input type="number" id="p3_qty" value="13"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <h3>4. عناصر وجدول التسعير الديناميكي الذكي (صفحة 12)</h3>
-        <table class="dynamic-table" id="itemsEditorTable">
-            <thead>
-                <tr>
-                    <th style="width: 25%;">البند</th>
-                    <th style="width: 35%;">البيان التفصيلي</th>
-                    <th style="width: 15%;">تكلفة الوحدة</th>
-                    <th style="width: 15%;">عدد الأجهزة</th>
-                    <th style="width: 10%;">إجراء</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" value="اشتراك لمدة 12 أشهر"></td>
-                    <td><input type="text" value="اشتراك لمدة 12 أشهر في اشتراك موقع بيسك نقل لربط المركبة وتتبعها"></td>
-                    <td><input type="number" value="240.00" oninput="recalculateFinancials()"></td>
-                    <td><input type="number" value="56" oninput="recalculateFinancials()"></td>
-                    <td><button class="btn-danger" onclick="removeRow(this)">حذف</button></td>
-                </tr>
-                <tr>
-                    <td><input type="text" value="Teltonika GPS Tracker Basic FMC920"></td>
-                    <td><input type="text" value="شركة تيلتونيكا - جهاز تتبع 4G بيسك تتبع متطور يدعم منصات الهيئة"></td>
-                    <td><input type="number" value="190.00" oninput="recalculateFinancials()"></td>
-                    <td><input type="number" value="56" oninput="recalculateFinancials()"></td>
-                    <td><button class="btn-danger" onclick="removeRow(this)">حذف</button></td>
-                </tr>
-                <tr>
-                    <td><input type="text" value="حساس وزن ميكانيكي"></td>
-                    <td><input type="text" value="حساس وزن ميكانيكي عالي الدقة لضبط قراءات الحمولات الزائدة"></td>
-                    <td><input type="number" value="180.00" oninput="recalculateFinancials()"></td>
-                    <td><input type="number" value="13" oninput="recalculateFinancials()"></td>
-                    <td><button class="btn-danger" onclick="removeRow(this)">حذف</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-add" style="margin-top: 12px;" onclick="addNewRow()">+ إضافة سطر مالي جديد</button>
-
-        <div class="btn-actions">
-            <button class="btn" id="pdfBtn" onclick="generatePerfectPDF()">إنشاء وتصدير وثيقة الـ PDF الكاملة فوراً</button>
+        <div class="btn-container">
+            <button class="btn-submit" onclick="generateLuxuryPDF()">⚙️ معالجة وتصدير العرض المالي الكامل (PDF)</button>
         </div>
     </div>
 
-
-    <!-- منطقة تصدير المستندات الفنية المعزولة والمدققة هندسياً وعمرانياً -->
-    <div class="preview-container" id="pdfCaptureArea">
-
-        <!-- الصفحة 1 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src="" alt="شعارك"></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">1 من 13</div>
-            </div>
-            <div class="cover-wrapper">
-                <div class="cover-main-design">
-                    <div class="cover-side-bar"></div>
-                    <div class="cover-orange-box"></div>
-                    <div class="cover-circle-logo">
-                        <div class="cover-circle-text">أنظمة التتبع وإنترنت الأشياء</div>
-                        <div style="font-weight:bold; font-size:16px; color:var(--dark-color); text-align: center; padding:0 5px;" class="lblCompanyName">مؤسسة البقمي للخدمات والحلول المتكاملة</div>
-                    </div>
-                </div>
-                <div class="cover-title-box">
-                    <div class="cover-main-title">عروض منظومات التتبع</div>
-                    <div class="cover-sub-title">عرض نموذج تتبع متكامل</div>
-                </div>
-                <div class="cover-meta-info">
-                    <div style="font-size: 13px; color:#555;">الرقم الموحد: <span class="lblPhone">+966500000106</span></div>
-                    <div style="font-size: 13px; color:#555;">الموقع الإلكتروني: <span class="lblWeb">www.al-baqami.com</span></div>
-                </div>
-            </div>
-            <div class="page-footer-line"></div>
-        </div>
-
-        <!-- الصفحة 2 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src="" alt="شعار"></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">2 من 13</div>
-            </div>
-            <h2 style="margin-top: 5mm; text-align: center; font-size: 22px;">Financial Proposal / المقترح المالي الفني</h2>
-            
-            <table class="content-table" style="margin-top: 10mm;">
-                <tr><td class="bg-yellow-cell" style="width: 35%;">Customer Name / اسم شركة العميل</td><td id="vClientName">شركة العميل</td></tr>
-                <tr><td class="bg-yellow-cell">Contact Person / المسؤول المباشر</td><td id="vContactPerson">المسؤول</td></tr>
-                <tr><td class="bg-yellow-cell">Mobile Number / جوال التواصل</td><td id="vClientPhone">05000000</td></tr>
-                <tr><td class="bg-yellow-cell">Email / البريد الإلكتروني</td><td id="vClientEmail">email@domain.com</td></tr>
-                <tr><td class="bg-yellow-cell">Offer For Vehicle / طراز وعرض المركبات</td><td id="vVehicleModel">مركبات</td></tr>
-                <tr><td class="bg-yellow-cell">Number of Vehicle / إجمالي عدد المركبات</td><td id="vVehicleQty">0</td></tr>
-                <tr><td class="bg-yellow-cell">Sales Consultant / استشاري مبيعات المنظومة</td><td style="font-weight: bold;">تطوير وأنظمة مدمجة: FARESPCB (بإشراف: م/ محمد اشرف)</td></tr>
-                <tr><td class="bg-yellow-cell">Mobile Number / رقم الجوال المباشر</td><td class="lblPhone">+966500000106</td></tr>
-                <tr><td class="bg-yellow-cell">Date / تاريخ تقديم العرض</td><td id="vCurrentDate">2026-07-12</td></tr>
-            </table>
-
-            <div style="margin-top: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px dashed #ccc;">
-                <p style="font-weight: bold; color: var(--dark-color);">تراخيص واعتمادات المنشأة:</p>
-                <p>• رقم السجل التجاري المعتمد: <span id="vCR">1010664923</span></p>
-                <p>• الرقم الضريبي الرسمي الموثق: <span id="vTaxNumber">310365859500003</span></p>
-            </div>
-
-            <div class="page-footer"><span class="lblCompanyName">مؤسسة البقمي</span><span>وثيقة سرية ومحمية للعميل</span></div>
-        </div>
-
-        <!-- الصفحة 3 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">3 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">نبذة عن الشركة / Company Profile</div>
-            </div>
-            <p>تأسست شركتنا عام 2011 لتكون في طليعة الشركات المتخصصة في أنظمة الاتصالات، إنترنت الأشياء، وتحديد المواقع (GPS) وحلول إدارة الوقود بفضل اعتمادنا من هيئة النقل، هيئة الغذاء والدواء، ومنصة مدينتي، نلتزم بتقديم حلول ذات موثوقية عالية تتماشى مع أعلى معايير الجودة والسلامة لتلبية تطلعات السوق.</p>
-            <p>نعمل باستمرار على تطوير وتحديث تقنياتنا ومنتجاتنا لتلبية متطلبات السوق المتزايدة والمتغيرة، فنقدم خدمات متكاملة لرفع كفاءة العمل، تقليل التكاليف، وتعزيز الإنتاجية في إدارة الأساطيل، بفضل حلولنا المتقدمة نوفر لعملائنا القدرة على تنظيم وتوجيه وإدارة أساطيلهم بفاعلية بما يضمن السلامة والكفاءة القصوى على الطرقات.</p>
-            <p>نفتخر بأننا شريك موثوق لمجموعة واسعة من القطاعات تشمل شركات النقل، الخرسانة، المقاولات، تأجير المركبات, المدارس، الجامعات، شركات نقل المواد الخطرة والمحروقات، وشركات توزيع المواد الغذائية والطبية. نحن هنا لدعم استثماراتكم وتقديم حلول تزيد من الأمان وتدعم استدامة أعمالكم على المدى الطويل وبناء الثقة المتبادلة.</p>
-            
-            <div class="section-header">
-                <div class="section-header-title">رؤية الشركة / Our Vision</div>
-            </div>
-            <p>أن نكون الخيار الأول في حلول الاتصالات وإنترنت الأشياء وإدارة الوقود عبر تقديم تقنيات متقدمة وآمنة تساعد عملاءنا على تحقيق كفاءة أعلى، خفض التكاليف، وضمان الالتزام بالمعايير المحلية والعالمية نلتزم بأن نكون الشريك المعتمد والموثوق للقطاعات التي نخدمها لدعم استدامتها ونجاحها الدائم والمستمر.</p>
-            
-            <div class="section-header">
-                <div class="section-header-title">رسالة الشركة / Our Mission</div>
-            </div>
-            <p>أن نكون قوة دافعة نحو التميز في إدارة الأساطيل وحلول الوقود عبر توفير تقنيات تواصل مبتكرة وحلول إنترنت الأشياء التي تلبي احتياجات عملائنا اليومية. نلتزم بتقديم خدمات وحلول تكنولوجية مخصصة تعزز الكفاءة وتوفر الوقت والجهد، مع التركيز على السلامة والأمان. نحن هنا لنبني علاقات طويلة الأمد مع عملائنا ونساهم في نمو أعمالهم عبر حلول معتمدة تلبي المعايير وتزيد من ثقتهم في إدارة مواردهم بالشكل الأمثل.</p>
-            <div class="page-footer"><span class="lblWeb">www.al-baqami.com</span><span>صفحة 3 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 4 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">4 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">لماذا شركتنا هي شريكك المثالي؟</div>
-            </div>
-            <p>إن شركتنا ليست مجرد مزود خدمات عابر، بل نحن شريك استراتيجي يقدم دعماً متكاملاً من الاستشارة والتصميم إلى خدمات ما بعد البيع، لضمان الأداء والاستدامة لأعمالك. إليك ما يجعلنا الخيار الأمثل والأنسب دائمًا:</p>
-            
-            <p><strong>1- فريق عمل متخصص ومحترف:</strong> خبراء مؤهلون في الاتصالات وإنترنت الأشياء وإدارة الوقود يعملون لتقديم حلول تتناسب مع احتياجات كل عميل وتواكب متغيرات وتحديات بيئة العمل المحلية والعالمية بكفاءة عالية.</p>
-            <p><strong>2- التزام دائم بخدمات ما بعد البيع:</strong> دعم فني مستمر من فرق مخصصة لضمان فعالية الحلول واستمرارية نجاحك الفني والتشغيلي والرد على الاستفسارات الفنية وحل المشكلات خلال زمن قياسي دون تعطيل للعمل.</p>
-            <p><strong>3- اعتماد ومصداقية كاملة:</strong> معتمدون من جهات تنظيمية وحكومية رئيسية بالمملكة (هيئة النقل، الغذاء والدواء، ومنصات الربط المختلفة) مما يضمن توافق حلولنا تماماً وفق أعلى معايير الجودة والسلامة القانونية.</p>
-            <p><strong>4- ابتكار وتطوير مستمر للأنظمة:</strong> نسعى باستمرار لتحديث تقنياتنا لمواكبة التطورات ودعم كفاءة عملك عبر تزويدك بآخر إصدارات البرمجيات وأقوى التحديثات الأمنية لأجهزة التتبع والاستشعار بمختلف مستوياتها.</p>
-            <p><strong>5- حلول مستدامة وعملية:</strong> نقدم حلولاً تقلل التكاليف والهدر وتضمن استدامة أعمالك على المدى الطويل من خلال خفض معدلات استهلاك الوقود الإضافي ومراقبة سلوكيات القيادة السيئة للسائقين على الطرق.</p>
-            
-            <p style="background:#f9f9f9; padding:8px; border-right:4px solid var(--primary-color); margin-top:10px;"><strong>اختيارك لشركتنا يعني دائمًا:</strong><br>
-            • الاستفادة القصوى من فريق مؤهل ودعم متواصل على مدار الساعة.<br>
-            • تقنيات متقدمة تعزز أداء أسطولك وتمنحك تحكماً شاملاً.<br>
-            • شراكة طويلة الأمد مبنية على الشفافية والالتزام الكامل والابتكار.</p>
-            <div class="page-footer"><span class="lblWeb">www.al-baqami.com</span><span>صفحة 4 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 5 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">5 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">المنتجات وأجهزة التتبع الرقمية المتطورة</div>
-            </div>
-            <p>نقدم لعملائنا النخبة باقة من أفضل أجهزة التتبع العالمية المعتمدة والمطابقة للمواصفات القياسية لهيئة الاتصالات والفضاء والتقنية وهيئة النقل العام لضمان أفضل تغطية وإشارة وسرعة نقل بيانات:</p>
-            
-            <div class="products-grid">
-                <div class="center-hub-badge">أنظمة<br>التتبع</div>
-                <div class="product-box">
-                    <div class="product-circle-img"><span>FMC130 الجهاز المتقدم</span></div>
-                    <div class="product-name">جهاز تتبع 4G متقدم FMC130</div>
-                    <div class="product-desc">يدعم 1 شريحة اتصال مدمجة وقراءة قنوات ومخرجات الـ CAN-BUS للسيارات والشاحنات لقراءة الأعطال الفنية والتشغيلية بدقة.</div>
-                </div>
-                <div class="product-box">
-                    <div class="product-circle-img"><span>FMC920 البيسك الذكي</span></div>
-                    <div class="product-name">جهاز تتبع 4G بيسك FMC920</div>
-                    <div class="product-desc">جهاز تتبع ذكي صغير الحجم يمتاز بحساسية عالية لالتقاط الإشارات، مثالي للمركبات الخفيفة وسيارات التوزيع والتشغيل السريع.</div>
-                </div>
-                <div class="product-box">
-                    <div class="product-circle-img"><span>CAN-CONTROL المتحكم</span></div>
-                    <div class="product-name">متحكم كمبيوتر السيارة المتقدم</div>
-                    <div class="product-desc">يدعم التحكم ببعض المركبات وقراءة البيانات التشغيلية المباشرة التي تدعم خطوط قراءة قنوات CAN-BUS لتوثيق الاستهلاك والسرعات.</div>
-                </div>
-                <div class="product-box">
-                    <div class="product-circle-img"><span>FMC650 العملاق الاحترافي</span></div>
-                    <div class="product-name">جهاز تتبع 4G احترافي FMC650</div>
-                    <div class="product-desc">جهاز متقدم يدعم 2 شريحة اتصال لضمان عدم انقطاع الإشارة نهائياً، متضمناً منافذ ربط كمبيوتر الشاحنات والمعدات الثقيلة.</div>
-                </div>
-            </div>
-            <div class="page-footer"><span class="lblCompanyName">مؤسسة البقمي</span><span>صفحة 5 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 6 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">6 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">الخدمات الرقمية التي نقدمها ونتميز بها</div>
-            </div>
-            
-            <div class="services-timeline">
-                <div class="service-node right" style="top: 0mm;">
-                    <div class="node-badge">01</div>
-                    <div class="node-content">
-                        <div class="node-title">حساس الوقود الذكي</div>
-                        <div class="node-desc">مراقبة دقيقة لمستوى الوقود في الخزانات وكشف حالات السرقة أو الهدر اللحظي بالوقت والتاريخ.</div>
-                    </div>
-                </div>
-                <div class="service-node left" style="top: 25mm;">
-                    <div class="node-badge">02</div>
-                    <div class="node-content">
-                        <div class="node-title">نظام التتبع اللحظي المتكامل</div>
-                        <div class="node-desc">مراقبة حركة ومسارات الأسطول بالكامل على الخرائط مباشرة تحديث دوري كل ثانيتين بدون انقطاع.</div>
-                    </div>
-                </div>
-                <div class="service-node right" style="top: 50mm;">
-                    <div class="node-badge">03</div>
-                    <div class="node-content">
-                        <div class="node-title">نظام إدارة الأسطول والمجموعات</div>
-                        <div class="node-desc">توزيع وتصنيف المركبات لخطوط ومجموعات عمل منفصلة لتسهيل الإدارة والتقارير الدورية لكل قسم تشغيلي.</div>
-                    </div>
-                </div>
-                <div class="service-node left" style="top: 75mm;">
-                    <div class="node-badge">04</div>
-                    <div class="node-content">
-                        <div class="node-title">تركيب حساسات الوزن اللحظية</div>
-                        <div class="node-desc">منع الحمولات الزائدة للمركبات والمحافظة على سلامة الأسطول من المخالفات المرورية وحماية البنية التحتية.</div>
-                    </div>
-                </div>
-                <div class="service-node right" style="top: 100mm;">
-                    <div class="node-badge">05</div>
-                    <div class="node-content">
-                        <div class="node-title">الإطفاء والتشغيل عن بعد آلياً</div>
-                        <div class="node-desc">إمكانية تعطيل أو إعادة تشغيل محرك المركبة بضغطة زر واحدة من النظام في حالات السرقة أو الطوارئ الأمنية.</div>
-                    </div>
-                </div>
-                <div class="service-node left" style="top: 125mm;">
-                    <div class="node-badge">06</div>
-                    <div class="node-content">
-                        <div class="node-title">نظام تعريف وهوية السائقين</div>
-                        <div class="node-desc">ربط تشغيل المركبة ببطاقات ومفاتيح تعريف خاصة بكل سائق لتوثيق ساعات العمل وسلوكيات القيادة الفردية.</div>
-                    </div>
-                </div>
-                <div class="service-node right" style="top: 150mm;">
-                    <div class="node-badge">07</div>
-                    <div class="node-content">
-                        <div class="node-title">نظام متطور لإدارة وقود المركبة</div>
-                        <div class="node-desc">تحليل دقيق لمعدلات الاستهلاك الفعلي ومقارنتها بالمسافات المقطوعة لإصدار تقارير الجدوى التشغيلية وتوفير الهدر.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="page-footer"><span class="lblWeb">www.al-baqami.com</span><span>صفحة 6 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 7 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">7 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">أهم التقارير الدورية الصادرة من المنظومة الشاملة</div>
-            </div>
-            <p>يوفر النظام لوحة تقارير تفصيلية تمكن الإدارة من مراجعة كل الحركات اليومية والأسبوعية للأسطول بضغطة زر، لدعم اتخاذ القرارات الصحيحة المعتمدة على البيانات الحقيقية والموثقة:</p>
-            
-            <table class="content-table" style="margin-top: 5mm;">
-                <thead>
-                    <tr>
-                        <th style="width: 30%;">اسم التقرير التفصيلي</th>
-                        <th style="width: 70%;">فائدة ومخرجات التقرير التشغيلية والإدارية</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>تقرير حركة ومسار الأسطول</td><td>يوثق بالتفصيل جميع خطوط السير والمسارات التي قطعتها المركبة من نقطة الانطلاق إلى نقطة الوصول.</td></tr>
-                    <tr><td>تقرير التوقفات والانتظار</td><td>يوضح أماكن وقوف المركبات ومدة كل توقف والمحرك يعمل أو في حالة إطفاء لكشف الهدر.</td></tr>
-                    <tr><td>تقرير المسافات المقطوعة الكلية</td><td>حساب دقيق لعدد الكيلومترات التي قطعتها كل مركبة أو الأسطول ككل خلال فترة زمنية محددة بدقة.</td></tr>
-                    <tr><td>تقرير سرعات وتجاوزات السائقين</td><td>رصد لحظي لتجاوز السرعات المحددة وتوثيق المخالفات على الطرق لضمان أمن الأصول وسلامة الأرواح.</td></tr>
-                    <tr><td>تقرير استهلاك وتعبئة الوقود</td><td>مخطط بياني يوضح كميات الوقود المستهلكة، ومقارنتها بالمسافات لكشف قفزات الانخفاض المفاجئ.</td></tr>
-                    <tr><td>تقرير تشغيل وإطفاء المحركات</td><td>يوثق عدد ساعات العمل الفعلية للمحركات يومياً لجدولة فترات الصيانة الدورية وتغيير الزيوت.</td></tr>
-                    <tr><td>تقرير التنبيهات والتحذيرات اللحظية</td><td>جمع وتوثيق حالات الطوارئ مثل فصل البطارية، تجاوز النطاق الجغرافي المسموح، أو الحوادث.</td></tr>
-                </tbody>
-            </table>
-            <div class="page-footer"><span class="lblCompanyName">مؤسسة البقمي</span><span>صفحة 7 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 8 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">8 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">أهم التنبيهات اللحظية الفورية (Real-time Alerts)</div>
-            </div>
-            <p>يتميز نظام التتبع السحابي الذكي بإصدار إشعارات فورية عبر تطبيق الجوال أو البريد الإلكتروني عند حدوث أي تجاوزات فنية أو تشغيلية من قبل السائقين على الطرقات:</p>
-            
-            <table class="content-table" style="margin-top: 5mm;">
-                <thead>
-                    <tr>
-                        <th style="width: 30%;">التنبيه اللحظي الذكي</th>
-                        <th style="width: 70%;">شرح آلية عمل وحالات إطلاق التنبيه الفوري للإدارة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>تنبيه تجاوز السرعة المحددة</td><td>ينطلق فوراً عند قيام السائق بتجاوز السرعة القانونية المحددة له مسبقاً من لوحة تحكم النظام.</td></tr>
-                    <tr><td>تنبيه دخول/خروج النطاق الجغرافي</td><td>إشعار فوري عند تجاوز المركبة للحدود والمناطق المسموح لها بالعمل والتحرك داخلها.</td></tr>
-                    <tr><td>تنبيه الحركة بدون إذن تشغيل</td><td>يتم إطلاقه في حال تحرك الشاحنة أو السيارة خارج أوقات الدوام الرسمي أو بدون بطاقة السائق.</td></tr>
-                    <tr><td>تنبيه فصل جهاز التتبع أو البطارية</td><td>إشعار أمني عالي الخطورة ينطلق لحظة محاولة التلاعب بأسلاك الجهاز أو فصل طاقة المركبة الكلية.</td></tr>
-                    <tr><td>تنبيه القيادة القاسية والتهور</td><td>رصد حالات الانعطاف الحاد، التوقف المفاجئ الصادم، أو التسارع العنيف لحماية الأصول والبضائع المنقولة.</td></tr>
-                    <tr><td>تنبيه فترات الانتظار والمحرك يعمل</td><td>تحذير عند ترك السائق للمحرك يعمل والمكيف نشط أثناء الوقوف الطويل لتفادي الهدر الكبير للوقود.</td></tr>
-                </tbody>
-            </table>
-            <div class="page-footer"><span class="lblWeb">www.al-baqami.com</span><span>صفحة 8 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 9 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">9 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">تطبيق تتبع الأسطول الذكي للهواتف المحمولة</div>
-            </div>
-            <p>نوفر لمدراء الأساطيل وأصحاب الحلال تطبيقاً متطوراً وسريعاً يعمل على أنظمة Android و iOS يمنحك السيطرة الكاملة والمراقبة اللحظية لأسطولك أينما كنت وفي أي وقت بمرونة تامة وعبر واجهات عربية احترافية:</p>
-            
-            <div style="background:#f9f9f9; padding:15px; border-radius:8px; border:1px solid #eee; margin-top:10px;">
-                <p><strong>مميزات وخصائص تطبيق الجوال الذكي لإدارة الأساطيل:</strong></p>
-                <p>• <strong>المراقبة المباشرة على الخريطة:</strong> عرض مواقع جميع المركبات حياً مع إيضاح حالة المحرك (يعمل/مطفأ) وسرعة التحرك الحالية لكل شاحنة بدقة.</p>
-                <p>• <strong>مراجعة وتوثيق الروابط السابقة:</strong> إمكانية إعادة تشغيل مسار وأماكن تحرك المركبة لأي يوم أو فترة سابقة وتتبع خط السير خطوة بخطوة.</p>
-                <p>• <strong>إرسال أوامر الإطفاء السريعة:</strong> ميزة أمنية تمكنك من إرسال أمر تعطيل تشغيل المحرك ومنع حركتها بضغطة زر مباشرة من داخل التطبيق.</p>
-                <p>• <strong>استقبال الإشعارات المنبثقة (Push Notifications):</strong> تظهر التنبيهات الهامة والتجاوزات على شاشة جوالك فوراً كإشعار منبثق دون الحاجة لفتح التطبيق.</p>
-                <p>• <strong>إدارة الحسابات وتصنيف المجموعات:</strong> سهولة التنقل بين فروع ومجموعات المركبات، ومتابعة أداء السائقين ومعدلات إنتاجيتهم اليومية.</p>
-            </div>
-            <div class="page-footer"><span class="lblCompanyName">مؤسسة البقمي</span><span>صفحة 9 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 10 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">10 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">الفوائد الاقتصادية والتشغيلية المكتسبة من النظام</div>
-            </div>
-            <p>إن الاستثمار في منظومة التتبع السحابية الخاصة بنا لا يقتصر على المراقبة الأمنية وحسب، بل يمتد ليشمل تحقيق عوائد مالية وتوفير مباشر في التكاليف التشغيلية الكلية للمؤسسة من خلال المحاور التالية:</p>
-            
-            <div class="benefits-layout">
-                <div class="benefit-card"><div class="benefit-icon-area">01</div><div class="benefit-text">تقليل استهلاك الوقود بنسب تصل إلى 25% عبر ضبط المسارات ومنع الهدر الطويل.</div></div>
-                <div class="benefit-card"><div class="benefit-icon-area">02</div><div class="benefit-text">حماية تامة للمحركات وقطع الغيار وتقليل تكاليف الصيانة عبر رصد القيادة القاسية.</div></div>
-                <div class="benefit-card"><div class="benefit-icon-area">03</div><div class="benefit-text">رفع معدلات إنتاجية الأسطول وزيادة عدد الرحلات اليومية عبر التنظيم والتقارير.</div></div>
-                <div class="benefit-card"><div class="benefit-icon-area">04</div><div class="benefit-text">الالتزام الكامل بالأنظمة وتفادي المخالفات المالية لهيئة النقل والجهات الحكومية.</div></div>
-                <div class="benefit-card"><div class="benefit-icon-area">05</div><div class="benefit-text">ضمان أمان البضائع والمنقولات ومراقبة درجات الحرارة والحمولات الزائدة بدقة.</div></div>
-                <div class="benefit-card"><div class="benefit-icon-area">06</div><div class="benefit-text">بناء نظام أمني محكم يمنع السرقات تماماً ويسهل استرداد الأصول في دقائق معدودة.</div></div>
-            </div>
-            <div class="page-footer"><span class="lblWeb">www.al-baqami.com</span><span>صفحة 10 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 11 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">11 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">مقارنة الخصائص الفنية والميزات بين باقات المنظومة</div>
-            </div>
-            <p>نقدم لعملائنا خيارات مرنة تتناسب مع أحجام وأنشطة أساطيلهم المختلفة، وتوضح المقارنة التالية الميزات المتضمنة في كل باقة لمساعدتكم على اختيار الأنسب لأعمالكم:</p>
-            
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th style="width: 5%;">م</th>
-                        <th style="width: 50%;">الخاصية والميزة الفنية المتوفرة بالمنظومة</th>
-                        <th style="width: 15%;">الباقة الأساسية</th>
-                        <th style="width: 15%;">الباقة المتقدمة</th>
-                        <th style="width: 15%;">الباقة الاحترافية</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>1</td><td>التتبع اللحظي وتحديث المواقع على الخريطة مباشرة</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td></tr>
-                    <tr><td>2</td><td>حفظ تاريخ مسارات وتحركات المركبة السابقة</td><td>90 يوم</td><td>365 يوم</td><td>2 سنتين</td></tr>
-                    <tr><td>3</td><td>دعم تطبيق الجوال لمدير الأسطول (Android / iOS)</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td></tr>
-                    <tr><td>4</td><td>استقبال التنبيهات اللحظية (سرعة، نطاق جغرافي)</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td></tr>
-                    <tr><td>5</td><td>تقارير تشغيل وإطفاء المحرك وساعات العمل اليومية</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td></tr>
-                    <tr><td>6</td><td>الربط المباشر مع منصات هيئة النقل العام ومدينتي</td><td class="check-no">❌ لا</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td></tr>
-                    <tr><td>7</td><td>أمر الإطفاء والتعطيل عن بعد آلياً عبر التطبيق والنظام</td><td class="check-no">❌ لا</td><td class="check-yes">✔ نعم</td><td class="check-yes">✔ نعم</td></tr>
-                    <tr><td>8</td><td>قراءة بيانات كمبيوتر السيارة والـ CAN-BUS للأعطال</td><td class="check-no">❌ لا</td><td class="check-no">❌ لا</td><td class="check-yes">✔ نعم</td></tr>
-                    <tr><td>9</td><td>ربط وتركيب حساسات الوزن اللحظية ومنع المخالفات</td><td class="check-no">❌ لا</td><td class="check-no">❌ لا</td><td class="check-yes">✔ نعم</td></tr>
-                    <tr><td>10</td><td>دعم تركيب حساسات الوقود الذكية وكشف السرقات والهدر</td><td class="check-no">❌ لا</td><td class="check-no">❌ لا</td><td class="check-yes">✔ نعم</td></tr>
-                </tbody>
-            </table>
-            <div class="page-footer"><span class="lblCompanyName">مؤسسة البقمي</span><span>صفحة 11 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 12 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">12 من 13</div>
-            </div>
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">جدول عروض الأسعار والبنود المالية التفصيلية</div>
-            </div>
-            <p>بناءً على المعايير الفنية المطلوبة، يسعدنا تقديم عرض السعر المالي التالي والخاص بتقديم وتركيب منظومة التتبع المتكاملة لأصولكم وحساب التكاليف الحية تلقائياً:</p>
-            
-            <table class="content-table" id="pdfFinTable">
-                <thead>
-                    <tr>
-                        <th style="text-align: right; width: 45%;">البيان / وصف البند والخدمة المعروضة</th>
-                        <th style="text-align: center; width: 15%;">سعر الوحدة</th>
-                        <th style="text-align: center; width: 15%;">الكمية</th>
-                        <th style="text-align: left; width: 25%;">الإجمالي الكلي</th>
-                    </tr>
-                </thead>
-                <tbody id="pdfFinTableBody">
-                    <!-- تعبئة ديناميكية -->
-                </tbody>
-            </table>
-
-            <div style="width: 50%; margin-right: auto; display: flex; flex-direction: column; gap: 6px; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px;">
-                <div style="display: flex; justify-content: space-between; font-size: 13px; color: #444;">
-                    <span>المجموع الفرعي (غير شامل الضريبة):</span>
-                    <span id="pdfSubtotal">0.00 ج.م</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 13px; color: #444;">
-                    <span>قيمة الضريبة المضافة (<span id="pdfTaxPercentage">15</span>%):</span>
-                    <span id="pdfTaxAmount">0.00 ج.م</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; color: #c0392b; border-top: 2px solid var(--dark-color); padding-top: 6px;">
-                    <span>المبلغ الإجمالي الكلي النهائي:</span>
-                    <span id="pdfTotal">0.00 ج.م</span>
-                </div>
-            </div>
-            <div class="page-footer"><span class="lblWeb">www.al-baqami.com</span><span>صفحة 12 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 13 -->
-        <div class="page">
-            <div class="page-header">
-                <div class="logo-container"><img class="global-logo" src=""></div>
-                <div class="brand-identity-text">مؤسسة <span>البقمي</span></div>
-                <div class="page-number-top">13 من 13</div>
-            </div>
-            
-            <div class="section-header" style="margin-top: 5mm;">
-                <div class="section-header-title">الشروط والأحكام المالية والفنية العامة للعرض</div>
-            </div>
-            <div class="rule-highlight">1- صلاحية عرض السعر المقدم: هذا العرض سارٍ لمدة 30 يوماً فقط من تاريخ الإصدار الموثق بأعلى الصفحة.</div>
-            <div class="rule-normal-box">2- شروط وآلية الدفع: يتم دفع 50% دفعة مقدمة عند توثيق التعميد وقبول العرض، و 50% المتبقية فور الانتهاء من أعمال التركيب والتشغيل والربط الفعلي للمنظومة.</div>
-            <div class="rule-normal-box">3- فترة الضمان المعتمدة: ضمان لمدة 2 سنتين على كافة أجهزة التتبع والاستشعار ضد العيوب المصنعية، مع استبدال فوري للجهاز المتعطل مجاناً دون تكاليف إضافية.</div>
-            <div class="rule-normal-box">4- الدعم الفني والصيانة: نلتزم بتقديم دعم فني مخصص على مدار الساعة (24/7) عبر مهندسي الأنظمة المدمجة وفريق الدعم البرمجي، والاستجابة الميدانية خلال 48 ساعة كحد أقصى.</div>
-            <div class="rule-normal-box">5- مدة وأعمال التنفيذ والتركيب: يبدأ العمل فور استلام الدفعة المقدمة، وتلتزم الفرق الفنية بإنهاء تركيب الأجهزة وإعداد الحسابات والربط السحابي في فترات قياسية متفق عليها مسبقاً.</div>
-
-            <div style="margin-top: 10px;">
-                <h4 style="border-right: 4px solid var(--primary-color); padding-right: 8px; margin-bottom: 5px; font-size:13px;">الحسابات البنكية ومنافذ التحويل الرسمية المعتمدة:</h4>
-                <div id="vBankDetails" style="font-size: 11.5px; color: #555; white-space: pre-line; line-height: 1.5;">
-                    <!-- تعبئة حية -->
-                </div>
-            </div>
-
-            <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 10px;">
-                <div style="text-align: center; width: 45%;">
-                    <p style="font-weight: bold; margin-bottom: 15px; font-size: 13px;">الختم والتوقيع الرسمي للمنشأة</p>
-                    <div style="width: 35mm; height: 12mm; border: 1px dashed #ccc; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 11px;">مؤسسة البقمي للخدمات</div>
-                </div>
-                <div style="text-align: center; width: 45%;">
-                    <p style="font-weight: bold; margin-bottom: 15px; font-size: 13px;">اعتماد وتوقيع العميل المستهدف</p>
-                    <div style="width: 35mm; height: 12mm; border: 1px dashed #ccc; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 11px;">موافقة وتوقيع بالتعميد</div>
-                </div>
-            </div>
-
-            <div class="page-footer">
-                <span>تم إصدار هذا العرض وتوثيقه آلياً عبر الأنظمة البرمجية الخاصة بـ لوحة م/ محمد اشرف (FARESPCB).</span>
-                <span>صفحة 13 من 13</span>
-            </div>
-        </div>
-
+    <div class="loading-overlay" id="loading">
+        <div class="spinner"></div>
+        <h2 style="color: var(--gold-glow); font-weight: 700;">جاري دمج البيانات وحقن مسار الشعار الجديد في كافة الصفحات...</h2>
     </div>
+
+    <div id="pdfRenderZone"></div>
 
     <script>
-        function syncData() {
-            const compName = document.getElementById('inpCompanyName').value;
-            const phone = document.getElementById('inpPhone').value;
-            const web = document.getElementById('inpWeb').value;
-            const cr = document.getElementById('inpCR').value;
-            const taxNum = document.getElementById('inpTaxNumber').value;
-
-            document.querySelectorAll('.lblCompanyName').forEach(el => el.textContent = compName);
-            document.querySelectorAll('.lblPhone').forEach(el => el.textContent = phone);
-            document.querySelectorAll('.lblWeb').forEach(el => el.textContent = web);
-            
-            if(document.getElementById('vClientName')) document.getElementById('vClientName').textContent = document.getElementById('inpClientName').value;
-            if(document.getElementById('vContactPerson')) document.getElementById('vContactPerson').textContent = document.getElementById('inpContactPerson').value;
-            if(document.getElementById('vClientPhone')) document.getElementById('vClientPhone').textContent = document.getElementById('inpClientPhone').value;
-            if(document.getElementById('vClientEmail')) document.getElementById('vClientEmail').textContent = document.getElementById('inpClientEmail').value;
-            if(document.getElementById('vVehicleModel')) document.getElementById('vVehicleModel').textContent = document.getElementById('inpVehicleModel').value;
-            if(document.getElementById('vVehicleQty')) document.getElementById('vVehicleQty').textContent = document.getElementById('inpVehicleQty').value;
-            
-            if(document.getElementById('vCR')) document.getElementById('vCR').textContent = cr;
-            if(document.getElementById('vTaxNumber')) document.getElementById('vTaxNumber').textContent = taxNum;
-            if(document.getElementById('vBankDetails')) document.getElementById('vBankDetails').textContent = document.getElementById('inpBankDetails').value;
+        function syncQuantities() {
+            const count = document.getElementById('vehicleCount').value;
+            document.getElementById('p1_qty').value = count;
+            document.getElementById('p2_qty').value = count;
         }
 
-        function addNewRow() {
-            const tableBody = document.querySelector('#itemsEditorTable tbody');
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><input type="text" placeholder="بند جديد"></td>
-                <td><input type="text" placeholder="وصف الخدمة بالتفصيل"></td>
-                <td><input type="number" value="0.00" oninput="recalculateFinancials()"></td>
-                <td><input type="number" value="1" oninput="recalculateFinancials()"></td>
-                <td><button class="btn-danger" onclick="removeRow(this)">حذف</button></td>
-            `;
-            tableBody.appendChild(tr);
-            recalculateFinancials();
-        }
+        function generateLuxuryPDF() {
+            document.getElementById('loading').style.display = 'flex';
+            const renderZone = document.getElementById('pdfRenderZone');
+            renderZone.innerHTML = '';
 
-        function removeRow(btn) {
-            btn.closest('tr').remove();
-            recalculateFinancials();
-        }
-
-        function recalculateFinancials() {
-            syncData();
-            
-            const taxRate = parseFloat(document.getElementById('inpTaxRate').value) || 0;
-            if(document.getElementById('pdfTaxPercentage')) document.getElementById('pdfTaxPercentage').textContent = taxRate;
-
-            const rows = document.querySelectorAll('#itemsEditorTable tbody tr');
-            const pdfTableBody = document.getElementById('pdfFinTableBody');
-            if(!pdfTableBody) return;
-
-            pdfTableBody.innerHTML = '';
-            let subtotal = 0;
-
-            rows.forEach(row => {
-                const inputs = row.querySelectorAll('input');
-                const title = inputs[0].value;
-                const desc = inputs[1].value;
-                const price = parseFloat(inputs[2].value) || 0;
-                const qty = parseFloat(inputs[3].value) || 0;
-
-                if (title || desc) {
-                    const totalRow = price * qty;
-                    subtotal += totalRow;
-
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>
-                            <div style="font-weight: bold; color: var(--dark-color);">${title}</div>
-                            <div style="font-size: 11px; color: #666; margin-top: 3px;">${desc}</div>
-                        </td>
-                        <td class="text-center">${price.toFixed(2)} ج.م</td>
-                        <td class="text-center">${qty}</td>
-                        <td class="text-left" style="font-weight: bold; color: var(--dark-color);">${totalRow.toFixed(2)} ج.م</td>
-                    `;
-                    pdfTableBody.appendChild(tr);
-                }
-            });
-
-            if(pdfTableBody.children.length === 0) {
-                pdfTableBody.innerHTML = `<tr><td colspan="4" class="text-center" style="color:#aaa; padding: 25px 0;">لا توجد بنود مالية معروضة.</td></tr>`;
-            }
-
-            const taxAmount = subtotal * (taxRate / 100);
-            const grandTotal = subtotal + taxAmount;
-
-            if(document.getElementById('pdfSubtotal')) document.getElementById('pdfSubtotal').textContent = subtotal.toFixed(2) + " ج.م";
-            if(document.getElementById('pdfTaxAmount')) document.getElementById('pdfTaxAmount').textContent = taxAmount.toFixed(2) + " ج.م";
-            if(document.getElementById('pdfTotal')) document.getElementById('pdfTotal').textContent = grandTotal.toFixed(2) + " ج.م";
-        }
-
-        function handleLogoChange(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelectorAll('.global-logo').forEach(img => {
-                        img.src = e.target.result;
-                        img.style.display = 'block';
-                    });
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function generatePerfectPDF() {
-            recalculateFinancials();
-
-            const element = document.getElementById('pdfCaptureArea');
-            const clientName = document.getElementById('inpClientName').value || 'عرض_سعر';
-
-            // إعدادات هندسية دقيقة لمنع الانفصال والصفحات البيضاء تماماً
-            const opt = {
-                margin:       0,
-                filename:     `Baqami_Proposal_${clientName}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, letterRendering: true, scrollY: 0 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            const payload = {
+                logoUrl: document.getElementById('companyLogoUrl').value,
+                customerName: document.getElementById('customerName').value,
+                contactPerson: document.getElementById('contactPerson').value,
+                mobile: document.getElementById('customerMobile').value,
+                email: document.getElementById('customerEmail').value,
+                vehicleOffer: document.getElementById('vehicleOffer').value,
+                vehicleCount: document.getElementById('vehicleCount').value,
+                salesConsultant: document.getElementById('salesConsultant').value,
+                salesMobile: document.getElementById('salesMobile').value,
+                date: document.getElementById('offerDate').value,
+                
+                p1_rate: parseFloat(document.getElementById('p1_rate').value) || 0,
+                p1_qty: parseFloat(document.getElementById('p1_qty').value) || 0,
+                p2_rate: parseFloat(document.getElementById('p2_rate').value) || 0,
+                p2_qty: parseFloat(document.getElementById('p2_qty').value) || 0,
+                p3_rate: parseFloat(document.getElementById('p3_rate').value) || 0,
+                p3_qty: parseFloat(document.getElementById('p3_qty').value) || 0
             };
 
-            html2pdf().set(opt).from(element).save();
+            let loadedIframes = 0;
+            const totalPages = 13;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'pdf-page-wrapper';
+                
+                const iframe = document.createElement('iframe');
+                iframe.src = `pages/page${i}.html`;
+                iframe.id = `iframe_page_${i}`;
+                
+                wrapper.appendChild(iframe);
+                renderZone.appendChild(wrapper);
+
+                iframe.onload = function() {
+                    loadedIframes++;
+                    iframe.contentWindow.postMessage({
+                        type: 'RENDER_DATA',
+                        ...payload
+                    }, '*');
+
+                    if (loadedIframes === totalPages) {
+                        setTimeout(() => {
+                            executePDFPrint(payload.customerName);
+                        }, 2000);
+                    }
+                };
+            }
         }
 
-        window.onload = function() {
-            const today = new Date().toISOString().split('T')[0];
-            if(document.getElementById('vCurrentDate')) document.getElementById('vCurrentDate').textContent = today;
-            recalculateFinancials();
-        };
+        function executePDFPrint(customerName) {
+            const element = document.getElementById('pdfRenderZone');
+            const opt = {
+                margin:       0,
+                filename:     `العرض الفني والمالي - ${customerName}.pdf`,
+                image:        { type: 'jpeg', quality: 1.0 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                document.getElementById('loading').style.display = 'none';
+            }).catch((err) => {
+                console.error(err);
+                document.getElementById('loading').style.display = 'none';
+            });
+        }
     </script>
 </body>
 </html>
