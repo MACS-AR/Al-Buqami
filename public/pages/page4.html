@@ -1,1 +1,31 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Page 4</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; padding: 25mm 20mm; width: 210mm; height: 297mm; box-sizing: border-box; }
+        .header { display: flex; justify-content: flex-end; } .header img { height: 18mm; }
+        .content { margin-top: 15mm; line-height: 1.8; font-size: 16px; }
+        .title { font-size: 22px; font-weight: bold; color: #d4af37; border-bottom: 2px solid #121212; padding-bottom: 5px; margin-bottom: 10mm; }
+        ul { margin-top: 5mm; padding-right: 20px; } li { margin-bottom: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header"><img id="dynamicLogo" src="" alt="Logo"></div>
+    <div class="content">
+        <div class="title">الاعتمادات والمميزات الأساسية للنظام</div>
+        <p>نظامنا معتمد ومرخص بالكامل ومتوافق مع شروط الهيئات التنظيمية:</p>
+        <ul>
+            <li>ربط مباشر وفوري مع منصات هيئة النقل العام (وصل).</li>
+            <li>تحديث فوري للموقع الجغرافي للمركبة كل ثانية.</li>
+            <li>سيرفرات سحابية آمنة ومستقرة ومتاحة بنسبة 99.9%.</li>
+            <li>تنبيهات فورية عند تجاوز السرعات المحددة أو الخروج عن المسار.</li>
+        </ul>
+    </div>
+    <script>
+        window.addEventListener('message', function(e) { if (e.data.type === 'RENDER_DATA') document.getElementById('dynamicLogo').src = e.data.logoUrl || ''; });
+    </script>
+</body>
+</html>
