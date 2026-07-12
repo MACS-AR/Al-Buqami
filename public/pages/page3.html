@@ -1,1 +1,25 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Page 3</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; padding: 25mm 20mm; width: 210mm; height: 297mm; box-sizing: border-box; }
+        .header { display: flex; justify-content: flex-end; } .header img { height: 18mm; }
+        .content { margin-top: 15mm; line-height: 1.8; font-size: 16px; color: #333; }
+        .title { font-size: 22px; font-weight: bold; color: #d4af37; border-bottom: 2px solid #121212; padding-bottom: 5px; margin-bottom: 10mm; }
+    </style>
+</head>
+<body>
+    <div class="header"><img id="dynamicLogo" src="" alt="Logo"></div>
+    <div class="content">
+        <div class="title">من نحن ومقدمة الخدمة</div>
+        <p>يسرنا أن نتقدم لسيادتكم بهذا العرض الفني والمالي الخاص بأنظمة التتبع الآلي للمركبات وإدارة الأساطيل، حيث نسعى جاهدين لتقديم أفضل الحلول البرمجية والهندسية المتكاملة المعتمدة لدى الهيئات الرسمية بالمملكة العربية السعودية وبأعلى معايير الجودة العالمية المتبعة.</p>
+        <p>تتميز أنظمتنا بالدقة المتناهية والقدرة على العمل الشاق وتحمل الظروف المناخية المتغيرة مع تقديم تقارير فورية ودقيقة تساعد أصحاب القرار على إدارة منظوماتهم بكفاءة تامة.</p>
+    </div>
+    <script>
+        window.addEventListener('message', function(e) { if (e.data.type === 'RENDER_DATA') document.getElementById('dynamicLogo').src = e.data.logoUrl || ''; });
+    </script>
+</body>
+</html>
