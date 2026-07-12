@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>العرض المالي الحسابي المحدث</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        @page { size: A4; margin: 0; } 
+        body { font-family: 'Cairo', sans-serif; padding: 25mm 20mm; width: 210mm; height: 297mm; box-sizing: border-box; background: #fff; }
+        .header { display: flex; justify-content: flex-end; margin-bottom: 15mm; } 
+        .header img { height: 18mm; max-width: 45mm; object-fit: contain; }
+        .title { text-align: left; font-size: 24px; font-weight: bold; margin-bottom: 10mm; color: #000; border-bottom: 2px solid #f1b317; padding-bottom: 3mm; width: fit-content; }
+        table { width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; margin-top: 5mm; }
+        th, td { border: 1px solid #000; padding: 10px; font-weight: bold; color: #000; }
+        th { background: #fafafa; font-weight: bold; }
+        .highlight { background-color: #f1b317; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header"><img id="dynamicLogo" src="" alt="Logo"></div>
+    <div class="title">العرض المالي</div>
+    <table>
+        <thead>
+            <tr>
+                <th>البند</th>
+                <th>البيان</th>
+                <th>تكلفة الوحدة</th>
+                <th>عدد الاجهزة</th>
+                <th>المستحق عند التعاقد</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>اشتراك لمدة 12 شهر</td>
+                <td>اشتراك موقع بيسك نقل</td>
+                <td id="r1">0.00</td>
+                <td id="q1">0</td>
+                <td id="t1">0.00</td>
+            </tr>
+            <tr>
+                <td>Teltonika GPS Basic</td>
+                <td>جهاز تتبع 4G بيسك</td>
+                <td id="r2">0.00</td>
+                <td id="q2">0</td>
+                <td id="t2">0.00</td>
+            </tr>
+            <tr>
+                <td>حساس وزن</td>
+                <td>حساس وزن ميكانيكي</td>
+                <td id="r3">0.00</td>
+                <td id="q3">0</td>
+                <td id="t3">0.00</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" style="font-weight:bold; font-size:13px; text-align: right; padding-right: 15px;">الإجمالي المالي المعتمد للتعاقد.</td>
+                <td colspan="2" style="font-weight:bold; text-align: left;">المجموع</td>
+                <td class="highlight" id="subTotal">0.00</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border: none;"></td>
+                <td colspan="2" style="font-weight:bold; text-align: left;">الضريبة 15%</td>
+                <td class="highlight" id="vatTotal">0.00</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border: none;"></td>
+                <td colspan="2" style="font-weight:bold; text-align: left;">الإجمالي شامل الضريبة</td>
+                <td class="highlight" id="finalTotal">0.00</td>
+            </tr>
+        </tfoot>
+    </table>
 
+    <script>
+        window.addEventListener('message', function(e) {
+            if (e.data.type === 'RENDER_DATA') {
+                document.getElementById('dynamicLogo').src = e.data.logoUrl || '';
+                
+                const t1 = e.data.p1_rate * e.data.p1_qty;
+                document.getElementById('r1').innerText = e.data.p1_rate.toFixed(2);
+                document.getElementById('q1').innerText = e.data.p1_qty;
+                document.getElementById('t1').innerText = t1.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+                const t2 = e.data.p2_rate * e.data.p2_qty;
+                document.getElementById('r2').innerText = e.data.p2_rate.toFixed(2);
+                document.getElementById('q2').innerText = e.data.p2_qty;
+                document.getElementById('t2').innerText = t2.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+                const t3 = e.data.p3_rate * e.data.p3_qty;
+                document.getElementById('r3').innerText = e.data.p3_rate.toFixed(2);
+                document.getElementById('q3').innerText = e.data.p3_qty;
+                document.getElementById('t3').innerText = t3.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+                const subTotalSum = t1 + t2 + t3;
+                const vatSum = subTotalSum * 0.15;
+                const grandTotalSum = subTotalSum + vatSum;
+
+                document.getElementById('subTotal').innerText = subTotalSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('vatTotal').innerText = vatSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('finalTotal').innerText = grandTotalSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            }
+        });
+    </script>
+</body>
+</html>
