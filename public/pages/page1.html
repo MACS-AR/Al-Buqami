@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>TST - الغلاف</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        @page { size: A4; margin: 0; }
+        body {
+            font-family: 'Cairo', sans-serif; margin: 0; padding: 0;
+            width: 210mm; height: 297mm; box-sizing: border-box;
+            background-color: #ffffff; position: relative; -webkit-print-color-adjust: exact;
+        }
+        .header-logo { position: absolute; top: 15mm; left: 15mm; width: 35mm; }
+        .main-design { position: absolute; top: 75mm; right: 0; width: 100%; display: flex; align-items: center; }
+        .black-line { width: 5px; height: 65mm; background-color: #3a3a3a; }
+        .yellow-block { width: 50mm; height: 32mm; background-color: #f1b317; }
+        .center-logo { width: 105mm; height: 105mm; margin-right: -12mm; background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .title-box { position: absolute; top: 200mm; width: 100%; text-align: center; }
+        .title-box h1 { color: #f1b317; font-size: 42px; margin: 0; font-weight: 700; }
+        .title-box h2 { color: #f1b317; font-size: 32px; margin: 5mm 0 0 0; font-weight: 400; }
+        .footer-info { position: absolute; bottom: 20mm; left: 20mm; font-family: Arial, sans-serif; direction: ltr; }
+        .info-row { margin-bottom: 2mm; font-size: 14px; }
+        .info-row .lbl { color: #777; margin-right: 5px; }
+        .info-row .val { font-weight: bold; color: #222; }
+        .qr-code { position: absolute; bottom: 20mm; right: 20mm; width: 28mm; height: 28mm; }
+    </style>
+</head>
+<body>
+    <img id="topLogo" class="header-logo" src="../assets/logo.png" alt="TST">
+    <div class="main-design">
+        <div class="black-line"></div>
+        <div class="yellow-block"></div>
+        <div class="center-logo" id="centerLogo" style="background-image: url('../assets/logo.png');"></div>
+    </div>
+    <div class="title-box">
+        <h1>عرض</h1>
+        <h2 id="custName">نموذج تتبع</h2>
+    </div>
+    <img id="qrImg" class="qr-code" src="../assets/qr.png">
+    <div class="footer-info">
+        <div class="info-row"><span class="lbl">Unified number</span><span class="val" id="uniPhone">+9660106</span></div>
+        <div class="info-row"><span class="lbl">Website</span><span class="val" id="webUrl">www.tst-ksa.com</span></div>
+    </div>
+    <script>
+        window.addEventListener('message', function(e) {
+            if (e.data.type === 'RENDER_DATA') {
+                if(e.data.customerName) document.getElementById('custName').innerText = e.data.customerName;
+                if(e.data.logo) {
+                    document.getElementById('topLogo').src = e.data.logo;
+                    document.getElementById('centerLogo').style.backgroundImage = `url('${e.data.logo}')`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
