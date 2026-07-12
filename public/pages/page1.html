@@ -2,230 +2,33 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم الملكية - FARESPCB</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <title>Page 1 - Cover</title>
     <style>
-        :root {
-            --bg-dark: #121212;
-            --card-dark: #1a1a1a;
-            --gold-primary: #d4af37;
-            --gold-glow: #f1b317;
-            --gold-dark: #aa8416;
-            --text-light: #f5f5f5;
-            --text-muted: #aaaaaa;
-            --border-gold: rgba(212, 175, 55, 0.3);
-        }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-dark); color: var(--text-light); margin: 0; padding: 20px; direction: rtl; }
-        .dashboard-container { max-width: 1200px; margin: 0 auto; background: var(--card-dark); border: 2px solid var(--gold-primary); border-radius: 15px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); padding: 30px; position: relative; }
-        .main-header { text-align: center; border-bottom: 2px double var(--gold-primary); padding-bottom: 20px; margin-bottom: 30px; }
-        .main-header h1 { color: var(--gold-glow); font-size: 32px; font-weight: 900; margin: 0; text-shadow: 0px 2px 10px rgba(241, 179, 23, 0.3); }
-        .section-box { border: 1px solid var(--border-gold); border-radius: 8px; padding: 20px; margin-bottom: 25px; background: rgba(0, 0, 0, 0.2); }
-        .section-title { color: var(--gold-primary); font-size: 18px; font-weight: 700; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid var(--border-gold); padding-bottom: 8px; }
-        .grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .input-group { display: flex; flex-direction: column; gap: 8px; }
-        label { color: var(--gold-primary); font-weight: 600; font-size: 14px; }
-        input { background-color: #222; border: 1px solid var(--border-gold); color: var(--text-light); padding: 12px; border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 14px; }
-        input:focus { outline: none; border-color: var(--gold-glow); background-color: #2a2a2a; }
-        .pricing-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .pricing-table th { background-color: #2a220a; color: var(--gold-glow); border: 1px solid var(--border-gold); padding: 12px; font-weight: 700; }
-        .pricing-table td { border: 1px solid var(--border-gold); padding: 10px; background: #181818; text-align: center; }
-        .pricing-table input { width: 90%; padding: 8px; text-align: center; }
-        .btn-container { text-align: center; margin-top: 30px; }
-        .btn-submit { background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 50%, var(--gold-glow) 100%); color: #121212; border: none; padding: 15px 45px; font-size: 18px; font-weight: 900; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); }
-        .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(18, 18, 18, 0.9); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
-        .spinner { width: 60px; height: 60px; border: 5px solid #222; border-top: 5px solid var(--gold-glow); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        #pdfRenderZone { position: absolute; left: -9999px; top: -9999px; width: 210mm; background: white; }
-        .pdf-page-wrapper { width: 210mm; height: 297mm; page-break-after: always; overflow: hidden; position: relative; }
-        iframe { width: 210mm; height: 297mm; border: none; overflow: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        @page { size: A4; margin: 0; }
+        body { font-family: 'Cairo', sans-serif; margin: 0; padding: 0; width: 210mm; height: 297mm; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #121212; color: #fff; position: relative; box-sizing: border-box; }
+        .border-line { position: absolute; top: 15mm; bottom: 15mm; left: 15mm; right: 15mm; border: 2px solid #d4af37; }
+        .logo-container { margin-bottom: 25mm; z-index: 2; }
+        .logo-container img { height: 35mm; max-width: 80mm; object-fit: contain; }
+        .main-title { font-size: 38px; font-weight: 900; color: #f1b317; text-align: center; letter-spacing: 1px; line-height: 1.6; z-index: 2; margin-bottom: 10mm; }
+        .sub-title { font-size: 20px; color: #eaeaea; text-align: center; font-weight: bold; z-index: 2; }
     </style>
 </head>
 <body>
-
-    <div class="dashboard-container">
-        <div class="main-header">
-            <h1>لوحة التحكم المحدثة لإصدار العروض الفنية</h1>
-            <p>تخصيص كامل للهوية والشعار والأقسام المالية الحية</p>
-        </div>
-
-        <!-- إعدادات الهوية والشعار -->
-        <div class="section-box">
-            <div class="section-title">✦ تخصيص مسار الهوية والشعار</div>
-            <div class="input-group">
-                <label>رابط شعار الشركة الفاخر (Logo URL):</label>
-                <input type="text" id="companyLogoUrl" value="../assets/logo.png" style="direction: ltr;">
-            </div>
-        </div>
-
-        <!-- بيانات العميل المحدثة -->
-        <div class="section-box">
-            <div class="section-title">✦ بيانات العميل والتعاقد (صفحة 2)</div>
-            <div class="grid-inputs">
-                <div class="input-group">
-                    <label>اسم العميل / الشركة:</label>
-                    <input type="text" id="customerName" value="شركة ومؤسسة البقمي للمقاولات">
-                </div>
-                <div class="input-group">
-                    <label>الشخص المسؤول (Contact Person):</label>
-                    <input type="text" id="contactPerson" value="م / محمد البقمي">
-                </div>
-                <div class="input-group">
-                    <label>رقم جوال العميل:</label>
-                    <input type="text" id="customerMobile" value="+966 500 000 000">
-                </div>
-                <div class="input-group">
-                    <label>البريد الإلكتروني للعميل:</label>
-                    <input type="text" id="customerEmail" value="info@albuqami.com">
-                </div>
-                <div class="input-group">
-                    <label>نوع العرض المطلوب (Offer For Vehicle):</label>
-                    <input type="text" id="vehicleOffer" value="Teltonika GPS Basic Protocol">
-                </div>
-                <div class="input-group">
-                    <label>عدد السيارات الكلي:</label>
-                    <input type="number" id="vehicleCount" value="56" oninput="syncQuantities()">
-                </div>
-                <div class="input-group">
-                    <label>مستشار المبيعات المسؤول:</label>
-                    <input type="text" id="salesConsultant" value="المهندس أشرف">
-                </div>
-                <div class="input-group">
-                    <label>جوال مستشار المبيعات:</label>
-                    <input type="text" id="salesMobile" value="+966 555 555 555">
-                </div>
-                <div class="input-group">
-                    <label>تاريخ إصدار العرض:</label>
-                    <input type="date" id="offerDate" value="2026-07-12">
-                </div>
-            </div>
-        </div>
-
-        <!-- تفاصيل العرض المالي المستهدف -->
-        <div class="section-box">
-            <div class="section-title">✦ تفاصيل بنود العرض المالي (صفحة 12)</div>
-            <div style="overflow-x: auto;">
-                <table class="pricing-table">
-                    <thead>
-                        <tr>
-                            <th>البند والبيان الفني</th>
-                            <th>سعر الوحدة (ريال)</th>
-                            <th>الكمية / العدد</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>اشتراك منصة تتبع لمدة 12 شهر (بيسك نقل)</td>
-                            <td><input type="number" id="p1_rate" value="240"></td>
-                            <td><input type="number" id="p1_qty" value="56"></td>
-                        </tr>
-                        <tr>
-                            <td>جهاز تتبع Teltonika GPS Basic 4G أوروبي</td>
-                            <td><input type="number" id="p2_rate" value="190"></td>
-                            <td><input type="number" id="p2_qty" value="56"></td>
-                        </tr>
-                        <tr>
-                            <td>حساس وزن ميكانيكي متطور ومعاير</td>
-                            <td><input type="number" id="p3_rate" value="180"></td>
-                            <td><input type="number" id="p3_qty" value="13"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="btn-container">
-            <button class="btn-submit" onclick="generateLuxuryPDF()">⚙️ معالجة وتصدير العرض المالي المحدث (PDF)</button>
-        </div>
+    <div class="border-line"></div>
+    <div class="logo-container">
+        <img id="dynamicLogo" src="" alt="Logo">
     </div>
-
-    <div class="loading-overlay" id="loading">
-        <div class="spinner"></div>
-        <h2 style="color: var(--gold-glow); font-weight: 700;">جاري دمج البيانات وحقن مسار الشعار الجديد...</h2>
-    </div>
-
-    <div id="pdfRenderZone"></div>
+    <div class="main-title">عرض فني ومالي متكامل<br>أنظمة التتبع وإدارة الأساطيل الذكية</div>
+    <div class="sub-title" id="cName">شركة ومؤسسة البقمي للمقاولات</div>
 
     <script>
-        function syncQuantities() {
-            const count = document.getElementById('vehicleCount').value;
-            document.getElementById('p1_qty').value = count;
-            document.getElementById('p2_qty').value = count;
-        }
-
-        function generateLuxuryPDF() {
-            document.getElementById('loading').style.display = 'flex';
-            const renderZone = document.getElementById('pdfRenderZone');
-            renderZone.innerHTML = '';
-
-            const payload = {
-                logoUrl: document.getElementById('companyLogoUrl').value,
-                customerName: document.getElementById('customerName').value,
-                contactPerson: document.getElementById('contactPerson').value,
-                mobile: document.getElementById('customerMobile').value,
-                email: document.getElementById('customerEmail').value,
-                vehicleOffer: document.getElementById('vehicleOffer').value,
-                vehicleCount: document.getElementById('vehicleCount').value,
-                salesConsultant: document.getElementById('salesConsultant').value,
-                salesMobile: document.getElementById('salesMobile').value,
-                date: document.getElementById('offerDate').value,
-                
-                p1_rate: parseFloat(document.getElementById('p1_rate').value) || 0,
-                p1_qty: parseFloat(document.getElementById('p1_qty').value) || 0,
-                p2_rate: parseFloat(document.getElementById('p2_rate').value) || 0,
-                p2_qty: parseFloat(document.getElementById('p2_qty').value) || 0,
-                p3_rate: parseFloat(document.getElementById('p3_rate').value) || 0,
-                p3_qty: parseFloat(document.getElementById('p3_qty').value) || 0
-            };
-
-            let loadedIframes = 0;
-            const totalPages = 13;
-
-            for (let i = 1; i <= totalPages; i++) {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'pdf-page-wrapper';
-                
-                const iframe = document.createElement('iframe');
-                iframe.src = `pages/page${i}.html`;
-                iframe.id = `iframe_page_${i}`;
-                
-                wrapper.appendChild(iframe);
-                renderZone.appendChild(wrapper);
-
-                iframe.onload = function() {
-                    loadedIframes++;
-                    iframe.contentWindow.postMessage({
-                        type: 'RENDER_DATA',
-                        ...payload
-                    }, '*');
-
-                    if (loadedIframes === totalPages) {
-                        setTimeout(() => {
-                            executePDFPrint(payload.customerName);
-                        }, 1500);
-                    }
-                };
+        window.addEventListener('message', function(e) {
+            if (e.data.type === 'RENDER_DATA') {
+                document.getElementById('dynamicLogo').src = e.data.logoUrl || '';
+                document.getElementById('cName').innerText = e.data.customerName || '';
             }
-        }
-
-        function executePDFPrint(customerName) {
-            const element = document.getElementById('pdfRenderZone');
-            const opt = {
-                margin:       0,
-                filename:     `العرض المالي المحدث - ${customerName}.pdf`,
-                image:        { type: 'jpeg', quality: 1.0 },
-                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(element).save().then(() => {
-                document.getElementById('loading').style.display = 'none';
-            }).catch((err) => {
-                console.error(err);
-                document.getElementById('loading').style.display = 'none';
-            });
-        }
+        });
     </script>
 </body>
 </html>
