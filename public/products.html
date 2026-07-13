@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="متجر مؤسسة البقمي للحلول الذكية - أجهزة تتبع، كاميرات مراقبة، أنظمة إنذار وحماية، ومكونات إنترنت الأشياء والميكروكنترولر">
+    <title>المتجر الإلكتروني - مؤسسة البقمي</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" alt="البقمي">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="services.html">الخدمات التقنية</a></li>
+                <li><a href="products.html" class="active">المتجر الرقمي</a></li>
+                <li><a href="invoice.html">الفاتورة الإلكترونية</a></li>
+                <li><a href="admin.html">لوحة التحكم</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-icon" id="btn-wishlist" style="background:none; border:none;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span class="badge" id="wishlist-badge">0</span>
+                </button>
+                <button class="nav-icon" id="btn-cart" style="background:none; border:none;">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span class="badge" id="cart-badge">0</span>
+                </button>
+                <a href="login.html" class="nav-icon"><i class="fa-regular fa-user"></i></a>
+                <div class="menu-toggle"><i class="fa-solid fa-bars"></i></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Store Container -->
+    <main style="padding: 120px 5% 60px; max-width: 1400px; margin: 0 auto; min-height: 80vh;">
+        
+        <!-- Store View -->
+        <div id="view-store">
+            <h1 class="section-title">المتجر <span>الرقمي للأجهزة</span></h1>
+
+            <!-- Search and Filter Panel -->
+            <div class="glass-panel" style="padding: 20px; margin-bottom: 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;">
+                <div style="flex: 1; min-width: 250px; position: relative;">
+                    <input type="text" id="store-search" class="form-control" placeholder="ابحث عن جهاز تتبع، كاميرا، مستشعر..." style="padding-right: 40px;">
+                    <i class="fa-solid fa-magnifying-glass" style="position: absolute; right: 15px; top: 18px; color: var(--gold);"></i>
+                </div>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                    <select id="filter-category" class="form-control" style="width: 180px; background-color: #111;">
+                        <option value="all">كل الأقسام</option>
+                        <option value="tracking">أجهزة تتبع</option>
+                        <option value="security">أنظمة حماية</option>
+                        <option value="iot">حلول إنترنت الأشياء</option>
+                    </select>
+                    <select id="sort-products" class="form-control" style="width: 180px; background-color: #111;">
+                        <option value="default">الترتيب التلقائي</option>
+                        <option value="price-low">السعر: من الأقل للأعلى</option>
+                        <option value="price-high">السعر: من الأعلى للأقل</option>
+                        <option value="newest">الأحدث وصولاً</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid-container" id="products-grid">
+                <!-- Loaded dynamically via JS -->
+            </div>
+        </div>
+
+        <!-- Wishlist View (Initially Hidden) -->
+        <div id="view-wishlist" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <h1 style="font-weight: 800;"><i class="fa-regular fa-heart" style="color: var(--gold);"></i> قائمة <span>المفضلة</span></h1>
+                <button class="btn-outline" id="back-to-store-1"><i class="fa-solid fa-arrow-left"></i> العودة للمتجر</button>
+            </div>
+            <div class="grid-container" id="wishlist-grid">
+                <!-- Loaded dynamically via JS -->
+            </div>
+        </div>
+
+        <!-- Cart View (Initially Hidden) -->
+        <div id="view-cart" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <h1 style="font-weight: 800;"><i class="fa-solid fa-basket-shopping" style="color: var(--gold);"></i> سلة <span>الشراء</span></h1>
+                <button class="btn-outline" id="back-to-store-2"><i class="fa-solid fa-arrow-left"></i> العودة للمتجر</button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; align-items: start; flex-wrap: wrap;" id="cart-content-wrapper">
+                <!-- Cart Items List -->
+                <div class="glass-panel" style="padding: 25px; display: flex; flex-direction: column; gap: 20px;" id="cart-items-list">
+                    <!-- Loaded dynamically -->
+                </div>
+
+                <!-- Checkout details -->
+                <div class="glass-panel" style="padding: 25px;">
+                    <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 20px; color: var(--gold);">ملخص الطلب</h3>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <span>إجمالي المنتجات:</span>
+                        <span id="cart-subtotal">0 ر.س</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <span>الشحن والتركيب:</span>
+                        <span style="color: #2ecc71;">مجاني</span>
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+                    <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem; margin-bottom: 30px;">
+                        <span>الإجمالي الكلي:</span>
+                        <span id="cart-total" style="color: var(--gold);">0 ر.س</span>
+                    </div>
+                    
+                    <h4 style="color: #fff; margin-bottom: 15px;"><i class="fa-regular fa-address-card"></i> معلومات الشحن والتوصيل</h4>
+                    <form id="checkout-form">
+                        <div class="form-group">
+                            <input type="text" id="cust-name" class="form-control" placeholder="الاسم الكامل" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="cust-phone" class="form-control" placeholder="رقم الجوال النشط" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="cust-email" class="form-control" placeholder="البريد الإلكتروني" required>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                            <input type="text" id="cust-city" class="form-control" placeholder="المدينة" required>
+                            <input type="text" id="cust-address" class="form-control" placeholder="العنوان السكني" required>
+                        </div>
+                        <button type="submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 15px;"><i class="fa-solid fa-check"></i> إرسال وتأكيد الطلب الآن</button>
+                    </form>
+                </div>
+            </div>
+            <div id="cart-empty-message" style="text-align: center; padding: 60px 20px; display: none;">
+                <i class="fa-solid fa-basket-shopping" style="font-size: 4rem; color: var(--glass-border); margin-bottom: 20px;"></i>
+                <h2>السلة فارغة حالياً!</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">تصفح المنتجات في المتجر وأضف ما ترغب به للسلة للبدء بالدفع والطلب.</p>
+                <button class="btn-gold" onclick="document.getElementById('back-to-store-2').click()">تصفح المنتجات</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto;">
+            <p>© 2026 مؤسسة البقمي للحلول الذكية. جميع الحقوق محفوظة.</p>
+            <p style="color: var(--gold);">المملكة العربية السعودية - الرياض</p>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/store.js"></script>
+</body>
+</html>
