@@ -3,9 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفاصيل المنتج - مؤسسة البقمي</title>
+    <title>تفاصيل المنتج - مؤسسة مناحي البقمي</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* كود مرن متطور لضمان تجاوب الصفحة 100% على الهواتف والشاشات الكبيرة */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+        .image-showcase {
+            padding: 20px;
+            text-align: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+        .image-showcase img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        .product-meta-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            #product-name {
+                font-size: 1.8rem !important;
+            }
+            .image-showcase img {
+                max-height: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -14,7 +54,7 @@
     <header>
         <nav class="navbar">
             <div class="logo-container">
-                <a href="index.html"><img src="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" alt="البقمي"></a>
+                <a href="index.html"><img src="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" alt="مؤسسة البقمي"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">الرئيسية</a></li>
@@ -28,57 +68,57 @@
 
     <main style="padding: 120px 5% 60px; max-width: 1400px; margin: 0 auto; min-height: 80vh;">
         
-        <div style="display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 50px; flex-wrap: wrap;" id="product-detail-wrapper">
-            <!-- Product Images -->
-            <div>
-                <div class="glass-panel" style="padding: 20px; text-align: center; margin-bottom: 20px;">
-                    <img id="main-product-img" src="" style="max-width: 100%; height: 400px; object-fit: contain; border-radius: 12px;" alt="">
-                </div>
-                <div id="product-thumbnails-container" style="display: flex; gap: 10px; overflow-x: auto;">
+        <div class="details-grid" id="product-detail-wrapper">
+            <!-- Product Images (عرض الصور) -->
+            <div class="image-showcase">
+                <img id="main-product-img" src="" alt="جاري التحميل...">
+                <div id="product-thumbnails-container" style="display: flex; gap: 10px; overflow-x: auto; margin-top: 15px;">
                     <!-- Thumbnails dynamic -->
                 </div>
             </div>
 
-            <!-- Product Data -->
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <span id="product-badge" class="glass-panel" style="padding: 6px 15px; color: var(--gold); align-self: flex-start; font-weight: 700; font-size: 0.85rem;"></span>
-                <h1 id="product-name" style="font-size: 2.5rem; font-weight: 900;"></h1>
+            <!-- Product Data (بيانات ومواصفات القطعة) -->
+            <div class="product-meta-box">
+                <span id="product-badge" class="glass-panel" style="padding: 6px 15px; color: var(--gold); align-self: flex-start; font-weight: 700; font-size: 0.85rem; border-color: var(--gold);"></span>
+                <h1 id="product-name" style="font-size: 2.5rem; font-weight: 900; color: #fff; line-height: 1.3;"></h1>
                 
-                <div style="display: flex; align-items: center; gap: 20px;">
-                    <div id="product-rating-stars" style="color: var(--gold);"></div>
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    <div id="product-rating-stars" style="color: var(--gold); font-size: 0.95rem;"></div>
                     <span id="product-sku" style="color: var(--text-muted); font-size: 0.9rem;"></span>
                 </div>
 
-                <div style="display: flex; align-items: baseline; gap: 15px; margin: 15px 0;">
+                <div style="display: flex; align-items: baseline; gap: 15px; margin: 5px 0;">
                     <span id="product-price" style="font-size: 2.2rem; font-weight: 900; color: var(--gold);"></span>
                     <span id="product-old-price" style="text-decoration: line-through; color: var(--text-muted); font-size: 1.3rem;"></span>
                 </div>
 
-                <p id="product-description" style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem;"></p>
+                <!-- الوصف المختصر والأساسي للمنتج -->
+                <p id="product-description" style="color: var(--text-white); line-height: 1.8; font-size: 1.05rem; text-align: justify; white-space: pre-wrap;"></p>
 
                 <div style="border-top: 1px solid var(--glass-border); padding-top: 20px; margin-top: 10px;">
-                    <p style="margin-bottom: 10px;"><strong>الضمان المعتمد:</strong> <span id="product-warranty" style="color: #2ecc71;"></span></p>
-                    <p style="margin-bottom: 20px;"><strong>حالة المخزون:</strong> <span id="product-status" style="color: var(--gold);"></span></p>
+                    <p style="margin-bottom: 10px; color: var(--text-muted);"><strong>الضمان المعتمد:</strong> <span id="product-warranty" style="color: #2ecc71; font-weight: 600;"></span></p>
+                    <p style="margin-bottom: 20px; color: var(--text-muted);"><strong>حالة المخزون:</strong> <span id="product-status" style="color: var(--gold); font-weight: 600;"></span></p>
                 </div>
 
-                <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
-                    <button class="btn-gold" id="btn-add-to-cart-page" style="flex: 1; justify-content: center; padding: 15px;"><i class="fa-solid fa-basket-shopping"></i> إضافة إلى السلة</button>
-                    <button class="btn-outline" id="btn-add-to-wishlist-page" style="padding: 15px 25px;"><i class="fa-regular fa-heart"></i></button>
+                <div style="display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap;">
+                    <button class="btn-gold" id="btn-add-to-cart-page" style="flex: 1; min-width: 160px; justify-content: center; padding: 15px; font-size: 1.05rem;"><i class="fa-solid fa-basket-shopping"></i> إضافة إلى السلة</button>
+                    <button class="btn-outline" id="btn-add-to-wishlist-page" style="padding: 15px 25px;"><i class="fa-regular fa-heart"></i> المفضلة</button>
                 </div>
             </div>
         </div>
 
-        <!-- Specifications Tab / Reviews -->
-        <section class="glass-panel" style="padding: 40px; margin-top: 60px;">
-            <h2 style="color: var(--gold); border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 25px;">المواصفات الفنية والميزات للحل الذكي</h2>
-            <p id="product-specs" style="line-height: 1.8; white-space: pre-line; color: var(--text-muted);"></p>
+        <!-- Specifications Tab / Reviews (الوصف المفصل والمواصفات الكاملة) -->
+        <section class="glass-panel" style="padding: 35px; margin-top: 50px;">
+            <h2 style="color: var(--gold); border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 25px; font-weight: 800; font-size: 1.5rem;"><i class="fa-solid fa-sliders" style="margin-left: 8px;"></i> المواصفات الفنية والميزات التفصيلية للحل الذكي</h2>
+            <!-- تعديل برمجى ليدعم النصوص الطويلة المنسقة والمنظمة -->
+            <p id="product-specs" style="line-height: 1.9; white-space: pre-wrap; color: var(--text-muted); font-size: 1.05rem; text-align: justify;"></p>
         </section>
 
     </main>
 
     <footer>
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto;">
-            <p>© 2026 مؤسسة البقمي للحلول الذكية. جميع الحقوق محفوظة.</p>
+            <p>© 2026 مؤسسة مناحي البقمي التجارية. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
@@ -106,19 +146,22 @@
                 document.getElementById('product-name').textContent = p.name;
                 document.getElementById('product-badge').textContent = getCategoryName(p.category);
                 document.getElementById('product-sku').textContent = `رقم المنتج: ${p.sku || productId.substring(0, 8).toUpperCase()}`;
-                document.getElementById('product-price').textContent = `${p.price} ر.س`;
+                document.getElementById('product-price').textContent = `${parseFloat(p.price).toFixed(2)} ر.س`;
                 
                 if (p.oldPrice && parseFloat(p.oldPrice) > parseFloat(p.price)) {
-                    document.getElementById('product-old-price').textContent = `${p.oldPrice} ر.س`;
+                    document.getElementById('product-old-price').textContent = `${parseFloat(p.oldPrice).toFixed(2)} ر.س`;
                 }
 
-                document.getElementById('product-description').textContent = p.description;
-                document.getElementById('product-specs').textContent = p.specs || "لا توجد مواصفات فنية إضافية.";
-                document.getElementById('product-warranty').textContent = p.warranty || "سنتين على الأعطال الفنية";
-                document.getElementById('product-status').textContent = parseInt(p.qty) > 0 ? "متوفر حالياً" : "غير متوفر - طلب مسبق";
+                // دمج الوصف والوصف الكامل والمواصفات المتاحة
+                document.getElementById('product-description').textContent = p.description || "لا يوجد وصف مختصر متوفر حالياً.";
+                document.getElementById('product-specs').textContent = p.specs || p.description || "لا توجد مواصفات فنية إضافية ملحقة بالمنتج.";
+                document.getElementById('product-warranty').textContent = p.warranty || "سنتين على الأعطال الفنية بضمان الوكيل المعتمد";
+                document.getElementById('product-status').textContent = (p.qty && parseInt(p.qty) > 0) ? "متوفر في المستودع حالياً جاهز للتوصيل" : "متوفر حالياً (طلب مسبق / تركيب مباشر)";
                 
+                // [حل مشكلة جلب الصورة اللحظية]: فحص كافة الاحتمالات الممكنة للمسمى القادم من الأدمن
                 const mainImg = document.getElementById('main-product-img');
-                mainImg.src = p.imageUrl || "https://via.placeholder.com/600x400?text=No+Image";
+                const productFinalImg = p.image || p.img || p.imageUrl || "https://via.placeholder.com/600x400?text=No+Image";
+                mainImg.src = productFinalImg;
                 mainImg.alt = p.name;
 
                 // Simple static rating stars
@@ -128,7 +171,7 @@
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
-                    <span style="color:#aaa; margin-right: 10px;">(التقييمات مخصصة للعملاء المشترين)</span>
+                    <span style="color:var(--text-muted); margin-right: 10px;">(تقييمات العملاء المشترين 5/5)</span>
                 `;
 
             } else {
@@ -147,6 +190,10 @@
             if (!currentProduct) return;
             let cart = JSON.parse(localStorage.getItem("albuqami_cart")) || [];
             const idx = cart.findIndex(item => item.id === currentProduct.id);
+            
+            // تأمين جلب مسار الصورة الصحيح للسلة أيضاً
+            const cartImg = currentProduct.image || currentProduct.img || currentProduct.imageUrl || "";
+            
             if (idx > -1) {
                 cart[idx].quantity += 1;
             } else {
@@ -154,7 +201,7 @@
                     id: currentProduct.id,
                     name: currentProduct.name,
                     price: parseFloat(currentProduct.price),
-                    image: currentProduct.imageUrl,
+                    image: cartImg,
                     quantity: 1
                 });
             }
@@ -171,7 +218,7 @@
                 wishlist.push(currentProduct.id);
                 localStorage.setItem("albuqami_wishlist", JSON.stringify(wishlist));
                 updateGlobalBadges();
-                showToast("تمت الإضافة للمفضلة", "success");
+                showToast("تمت الإضافة للمفضلة بنجاح", "success");
             } else {
                 showToast("المنتج موجود بالفعل بالمفضلة", "error");
             }
