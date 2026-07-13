@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="siteTitle">مؤسسة مناحي البقمي للخدمات التجارية | تخليص جمركي ولوجستي معتمد</title>
+    <meta name="description" content="نقدم في مؤسسة مناحي البقمي حلولاً لوجستية وتخليص جمركي متكامل في جميع منافذ المملكة. سرعة في الإفراج، دقة في تصنيف البضائع، وتكلفة أقل لسلسلة الإمداد.">
+    <meta name="keywords" content="مؤسسة مناحي البقمي, مخلص جمركي معتمد, تخليص جمركي السعودية, ميناء جدة الإسلامي, حلول لوجستية, شحن ونقل, إدارة المخزون, رؤية 2030">
+    <meta name="robots" content="index, follow">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+        :root { 
+            --royal-gold: #D4AF37; 
+            --gold-dark: #AA7C11; 
+            --gold-light: #F3E5AB; 
+            --bg-deep: #060b13; 
+            --bg-surface: #0e1624; 
+            --bg-input: #172132; 
+            --text-main: #F5F6F8; 
+            --text-muted: #94A3B8; 
+            --white: #FFFFFF; 
+            --success: #10B981; 
+            --warning: #F59E0B; 
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-deep); color: var(--text-main); line-height: 1.6; }
+        
+        /* شريط علوي للمعلومات وتوقيت العمل والتواصل المباشر */
+        .top-bar { background-color: #03060a; padding: 6px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; border-bottom: 1px solid rgba(214,175,55,0.1); color: var(--text-muted); }
+        .top-bar-links a { color: var(--gold-light); text-decoration: none; margin-right: 15px; font-weight: 600; transition: color 0.3s; }
+        .top-bar-links a:hover { color: var(--royal-gold); }
+
+        /* الهيدر الرئيسي للموقع وقائمة التنقل */
+        header { background-color: rgba(6, 11, 19, 0.95); border-bottom: 2px solid var(--royal-gold); padding: 15px 5%; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        /* تم إظهار اللوجو وإلغاء الحواف والمربع الذهبي تماماً */
+        .logo-img { height: 60px; max-width: 150px; object-fit: contain; background: transparent; border: none; border-radius: 0; }
+        .logo-text { color: var(--royal-gold); font-weight: 900; font-size: 1.4rem; text-shadow: 0 2px 10px rgba(212,175,55,0.2); }
+        
+        nav { display: flex; gap: 20px; align-items: center; }
+        nav a { color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; }
+        nav a:hover { color: var(--royal-gold); }
+        .btn-nav-order { background: transparent; color: var(--royal-gold); border: 1px solid var(--royal-gold); padding: 6px 16px; border-radius: 4px; font-weight: 700; text-decoration: none; transition: all 0.3s; }
+        .btn-nav-order:hover { background: var(--royal-gold); color: var(--bg-deep); }
+
+        /* قسم الهيرو الاستعراضي */
+        .hero-section { 
+            text-align: center; 
+            padding: 120px 20px; 
+            background: linear-gradient(rgba(6, 11, 19, 0.8), rgba(6, 11, 19, 0.95)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            border-bottom: 1px solid rgba(214, 175, 55, 0.15); 
+        }
+        .hero-section h1 { font-size: 2.8rem; color: var(--royal-gold); margin-bottom: 15px; font-weight: 900; text-shadow: 0 3px 15px rgba(0,0,0,0.8); }
+        .hero-section p { font-size: 1.25rem; color: #E2E8F0; max-width: 850px; margin: 0 auto 25px auto; font-weight: 600; }
+        .hero-tagline { color: var(--gold-light); font-size: 1.1rem; font-weight: 700; margin-bottom: 30px; letter-spacing: 0.5px; }
+        
+        .hero-actions { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn-hero-primary { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); padding: 12px 30px; border-radius: 4px; font-weight: 900; text-decoration: none; font-size: 1rem; box-shadow: 0 4px 15px rgba(212,175,55,0.2); }
+        .btn-hero-secondary { background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid rgba(255,255,255,0.2); padding: 12px 30px; border-radius: 4px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: background 0.3s; }
+        .btn-hero-secondary:hover { background: rgba(255,255,255,0.1); border-color: var(--royal-gold); }
+
+        .main-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+        
+        /* قسم من نحن والتفاصيل الجديدة المضافة بالحرف */
+        .about-box { background-color: var(--bg-surface); border: 1px solid rgba(214,175,55,0.1); padding: 45px; border-radius: 8px; margin-bottom: 40px; text-align: right; }
+        .about-box h3 { color: var(--royal-gold); font-size: 1.8rem; margin-bottom: 20px; font-weight: 800; text-align: center; }
+        .about-p-block { color: #CBD5E1; font-size: 1.1rem; text-align: justify; margin-bottom: 15px; text-indent: 15px; }
+
+        /* قسم المميزات الاستراتيجية الإضافية للمؤسسة */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .feature-item { background: rgba(214, 175, 55, 0.05); border: 1px dashed rgba(214, 175, 55, 0.3); padding: 20px; border-radius: 6px; text-align: center; }
+        .feature-item h5 { color: var(--royal-gold); font-size: 1.1rem; margin-bottom: 8px; font-weight: 700; }
+        .feature-item p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* قسم المنافذ الجمركية المطور والمقسم لتصميم جذاب */
+        .ports-section { background: rgba(14, 22, 36, 0.7); border: 1px solid rgba(214,175,55,0.15); border-radius: 8px; padding: 40px 30px; margin-bottom: 60px; }
+        .ports-section h4 { color: var(--royal-gold); font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; border-bottom: 1px solid rgba(214,175,55,0.15); padding-bottom: 10px; }
+        .ports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+        .port-item { background: var(--bg-input); padding: 12px 15px; border-radius: 4px; font-size: 0.95rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 10px; border-right: 3px solid var(--royal-gold); }
+
+        /* عناوين الأقسام */
+        .section-headline { text-align: center; margin-bottom: 40px; }
+        .section-headline h2 { color: var(--royal-gold); font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; }
+        .section-headline p { color: var(--text-muted); font-size: 1rem; }
+
+        /* شبكة الخدمات الثلاثية */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 70px; }
+        .service-card { background-color: var(--bg-surface); border: 1px solid rgba(214, 175, 55, 0.12); border-radius: 6px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s; }
+        .service-card:hover { transform: translateY(-4px); border-color: var(--royal-gold); }
+        .service-card-content h4 { color: var(--royal-gold); font-size: 1.3rem; margin-bottom: 15px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .service-card-content p { color: #CBD5E1; font-size: 0.95rem; text-align: justify; margin-bottom: 20px; }
+        .btn-learn-more { color: var(--gold-light); text-decoration: none; font-size: 0.9rem; font-weight: bold; border-bottom: 1px dashed var(--gold-light); align-self: flex-start; transition: color 0.3s; }
+        .btn-learn-more:hover { color: var(--royal-gold); border-color: var(--royal-gold); }
+
+        /* بوابات العمليات المباشرة */
+        .grid-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; margin-top: 20px; }
+        .custom-box { background-color: var(--bg-surface); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px; padding: 45px 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
+        .custom-box::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 4px; background: linear-gradient(to left, var(--royal-gold), var(--gold-dark)); border-radius: 8px 8px 0 0; }
+        .box-title { color: var(--royal-gold); font-size: 1.5rem; margin-bottom: 25px; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding-bottom: 15px; text-align: center; font-weight: 700; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: var(--gold-light); margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
+        .form-control { width: 100%; padding: 13px 15px; background-color: var(--bg-input); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 4px; color: var(--white); font-size: 1rem; transition: all 0.3s; }
+        .form-control:focus { border-color: var(--royal-gold); outline: none; box-shadow: 0 0 10px rgba(212,175,55,0.25); }
+        
+        .btn-royal { background: linear-gradient(135deg, var(--royal-gold), var(--gold-dark)); color: var(--bg-deep); padding: 14px 30px; border: none; border-radius: 4px; font-size: 1.1rem; font-weight: 900; cursor: pointer; width: 100%; transition: all 0.3s; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); }
+        .btn-royal:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); }
+        
+        .status-badge { display: inline-block; padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 900; }
+        .status-waiting { background-color: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .status-accepted { background-color: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .status-rejected { background-color: rgba(239, 68, 68, 0.2); color: #EF4444; }
+        
+        .result-item { background: rgba(6, 11, 19, 0.6); padding: 22px; border-radius: 6px; margin-top: 15px; border: 1px solid rgba(212,175,55,0.15); border-right: 5px solid var(--royal-gold); animation: fadeIn 0.4s ease; }
+        
+        /* فوتر الموقع */
+        footer { background-color: var(--bg-surface); border-top: 2px solid var(--royal-gold); padding: 50px 5% 30px 5%; margin-top: 100px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h5 { color: var(--royal-gold); font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; }
+        .footer-col p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; display: flex; flex-direction: column; }
+        .footer-col ul li span { color: var(--white); font-weight: 600; }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 25px; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+        
+        /* زر واتساب عائم جديد كـ ميزة مضافة حصرية */
+        .whatsapp-float { position: fixed; bottom: 30px; left: 30px; background-color: #25d366; color: white; border-radius: 50%; width: 60px; height: 60px; text-align: center; font-size: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        @media (max-width: 768px) { 
+            .hero-section h1 { font-size: 2rem; } 
+            header { flex-direction: column; gap: 15px; text-align: center; } 
+            nav { flex-wrap: wrap; justify-content: center; gap: 12px; }
+            .top-bar { flex-direction: column; gap: 8px; text-align: center; }
+            .grid-sections { grid-template-columns: 1fr; } 
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <!-- 🌐 شريط الاتصال السريع وساعات العمل (يدعم الاتصال المباشر عبر الجوال والواتساب) -->
+    <div class="top-bar">
+        <div>🕒 من الأحد إلى السبت: من الساعة 09:00 صباحاً - وحتى الساعة 19:00 مساءً</div>
+        <div class="top-bar-links">
+            <a href="mailto:W9103W@gmail.com">📧 W9103W@gmail.com</a>
+            <a href="tel:+966548138548">📞 الاتصال المباشر: +966548138548</a>
+            <a href="https://wa.me/966548138548" target="_blank" style="color: #25d366;">💬 واتساب الإدارة</a>
+        </div>
+    </div>
+
+    <!-- 👑 هيدر التنقل الكامل -->
+    <header>
+        <div class="logo-container">
+            <!-- تم إزالة الـ display: none ووضع مسار اللوجو ليعمل مباشرة وبدون إطار محدد -->
+            <img id="siteLogoImg" src="1000342851.png" alt="مؤسسة مناحي البقمي للخدمات التجارية" class="logo-img">
+            <div class="logo-text" id="siteLogoText">مؤسسة مناحي البقمي</div>
+        </div>
+        <nav>
+            <a href="#">الرئيسية</a>
+            <a href="#about-sec">من نحن</a>
+            <a href="#services-sec">الخدمات</a>
+            <a href="#portal-sec" class="btn-nav-order">طلب عرض سعر فوري 📄</a>
+        </nav>
+    </header>
+
+    <!-- 🚛 قسم الهيرو التعريفي -->
+    <div class="hero-section" id="heroBg">
+        <h1 id="heroTitle">مؤسسة مناحي البقمي للخدمات التجارية</h1>
+        <p id="heroDesc">نقدم حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي.</p>
+        <div class="hero-tagline">حلول لوجستية تُنجز أعمالك بلا تأخير من المستودع إلى الوجهة - تنفيذ دقيق وتخليص سريع وتوزيع موثوق</div>
+        <div class="hero-actions">
+            <a href="#portal-sec" class="btn-hero-primary">احصل على عرض سعر الآن 🚀</a>
+            <a href="https://wa.me/966548138548" target="_blank" class="btn-hero-secondary" style="border-color: #25d366; color: #25d366;">تحدث معنا عبر واتساب 💬</a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        
+        <!-- 🎯 قسم من نحن (مدمج به نصك الكامل بالحرف وتنسيق جذاب) -->
+        <div class="about-box" id="about-sec">
+            <h3>شريكك اللوجستي المعتمد بالمملكة</h3>
+            
+            <p class="about-p-block">نقدم حلولاً لوجستية متكاملة تشمل الشحن والنقل وإدارة المخزون والتخليص الجمركي والتوزيع المحلي والدولي. مهمتنا تسريع سلسلة الإمداد لعملائنا وتقليل التكاليف دون المساس بجودة الخدمة. نتميّز بتتبع دقيق للشحنات، وشبكة تشغيل مرنة، وفريق دعم موثوق يضمن وصول المنتجات بأمان وفي الوقت المحدد.</p>
+            
+            <p class="about-p-block">إذا كنت تبحث عن مخلص جمركي معتمد ينجز معاملاتك بسرعة ودقة واحترافية، فأنت في المكان الصحيح. ففي عالم التجارة الدولية، لم يعد التخليص الجمركي مجرد إجراء روتيني، بل أصبح أحد أهم العوامل التي تؤثر على سرعة وصول الشحنات، وتقليل التكاليف، وضمان انسيابية عمليات الاستيراد والتصدير دون تأخير أو عوائق.</p>
+            
+            <p class="about-p-block">ومع التطور الكبير الذي يشهده القطاع اللوجستي في المملكة العربية السعودية، وارتفاع حجم حركة التجارة عبر المنافذ البرية والبحرية والجوية, أصبحت الحاجة إلى مخلص جمركي يمتلك الخبرة والمعرفة بالأنظمة الجمركية أكثر أهمية من أي وقت مضى. فالمخلص الجمركي المحترف لا يقتصر دوره على إنهاء الإجراءات، بل يعمل على مراجعة المستندات، وتصنيف البضائع وفق البنود الجمركية، والتنسيق مع الجهات الحكومية، وتسريع الإفراج عن الشحنات، بما يضمن وصولها بأعلى درجات الكفاءة والالتزام.</p>
+
+            <p class="about-p-block">ومن خلال فريق متخصص يمتلك خبرة واسعة في الأنظمة الجمركية السعودية، نحرص على تقديم حلول متكاملة تشمل التخليص الجمركي، وإنهاء جميع الإجراءات النظامية، والتنسيق مع الجهات ذات العلاقة، ومتابعة الشحنات حتى الإفراج عنها وتسليمها، بما يحقق أعلى مستويات السرعة والدقة والموثوقية.</p>
+
+            <p class="about-p-block">وانطلاقًا من مستهدفات رؤية السعودية 2030، التي تهدف إلى جعل المملكة مركزًا لوجستيًا عالميًا يربط بين آسيا وأوروبا وأفريقيا، أصبح الاعتماد على مخلص جمركي محترف شريكًا استراتيجيًا يساهم في تسريع الأعمال، وخفض التكاليف، وتعزيز كفاءة سلاسل الإمداد، ودعم نمو أعمال الشركات والمستثمرين داخل المملكة وخارجها.</p>
+            
+            <!-- ميزة إضافية: ركائز القوة لدينا -->
+            <div class="features-grid" style="margin-top: 35px;">
+                <div class="feature-item">
+                    <h5>⚡ سرعة فائقة</h5>
+                    <p>تسريع الإفراج عن الشحنات في وقت قياسي.</p>
+                </div>
+                <div class="feature-item">
+                    <h5>🎯 دقة التصنيف</h5>
+                    <p>تصنيف البضائع بدقة وفق البنود الجمركية الفعالة.</p>
+                </div>
+                <div class="feature-item">
+                    <h5>🤝 التزام وموثوقية</h5>
+                    <p>خبرة كاملة ومتابعة دقيقة مع كافة الجهات الحكومية.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ⚓ قسم شبكة المنافذ الجمركية المطور (مأخوذ من نصك بالحرف) -->
+        <div class="ports-section">
+            <h4 style="text-align: center;">🌐 خدمات التخليص الجمركي في جميع المنافذ الجمركية بالمملكة</h4>
+            
+            <h4 style="font-size:1.1rem; border:none; margin-bottom:15px;">🚢 المنافذ البحرية:</h4>
+            <div class="ports-grid" style="margin-bottom: 30px;">
+                <div class="port-item">⚓ ميناء جدة الإسلامي</div>
+                <div class="port-item">⚓ ميناء الملك عبدالعزيز بالدمام</div>
+                <div class="port-item">⚓ ميناء الجبيل التجاري</div>
+                <div class="port-item">⚓ ميناء الملك فهد الصناعي بالجبيل</div>
+                <div class="port-item">⚓ ميناء الملك فهد الصناعي بينبع</div>
+                <div class="port-item">⚓ ميناء ينبع التجاري</div>
+                <div class="port-item">⚓ ميناء جازان</div>
+                <div class="port-item">⚓ ميناء رأس الخير</div>
+                <div class="port-item">⚓ ميناء ضباء</div>
+            </div>
+
+            <h4 style="font-size:1.1rem; border:none; margin-bottom:15px;">🚛 المنافذ البرية والجافة:</h4>
+            <div class="ports-grid">
+                <div class="port-item">🛑 منفذ الحديثة</div>
+                <div class="port-item">🛑 منفذ البطحاء</div>
+                <div class="port-item">🛑 منفذ حالة عمار</div>
+                <div class="port-item">🛑 منفذ الرقعي</div>
+                <div class="port-item">🛑 منفذ جديدة عرعر</div>
+                <div class="port-item">🛑 منفذ الخفجي</div>
+                <div class="port-item">🛑 منفذ الوديعة</div>
+            </div>
+        </div>
+
+        <!-- 🛠️ قسم الخدمات اللوجستية المتخصصة -->
+        <div class="section-headline" id="services-sec">
+            <h2>الخدمات اللوجستية المتخصصة</h2>
+            <p>نصمم خدماتنا بدقة متناهية لتواكب متطلبات أعمالكم وتسرع قوافلكم</p>
+        </div>
+
+        <div class="services-grid">
+            <!-- الخدمة الأولى -->
+            <div class="service-card">
+                <div class="service-card-content">
+                    <h4>🚛 الشحن والنقل المحلي والدولي</h4>
+                    <p>خدمات شحن مرنة براً وبحراً وجواً مع تتبع للشحنات لضمان وصول آمن وفي الوقت المحدد لضمان استقرار وسرعة أعمالكم وعملياتكم التجارية.</p>
+                </div>
+                <a href="#portal-sec" class="btn-learn-more">طلب الخدمة والتسعير ←</a>
+            </div>
+
+            <!-- الخدمة الثانية -->
+            <div class="service-card">
+                <div class="service-card-content">
+                    <h4>📦 إدارة المخزون والمستودعات</h4>
+                    <p>استلام وفرز وتخزين وتجهيز طلبات بكفاءة أعلى لتقليل الهدر وتحسين توافر المنتجات داخل مستودعاتنا المؤمنة بالكامل ومراقبة المخزون باحترافية.</p>
+                </div>
+                <a href="#portal-sec" class="btn-learn-more">طلب الخدمة والتسعير ←</a>
+            </div>
+
+            <!-- الخدمة الثالثة -->
+            <div class="service-card">
+                <div class="service-card-content">
+                    <h4>💼 التخليص الجمركي وخدمات الاستيراد والتصدير</h4>
+                    <p>نقدّم خدمات احترافية في الاستيراد والتصدير والتخليص الجمركي لتسريع دخول الشحنات وتقليل التأخير والغرامات، مع متابعة دقيقة للإجراءات وشفافية في تحديث حالة الشحنات.</p>
+                </div>
+                <a href="#portal-sec" class="btn-learn-more">طلب الخدمة والتسعير ←</a>
+            </div>
+        </div>
+
+        <!-- 📥 منصة طلب عروض الأسعار -->
+        <div class="section-headline" id="portal-sec">
+            <h2>منصة طلب عروض الأسعار والمعاملات الفورية</h2>
+            <p>أرسل طلبك الآن برقم جوالك وسيتم الرد وحساب التكلفة والرد حياً من الإدارة</p>
+        </div>
+
+        <div class="grid-sections">
+            <!-- صندوق تقديم الطلب الجديد (تم إكماله بالكامل وإصلاح وسوم الإغلاق المحذوفة) -->
+            <div class="custom-box">
+                <h3 class="box-title">📥 تقديم طلب جديد (بدون مسبق دفع)</h3>
+                <form id="newRequestForm" onsubmit="event.preventDefault(); sendClientRequest();">
+                    <div class="form-group">
+                        <label for="cName">الاسم الكريم بالكامل</label>
+                        <input type="text" id="cName" class="form-control" required placeholder="مثال: محمد أشرف">
+                    </div>
+                    <div class="form-group">
+                        <label for="cPhone">رقم الجوال لتلقي العرض</label>
+                        <input type="tel" id="cPhone" class="form-control" required placeholder="05xxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="cType">نوع الخدمة والمسار المطلوب</label>
+                        <select id="cType" class="form-control" required>
+                            <option value="شحن دولي وسريع">الشحن والنقل المحلي والدولي (براً وبحراً وجواً)</option>
+                            <option value="إدارة المخزون والمستودعات">إدارة المخزون وتخزين وتجهيز طلبات المستودعات</option>
+                            <option value="تخليص معاملات وأوراق">التخليص الجمركي وخدمات الاستيراد والتصدير الاحترافية</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cDetails">اكتب تفاصيل طلبك بدقة (نوع البضائع، الكمية، مسار الوجهة المستهدفة)</label>
+                        <textarea id="cDetails" class="form-control" rows="4" required placeholder="مثال: أريد فحص شحنة وتخزينها، أو نقل حاوية برية من الرياض إلى الوجهة المستهدفة مع التخليص الجمركي..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-royal">إرسال الطلب لتقدير السعر فوراً 🚀</button>
+                </form>
+            </div>
+
+            <!-- صندوق المتابعة الحية -->
+            <div class="custom-box">
+                <h3 class="box-title">🔍 الاستعلام ومتابعة العروض بالرقم</h3>
+                <p style="color: var(--text-muted); font-size:0.95rem; margin-bottom:25px; text-align:center;">أدخل رقم جوالك المسجل لاستدعاء عروض الأسعار والملاحظات وقرارات الإدارة لمعاملتك حياً لايف.</p>
+                <div class="form-group">
+                    <label for="searchPhone">رقم الجوال الخاص بك</label>
+                    <input type="tel" id="searchPhone" class="form-control" placeholder="أدخل رقم الجوال وبث النتائج">
+                </div>
+                <button type="button" class="btn-royal" onclick="checkMyOffers()">تحقق من عروض الإدارة 👁️</button>
+                <div id="statusResultOutput" style="margin-top:25px;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🌐 الفوتر -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h5>مؤسسة مناحي البقمي للخدمات التجارية</h5>
+                <p>سلسلة إمداد أسرع، تكلفة أقل، تسليم أدق لضمان ريادة وسرعة أعمالك من المستودعات وحتى الوجهات المحددة.</p>
+            </div>
+            <div class="footer-col">
+                <h5>أقسام الوصول السريع</h5>
+                <ul>
+                    <li><a href="#" style="color:var(--text-muted); text-decoration:none;">الرئيسية</a></li>
+                    <li><a href="#about-sec" style="color:var(--text-muted); text-decoration:none;">من نحن في المؤسسة</a></li>
+                    <li><a href="#services-sec" style="color:var(--text-muted); text-decoration:none;">الخدمات والحلول اللوجستية</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>قنوات الاتصال المباشر</h5>
+                <ul>
+                    <li>📞 هاتف الإدارة: <a href="tel:+966548138548" style="color:var(--white); text-decoration:none; font-weight:600;">+966548138548</a></li>
+                    <li>📞 هاتف الدعم الثاني: <a href="tel:+966548138548" style="color:var(--white); text-decoration:none; font-weight:600;">+966548138548</a></li>
+                    <li>📧 البريد الإلكتروني الرسمي: <span>W9103W@gmail.com</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" id="siteFooter">
+            جميع الحقوق محفوظة © مؤسسة مناحي البقمي للخدمات اللوجستية المتكاملة 2026
+        </div>
+    </footer>
+
+    <!-- زر واتساب العائم للمراسلة الفورية والسهلة في أي وقت -->
+    <a href="https://wa.me/966548138548" class="whatsapp-float" target="_blank">
+        <svg style="width:32px; height:32px; fill:white; vertical-align:middle;" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.4 0 12.008 0c3.202.001 6.212 1.249 8.477 3.517 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 12.008-11.948 12.008-1.998-.001-3.951-.5-5.688-1.448L0 24zm6.59-4.846c1.656.982 3.511 1.5 5.409 1.512 5.517 0 10.005-4.48 10.009-10.004.002-2.678-1.042-5.193-2.94-7.094C17.228 1.666 14.72 .62 12.006.62c-5.522 0-10.01 4.481-10.013 10.004-.001 1.848.482 3.655 1.4 5.23L2.4 21.53l5.85-1.532-.003-.004z"/>
+        </svg>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
