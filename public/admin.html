@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="لوحة التحكم الإدارية - مؤسسة البقمي للحلول الذكية">
+    <title>لوحة التحكم الإدارة - مؤسسة البقمي</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" alt="البقمي">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="services.html">الخدمات التقنية</a></li>
+                <li><a href="products.html">المتجر الرقمي</a></li>
+                <li><a href="invoice.html">الفاتورة الإلكترونية</a></li>
+                <li><a href="admin.html" class="active">لوحة التحكم</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Admin Container -->
+    <main style="padding: 120px 5% 60px; max-width: 1400px; margin: 0 auto; min-height: 85vh;">
+        
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 class="section-title">لوحة <span>التحكم الإدارية</span></h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">إدارة المبيعات، المخزون، وطلبات عروض أسعار الأنظمة الذكية</p>
+        </div>
+
+        <!-- Dashboard Stat Cards -->
+        <div class="grid-container" style="margin-bottom: 40px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <div class="glass-panel" style="padding: 20px; text-align: center; border-radius: 12px;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">إجمالي المبيعات</h3>
+                <p id="stat-total-sales" style="color: var(--gold); font-size: 1.8rem; font-weight: 900;">0.00 ر.س</p>
+            </div>
+            <div class="glass-panel" style="padding: 20px; text-align: center; border-radius: 12px;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">الطلبات النشطة</h3>
+                <p id="stat-active-orders" style="color: #fff; font-size: 1.8rem; font-weight: 900;">0</p>
+            </div>
+            <div class="glass-panel" style="padding: 20px; text-align: center; border-radius: 12px;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">عروض الأسعار المعلقة</h3>
+                <p id="stat-pending-rfqs" style="color: #e67e22; font-size: 1.8rem; font-weight: 900;">0</p>
+            </div>
+            <div class="glass-panel" style="padding: 20px; text-align: center; border-radius: 12px;">
+                <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">المنتجات بالمخزن</h3>
+                <p id="stat-total-products" style="color: #2ecc71; font-size: 1.8rem; font-weight: 900;">0</p>
+            </div>
+        </div>
+
+        <!-- Tab Switchers -->
+        <div style="display: flex; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; flex-wrap: wrap;">
+            <button class="btn-gold tab-btn" data-target="section-orders"><i class="fa-solid fa-basket-shopping"></i> إدارة الطلبات</button>
+            <button class="btn-outline tab-btn" data-target="section-inventory"><i class="fa-solid fa-boxes-stacked"></i> المخزون والمنتجات</button>
+            <button class="btn-outline tab-btn" data-target="section-rfqs"><i class="fa-solid fa-file-signature"></i> طلبات عروض الأسعار</button>
+        </div>
+
+        <!-- Tab 1: Orders Section -->
+        <section id="section-orders" class="tab-content glass-panel" style="padding: 30px; border-radius: 16px;">
+            <h2 style="font-weight: 800; margin-bottom: 20px; color: var(--gold);"><i class="fa-solid fa-cart-flatbed"></i> طلبات العملاء الحالية</h2>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--glass-border); text-align: right;">
+                            <th style="padding: 12px; color: var(--gold);">رقم الطلب</th>
+                            <th style="padding: 12px; color: var(--gold);">العميل</th>
+                            <th style="padding: 12px; color: var(--gold);">الجوال</th>
+                            <th style="padding: 12px; color: var(--gold);">التاريخ</th>
+                            <th style="padding: 12px; color: var(--gold);">القيمة الكلية</th>
+                            <th style="padding: 12px; color: var(--gold);">الحالة</th>
+                            <th style="padding: 12px; color: var(--gold); text-align: left;">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-orders-table">
+                        <!-- Dynamic content via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tab 2: Inventory Section -->
+        <section id="section-inventory" class="tab-content glass-panel" style="padding: 30px; border-radius: 16px; display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                <h2 style="font-weight: 800; color: var(--gold);"><i class="fa-solid fa-box-open"></i> إدارة مخزن الأجهزة والمستشعرات</h2>
+                <button class="btn-gold" id="btn-open-add-product"><i class="fa-solid fa-plus"></i> إضافة منتج جديد</button>
+            </div>
+
+            <!-- Add Product Form (Hidden by default) -->
+            <div id="add-product-wrapper" class="glass-panel" style="display: none; padding: 25px; margin-bottom: 30px; border-color: var(--gold);">
+                <h3 style="margin-bottom: 20px; font-weight: 800;"><i class="fa-solid fa-wrench"></i> إدخال منتج جديد للنظام</h3>
+                <form id="add-product-form">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label>اسم المنتج / الجهاز</label>
+                            <input type="text" id="p-name" class="form-control" required placeholder="مثال: مفتاح ذكي منفرد">
+                        </div>
+                        <div class="form-group">
+                            <label>السعر (ر.س)</label>
+                            <input type="number" step="0.01" id="p-price" class="form-control" required placeholder="150">
+                        </div>
+                        <div class="form-group">
+                            <label>رابط الصورة</label>
+                            <input type="url" id="p-image" class="form-control" required placeholder="https://example.com/image.jpg">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label>وصف فني ومواصفات التحكم بالجهاز</label>
+                        <textarea id="p-desc" class="form-control" rows="3" required placeholder="اكتب مواصفات الجهاز وطريقة تركيبه..."></textarea>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn-gold">حفظ المنتج</button>
+                        <button type="button" class="btn-outline" id="btn-cancel-product">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Products Inventory Table -->
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--glass-border); text-align: right;">
+                            <th style="padding: 12px; color: var(--gold);">الصورة</th>
+                            <th style="padding: 12px; color: var(--gold);">اسم المنتج</th>
+                            <th style="padding: 12px; color: var(--gold);">السعر</th>
+                            <th style="padding: 12px; color: var(--gold);">الوصف الفني</th>
+                            <th style="padding: 12px; color: var(--gold); text-align: left;">التحكم</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-products-table">
+                        <!-- Dynamic content via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tab 3: RFQs Section -->
+        <section id="section-rfqs" class="tab-content glass-panel" style="padding: 30px; border-radius: 16px; display: none;">
+            <h2 style="font-weight: 800; margin-bottom: 20px; color: var(--gold);"><i class="fa-solid fa-file-invoice"></i> طلبات دراسة مشاريع الأنظمة الذكية</h2>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--glass-border); text-align: right;">
+                            <th style="padding: 12px; color: var(--gold);">رقم الطلب</th>
+                            <th style="padding: 12px; color: var(--gold);">العميل</th>
+                            <th style="padding: 12px; color: var(--gold);">الجوال</th>
+                            <th style="padding: 12px; color: var(--gold);">نوع النظام</th>
+                            <th style="padding: 12px; color: var(--gold);">التفاصيل والرؤية</th>
+                            <th style="padding: 12px; color: var(--gold);">تاريخ الإرسال</th>
+                            <th style="padding: 12px; color: var(--gold);">حالة الدراسة</th>
+                            <th style="padding: 12px; color: var(--gold); text-align: left;">التحكم</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-rfqs-table">
+                        <!-- Dynamic content via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto;">
+            <p>© 2026 مؤسسة البقمي للحلول الذكية. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/admin.js"></script>
+</body>
+</html>
