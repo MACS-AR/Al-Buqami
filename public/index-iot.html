@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة مؤسسة البقمي للحلول الذكية وإنترنت الأشياء (IoT) - حلول التتبع، كاميرات المراقبة، أنظمة الحماية المتطورة والميكرومتحكمات في السوق السعودي">
+    <meta property="og:title" content="مؤسسة البقمي للحلول الذكية وإنترنت الأشياء">
+    <meta property="og:description" content="وجهتك التقنية الأولى لأجهزة تتبع المركبات، الأنظمة الذكية، والتحكم الآلي.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png">
+    <link rel="canonical" href="https://albuqami-iot.vercel.app/">
+    <title>مؤسسة البقمي للحلول الذكية وإنترنت الأشياء</title>
+    
+    <!-- CSS and Fonts -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; color: #d4af37; font-weight: 600; letter-spacing: 1px;">مؤسسة البقمي للحلول الذكية</p>
+    </div>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" alt="البقمي للحلول الذكية">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">الرئيسية</a></li>
+                <li><a href="services.html">الخدمات التقنية</a></li>
+                <li><a href="products.html">المتجر الرقمي</a></li>
+                <li><a href="invoice.html">الفاتورة الإلكترونية</a></li>
+                <li><a href="admin.html">لوحة التحكم</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="products.html?view=wishlist" class="nav-icon">
+                    <i class="fa-regular fa-heart"></i>
+                    <span class="badge" id="wishlist-badge">0</span>
+                </a>
+                <a href="products.html?view=cart" class="nav-icon">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span class="badge" id="cart-badge">0</span>
+                </a>
+                <a href="login.html" class="nav-icon" id="auth-nav-btn">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <div class="menu-toggle"><i class="fa-solid fa-bars"></i></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate-fade-in">
+            <h1>مؤسسة البقمي للحلول الذكية و<span>إنترنت الأشياء IoT</span></h1>
+            <p>نقود مستقبل الأتمتة وحماية الأصول عبر توفير أحدث تقنيات تتبع المركبات، كاميرات المراقبة، وأنظمة التحكم الذكي المعتمدة على لوحات ومتحكمات ESP32 و Arduino المربوطة بالسحاب.</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="products.html" class="btn-gold"><i class="fa-solid fa-store"></i> تصفح المتجر الرقمي</a>
+                <a href="services.html" class="btn-outline">طلب عرض سعر مخصص</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section style="padding: 80px 5%; max-width: 1400px; margin: 0 auto;">
+        <h2 class="section-title">لماذا تفضل <span>أنظمتنا الذكية</span>؟</h2>
+        <div class="grid-container">
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <i class="fa-solid fa-satellite-dish" style="font-size: 3rem; color: #d4af37; margin-bottom: 20px;"></i>
+                <h3 style="margin-bottom: 15px;">تتبع فوري ومستمر</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">أنظمة GPS هجينة تدعم SIM7600 و 4G لضمان تتبع الشاحنات والمركبات بدقة متناهية تحت أي ظرف.</p>
+            </div>
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <i class="fa-solid fa-microchip" style="font-size: 3rem; color: #d4af37; margin-bottom: 20px;"></i>
+                <h3 style="margin-bottom: 15px;">تطوير الأنظمة المدمجة</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">تصميم لوحات إلكترونية احترافية وبرمجة متحكمات LoRa و NB-IoT للربط المباشر مع قواعد البيانات السحابية.</p>
+            </div>
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <i class="fa-solid fa-shield-halved" style="font-size: 3rem; color: #d4af37; margin-bottom: 20px;"></i>
+                <h3 style="margin-bottom: 15px;">حماية متكاملة وأتمتة</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">حلول المنازل الذكية وأنظمة الإنذار المبكر وكاميرات المراقبة المدمجة بالذكاء الاصطناعي لحماية تامة للأصول.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Showcase Section -->
+    <section style="padding: 40px 5%; max-width: 1400px; margin: 0 auto;">
+        <h2 class="section-title">أحدث الأجهزة و<span>المنتجات التقنية</span></h2>
+        <div class="grid-container" id="featured-products-container">
+            <!-- Rendered via JS -->
+        </div>
+    </section>
+
+    <footer>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto;">
+            <p>© 2026 مؤسسة البقمي للحلول الذكية. جميع الحقوق محفوظة.</p>
+            <p style="color: var(--gold);">المملكة العربية السعودية - الرياض</p>
+        </div>
+    </footer>
+
+    <!-- Script Routing Modules -->
+    <script type="module" src="assets/js/app.js"></script>
+    <script type="module">
+        import { db, ref, get, child } from "./assets/js/firebase.js";
+        
+        // Fetch top products for index page
+        const prodContainer = document.getElementById('featured-products-container');
+        if(prodContainer) {
+            get(child(ref(db), 'products')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    let html = '';
+                    const data = snapshot.val();
+                    let count = 0;
+                    for(let key in data) {
+                        if(count >= 3) break;
+                        const p = data[key];
+                        html += `
+                            <div class="glass-panel" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                                <img src="${p.imageUrl || 'https://via.placeholder.com/300x200?text=No+Image'}" style="width:100%; height:200px; object-fit:cover; border-radius:12px; border:1px solid rgba(212,175,55,0.2);" alt="${p.name}">
+                                <h3 style="margin: 15px 0 10px; font-size: 1.2rem; color:#fff;">${p.name}</h3>
+                                <p style="color:var(--text-muted); font-size:0.85rem; height:60px; overflow:hidden;">${p.description || ''}</p>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                                    <span style="color:var(--gold); font-weight:700; font-size:1.2rem;">${p.price} ر.س</span>
+                                    <a href="product.html?id=${key}" class="btn-gold" style="padding:8px 15px; font-size:0.85rem;">تفاصيل المنتج</a>
+                                </div>
+                            </div>`;
+                        count++;
+                    }
+                    prodContainer.innerHTML = html;
+                } else {
+                    prodContainer.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:var(--text-muted);">لا توجد منتجات معروضة حالياً.</p>';
+                }
+            }).catch(() => {
+                prodContainer.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:red;">خطأ أثناء تحميل البيانات.</p>';
+            });
+        }
+    </script>
+</body>
+</html>
