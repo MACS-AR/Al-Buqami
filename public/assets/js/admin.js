@@ -96,7 +96,7 @@ function calculateStats(orders, products, rfqs) {
     // Calculate total money from orders marked as 'مدفوعة' or completed
     Object.values(orders).forEach(o => {
         if (o.status === "مدفوعة" || o.status === "تم التوصيل") {
-            totalSales += parseFloat(o.totalPrice || 0);
+            totalSales += parseFloat(o.totalPrice || o.total || 0);
         }
         if (o.status !== "تم التوصيل" && o.status !== "ملغي") {
             activeOrdersCount++;
@@ -116,7 +116,7 @@ function calculateStats(orders, products, rfqs) {
     document.getElementById("stat-total-products").textContent = Object.keys(products).length;
 }
 
-// Render Orders Tab
+// Render Orders Tab (تمت إضافة حقل نصي لإدخال الرد الفني وحفظه السحابي)
 function renderOrders(orders) {
     const tbody = document.getElementById("admin-orders-table");
     tbody.innerHTML = "";
@@ -136,19 +136,22 @@ function renderOrders(orders) {
         tr.innerHTML = `
             <td style="padding:15px 12px; color:#fff; font-weight:700;">${o.orderId}</td>
             <td style="padding:15px 12px; color:#fff;">${o.customerName}</td>
-            <td style="padding:15px 12px; color:var(--text-muted);">${o.customerPhone || 'غير مدرج'}</td>
+            <td style="padding:15px 12px; color:var(--text-muted);">${o.customerPhone || o.phone || 'غير مدرج'}</td>
             <td style="padding:15px 12px; color:var(--text-muted);">${orderDate}</td>
-            <td style="padding:15px 12px; color:var(--gold); font-weight:700;">${parseFloat(o.totalPrice).toFixed(2)} ر.س</td>
+            <td style="padding:15px 12px; color:var(--gold); font-weight:700;">${parseFloat(o.totalPrice || o.total || 0).toFixed(2)} ر.س</td>
             <td style="padding:15px 12px;">
-                <select class="form-control opt-status" data-id="${o.orderId}" style="width:130px; padding:5px; background:#111; font-size:0.9rem;">
+                <select class="form-control opt-status" data-id="${o.orderId}" style="width:140px; padding:6px; background:#111; font-size:0.9rem; border-color: var(--gold); margin-bottom: 8px;">
                     <option value="بانتظار الدفع" ${o.status === 'بانتظار الدفع' ? 'selected' : ''}>بانتظار الدفع</option>
                     <option value="مدفوعة" ${o.status === 'مدفوعة' ? 'selected' : ''}>مدفوعة</option>
                     <option value="تم التوصيل" ${o.status === 'تم التوصيل' ? 'selected' : ''}>تم التوصيل</option>
                     <option value="ملغي" ${o.status === 'ملغي' ? 'selected' : ''}>ملغي</option>
                 </select>
+                <!-- حقل إدخال الرد للعميل -->
+                <input type="text" id="reply-${o.orderId}" class="form-control" placeholder="اكتب رداً أو حالة التحديث للعميل..." value="${o.adminReply || ''}" style="font-size:0.85rem; padding:6px; background: rgba(0,0,0,0.4);">
             </td>
             <td style="padding:15px 12px; text-align:left;">
-                <a href="invoice.html?orderId=${o.orderId}" target="_blank" class="btn-gold" style="padding:6px 12px; font-size:0.85rem;"><i class="fa-solid fa-file-invoice"></i> الفاتورة</a>
+                <button class="btn-gold btn-save-reply" data-id="${o.orderId}" style="padding:6px 12px; font-size:0.85rem; margin-bottom: 6px; width: 100%; justify-content: center;"><i class="fa-regular fa-comment-dots"></i> حفظ الرد</button>
+                <a href="invoice.html?orderId=${o.orderId}" target="_blank" class="btn-outline" style="padding:6px 12px; font-size:0.85rem; display: block; text-align: center;"><i class="fa-solid fa-file-invoice"></i> الفاتورة</a>
             </td>
         `;
 
@@ -161,6 +164,24 @@ function renderOrders(orders) {
             const orderId = e.target.getAttribute("data-id");
             const newStatus = e.target.value;
             updateOrderStatus(orderId, newStatus);
+        });
+    });
+
+    // [ربط الزر الجديد برمجياً]: حفظ رد الإدارة في السيرفر السحابي لربطه مع استعلام العميل
+    document.querySelectorAll(".btn-save-reply").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const orderId = btn.getAttribute("data-id");
+            const replyText = document.getElementById(`reply-${orderId}`).value.trim();
+
+            const updates = {};
+            updates[`orders/${orderId}/adminReply`] = replyText;
+            updates[`invoices/${orderId}/adminReply`] = replyText;
+
+            update(ref(db), updates).then(() => {
+                showToast(`تم حفظ الرد الفني للطلب ${orderId} بنجاح!`, "success");
+            }).catch(err => {
+                showToast("فشل حفظ وإرسال الرد.", "error");
+            });
         });
     });
 }
@@ -186,7 +207,8 @@ function addNewProduct() {
         name: document.getElementById("p-name").value.trim(),
         price: parseFloat(document.getElementById("p-price").value),
         image: document.getElementById("p-image").value.trim(),
-        description: document.getElementById("p-desc").value.trim()
+        description: document.getElementById("p-desc").value.trim(),
+        specs: document.getElementById("p-desc").value.trim() // مزامنة الوصف التفصيلي مع حقل المواصفات الفنية لصفحة المنتج
     };
 
     set(ref(db, `products/${id}`), pData).then(() => {
@@ -200,7 +222,7 @@ function addNewProduct() {
     });
 }
 
-// Render Products Tab
+// Render Products Tab (تعديل الأسلوب ليعرض الوصف والمواصفات بالكامل بدون قطع)
 function renderProducts(products) {
     const tbody = document.getElementById("admin-products-table");
     tbody.innerHTML = "";
@@ -215,13 +237,17 @@ function renderProducts(products) {
         const tr = document.createElement("tr");
         tr.style.borderBottom = "1px solid var(--glass-border)";
 
+        // تأمين جلب رابط الصورة بأي مسمى مسجل
+        const currentImg = p.image || p.img || p.imageUrl || "https://via.placeholder.com/50";
+
         tr.innerHTML = `
-            <td style="padding:15px 12px;"><img src="${p.image}" style="width:50px; height:50px; border-radius:8px; object-fit:cover;"></td>
-            <td style="padding:15px 12px; color:#fff; font-weight:700;">${p.name}</td>
-            <td style="padding:15px 12px; color:var(--gold); font-weight:700;">${parseFloat(p.price).toFixed(2)} ر.س</td>
-            <td style="padding:15px 12px; color:var(--text-muted); max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.description}</td>
+            <td style="padding:15px 12px;"><img src="${currentImg}" style="width:60px; height:60px; border-radius:8px; object-fit:cover; border: 1px solid rgba(212,175,55,0.2);"></td>
+            <td style="padding:15px 12px; color:#fff; font-weight:700; white-space: nowrap;">${p.name}</td>
+            <td style="padding:15px 12px; color:var(--gold); font-weight:700; white-space: nowrap;">${parseFloat(p.price).toFixed(2)} ر.س</td>
+            <!-- [تعديل العرض]: جعل النص يلتف تلقائياً ليعرض كامل المواصفات الفنية المدخلة دون أي حجب أو اختصار -->
+            <td style="padding:15px 12px; color:var(--text-muted); max-width:450px; line-height: 1.6; white-space: pre-wrap; text-align: justify;">${p.description || p.specs || ''}</td>
             <td style="padding:15px 12px; text-align:left;">
-                <button class="btn-outline btn-delete-product" data-id="${p.id}" style="border-color:#e74c3c; color:#e74c3c; padding:6px 12px; font-size:0.85rem;"><i class="fa-solid fa-trash-can"></i> حذف</button>
+                <button class="btn-outline btn-delete-product" data-id="${p.id || p.id}" style="border-color:#e74c3c; color:#e74c3c; padding:6px 12px; font-size:0.85rem;"><i class="fa-solid fa-trash-can"></i> حذف</button>
             </td>
         `;
         tbody.appendChild(tr);
