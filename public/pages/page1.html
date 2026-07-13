@@ -29,7 +29,6 @@
             overflow-x: hidden;
         }
 
-        /* تأثير الخلفية المتحركة الملكية الفخمة */
         body::before {
             content: "";
             position: fixed;
@@ -159,7 +158,6 @@
         }
         .btn-pdf:hover { transform: translateY(-3px); background: linear-gradient(135deg, #334155, #475569); }
 
-        /* نافذة اختيار الصور من المعرض (Modal) */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -201,10 +199,10 @@
         
         <div class="section-title">1️⃣ الإعدادات العامة للموقع وشعار الشركة البديل</div>
         <div class="grid-inputs">
-            <div class="input-group"><label>رابط شعار مؤسسة البقمي (أو مسار محلي):</label><input type="text" id="inLogo" value="https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/al_baqami_logo.png" placeholder="ضع مسار أو رابط الشعار"></div>
-            <div class="input-group"><label>الرقم الموحد للمؤسسة:</label><input type="text" id="inPhone1" value="+966 920000000"></div>
-            <div class="input-group"><label>الموقع الإلكتروني للمؤسسة:</label><input type="text" id="inWeb" value="www.al-baqami.com"></div>
-            <div class="input-group"><label>رابط مسح الدعم الفني والواتساب (QR Code):</label><input type="text" id="inQrLink" value="https://wa.me/966920000000"></div>
+            <div class="input-group"><label>رابط شعار مؤسسة البقمي (أو مسار محلي):</label><input type="text" id="inLogo" value="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" placeholder="ضع مسار أو رابط الشعار"></div>
+            <div class="input-group"><label>الرقم الموحد للمؤسسة:</label><input type="text" id="inPhone1" value="0548138548"></div>
+            <div class="input-group"><label>الموقع الإلكتروني للمؤسسة:</label><input type="text" id="inWeb" value="w9103W@gmail.com"></div>
+            <div class="input-group"><label>رابط مسح الدعم الفني والواتساب (QR Code):</label><input type="text" id="inQrLink" value="https://wa.me/966548138548"></div>
         </div>
 
         <div class="section-title">2️⃣ بيانات وثيقة التعاقد العامة والعميل اليوم</div>
@@ -254,7 +252,7 @@
 
         <div class="section-title">4️⃣ السجل التجاري والحساب البنكي الرسمي لمؤسسة البقمي</div>
         <div class="grid-inputs">
-            <div class="input-group"><label>رقم السجل التجاري:</label><input type="text" id="inCr" value="رقم السجل التجاري المعتمد: 1010000000"></div>
+            <div class="input-group"><label>رقم السجل التجاري:</label><input type="text" id="inCr" value="رقم السجل التجاري المعتمد: 310805755800003"></div>
             <div class="input-group"><label>اسم البنك:</label><input type="text" id="inBankName" value="مصرف الراجحي الرسمي"></div>
             <div class="input-group"><label>رقم الحساب:</label><input type="text" id="inBankAcc" value="123456789012345"></div>
             <div class="input-group"><label>الآيبان الدولي (IBAN):</label><input type="text" id="inBankIban" value="SA9380000012345678901234"></div>
@@ -272,8 +270,7 @@
                 <h3 style="color:var(--gold-bright);">📁 معرض أجهزة ومفاتيح مؤسسة البقمي المعتمدة</h3>
                 <span class="modal-close" onclick="closeGallery()">&times;</span>
             </div>
-            <div class="gallery-grid" id="galleryGrid">
-                </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
         </div>
     </div>
 
@@ -281,7 +278,6 @@
     <p class="preview-notice">المنظومة مجهزة بالكامل لتعمل على الهواتف الذكية والكمبيوتر بتصميم ملكي فاخر ومستقر بالكامل.</p>
 
     <script>
-        // مصفوفة محاكاة لملفات الصور المحفوظة في مسار GitHub الخاص بك لضمان السرعة وعدم الاعتماد التام على الـ Token
         const githubImages = [
             { name: "fmc130 جهاز تتبع", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/1.png" },
             { name: "fmc920 جهاز تتبع", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/2.png" },
@@ -414,9 +410,8 @@
         }
         
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-        body { background-color: #090d16; color: #f8fafc; padding: 25px 15px; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { background-color: #090d16; color: #f8fafc; padding: 0; margin: 0; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
-        /* تأثير الخلفية الفخمة المتحركة في العرض النهائي */
         .page-bg-effect {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -424,210 +419,206 @@
             z-index: -5;
         }
 
-        .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 50px; }
+        .container { width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; align-items: center; justify-content: center; padding: 20px 0; }
 
         .digital-page { 
             background: var(--card-dark) !important; 
             color: var(--text-main) !important;
             border-radius: 20px; 
-            padding: 50px 40px; 
+            padding: 18mm; 
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); 
             border: 2px solid var(--gold-royal) !important;
             position: relative; 
-            min-height: 1050px;
+            width: 190mm;
+            min-height: 277mm;
+            max-width: 100%;
             display: flex; 
             flex-direction: column; 
             justify-content: space-between;
             page-break-after: always;
+            page-break-inside: avoid;
+            overflow: hidden;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            box-sizing: border-box;
         }
 
-        .page-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border-color); padding-bottom: 15px; margin-bottom: 30px; color: var(--gold-royal); }
-        .page-header .web-link { font-size: 14px; color: var(--gold-bright); font-weight: 600; text-decoration: none; }
-        .page-header .company-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-royal); background-color: #1a2236; }
+        .company-logo,
+        .cover-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: contain;
+            object-position: center;
+            background: transparent;
+            border: 4px solid #f5c842;
+            display: block;
+            margin: 0 auto;
+            padding: 6px;
+        }
 
-        .page-body { flex: 1; display: flex; flex-direction: column; }
-        .section-heading { font-size: 24px; font-weight: 900; color: var(--gold-bright); border-right: 6px solid var(--gold-royal); padding-right: 12px; margin-bottom: 30px; }
+        .cover-page-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .page-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border-color); padding-bottom: 15px; margin-bottom: 30px; color: var(--gold-royal); width: 100%; box-sizing: border-box; }
+        .page-header .web-link { font-size: 14px; color: var(--gold-bright); font-weight: 600; text-decoration: none; }
+        .page-header .company-logo { width: 65px; height: 65px; border-radius: 50%; object-fit: contain; border: 2px solid var(--gold-royal); background: transparent; padding: 3px; margin: 0; }
+
+        .page-body { flex: 1; display: flex; flex-direction: column; width: 100%; }
+        .section-heading { font-size: 24px; font-weight: 900; color: var(--gold-bright); border-right: 6px solid var(--gold-royal); padding-right: 12px; margin-bottom: 30px; text-align: right; }
 
         .static-paragraph { font-size: 16px; line-height: 2; color: #cbd5e1; text-align: justify; margin-bottom: 20px; }
-        .highlight-box { background: #1e2942; border-right: 4px solid var(--gold-royal); padding: 18px; border-radius: 6px; margin: 20px 0; font-weight: 600; color: var(--gold-bright); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); }
+        .highlight-box { background: #1e2942; border-right: 4px solid var(--gold-royal); padding: 18px; border-radius: 6px; margin: 20px 0; font-weight: 600; color: var(--gold-bright); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); text-align: right; }
 
-        .client-info-table, .financial-table, .check-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .client-info-table td { border: 1px solid var(--border-color); padding: 14px 18px; font-size: 15px; font-weight: bold; color: var(--text-main); background: #141c2e; }
-        .client-info-table td.label-side { color: var(--gold-royal); font-weight: 600; width: 35%; background: #1e2942; }
+        .client-info-table, .financial-table, .features-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .client-info-table td { border: 1px solid var(--border-color); padding: 14px 18px; font-size: 15px; font-weight: bold; color: var(--text-main); background: #141c2e; text-align: right; }
+        .client-info-table td.label-side { color: var(--gold-royal); font-weight: 600; width: 35%; background: #1e2942; text-align: right; }
         
-.financial-table{
-    width:100%;
-    border-collapse:collapse;
-    page-break-inside:auto;
-}
-
-.financial-table thead{
-    display:table-header-group;
-}
-
-.financial-table tfoot{
-    display:table-footer-group;
-}
-
-.financial-table tr{
-    page-break-inside:avoid;
-    break-inside:avoid;
-}
-
-.financial-table td,
-.financial-table th{
-    page-break-inside:avoid;
-    break-inside:avoid;
-}
-        .financial-table th, .financial-table td { border: 1px solid var(--border-color); padding: 12px; font-size: 13px; font-weight: bold; text-align: center; }
+        .financial-table { width: 100%; border-collapse: collapse; page-break-inside: auto; }
+        .financial-table thead { display: table-header-group; }
+        .financial-table tfoot { display: table-footer-group; }
+        .financial-table tr { page-break-inside: avoid; break-inside: avoid; }
+        .financial-table th, .financial-table td { border: 1px solid var(--border-color); padding: 12px; font-size: 13px; font-weight: bold; text-align: center; page-break-inside: avoid; break-inside: avoid; }
         .financial-table th { background: #1e2942; color: var(--gold-bright); }
         .financial-table td { background: #141c2e; }
-        .device-preview-img { width: 65px; height: 55px; object-fit: contain; background: transparent; }
+
+        .features-table th, .features-table td { border: 1px solid var(--border-color); padding: 8px 10px; font-size: 12px; text-align: center; }
+        .features-table th { background: #1e2942; color: var(--gold-bright); font-weight: 700; }
+        .features-table td { background: #141c2e; color: var(--text-main); }
+        .features-table td.feature-text { text-align: right; font-weight: 600; color: #cbd5e1; }
+        .features-table td.highlight-accent { background: rgba(245, 200, 66, 0.05); color: var(--gold-bright); }
+        .check-icon { color: #10b981; font-weight: bold; font-size: 14px; }
+        .cross-icon { color: #ef4444; font-weight: bold; font-size: 14px; }
+        
+        img { max-width: 100%; height: auto; page-break-inside: avoid; }
+        .device-preview-img { width: 65px; height: 55px; object-fit: contain; background: transparent; display: block; margin: auto; }
         .total-row-highlight { font-weight: 900; }
         .total-row-highlight td { background: #1e2942 !important; color: var(--gold-bright) !important; }
 
-        .feature-card-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
-        .feature-item-card { background: #141c2e; border: 1px solid var(--border-color); padding: 18px; border-radius: 12px; transition: all 0.3s; }
-        .feature-item-card:hover { transform: translateY(-3px); border-color: var(--gold-royal); }
-        .feature-num { font-size: 16px; font-weight: 900; color: var(--gold-bright); display: block; margin-bottom: 4px; }
-        .feature-title { font-size: 15px; font-weight: 700; color: var(--gold-royal); }
-        .feature-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
-
-        .check-table th, .check-table td { border: 1px solid var(--border-color); padding: 12px; font-weight: bold; font-size: 13px; text-align: center; }
-        .check-table th { background: #1e2942; color: var(--gold-bright); }
-        .check-table td { background: #141c2e; color: var(--text-main); }
-        .check-icon { color: #10b981; font-weight: bold; }
-
-        .bank-wrapper-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; background: #141c2e; margin-top: 20px; }
+        .bank-wrapper-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; background: #141c2e; margin-top: 20px; text-align: right; }
         .bank-title-display { font-size: 16px; color: var(--gold-bright); font-weight: 900; margin-bottom: 8px; }
         
-        .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px; gap: 8px; }
-        .page-footer { border-top: 1px solid var(--border-color); padding-top: 15px; font-size: 13px; color: var(--gold-royal); display: flex; justify-content: space-between; align-items: center; }
+        .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px; gap: 8px; width: 100%; }
+        .page-footer { border-top: 1px solid var(--border-color); padding-top: 15px; font-size: 13px; color: var(--gold-royal); display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
 
-        /* تخصيص الطباعة لضمان خروج الـ 13 صفحة بدقة عالية جداً بالخلفية الفخمة */
         @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
 
-    @page{
-        size:A4 portrait;
-        margin:10mm;
-    }
+            html, body {
+                width: 210mm;
+                margin: 0;
+                padding: 0;
+                background: #090d16 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
 
-    html,body{
-        width:210mm;
-        background:#090d16 !important;
-        -webkit-print-color-adjust:exact !important;
-        print-color-adjust:exact !important;
-    }
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
 
-    body{
-        padding:0 !important;
-        margin:0 !important;
-    }
+            .page-bg-effect,
+            .print-btn-floating {
+                display: none !important;
+            }
 
-    .page-bg-effect,
-    .print-btn-floating{
-        display:none !important;
-    }
+            .container {
+                width: 100%;
+                margin: 0 auto;
+                display: block !important;
+                padding: 0 !important;
+            }
 
-    .container{
-        display:block !important;
-    }
+            .digital-page {
+                width: 190mm;
+                min-height: 277mm;
+                margin: 0 auto 8mm auto;
+                padding: 15mm 18mm;
+                box-shadow: none !important;
+                background: #111726 !important;
+                border: 2px solid #dbb339 !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                overflow: hidden;
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
 
-    .digital-page{
+            .digital-page:last-child {
+                margin-bottom: 0 !important;
+                page-break-after: auto;
+            }
 
-        width:190mm;
-        min-height:277mm;
+            table {
+                page-break-inside: auto;
+                width: 100%;
+            }
 
-        margin:0 auto !important;
-        padding:18mm !important;
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
 
-        page-break-after:always;
-        page-break-inside:avoid;
-
-        overflow:hidden;
-
-        background:#111726 !important;
-        border:2px solid #dbb339 !important;
-        box-shadow:none !important;
-
-        -webkit-print-color-adjust:exact !important;
-        print-color-adjust:exact !important;
-    }
-
-    .digital-page:last-child{
-        page-break-after:auto;
-    }
-
-    table{
-        page-break-inside:auto;
-    }
-
-    tr{
-        page-break-inside:avoid;
-        page-break-after:auto;
-    }
-
-    td,th{
-        page-break-inside:avoid;
-    }
-
-    img{
-        max-width:100%;
-        page-break-inside:avoid;
-    }
-
-    .financial-table,
-    .client-info-table,
-    .check-table{
-        width:100%;
-    }
-
-    .feature-item-card{
-        break-inside:avoid;
-    }
-
-}
+            td, th {
+                page-break-inside: avoid;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="page-bg-effect"></div>
-    
     <div class="container">
 
+        <!-- الصفحة 1: الغلاف -->
         <div class="digital-page">
             <div class="page-header">
                 <a href="https://${web}" target="_blank" class="web-link">${web}</a>
                 <img src="${logo}" class="company-logo" alt="Logo">
             </div>
-            <div class="page-body" style="justify-content: center; text-align: center;">
-                <h1 style="font-size: 34px; font-weight: 900; color: var(--gold-bright); margin-bottom: 5px;">مؤسسة البقمي</h1>
-                <p style="font-size: 16px; color: var(--text-secondary); font-weight: bold; margin-bottom: 40px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
-                <div style="background: #141c2e; padding: 30px; border-radius: 16px; border: 2px solid rgba(219,179,57,0.4); max-width: 550px; margin: 0 auto; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main);"><strong>📦 موجه إلى:</strong> ${custName}</p>
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main);"><strong>👤 عناية الأستاذ:</strong> ${custContact}</p>
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main);"><strong>📅 تاريخ العرض:</strong> ${date}</p>
-                    <p style="font-size:15px; color:var(--text-main);"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
+            
+            <div class="cover-page-center">
+                <img src="${logo}" alt="شعار مؤسسة البقمي" class="cover-logo">
+                <h1 style="font-size: 36px; font-weight: 900; color: var(--gold-bright); margin-top: 20px; margin-bottom: 10px;">مؤسسة البقمي</h1>
+                <p style="font-size: 18px; color: var(--text-secondary); font-weight: bold; margin-bottom: 40px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
+                
+                <div style="background: #141c2e; padding: 30px; border-radius: 16px; border: 2px solid rgba(219,179,57,0.4); width: 100%; max-width: 550px; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.4); box-sizing: border-box;">
+                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>📦 موجه إلى:</strong> ${custName}</p>
+                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>👤 عناية الأستاذ:</strong> ${custContact}</p>
+                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>📅 تاريخ العرض:</strong> ${date}</p>
+                    <p style="font-size:16px; color:var(--text-main); text-align: right;"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
                 </div>
             </div>
             <div class="page-footer"><span>مؤسسة البقمي لأنظمة إنترنت الأشياء</span><span>صفحة 1 من 13</span></div>
         </div>
 
+        <!-- الصفحة 2: نبذة عن المؤسسة -->
         <div class="digital-page">
             <div class="page-header"><span>تتبع المركبات وإنترنت الأشياء</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 2: نبذة عن مؤسسة البقمي</h2>
-                <p class="static-paragraph">تعتبر مؤسسة البقمي إحدى المؤسسات الرائدة والموثوقة في المملكة العربية السعودية في تقديم أحدث حلول الاتصالات وتقنية المعلومات، متخصصة بالكامل في أنظمة إدارة الأساطيل وتتبع المركبات عن بُعد وحلول إنترنت الأشياء (IoT) والتكامل الذكي. نعمل جاهدين على تزويد قطاع الأعمال بأحدث التقنيات لرفع الكفاءة التشغيلية وتقليل التكاليف الزائدة لحماية الأصول المتحركة.</p>
+                <h2 class="section-heading">نبذة عن مؤسسة البقمي</h2>
+                <p class="static-paragraph">تعتبر مؤسسة البقمي إحدى المؤسسات الرائدة والموثوقة في المملكة العربية السعودية في تقديم أحدث حلول الاتصالات وتقنية المعلومات، متخصصة بالكامل في أنظمة إدارة الأساطيل وتتبع المركبات عن بُعد وحلول إنترنت الأشياء (IoT) والتكامل الذكي.</p>
                 <div class="highlight-box">رؤيتنا: الريادة في تقديم الأنظمة الرقمية والحلول الذكية وتطوير البنية التحتية لإدارة النقل في المملكة وفق رؤية 2030.</div>
             </div>
             <div class="page-footer"><span>الرقم الموحد: ${phone1}</span><span>صفحة 2 من 13</span></div>
         </div>
 
+        <!-- الصفحة 3: وثيقة التعاقد والبيانات العامة -->
         <div class="digital-page">
             <div class="page-header"><span>وثيقة العرض الفني</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 3: وثيقة التعاقد وبيانات العميل المستهدف</h2>
+                <h2 class="section-heading">وثيقة التعاقد وبيانات العميل المستهدف</h2>
                 <table class="client-info-table">
                     <tr><td class="label-side">اسم الشركة / العميل:</td><td>${custName}</td></tr>
                     <tr><td class="label-side">المسؤول المتابع:</td><td>${custContact}</td></tr>
@@ -640,73 +631,151 @@
             <div class="page-footer"><span>تاريخ الإصدار: ${date}</span><span>صفحة 3 من 13</span></div>
         </div>
 
+        <!-- الصفحة 4: جدول مميزات نظام التتبع (الجزء الأول: 1-14) -->
         <div class="digital-page">
-            <div class="page-header"><span>النطاق الفني والحلول</span><img src="${logo}" class="company-logo"></div>
+            <div class="page-header"><span>مميزات نظام التتبع</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 4: نطاق المشروع والأهداف الرئيسية</h2>
-                <p class="static-paragraph">يتمحور هذا المشروع حول توريد وتركيب وتشغيل ${custOffer} لعدد ${custVehicles} مركبة تابعة لشركتكم الموقرة. يهدف النظام إلى إعطائكم السيطرة التامة واللحظية للتحكم بالأسطول ومعرفة المسارات بدقة تامة لتفادي أي هدر في الموارد.</p>
-                <div class="feature-card-list">
-                    <div class="feature-item-card"><span class="feature-num">01</span><span class="feature-title">مراقبة حية 24/7</span><span class="feature-desc">تحديث فوري للموقع على الخريطة كل بضع ثوانٍ.</span></div>
-                    <div class="feature-item-card"><span class="feature-num">02</span><span class="feature-title">إدارة استهلاك الوقود</span><span class="feature-desc">حسابات دقيقة لمعدلات الاستهلاك والوقود المهدر.</span></div>
-                </div>
-            </div>
-            <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 4 من 13</span></div>
-        </div>
-
-        <div class="digital-page">
-            <div class="page-header"><span>الأجهزة المعتمدة</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">صفحة 5: المواصفات الفنية لجهاز التتبع المتقدم FMC130 (4G)</h2>
-                <p class="static-paragraph">يعد جهاز FMC130 الخيار المثالي لقراءة بيانات كمبيوتر الشاحنات الكبيرة والمركبات المتقدمة عبر تقنية CAN-BUS وحقن البيانات اللحظي وسرعة الاستجابة الفائقة عبر شبكات الجيل الرابع.</p>
-                <table class="check-table">
-                    <thead><tr><th>الميزة الفنية</th><th>الدعم الفني والتقني</th><th>الحالة</th></tr></thead>
+                <h2 class="section-heading">مميزات نظام التتبع (1)</h2>
+                <table class="features-table">
+                    <thead>
+                        <tr>
+                            <th style="width:45px;">Basic</th>
+                            <th style="width:55px;">Advance</th>
+                            <th style="width:45px;">F.M.S</th>
+                            <th>المواصفات</th>
+                            <th style="width:40px;">الرقم</th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <tr><td style="text-align: right; padding-right:15px;">دعم شبكات الجيل الرابع LTE Cat M1/NB-IoT</td><td>مدمج بالكامل لسرعات عالية</td><td><span class="check-icon">✔</span></td></tr>
-                        <tr><td style="text-align: right; padding-right:15px;">قراءة كمبيوتر المركبة والـ CANBUS</td><td>دعم قراءة حرارة المحرك والوقود</td><td><span class="check-icon">✔</span></td></tr>
-                        <tr><td style="text-align: right; padding-right:15px;">بطارية طوارئ داخلية ومقاومة الصدمات</td><td>تصل إلى 4 ساعات عمل عند فصل بطارية السيارة</td><td><span class="check-icon">✔</span></td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">النظام متوفر باللغتين العربية والانجليزية.</td><td class="highlight-accent">1</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">تحديد موقع المركبة كل 2 دقيقه.</td><td class="highlight-accent">2</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">معرفة مسار وسرعة المركبة على مدار الساعة.</td><td class="highlight-accent">3</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية متابعة مسار اكثر من مركبة في نفس الوقت ومعرفة اماكن الوقوف والتوقف تجاوز السرعة المحددة على الخريطة لكل مركبة.</td><td class="highlight-accent">4</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء 32 شاشات فرعية بنفس الوقت لمراقبة 32 مركبات بشكل منفصل.</td><td class="highlight-accent">5</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">معرفة اوقات تشغيل او اطفاء المحرك من قبل السائق.</td><td class="highlight-accent">6</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية التنقل بين اكثر من نوع من الخرائط.</td><td class="highlight-accent">7</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية اطفاء المركبة Immobilizer من خلال النظام او تطبيق الهاتف.</td><td class="highlight-accent">8</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة المركبات من خلال تطبيق الهواتف الذكية (Ios/Android).</td><td class="highlight-accent">9</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">توفير معلومات و استخراج تقارير عن كل رحلة تقوم بها المركبة مثل مكان و زمان بداية الرحلة و انتهائها، الوقت المستغرق، معدل السرعة و اعلى سرعة خلال الرحلة.</td><td class="highlight-accent">10</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">التنبيه في حال العبث بالجهاز.</td><td class="highlight-accent">11</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">متابعة سلوك السائقين من خلال التنبيهات الفورية لكل من:<br>- التسارع المفاجئ Harsh Acceleration.<br>- التباطؤ المفاجئ Harsh Breaking.<br>- السرعة الزائدة Over Speeding.</td><td class="highlight-accent">12</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية انشاء أي تقرير حسب رغبة العميل.</td><td class="highlight-accent">13</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية استخراج التقارير بصيغ مختلفة تتناسب و طبيعة العمل بالمنشأة (Excel/PDF/HTML).</td><td class="highlight-accent">14</td></tr>
                     </tbody>
                 </table>
             </div>
-            <div class="page-footer"><span>إدارة التقنية والأنظمة</span><span>صفحة 5 من 13</span></div>
+            <div class="page-footer"><span>منظومة تتبع المركبات الفخمة</span><span>صفحة 4 من 13</span></div>
         </div>
 
+        <!-- الصفحة 5: جدول مميزات نظام التتبع (الجزء الثاني: 15-28) -->
         <div class="digital-page">
-            <div class="page-header"><span>الأنظمة المدمجة</span><img src="${logo}" class="company-logo"></div>
+            <div class="page-header"><span>مميزات نظام التتبع</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 6: أجهزة التتبع الخفيفة FMC920 المعتمدة</h2>
-                <p class="static-paragraph">يمتاز جهاز FMC920 بالحجم الصغير والقدرة الفائقة على التخفي داخل السيارة لضمان تتبع دقيق وحماية متكاملة ضد السرقة مع إرسال إشعارات فورية عند تشغيل أو إطفاء المركبة.</p>
-                <div class="highlight-box">يمتاز هذا الجهاز باستهلاك منخفض جداً لبطارية المركبة مع حساسية هوائي عالية لالتقاط أقمار الـ GPS في أصعب الظروف المناخية.</div>
+                <h2 class="section-heading">مميزات نظام التتبع (2)</h2>
+                <table class="features-table">
+                    <thead>
+                        <tr>
+                            <th style="width:45px;">Basic</th>
+                            <th style="width:55px;">Advance</th>
+                            <th style="width:45px;">F.M.S</th>
+                            <th>المواصفات</th>
+                            <th style="width:40px;">الرقم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">معرفة حالات التوقف الطويل للمركبة في حال عدم مسيرها و هي تعمل (Idling Time).</td><td class="highlight-accent">15</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية تقسيم المركبات الى مجموعات لتسهيل عملية المراقبة و المتابعة من مستخدم النظام.</td><td class="highlight-accent">16</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء اسماء مستخدمين و اعطائهم صلاحيات مختلفة من قبل مستخدم النظام.</td><td class="highlight-accent">17</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء تنبيهات على جميع القراءات المرسلة من المركبة من قبل مستخدم النظام بالإضافة الى التنبيهات الرئيسية المعرفة مسبقاً.</td><td class="highlight-accent">18</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">مراقبة الدخول و/او الخروج للمناطق المحددة بسياج وهمي على الخريطة سواء بالسماح او المنع (Geo-fencing).</td><td class="highlight-accent">19</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية اضافة مواقع الاهتمام (POI) الخاصة بالعميل و ظهورها بالتقارير و العناوين.</td><td class="highlight-accent">20</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية اضافة نقاط الاهتمام و نقاط البيع على الخريطة و بناء تنبيهات و استخراج تقارير وقت الدخول / الخروج و مدة المكوث داخل هذه المناطق المحددة مسبقاً من قبل مستخدم.</td><td class="highlight-accent">21</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">المساعدة في عملية إدارة المركبات و التخطيط المستقبلي من خلال النظام باسترجاع أية معلومات عن المركبة في الماضي من خلال إعادة مشاهدة مسار المركبة فيديو لسنة كامله.</td><td class="highlight-accent">22</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية تعريف اسماء السائقين و تقسيمه الى مجموعات من قبل مستخدم النظام.</td><td class="highlight-accent">23</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية ربط المركبة بأكثر من سائق في حال اعتماد نظام الورديات (Shifts) بالعمل.</td><td class="highlight-accent">24</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء وظائف لإرسال تقارير يومية للأشخاص المعنيين بالمنشأة من قبل مستخدم النظام.</td><td class="highlight-accent">25</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية التميز برمز المركبة من حيث اللون و الشكل لتسهيل المراقبة.</td><td class="highlight-accent">26</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة الصيانة الدورية للمركبة من خلال نظام التتبع و برمجة تقارير بذلك و تنبيهات فورية تصل لمستخدم النظام، لتوفير الجهد والوقت و تخفيض التكاليف المخصصة للصيانة.</td><td class="highlight-accent">27</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة الصيانة الدورية للمركبة من خلال (Fleet Management System) الذي يدعمه نظام التتبع وإدخال لكافة قطع الصيانة و عمل تقارير توضح المصاريف والكلف الفعلية التي تم صرفها على مستوى المركبة.</td><td class="highlight-accent">28</td></tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="page-footer"><span>بإشراف م/ محمد اشرف</span><span>صفحة 6 من 13</span></div>
+            <div class="page-footer"><span>تقارير وحلول ذكية ممتدة</span><span>صفحة 5 من 13</span></div>
         </div>
 
+        <!-- الصفحة 6: تابع مميزات نظام التتبع (30-37) -->
         <div class="digital-page">
-            <div class="page-header"><span>برمجيات المنصة</span><img src="${logo}" class="company-logo"></div>
+            <div class="page-header"><span>تابع مميزات نظام التتبع</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 7: مميزات السيرفر الموحد وتطبيق الجوال للتحكم</h2>
-                <p class="static-paragraph">تقدم منصة البقمي واجهة مستخدم متكاملة وسلسة تعمل على جميع المتصفحات وتطبيقات الهواتف الذكية (iOS & Android)، ومزودة بنظام تنبيهات فوري لمديري الأساطيل.</p>
-                <div class="feature-card-list">
-                    <div class="feature-item-card"><span class="feature-num">01</span><span class="feature-title">تحديد النطاق الجغرافي (Geofencing)</span><span class="feature-desc">تنبيه فوري عند خروج السيارة عن مسارها المحدد.</span></div>
-                    <div class="feature-item-card"><span class="feature-num">02</span><span class="feature-title">التقارير الدورية المؤتمتة</span><span class="feature-desc">توليد تقارير PDF وإرسالها بريدياً بشكل تلقائي.</span></div>
-                </div>
+                <h2 class="section-heading">مميزات نظام التتبع (3)</h2>
+                <table class="features-table">
+                    <thead>
+                        <tr>
+                            <th style="width:45px;">Basic</th>
+                            <th style="width:55px;">Advance</th>
+                            <th style="width:45px;">F.M.S</th>
+                            <th>المواصفات</th>
+                            <th style="width:40px;">الرقم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية النظام على مساعدة العملاء في التخطيط للمسارات التي ستسلكها المركبة في مناطق العمل المحددة (Route Optimization) من قبل مستخدم النظام.</td><td class="highlight-accent">30</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء تقرير و/او تنبيه يحدد المواقع التي لم تزر ضمن الخطة.</td><td class="highlight-accent">31</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط ما بين القاطرة و المقطورة.</td><td class="highlight-accent">32</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية ربط نظام التتبع مع انظمة اخرى مثل (ERP) تعتمد على المعلومات المستخرجة من نظام التتبع.</td><td class="highlight-accent">33</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">عرض البيانات عن طريق (DashBoard) لصانع القرار.</td><td class="highlight-accent">34</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشار رابط مؤقت لتتبع رحلة محددة والغائه عند انتهاء الرحلة اتوماتيكيا.</td><td class="highlight-accent">35</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط مع الكاميرات MDVR لعرض الصور على النظام.</td><td class="highlight-accent">37</td></tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="page-footer"><span>تطوير ونمذجة FARESPCB</span><span>صفحة 7 من 13</span></div>
+            <div class="page-footer"><span>أنظمة متقدمة متكاملة</span><span>صفحة 6 من 13</span></div>
         </div>
 
+        <!-- الصفحة 7: خدمات إضافية (يقرتب عليها مبالغ اضافية) -->
+        <div class="digital-page">
+            <div class="page-header"><span>خدمات إضافية</span><img src="${logo}" class="company-logo"></div>
+            <div class="page-body">
+                <h2 class="section-heading" style="margin-bottom:5px;">خدمات إضافية</h2>
+                <p style="color:var(--gold-bright); font-weight:700; margin-bottom:25px; font-size:14px; text-align:right;">(يترتب عليها مبالغ اضافية)</p>
+                <table class="features-table">
+                    <thead>
+                        <tr>
+                            <th style="width:45px;">Basic</th>
+                            <th style="width:55px;">Advance</th>
+                            <th style="width:45px;">F.M.S</th>
+                            <th>المواصفات</th>
+                            <th style="width:40px;">الرقم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">عدم السماح بتشغيل المركبة إلا من خلال الشخص المخول باستخدام بطاقة تعريف خاصة بالسائق RFID.</td><td class="highlight-accent">1</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية مراقبة درجة الحرارة و نسبة الرطوبة و إرسال تنبيهات فورية عند اختلافها عن المحدد مسبقاً تصل الى مسؤول النظام فور حدوثها.</td><td class="highlight-accent">2</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط مع كمبيوتر المركبة عن طريق (CAN-Bus) والذي يساعد في أخذ قراءات حقيقية من لوحة العدادات بالمركبة.</td><td class="highlight-accent">3</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة مستوى الوقود بالمركبة من خلال (Fuel Level Sensor).</td><td class="highlight-accent">4</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية مراقبة وإدارة صرفيات الوقود.</td><td class="highlight-accent">5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-footer"><span>خدمات وحلول اختيارية</span><span>صفحة 7 من 13</span></div>
+        </div>
+
+        <!-- الصفحة 8: الربط بمنصة وصل -->
         <div class="digital-page">
             <div class="page-header"><span>الاعتمادات الرسمية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 8: الربط بمنصة وصل (هيئة النقل العام بالمملكة)</h2>
+                <h2 class="section-heading">الربط بمنصة وصل (هيئة النقل العام بالمملكة)</h2>
                 <p class="static-paragraph">تضمن مؤسسة البقمي ربطاً وتكاملاً مباشراً مع منصة "وصل" التابعة للهيئة العامة للنقل لضمان توافق شاحنات النقل والتوجيه مع الأنظمة واللوائح الرسمية بالمملكة وتفادي المخالفات.</p>
                 <div class="highlight-box" style="background:#1e2942; border-color:#dbb339; color:#f5c842;">جميع الأنظمة والأجهزة والشرائح المستخدمة مرخصة بالكامل من هيئة الاتصالات والفضاء والتقنية السعودية.</div>
             </div>
             <div class="page-footer"><span>امتثال كامل 100%</span><span>صفحة 8 من 13</span></div>
         </div>
 
+        <!-- الصفحة 9: العرض المالي الشامل -->
         <div class="digital-page">
-            <div class="page-header"><span>العرض المالي المالي</span><img src="${logo}" class="company-logo"></div>
+            <div class="page-header"><span>العرض المالي</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 9: المقايسة المالية وجدول تسعير الأجهزة والتركيب</h2>
+                <h2 class="section-heading">المقايسة المالية وجدول تسعير الأجهزة والتركيب</h2>
                 <table class="financial-table">
                     <thead>
                         <tr>
@@ -729,29 +798,32 @@
             <div class="page-footer"><span>العرض المالي الرسمي</span><span>صفحة 9 من 13</span></div>
         </div>
 
+        <!-- الصفحة 10: الشروط والأحكام -->
         <div class="digital-page">
             <div class="page-header"><span>الشروط القانونية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 10: الشروط والأحكام وآلية التوريد</h2>
+                <h2 class="section-heading">الشروط والأحكام وآلية التوريد</h2>
                 <p class="static-paragraph">1. مدة صلاحية هذا العرض المالي والفني هي 30 يوماً من تاريخ الإصدار المدون في الصفحة الأولى.<br>2. تلتزم المؤسسة ببدء التوريد والتركيب خلال 5 أيام عمل من تعميد العرض وتوقيع العقد الرسمي.<br>3. طريقة الدفع: يتم سداد دفعة مقدمة بنسبة 50% عند التعميد، والمتبقي 50% بعد إتمام التركيب والتشغيل الفعلي للمنصة وسيرفر التحكم.</p>
             </div>
             <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 10 من 13</span></div>
         </div>
 
+        <!-- الصفحة 11: الضمان والسياسة الذهبية -->
         <div class="digital-page">
             <div class="page-header"><span>الضمان والصيانة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 11: سياسة الضمان الذهبي والصيانة والدعم الفني</h2>
-                <p class="static-paragraph">تضمن مؤسسة البقمي الأجهزة الموردة ضد العيوب المصنعية لمدة سنتين كاملة (ضمان استبدال). كما يتضمن العقد دعماً فنياً مجانياً عن بُعد وعلى مدار الساعة لحل أي مشكلات برمجية في لوحة التحكم وتحديث الخرائط الفورية.</p>
+                <h2 class="section-heading">سياسة الضمان الذهبي والصيانة والدعم الفني</h2>
+                <p class="static-paragraph">تضمن مؤسسة البقمي الأجهزة الموردة ضد العيوب المصنعية لمدة سنتين كاملة (ضمان استبدال).</p>
                 <div class="highlight-box">نوفر فريق صيانة متنقل للوصول إلى مواقع العميل وصيانة الأجهزة في الميدان لضمان استمرارية العمل.</div>
             </div>
             <div class="page-footer"><span>ضمان لمدة سنتين</span><span>صفحة 11 من 13</span></div>
         </div>
 
+        <!-- الصفحة 12: قنوات السداد والبيانات البنكية -->
         <div class="digital-page">
             <div class="page-header"><span>البيانات البنكية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 12: قنوات السداد والحسابات البنكية المعتمدة</h2>
+                <h2 class="section-heading">قنوات السداد والحسابات البنكية المعتمدة</h2>
                 <p class="static-paragraph">يرجى إيداع المبالغ المالية والشيكات الرسمية باسم (مؤسسة البقمي) حصراً على الحساب البنكي المعتمد التالي:</p>
                 <div class="bank-wrapper-box">
                     <div class="bank-title-display"><i class="fa-solid fa-building-columns"></i> ${bName}</div>
@@ -763,9 +835,10 @@
             <div class="page-footer"><span>مصرفية معتمدة ورسمية</span><span>صفحة 12 من 13</span></div>
         </div>
 
-        <div class="digital-page" style="justify-content: space-between;">
+        <!-- الصفحة 13: الخاتمة والتواصل الفوري -->
+        <div class="digital-page">
             <div class="page-header"><span>الاتصال والتواصل</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body" style="text-align: center; justify-content: center;">
+            <div class="page-body" style="text-align: center; justify-content: center; align-items: center;">
                 <h2 style="font-size: 26px; font-weight: 900; color: var(--gold-bright); margin-bottom: 10px;">نشكركم على ثقتكم الغالية بمؤسسة البقمي</h2>
                 <p class="static-paragraph" style="text-align: center;">نتطلع للعمل معكم كشركاء نجاح دائمين وتوفير أفضل أنظمة إنترنت الأشياء والتكامل الذكي لأعمالكم.</p>
                 
@@ -774,70 +847,57 @@
                     <p style="font-size:13px; font-weight:bold; color:var(--gold-royal); margin-top:10px;">امسح الرمز للتواصل المباشر مع الدعم الفني والمبيعات عبر واتساب</p>
                 </div>
             </div>
-            <div class="page-footer"><span>لوحة م/ محمد اشرف (FARESPCB)</span><span>صفحة 13 من 13</span></div>
+            <div class="page-footer"><span>Mohamed Ashraf</span><span>صفحة 13 من 13</span></div>
         </div>
 
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
-<script>
-
-try {
-    new QRCode(document.getElementById("qrcode"), {
-        text: "${qrLink}",
-        width: 130,
-        height: 130
-    });
-} catch(e){
-    console.log(e);
-}
-
-async function waitImages(){
-
-    const imgs=document.images;
-
-    await Promise.all(
-        [...imgs].map(img=>{
-
-            if(img.complete){
-                return Promise.resolve();
-            }
-
-            return new Promise(resolve=>{
-                img.onload=resolve;
-                img.onerror=resolve;
-            });
-
-        })
-    );
-
-}
-
-(async()=>{
-
-    if("${mode}"==="print"){
-
-        await waitImages();
-
-        setTimeout(()=>{
-            window.print();
-        },500);
-
+    <script>
+    try {
+        new QRCode(document.getElementById("qrcode"), {
+            text: "${qrLink}",
+            width: 130,
+            height: 130
+        });
+    } catch(e){
+        console.log(e);
     }
 
-})();
+    async function waitImages(){
+        const imgs = document.images;
+        await Promise.all(
+            [...imgs].map(img => {
+                if(img.complete){
+                    return Promise.resolve();
+                }
+                return new Promise(resolve => {
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                });
+            })
+        );
+    }
 
-<\/script>
+    (async () => {
+        if ("` + mode + `" === "print") {
+            await waitImages();
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
+    })();
+    <\/script>
 </body>
 </html>`;
 
-            if(mode === 'html') {
-                const blob = new Blob([clientPageCode], { type: 'text/html;charset=utf-8;' });
-                const link = document.createElement("a");
+            if (mode === 'html') {
+                const blob = new Blob([clientPageCode], { type: 'text/html;charset=utf-8' });
+                const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = `عرض_مؤسسة_البقمي_${custName}.html`;
+                link.download = `عرض_رقمي_${custName}.html`;
                 link.click();
-            } else if(mode === 'print') {
+            } else if (mode === 'print') {
                 const printWindow = window.open('', '_blank');
                 printWindow.document.open();
                 printWindow.document.write(clientPageCode);
