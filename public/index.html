@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة مؤسسة مناحي البقمي التجارية للحلول الذكية وإنترنت الأشياء (IoT) - خدمات عامة، حلول التتبع، كاميرات المراقبة، أنظمة الحماية والتخلص الجمركي">
+    <meta property="og:title" content="مؤسسة مناحي البقمي للحلول الذكية وإنترنت الأشياء">
+    <meta property="og:description" content="وجهتك التقنية الأولى لأجهزة تتبع المركبات، المعاملات المرورية، التخليص الجمركي والأنظمة الذكية.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png">
+    <link rel="canonical" href="https://albuqami-iot.vercel.app/">
+    <title>مؤسسة مناحي البقمي التجارية للحلول الذكية</title>
+    
+    <!-- CSS and Fonts -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* كود إضافي مخصص للمرونة العالية وضمان التجاوب على الجوال والكمبيوتر بنسبة 100% */
+        .section-padding {
+            padding: 60px 5%;
+        }
+        .about-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .chairman-section {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 40px;
+            background: var(--bg-surface);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+        .chairman-img-wrapper {
+            flex-shrink: 0;
+            text-align: center;
+        }
+        .chairman-img-wrapper img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+        }
+        .chairman-text {
+            flex-grow: 1;
+            line-height: 1.8;
+        }
+        .portfolio-brand-card {
+            text-align: center;
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+        .portfolio-brand-card:hover {
+            transform: translateY(-5px);
+        }
+        .portfolio-brand-card .circle-frame {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 3px solid var(--gold);
+            overflow: hidden;
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
+        .portfolio-brand-card .circle-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @media(max-width: 768px) {
+            .chairman-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; color: #d4af37; font-weight: 600; letter-spacing: 1px;">مؤسسة مناحي البقمي التجارية</p>
+    </div>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" alt="مؤسسة مناحي البقمي">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">الرئيسية</a></li>
+                <li><a href="#about-us-section">من نحن</a></li>
+                <li><a href="services.html">الخدمات التقنية</a></li>
+                <li><a href="products.html">المتجر الرقمي</a></li>
+                <li><a href="invoice.html">الفاتورة الإلكترونية</a></li>
+                <li><a href="admin.html">لوحة التحكم</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="products.html?view=wishlist" class="nav-icon">
+                    <i class="fa-regular fa-heart"></i>
+                    <span class="badge" id="wishlist-badge">0</span>
+                </a>
+                <a href="products.html?view=cart" class="nav-icon">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span class="badge" id="cart-badge">0</span>
+                </a>
+                <a href="login.html" class="nav-icon" id="auth-nav-btn">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <div class="menu-toggle"><i class="fa-solid fa-bars"></i></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate-fade-in">
+            <h1>مؤسسة مناحي البقمي للحلول الذكية و<span>الخدمات التجارية</span></h1>
+            <p>جميع الخدمات التجارية متاحة تحت إشراف مناحي البقمي. خبرات عملية وعلمية على مدار 10 أعوام من التخصص في مجال الخدمات العامة والتجارة وأنظمة إنترنت الأشياء IoT.</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="products.html" class="btn-gold"><i class="fa-solid fa-store"></i> تصفح المتجر الرقمي</a>
+                <a href="#tracking-section" class="btn-outline"><i class="fa-solid fa-location-crosshairs"></i> تتبع طلبك الآن</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- [إضافة جديدة]: قسم تتبع الطلبات والاستعلام الفوري للعميل برقم الجوال -->
+    <section id="tracking-section" class="section-padding" style="background: rgba(15,15,15,0.4);">
+        <div class="glass-panel" style="max-width: 850px; margin: 0 auto; padding: 35px; border-radius: 16px;">
+            <h2 style="color: var(--gold); font-weight: 800; text-align: center; margin-bottom: 15px;">
+                <i class="fa-solid fa-magnifying-glass-location"></i> مراجعة وتتبع حالة طلبك
+            </h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem;">أدخل رقم هاتف الجوال الخاص بك والمُسجّل لدينا لمتابعة حالة الطلب والاطلاع على ردود المهندسين المختصين فوراً.</p>
+            
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <input type="tel" id="track-phone" class="form-control" placeholder="أدخل رقم الجوال المسجل (مثال: 05XXXXXXXX)" style="text-align: center; font-size: 1.1rem; flex: 1; min-width: 250px;">
+                <button id="btn-track" class="btn-gold" style="white-space: nowrap; padding: 0 35px; min-width: 140px; justify-content: center;"><i class="fa-solid fa-search"></i> استعلام</button>
+            </div>
+
+            <div id="tracking-results" style="display: none; margin-top: 30px;"></div>
+        </div>
+    </section>
+
+    <!-- [إضافة جديدة]: قسم من نحن المكامل المستوحى فنه ومضمونه من الصور المرسلة -->
+    <section id="about-us-section" class="section-padding" style="max-width: 1400px; margin: 0 auto;">
+        <h2 class="section-title">نبذة مختصرة <span>عن المؤسسة</span></h2>
+        <p style="text-align: center; color: var(--text-muted); max-width: 800px; margin: -30px auto 40px; line-height: 1.8;">
+            نحن «مؤسسة مناحي البقمي للخدمات التجارية»، متخصصون في تخليص جميع المعاملات المرورية، الخدمات الجمركية، الترخيص الجمركي، تعديل طرازات المركبات، بالإضافة إلى حلول التتبع الذكي وإنترنت الأشياء بأعلى كفاءة في المملكة.
+        </p>
+
+        <!-- كلمة رئيس مجلس الإدارة -->
+        <div class="chairman-section">
+            <div class="chairman-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80" alt="رئيس مجلس الإدارة">
+                <h4 style="color: var(--gold); margin-top: 10px; font-weight: 700;">رئيس مجلس الإدارة</h4>
+            </div>
+            <div class="chairman-text">
+                <h3 style="color: #fff; font-weight: 800; margin-bottom: 12px;"><i class="fa-solid fa-quote-right" style="color: var(--gold); margin-left: 8px;"></i> كلمة رئيس مجلس الإدارة</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; text-align: justify;">
+                    إنه لمن دواعي سرورنا أن نقدم مؤسستنا من خلال هذا الملف، ونوجز الصفحات التالية تجربتنا الماضية، والاهتمامات والمشاريع الحالية والأهداف المستقبلية والقدرات العملية. وتعمل مؤسسة مناحي البقمي مع شركات رائدة مثل شركة المجدوعي وشركة سدر وغيرها من الشركات الكبرى التي أكسبتنا تقاسم الخبرات والتنمية والتقدم والنمو. وتعمل مؤسستنا كمؤسسة رائدة في مجال الخدمات التجارية وخدمات المرور والخدمات الجمركية وفي مجالات متعددة، وذلك من كونه كواضعي الاتجاه في نوعية العمل والموظفين القائمين وعلى الرغم من الأوقات الصعبة التي واجهتنا في مسيرتنا، نحن نعتقد أننا وصلنا بنجاح إلى مرحلة من الثقة بالنفس، الاحترام والكرامة، وفخرنا مبني على موظفين على درجة عالية من الكفاءة، ومستويات مالية متينة، وعلى الثقة الممنوحة لنا من العملاء وجميع الناس. وفوق كل شيء روح الفريق العالية تتطلع لتحقيق نفس الأهداف والأحلام في شركتنا، وسواء كان الشركاء، المديرين والموظفين الماليين والإداريين أو الفنيين والعمال، نحن نعمل جميعاً كبناء مستقبل قوي وسلمي ومزدهر.
+                </p>
+            </div>
+        </div>
+
+        <!-- الرؤية والرسالة والقيم -->
+        <div class="about-cards-container">
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <div style="color: var(--gold); font-size: 2.5rem; margin-bottom: 15px;"><i class="fa-regular fa-eye"></i></div>
+                <h3 style="margin-bottom: 12px; font-weight: 700;">الرؤية</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">نحن نسعى للنمو المستدام لتكون المؤسسة الأكثر ثقة على المستويات العالمية في جميع العمليات، والأكثر مصداقية ونزاهة في علاقتنا بالعملاء.</p>
+            </div>
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <div style="color: var(--gold); font-size: 2.5rem; margin-bottom: 15px;"><i class="fa-regular fa-paper-plane"></i></div>
+                <h3 style="margin-bottom: 12px; font-weight: 700;">الرسالة</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">السعي دوماً لخلق الثقة العالية التي يلجأ إليها العملاء لتنفيذ كافة أعمال الخدمات الشاملة التجارية، حيث نتطلع أن نكون دائماً محل ثقة العميل لضمان جودة التنفيذ وسرعة التسليم.</p>
+            </div>
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <div style="color: var(--gold); font-size: 2.5rem; margin-bottom: 15px;"><i class="fa-regular fa-gem"></i></div>
+                <h3 style="margin-bottom: 12px; font-weight: 700;">القيم</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">قيمنا مبنية على النزاهة والمصداقية والتطوير من خلال تكرار السؤال على العيوب التي صادفت العملاء لضمان النجاح المستدام والعمر الطويل لهذه الشركة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section style="padding: 40px 5%; max-width: 1400px; margin: 0 auto;">
+        <h2 class="section-title">لماذا تفضل <span>أنظمتنا وخدماتنا</span>؟</h2>
+        <div class="grid-container">
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <i class="fa-solid fa-satellite-dish" style="font-size: 3rem; color: #d4af37; margin-bottom: 20px;"></i>
+                <h3 style="margin-bottom: 15px;">تتبع فوري ومستمر</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">أنظمة GPS هجينة تدعم SIM7600 و 4G لضمان تتبع الشاحنات والمركبات بدقة متناهية تحت أي ظرف وتوافق اشتراطات هيئة النقل.</p>
+            </div>
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <i class="fa-solid fa-truck-ramp-box" style="font-size: 3rem; color: #d4af37; margin-bottom: 20px;"></i>
+                <h3 style="margin-bottom: 15px;">التخلص والتخليص الجمركي</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">تخليص جميع الخدمات الجمركية والمعاملات المرورية ونقل ملكية السيارات وإصدار كروت التشغيل بكفاءة تامة.</p>
+            </div>
+            <div class="glass-panel" style="padding: 30px; text-align: center;">
+                <i class="fa-solid fa-shield-halved" style="font-size: 3rem; color: #d4af37; margin-bottom: 20px;"></i>
+                <h3 style="margin-bottom: 15px;">حماية متكاملة وأتمتة</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">حلول المنازل الذكية وأنظمة الإنذار المبكر وكاميرات المراقبة المدمجة بالذكاء الاصطناعي لحماية تامة للأصول.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Showcase Section -->
+    <section style="padding: 40px 5%; max-width: 1400px; margin: 0 auto;">
+        <h2 class="section-title">أحدث الأجهزة و<span>المنتجات التقنية</span></h2>
+        <div class="grid-container" id="featured-products-container">
+            <!-- Rendered via JS -->
+        </div>
+    </section>
+
+    <!-- [إضافة جديدة]: قسم سابقة الأعمال والشركات الكبرى المستوحى من الصورة -->
+    <section class="section-padding" style="max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--glass-border);">
+        <h2 class="section-title">سابقة <span>الأعمال والشركات</span></h2>
+        <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+            
+            <div class="glass-panel portfolio-brand-card">
+                <div class="circle-frame">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=300&q=80" alt="شركة المجدوعي">
+                </div>
+                <h3 style="color: #fff; font-size: 1.2rem;">شركة المجدوعي</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 5px;">تعاون إستراتيجي للمشاريع الكبرى</p>
+            </div>
+
+            <div class="glass-panel portfolio-brand-card">
+                <div class="circle-frame">
+                    <img src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=300&q=80" alt="شركة سدر">
+                </div>
+                <h3 style="color: #fff; font-size: 1.2rem;">شركة سدر</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 5px;">تقاسم الخبرات وتنمية وتطوير الأنظمة</p>
+            </div>
+
+            <div class="glass-panel portfolio-brand-card">
+                <div class="circle-frame">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80" alt="شركة جنريك">
+                </div>
+                <h3 style="color: #fff; font-size: 1.2rem;">شركة جنريك</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 5px;">جودة تنفيذ وسرعة لوجستية متكاملة</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto;">
+            <div>
+                <p style="font-weight: 700; color: #fff; margin-bottom: 5px;">مؤسسة مناحي البقمي التجارية</p>
+                <p dir="ltr" style="color: var(--text-muted); font-size: 0.9rem;"><i class="fa-regular fa-envelope"></i> uuaaa62@gmail.com</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;"><i class="fa-solid fa-location-dot"></i> جدة، أمام الفحص الدوري، مجمع مسا</p>
+            </div>
+            <div style="text-align: left;" dir="ltr">
+                <p style="color: var(--gold); font-weight: 700;"><i class="fa-solid fa-phone"></i> 0548138548</p>
+                <p style="color: var(--gold); font-weight: 700; margin-top: 5px;"><i class="fa-brands fa-whatsapp"></i> 0548138548</p>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">© 2026 جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Routing Modules -->
+    <script type="module" src="assets/js/app.js"></script>
+    <script type="module">
+        import { db, ref, get, child } from "./assets/js/firebase.js";
+        
+        // [تعديل برمجى ذكي لصور المنتجات]: فحص كافة الاحتمالات لروابط الصور القادمة من الـ Admin
+        const prodContainer = document.getElementById('featured-products-container');
+        if(prodContainer) {
+            get(child(ref(db), 'products')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    let html = '';
+                    const data = snapshot.val();
+                    let count = 0;
+                    for(let key in data) {
+                        if(count >= 3) break;
+                        const p = data[key];
+                        
+                        // فحص مسميات الروابط المختلفة لضمان العرض في جميع الأحوال المضافة من الأدمن
+                        const finalProductImage = p.image || p.img || p.imageUrl || 'https://via.placeholder.com/300x200?text=No+Image';
+                        
+                        html += `
+                            <div class="glass-panel" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                                <img src="${finalProductImage}" style="width:100%; height:200px; object-fit:cover; border-radius:12px; border:1px solid rgba(212,175,55,0.2);" alt="${p.name}">
+                                <h3 style="margin: 15px 0 10px; font-size: 1.2rem; color:#fff;">${p.name}</h3>
+                                <p style="color:var(--text-muted); font-size:0.85rem; height:60px; overflow:hidden; line-height:1.5;">${p.description || ''}</p>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                                    <span style="color:var(--gold); font-weight:700; font-size:1.2rem;">${parseFloat(p.price).toFixed(2)} ر.س</span>
+                                    <a href="product.html?id=${key}" class="btn-gold" style="padding:8px 15px; font-size:0.85rem;">تفاصيل المنتج</a>
+                                </div>
+                            </div>`;
+                        count++;
+                    }
+                    prodContainer.innerHTML = html;
+                } else {
+                    prodContainer.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:var(--text-muted);">لا توجد منتجات معروضة حالياً.</p>';
+                }
+            }).catch(() => {
+                prodContainer.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:red;">خطأ أثناء تحميل البيانات.</p>';
+            });
+        }
+
+        // [تفعيل ميزة التتبع برقم الجوال]: جلب الطلبات والبحث عنها مع إظهار ردود الدعم الفني والإدارة بالكامل
+        const btnTrack = document.getElementById("btn-track");
+        if(btnTrack){
+            btnTrack.addEventListener("click", () => {
+                const phone = document.getElementById("track-phone").value.trim();
+                const resultsDiv = document.getElementById("tracking-results");
+                
+                if(!phone) {
+                    alert("الرجاء إدخال رقم الجوال أولاً للاستعلام.");
+                    return;
+                }
+
+                resultsDiv.style.display = "block";
+                resultsDiv.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:0.95rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> جاري استرجاع بيانات طلباتك من السيرفر السحابي...</p>`;
+
+                get(child(ref(db), "orders")).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const allOrders = snapshot.val();
+                        // فلترة الطلبات لتطابق رقم الهاتف المدخل بمرونة كاملة
+                        const myOrders = Object.values(allOrders).filter(o => o.customerPhone === phone || o.phone === phone);
+
+                        if(myOrders.length === 0) {
+                            resultsDiv.innerHTML = `<div style="text-align:center; color:#e74c3c; padding:20px; font-weight:600;">عذراً، لا توجد طلبات مسجلة برقم الجوال هذا في النظام حالياً.</div>`;
+                            return;
+                        }
+
+                        resultsDiv.innerHTML = `<h4 style="color:#fff; margin-bottom:15px; font-weight:700;"><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> الطلبات المكتشفة لرقمك (${myOrders.length}):</h4>`;
+                        
+                        myOrders.forEach(o => {
+                            const orderCard = document.createElement("div");
+                            orderCard.style.cssText = "background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin-bottom: 15px; border-right: 4px solid var(--gold); text-align: right;";
+                            
+                            // تحديد لون شارة الحالة بناءً على حالة الطلب المحدثة من الإدارة
+                            let badgeBg = '#e67e22';
+                            if(o.status === 'مدفوعة' || o.status === 'تم التوصيل') badgeBg = '#2ecc71';
+                            if(o.status === 'ملغي') badgeBg = '#e74c3c';
+
+                            orderCard.innerHTML = `
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap: 10px;">
+                                    <span style="font-weight:700; color:#fff; font-size:1.05rem;">رقم الطلب: ${o.orderId}</span>
+                                    <span class="badge" style="position: static; background: ${badgeBg}; color:#fff; padding:5px 14px; border-radius:6px; font-size: 0.85rem; font-weight:600;">${o.status || 'قيد المراجعة'}</span>
+                                </div>
+                                <p style="color:var(--text-white); font-size:0.95rem; margin-bottom:8px;">إجمالي الفاتورة: <strong style="color:var(--gold); font-size:1.1rem;">${parseFloat(o.totalPrice || o.total || 0).toFixed(2)} ر.س</strong></p>
+                                <div style="background: rgba(255,255,255,0.03); padding:15px; border-radius:8px; margin-top:15px; border: 1px solid rgba(212,175,55,0.1);">
+                                    <span style="color:var(--gold); font-size:0.9rem; font-weight:700; display:block; margin-bottom:6px;"><i class="fa-regular fa-comments"></i> رد الإدارة والدعم الفني المباشر:</span>
+                                    <p style="color:#fff; font-size:0.95rem; margin:0; line-height: 1.6;">${o.adminReply || "طلبك مستلم وناجح وهو حالياً تحت المعاينة والمراجعة الفنية، سيقوم المهندس المختص بالرد وتحديث الحالة هنا فوراً."}</p>
+                                </div>
+                            `;
+                            resultsDiv.appendChild(orderCard);
+                        });
+                    } else {
+                        resultsDiv.innerHTML = `<div style="text-align:center; color:#e74c3c; padding:20px; font-weight:600;">لا توجد أي طلبات نشطة مسجلة في السيرفر حالياً.</div>`;
+                    }
+                }).catch(() => {
+                    resultsDiv.innerHTML = `<div style="text-align:center; color:#e74c3c; padding:20px;">حدث خطأ في الاتصال بالسيرفر السحابي، حاول مجدداً.</div>`;
+                });
+            });
+        }
+    </script>
+</body>
+</html>
