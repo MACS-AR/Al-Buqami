@@ -3,10 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="متجر مؤسسة البقمي للحلول الذكية - أجهزة تتبع، كاميرات مراقبة، أنظمة إنذار وحماية، ومكونات إنترنت الأشياء والميكروكنترولر">
+    <meta name="description" content="متجر مؤسسة مناحي البقمي التجارية للحلول الذكية - أجهزة تتبع، كاميرات مراقبة، أنظمة إنذار وحماية، ومكونات إنترنت الأشياء والميكروكنترولر">
     <title>المتجر الإلكتروني - مؤسسة البقمي</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* كود CSS متطور وحصري لضمان مظهر فخم وتجاوب مرن للسلة والمتجر على الجوال والكمبيوتر */
+        .cart-layout-wrapper {
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr;
+            gap: 30px;
+            align-items: start;
+        }
+        .cart-item-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 12px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .cart-item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .cart-item-info img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+        }
+        .quantity-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 2px 8px;
+            transition: transform 0.2s;
+        }
+        .quantity-btn:hover {
+            transform: scale(1.2);
+        }
+        .store-filter-panel {
+            background: var(--glass-bg);
+            padding: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+        @media (max-width: 992px) {
+            .cart-layout-wrapper {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+        @media (max-width: 576px) {
+            .cart-item-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+            .cart-item-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            .quantity-controls {
+                width: 100%;
+                justify-content: center;
+            }
+            .store-filter-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -53,19 +145,19 @@
             <h1 class="section-title">المتجر <span>الرقمي للأجهزة</span></h1>
 
             <!-- Search and Filter Panel -->
-            <div class="glass-panel" style="padding: 20px; margin-bottom: 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;">
+            <div class="store-filter-panel">
                 <div style="flex: 1; min-width: 250px; position: relative;">
                     <input type="text" id="store-search" class="form-control" placeholder="ابحث عن جهاز تتبع، كاميرا، مستشعر..." style="padding-right: 40px;">
                     <i class="fa-solid fa-magnifying-glass" style="position: absolute; right: 15px; top: 18px; color: var(--gold);"></i>
                 </div>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-                    <select id="filter-category" class="form-control" style="width: 180px; background-color: #111;">
+                    <select id="filter-category" class="form-control" style="width: 180px; background-color: #111; border-color: var(--glass-border);">
                         <option value="all">كل الأقسام</option>
                         <option value="tracking">أجهزة تتبع</option>
                         <option value="security">أنظمة حماية</option>
                         <option value="iot">حلول إنترنت الأشياء</option>
                     </select>
-                    <select id="sort-products" class="form-control" style="width: 180px; background-color: #111;">
+                    <select id="sort-products" class="form-control" style="width: 180px; background-color: #111; border-color: var(--glass-border);">
                         <option value="default">الترتيب التلقائي</option>
                         <option value="price-low">السعر: من الأقل للأعلى</option>
                         <option value="price-high">السعر: من الأعلى للأقل</option>
@@ -80,10 +172,10 @@
             </div>
         </div>
 
-        <!-- Wishlist View (Initially Hidden) -->
+        <!-- Wishlist View -->
         <div id="view-wishlist" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-                <h1 style="font-weight: 800;"><i class="fa-regular fa-heart" style="color: var(--gold);"></i> قائمة <span>المفضلة</span></h1>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 15px;">
+                <h1 style="font-weight: 800; font-size: 2rem;"><i class="fa-regular fa-heart" style="color: var(--gold);"></i> قائمة <span>المفضلة</span></h1>
                 <button class="btn-outline" id="back-to-store-1"><i class="fa-solid fa-arrow-left"></i> العودة للمتجر</button>
             </div>
             <div class="grid-container" id="wishlist-grid">
@@ -91,60 +183,62 @@
             </div>
         </div>
 
-        <!-- Cart View (Initially Hidden) -->
+        <!-- Cart View (واجهة السلة المطورة والمنسقة هندسياً لتناسب الهواتف والكمبيوتر) -->
         <div id="view-cart" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-                <h1 style="font-weight: 800;"><i class="fa-solid fa-basket-shopping" style="color: var(--gold);"></i> سلة <span>الشراء</span></h1>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 15px;">
+                <h1 style="font-weight: 800; font-size: 2rem;"><i class="fa-solid fa-basket-shopping" style="color: var(--gold);"></i> سلة <span>الشراء والطلب</span></h1>
                 <button class="btn-outline" id="back-to-store-2"><i class="fa-solid fa-arrow-left"></i> العودة للمتجر</button>
             </div>
             
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; align-items: start; flex-wrap: wrap;" id="cart-content-wrapper">
-                <!-- Cart Items List -->
-                <div class="glass-panel" style="padding: 25px; display: flex; flex-direction: column; gap: 20px;" id="cart-items-list">
-                    <!-- Loaded dynamically -->
+            <div class="cart-layout-wrapper" id="cart-content-wrapper">
+                <!-- قائمة عناصر المشتريات المصممة ككروت زجاجية مرنة ومتجاوبة -->
+                <div style="display: flex; flex-direction: column; gap: 20px;" id="cart-items-list">
+                    <!-- Loaded dynamically via assets/js/store.js or inner logic -->
                 </div>
 
-                <!-- Checkout details -->
-                <div class="glass-panel" style="padding: 25px;">
-                    <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 20px; color: var(--gold);">ملخص الطلب</h3>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                        <span>إجمالي المنتجات:</span>
-                        <span id="cart-subtotal">0 ر.س</span>
+                <!-- ملخص الطلب ونموذج الشحن الفاخر -->
+                <div class="glass-panel" style="padding: 30px; border-color: var(--gold);">
+                    <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 20px; color: var(--gold); font-weight: 800;"><i class="fa-solid fa-receipt"></i> ملخص الحساب المالي</h3>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px; color: var(--text-muted);">
+                        <span>إجمالي قيمة المنتجات:</span>
+                        <span id="cart-subtotal" style="color: #fff; font-weight: 600;">0 ر.س</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                        <span>الشحن والتركيب:</span>
-                        <span style="color: #2ecc71;">مجاني</span>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px; color: var(--text-muted);">
+                        <span>الشحن الفوري والتركيب:</span>
+                        <span style="color: #2ecc71; font-weight: 700;"><i class="fa-solid fa-bolt"></i> مجاني</span>
                     </div>
                     <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
-                    <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem; margin-bottom: 30px;">
-                        <span>الإجمالي الكلي:</span>
+                    <div style="display: flex; justify-content: space-between; font-weight: 900; font-size: 1.3rem; margin-bottom: 30px;">
+                        <span style="color: #fff;">الإجمالي المستحق:</span>
                         <span id="cart-total" style="color: var(--gold);">0 ر.س</span>
                     </div>
                     
-                    <h4 style="color: #fff; margin-bottom: 15px;"><i class="fa-regular fa-address-card"></i> معلومات الشحن والتوصيل</h4>
+                    <h4 style="color: #fff; margin-bottom: 15px; font-weight: 800; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;"><i class="fa-regular fa-address-card" style="color: var(--gold);"></i> معلومات التوصيل والتركيب</h4>
                     <form id="checkout-form">
                         <div class="form-group">
-                            <input type="text" id="cust-name" class="form-control" placeholder="الاسم الكامل" required>
+                            <input type="text" id="cust-name" class="form-control" placeholder="الاسم الكامل الكريم" required>
                         </div>
                         <div class="form-group">
-                            <input type="tel" id="cust-phone" class="form-control" placeholder="رقم الجوال النشط" required>
+                            <input type="tel" id="cust-phone" class="form-control" placeholder="رقم الجوال الفعال (للتتبع)" required>
                         </div>
                         <div class="form-group">
                             <input type="email" id="cust-email" class="form-control" placeholder="البريد الإلكتروني" required>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
                             <input type="text" id="cust-city" class="form-control" placeholder="المدينة" required>
-                            <input type="text" id="cust-address" class="form-control" placeholder="العنوان السكني" required>
+                            <input type="text" id="cust-address" class="form-control" placeholder="الحي / الشارع" required>
                         </div>
-                        <button type="submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 15px;"><i class="fa-solid fa-check"></i> إرسال وتأكيد الطلب الآن</button>
+                        <button type="submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 15px; font-size: 1.1rem; font-weight: 800;"><i class="fa-solid fa-circle-check"></i> تأمين وإرسال الطلب الآن</button>
                     </form>
                 </div>
             </div>
+            
+            <!-- رسالة السلة الفارغة -->
             <div id="cart-empty-message" style="text-align: center; padding: 60px 20px; display: none;">
-                <i class="fa-solid fa-basket-shopping" style="font-size: 4rem; color: var(--glass-border); margin-bottom: 20px;"></i>
-                <h2>السلة فارغة حالياً!</h2>
-                <p style="color: var(--text-muted); margin-bottom: 30px;">تصفح المنتجات في المتجر وأضف ما ترغب به للسلة للبدء بالدفع والطلب.</p>
-                <button class="btn-gold" onclick="document.getElementById('back-to-store-2').click()">تصفح المنتجات</button>
+                <i class="fa-solid fa-basket-shopping" style="font-size: 4.5rem; color: rgba(212,175,55,0.15); margin-bottom: 20px;"></i>
+                <h2 style="color: #fff; font-weight: 800; margin-bottom: 10px;">سلة المشتريات فارغة حالياً!</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;">تصفح أجهزة التتبع المتقدمة وأنظمة الحماية وإنترنت الأشياء في المتجر الرقمي وأضفها للسلة لتأكيد طلبك.</p>
+                <button class="btn-gold" onclick="document.getElementById('back-to-store-2').click()"><i class="fa-solid fa-store"></i> الانتقال للمتجر</button>
             </div>
         </div>
 
@@ -152,11 +246,116 @@
 
     <footer>
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto;">
-            <p>© 2026 مؤسسة البقمي للحلول الذكية. جميع الحقوق محفوظة.</p>
-            <p style="color: var(--gold);">المملكة العربية السعودية - الرياض</p>
+            <p>© 2026 مؤسسة مناحي البقمي التجارية. جميع الحقوق محفوظة.</p>
+            <p style="color: var(--gold);">المملكة العربية السعودية</p>
         </div>
     </footer>
 
     <script type="module" src="assets/js/store.js"></script>
+    
+    <!-- كود إضافي مدمج لضمان عرض صور سلة المشتريات بشكل فوري وسليم تماشياً مع الـ LocalStorage وبأي مسمى للروابط -->
+    <script type="module">
+        import { updateGlobalBadges } from "./assets/js/app.js";
+        
+        // مستمع لتهيئة وتنسيق كروت السلة ديناميكياً بأعلى معايير جودة الواجهات المتقدمة
+        window.renderBeautifulCartItems = function() {
+            const listContainer = document.getElementById("cart-items-list");
+            const emptyMsg = document.getElementById("cart-empty-message");
+            const wrapper = document.getElementById("cart-content-wrapper");
+            
+            if(!listContainer) return;
+            
+            let cart = JSON.parse(localStorage.getItem("albuqami_cart")) || [];
+            
+            if(cart.length === 0) {
+                if(wrapper) wrapper.style.display = "none";
+                if(emptyMsg) emptyMsg.style.display = "block";
+                return;
+            }
+            
+            if(wrapper) wrapper.style.display = "grid";
+            if(emptyMsg) emptyMsg.style.display = "none";
+            
+            listContainer.innerHTML = "";
+            let subtotal = 0;
+            
+            cart.forEach((item, index) => {
+                const itemPrice = parseFloat(item.price || 0);
+                const itemQty = parseInt(item.quantity || 1);
+                const totalItemPrice = itemPrice * itemQty;
+                subtotal += totalItemPrice;
+                
+                // فحص ذكي لمسار الصورة ليعمل بنجاح تام مع المتجر وجداول الأدمن القادمة من الـ Database
+                const finalImg = item.image || item.img || item.imageUrl || "https://via.placeholder.com/80";
+                
+                const itemCard = document.createElement("div");
+                itemCard.className = "cart-item-card";
+                itemCard.innerHTML = `
+                    <div class="cart-item-info">
+                        <img src="${finalImg}" alt="${item.name}">
+                        <div>
+                            <h4 style="color: #fff; font-weight: 700; font-size: 1.1rem; margin-bottom: 5px;">${item.name}</h4>
+                            <p style="color: var(--gold); font-weight: 600; font-size: 0.95rem;">${itemPrice.toFixed(2)} ر.س</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 25px; flex-wrap: wrap;">
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQtyInCart(${index}, -1)"><i class="fa-solid fa-minus"></i></button>
+                            <span style="font-weight: 700; color: #fff; min-width: 20px; text-align: center;">${itemQty}</span>
+                            <button class="quantity-btn" onclick="changeQtyInCart(${index}, 1)"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <p style="color: #fff; font-weight: 700; min-width: 90px; text-align: left; font-size: 1.05rem;">${totalItemPrice.toFixed(2)} ر.س</p>
+                        <button onclick="removeItemFromCart(${index})" style="background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 1.1rem; transition: transform 0.2s;"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                `;
+                listContainer.appendChild(itemCard);
+            });
+            
+            // تحديث قيم الملخص المالي الإجمالي
+            document.getElementById("cart-subtotal").textContent = `${subtotal.toFixed(2)} ر.س`;
+            document.getElementById("cart-total").textContent = `${subtotal.toFixed(2)} ر.س`;
+        };
+
+        // دالة تغيير الكميات داخل السلة
+        window.changeQtyInCart = function(index, change) {
+            let cart = JSON.parse(localStorage.getItem("albuqami_cart")) || [];
+            if(cart[index]) {
+                cart[index].quantity = parseInt(cart[index].quantity || 1) + change;
+                if(cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem("albuqami_cart", JSON.stringify(cart));
+                if(typeof updateGlobalBadges === "function") updateGlobalBadges();
+                window.renderBeautifulCartItems();
+            }
+        };
+
+        // دالة حذف عنصر نهائياً من السلة
+        window.removeItemFromCart = function(index) {
+            let cart = JSON.parse(localStorage.getItem("albuqami_cart")) || [];
+            if(cart[index]) {
+                if(confirm(`هل تود إزالة ${cart[index].name} من سلة المشتريات؟`)) {
+                    cart.splice(index, 1);
+                    localStorage.setItem("albuqami_cart", JSON.stringify(cart));
+                    if(typeof updateGlobalBadges === "function") updateGlobalBadges();
+                    window.renderBeautifulCartItems();
+                }
+            }
+        };
+
+        // تشغيل الرندر فور فتح شاشة السلة
+        document.getElementById("btn-cart").addEventListener("click", () => {
+            setTimeout(() => {
+                window.renderBeautifulCartItems();
+            }, 50);
+        });
+        
+        // استدعاء احتياطي عند تحميل الصفحة في حال كانت شاشة السلة هي العرض النشط من بارامترات الرابط
+        if(window.location.search.includes("view=cart")) {
+            setTimeout(() => {
+                window.renderBeautifulCartItems();
+            }, 150);
+        }
+    </script>
 </body>
 </html>
