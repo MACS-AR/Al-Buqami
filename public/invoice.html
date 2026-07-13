@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="نظام الفاتورة الإلكترونية - مؤسسة البقمي للحلول الذكية">
+    <title>الفاتورة الإلكترونية - مؤسسة البقمي</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- مكتبة توليد الـ QR Code لتأكيد الفاتورة المعتمدة -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <style>
+        /* أنماط مخصصة لتهيئة الفاتورة للطباعة الرسمية */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #invoice-print-area, #invoice-print-area * {
+                visibility: visible;
+            }
+            #invoice-print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                color: #000 !important;
+                background: #fff !important;
+                box-shadow: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .glass-panel {
+                background: #fff !important;
+                border: 1px solid #ccc !important;
+                color: #000 !important;
+            }
+            td, th {
+                color: #000 !important;
+                border-bottom: 1px solid #ccc !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="no-print">
+        <nav class="navbar">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" alt="البقمي">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="services.html">الخدمات التقنية</a></li>
+                <li><a href="products.html">المتجر الرقمي</a></li>
+                <li><a href="invoice.html" class="active">الفاتورة الإلكترونية</a></li>
+                <li><a href="admin.html">لوحة التحكم</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main style="padding: 120px 5% 60px; max-width: 1000px; margin: 0 auto; min-height: 85vh;">
+        
+        <!-- Action Buttons -->
+        <div class="no-print" style="display: flex; justify-content: space-between; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" id="input-search-invoice" class="form-control" placeholder="أدخل رقم الطلب (مثال: BQ-123456)" style="width: 250px;">
+                <button class="btn-gold" id="btn-fetch-invoice"><i class="fa-solid fa-file-invoice"></i> عرض</button>
+            </div>
+            <button class="btn-outline" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة الفاتورة أو حفظ كـ PDF</button>
+        </div>
+
+        <!-- Printable Invoice Area -->
+        <div class="glass-panel" id="invoice-print-area" style="padding: 40px; border-radius: 16px; border: 1px solid var(--glass-border);">
+            
+            <!-- Invoice Header -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--gold); padding-bottom: 25px; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <img src="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" style="height: 70px; margin-bottom: 10px;" alt="البقمي للحلول الذكية">
+                    <h2 style="color: var(--gold); font-weight: 800;">مؤسسة البقمي للحلول الذكية</h2>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">سجل تجاري رقم: 1010XXXXXX</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">الرقم الضريبي الموحد: 310XXXXXXXXXXXX</p>
+                </div>
+                <div style="text-align: left;" dir="ltr">
+                    <h1 style="color: #fff; font-size: 2rem; font-weight: 900; letter-spacing: 1px;">TAX INVOICE</h1>
+                    <p style="color: var(--gold); font-weight: 700; font-size: 1.1rem; margin-top: 5px;" id="lbl-invoice-id">INV-XXXX</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;" id="lbl-invoice-date">Date: 2026-07-13</p>
+                </div>
+            </div>
+
+            <!-- Customer & Bill Info Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; flex-wrap: wrap;">
+                <div>
+                    <h4 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem;"><i class="fa-regular fa-user"></i> العميل المستلم:</h4>
+                    <p id="lbl-cust-name" style="font-weight: 700; font-size: 1.1rem; color: #fff; margin-bottom: 5px;">اسم العميل الكريم</p>
+                    <p id="lbl-cust-phone" style="color: var(--text-muted); margin-bottom: 5px;">جوال: --</p>
+                    <p id="lbl-cust-address" style="color: var(--text-muted);">العنوان: --</p>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between;">
+                    <div style="text-align: right;">
+                        <h4 style="color: var(--gold); margin-bottom: 5px;"><i class="fa-solid fa-circle-info"></i> حالة المعاملة:</h4>
+                        <span id="lbl-invoice-status" class="badge" style="background: #e67e22; color: #fff; padding: 5px 15px; font-size: 0.9rem; border-radius: 6px;">بانتظار الدفع</span>
+                    </div>
+                    <!-- QR Code Container -->
+                    <div id="invoice-qrcode" style="background: #fff; padding: 8px; border-radius: 8px; margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--glass-border); text-align: right;">
+                        <th style="padding: 12px; color: var(--gold);">البيان / الأجهزة والحلول المشتراة</th>
+                        <th style="padding: 12px; color: var(--gold); text-align: center;">الكمية</th>
+                        <th style="padding: 12px; color: var(--gold); text-align: center;">سعر الوحدة</th>
+                        <th style="padding: 12px; color: var(--gold); text-align: left;">الإجمالي (غير شامل الضريبة)</th>
+                    </tr>
+                </thead>
+                <tbody id="invoice-items-body">
+                    <!-- Dynamic Rows via JS -->
+                </tbody>
+            </table>
+
+            <!-- Financial Calculations Breakdown -->
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+                <div style="width: 300px; display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-muted);">المجموع الفرعي (الصافي):</span>
+                    <span id="invoice-subtotal">0.00 ر.س</span>
+                </div>
+                <div style="width: 300px; display: flex; justify-content: space-between;">
+                    <span style="color: var(--text-muted);">ضريبة القيمة المضافة (15%):</span>
+                    <span id="invoice-tax">0.00 ر.س</span>
+                </div>
+                <hr style="width: 300px; border: 0; border-top: 1px solid var(--glass-border); margin: 5px 0;">
+                <div style="width: 300px; display: flex; justify-content: space-between; font-weight: 900; font-size: 1.3rem;">
+                    <span style="color: var(--gold);">الإجمالي الكلي المستحق:</span>
+                    <span id="invoice-grand-total" style="color: var(--gold);">0.00 ر.س</span>
+                </div>
+            </div>
+
+            <!-- Policy Footer -->
+            <div style="margin-top: 50px; border-top: 1px solid var(--glass-border); padding-top: 20px; text-align: center; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                <p>مؤسسة البقمي تضمن جميع الأجهزة والمستشعرات لمدة سنتين من تاريخ الشراء بضمان الوكيل.</p>
+                <p>تعتبر هذه الفاتورة مبدئية وإلكترونية غير قابلة للتعديل عند إتمام السداد الفعلي للطلب.</p>
+                <p style="color: var(--gold); margin-top: 10px; font-weight: 700;">نشكر لكم اختياركم حلولنا الذكية لتأمين وتتبع ممتلكاتكم!</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="no-print">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto;">
+            <p>© 2026 مؤسسة البقمي للحلول الذكية. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/invoice.js"></script>
+</body>
+</html>
