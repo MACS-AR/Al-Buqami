@@ -456,7 +456,31 @@
         .client-info-table, .financial-table, .check-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .client-info-table td { border: 1px solid var(--border-color); padding: 14px 18px; font-size: 15px; font-weight: bold; color: var(--text-main); background: #141c2e; }
         .client-info-table td.label-side { color: var(--gold-royal); font-weight: 600; width: 35%; background: #1e2942; }
+        
+.financial-table{
+    width:100%;
+    border-collapse:collapse;
+    page-break-inside:auto;
+}
 
+.financial-table thead{
+    display:table-header-group;
+}
+
+.financial-table tfoot{
+    display:table-footer-group;
+}
+
+.financial-table tr{
+    page-break-inside:avoid;
+    break-inside:avoid;
+}
+
+.financial-table td,
+.financial-table th{
+    page-break-inside:avoid;
+    break-inside:avoid;
+}
         .financial-table th, .financial-table td { border: 1px solid var(--border-color); padding: 12px; font-size: 13px; font-weight: bold; text-align: center; }
         .financial-table th { background: #1e2942; color: var(--gold-bright); }
         .financial-table td { background: #141c2e; }
@@ -484,25 +508,87 @@
 
         /* تخصيص الطباعة لضمان خروج الـ 13 صفحة بدقة عالية جداً بالخلفية الفخمة */
         @media print {
-            body { background: #090d16 !important; color: #f8fafc !important; padding: 0; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .page-bg-effect, .print-btn-floating { display: none !important; }
-            .digital-page { 
-                background: #111726 !important;
-                color: #f8fafc !important;
-                box-shadow: none !important; 
-                border: 2px solid #dbb339 !important; 
-                padding: 40px !important; 
-                margin: 0 !important;
-                page-break-after: always !important;
-                min-height: 100vh !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .financial-table th, .client-info-table td.label-side, .check-table th, .total-row-highlight td { background: #1e2942 !important; color: #f5c842 !important; }
-            .financial-table td, .client-info-table td, .check-table td, .feature-item-card, .bank-wrapper-box { background: #141c2e !important; color: #f8fafc !important; }
-            .static-paragraph { color: #cbd5e1 !important; }
-            .highlight-box { background: #1e2942 !important; color: #f5c842 !important; }
-        }
+
+    @page{
+        size:A4 portrait;
+        margin:10mm;
+    }
+
+    html,body{
+        width:210mm;
+        background:#090d16 !important;
+        -webkit-print-color-adjust:exact !important;
+        print-color-adjust:exact !important;
+    }
+
+    body{
+        padding:0 !important;
+        margin:0 !important;
+    }
+
+    .page-bg-effect,
+    .print-btn-floating{
+        display:none !important;
+    }
+
+    .container{
+        display:block !important;
+    }
+
+    .digital-page{
+
+        width:190mm;
+        min-height:277mm;
+
+        margin:0 auto !important;
+        padding:18mm !important;
+
+        page-break-after:always;
+        page-break-inside:avoid;
+
+        overflow:hidden;
+
+        background:#111726 !important;
+        border:2px solid #dbb339 !important;
+        box-shadow:none !important;
+
+        -webkit-print-color-adjust:exact !important;
+        print-color-adjust:exact !important;
+    }
+
+    .digital-page:last-child{
+        page-break-after:auto;
+    }
+
+    table{
+        page-break-inside:auto;
+    }
+
+    tr{
+        page-break-inside:avoid;
+        page-break-after:auto;
+    }
+
+    td,th{
+        page-break-inside:avoid;
+    }
+
+    img{
+        max-width:100%;
+        page-break-inside:avoid;
+    }
+
+    .financial-table,
+    .client-info-table,
+    .check-table{
+        width:100%;
+    }
+
+    .feature-item-card{
+        break-inside:avoid;
+    }
+
+}
     </style>
 </head>
 <body>
@@ -531,7 +617,7 @@
         <div class="digital-page">
             <div class="page-header"><span>تتبع المركبات وإنترنت الأشياء</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 2: نبذة عن مؤسسة البقمي</h2>
+                <h2 class="section-heading">نبذة عن مؤسسة البقمي</h2>
                 <p class="static-paragraph">تعتبر مؤسسة البقمي إحدى المؤسسات الرائدة والموثوقة في المملكة العربية السعودية في تقديم أحدث حلول الاتصالات وتقنية المعلومات، متخصصة بالكامل في أنظمة إدارة الأساطيل وتتبع المركبات عن بُعد وحلول إنترنت الأشياء (IoT) والتكامل الذكي. نعمل جاهدين على تزويد قطاع الأعمال بأحدث التقنيات لرفع الكفاءة التشغيلية وتقليل التكاليف الزائدة لحماية الأصول المتحركة.</p>
                 <div class="highlight-box">رؤيتنا: الريادة في تقديم الأنظمة الرقمية والحلول الذكية وتطوير البنية التحتية لإدارة النقل في المملكة وفق رؤية 2030.</div>
             </div>
@@ -541,7 +627,7 @@
         <div class="digital-page">
             <div class="page-header"><span>وثيقة العرض الفني</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 3: وثيقة التعاقد وبيانات العميل المستهدف</h2>
+                <h2 class="section-heading">وثيقة التعاقد وبيانات العميل المستهدف</h2>
                 <table class="client-info-table">
                     <tr><td class="label-side">اسم الشركة / العميل:</td><td>${custName}</td></tr>
                     <tr><td class="label-side">المسؤول المتابع:</td><td>${custContact}</td></tr>
@@ -557,7 +643,7 @@
         <div class="digital-page">
             <div class="page-header"><span>النطاق الفني والحلول</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 4: نطاق المشروع والأهداف الرئيسية</h2>
+                <h2 class="section-heading">نطاق المشروع والأهداف الرئيسية</h2>
                 <p class="static-paragraph">يتمحور هذا المشروع حول توريد وتركيب وتشغيل ${custOffer} لعدد ${custVehicles} مركبة تابعة لشركتكم الموقرة. يهدف النظام إلى إعطائكم السيطرة التامة واللحظية للتحكم بالأسطول ومعرفة المسارات بدقة تامة لتفادي أي هدر في الموارد.</p>
                 <div class="feature-card-list">
                     <div class="feature-item-card"><span class="feature-num">01</span><span class="feature-title">مراقبة حية 24/7</span><span class="feature-desc">تحديث فوري للموقع على الخريطة كل بضع ثوانٍ.</span></div>
@@ -570,7 +656,7 @@
         <div class="digital-page">
             <div class="page-header"><span>الأجهزة المعتمدة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 5: المواصفات الفنية لجهاز التتبع المتقدم FMC130 (4G)</h2>
+                <h2 class="section-heading">المواصفات الفنية لجهاز التتبع المتقدم FMC130 (4G)</h2>
                 <p class="static-paragraph">يعد جهاز FMC130 الخيار المثالي لقراءة بيانات كمبيوتر الشاحنات الكبيرة والمركبات المتقدمة عبر تقنية CAN-BUS وحقن البيانات اللحظي وسرعة الاستجابة الفائقة عبر شبكات الجيل الرابع.</p>
                 <table class="check-table">
                     <thead><tr><th>الميزة الفنية</th><th>الدعم الفني والتقني</th><th>الحالة</th></tr></thead>
@@ -587,7 +673,7 @@
         <div class="digital-page">
             <div class="page-header"><span>الأنظمة المدمجة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 6: أجهزة التتبع الخفيفة FMC920 المعتمدة</h2>
+                <h2 class="section-heading">أجهزة التتبع الخفيفة FMC920 المعتمدة</h2>
                 <p class="static-paragraph">يمتاز جهاز FMC920 بالحجم الصغير والقدرة الفائقة على التخفي داخل السيارة لضمان تتبع دقيق وحماية متكاملة ضد السرقة مع إرسال إشعارات فورية عند تشغيل أو إطفاء المركبة.</p>
                 <div class="highlight-box">يمتاز هذا الجهاز باستهلاك منخفض جداً لبطارية المركبة مع حساسية هوائي عالية لالتقاط أقمار الـ GPS في أصعب الظروف المناخية.</div>
             </div>
@@ -597,7 +683,7 @@
         <div class="digital-page">
             <div class="page-header"><span>برمجيات المنصة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 7: مميزات السيرفر الموحد وتطبيق الجوال للتحكم</h2>
+                <h2 class="section-heading">مميزات السيرفر الموحد وتطبيق الجوال للتحكم</h2>
                 <p class="static-paragraph">تقدم منصة البقمي واجهة مستخدم متكاملة وسلسة تعمل على جميع المتصفحات وتطبيقات الهواتف الذكية (iOS & Android)، ومزودة بنظام تنبيهات فوري لمديري الأساطيل.</p>
                 <div class="feature-card-list">
                     <div class="feature-item-card"><span class="feature-num">01</span><span class="feature-title">تحديد النطاق الجغرافي (Geofencing)</span><span class="feature-desc">تنبيه فوري عند خروج السيارة عن مسارها المحدد.</span></div>
@@ -610,7 +696,7 @@
         <div class="digital-page">
             <div class="page-header"><span>الاعتمادات الرسمية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 8: الربط بمنصة وصل (هيئة النقل العام بالمملكة)</h2>
+                <h2 class="section-heading">الربط بمنصة وصل (هيئة النقل العام بالمملكة)</h2>
                 <p class="static-paragraph">تضمن مؤسسة البقمي ربطاً وتكاملاً مباشراً مع منصة "وصل" التابعة للهيئة العامة للنقل لضمان توافق شاحنات النقل والتوجيه مع الأنظمة واللوائح الرسمية بالمملكة وتفادي المخالفات.</p>
                 <div class="highlight-box" style="background:#1e2942; border-color:#dbb339; color:#f5c842;">جميع الأنظمة والأجهزة والشرائح المستخدمة مرخصة بالكامل من هيئة الاتصالات والفضاء والتقنية السعودية.</div>
             </div>
@@ -620,7 +706,7 @@
         <div class="digital-page">
             <div class="page-header"><span>العرض المالي المالي</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 9: المقايسة المالية وجدول تسعير الأجهزة والتركيب</h2>
+                <h2 class="section-heading">المقايسة المالية وجدول تسعير الأجهزة والتركيب</h2>
                 <table class="financial-table">
                     <thead>
                         <tr>
@@ -646,7 +732,7 @@
         <div class="digital-page">
             <div class="page-header"><span>الشروط القانونية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 10: الشروط والأحكام وآلية التوريد</h2>
+                <h2 class="section-heading">الشروط والأحكام وآلية التوريد</h2>
                 <p class="static-paragraph">1. مدة صلاحية هذا العرض المالي والفني هي 30 يوماً من تاريخ الإصدار المدون في الصفحة الأولى.<br>2. تلتزم المؤسسة ببدء التوريد والتركيب خلال 5 أيام عمل من تعميد العرض وتوقيع العقد الرسمي.<br>3. طريقة الدفع: يتم سداد دفعة مقدمة بنسبة 50% عند التعميد، والمتبقي 50% بعد إتمام التركيب والتشغيل الفعلي للمنصة وسيرفر التحكم.</p>
             </div>
             <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 10 من 13</span></div>
@@ -655,7 +741,7 @@
         <div class="digital-page">
             <div class="page-header"><span>الضمان والصيانة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 11: سياسة الضمان الذهبي والصيانة والدعم الفني</h2>
+                <h2 class="section-heading">سياسة الضمان الذهبي والصيانة والدعم الفني</h2>
                 <p class="static-paragraph">تضمن مؤسسة البقمي الأجهزة الموردة ضد العيوب المصنعية لمدة سنتين كاملة (ضمان استبدال). كما يتضمن العقد دعماً فنياً مجانياً عن بُعد وعلى مدار الساعة لحل أي مشكلات برمجية في لوحة التحكم وتحديث الخرائط الفورية.</p>
                 <div class="highlight-box">نوفر فريق صيانة متنقل للوصول إلى مواقع العميل وصيانة الأجهزة في الميدان لضمان استمرارية العمل.</div>
             </div>
@@ -665,7 +751,7 @@
         <div class="digital-page">
             <div class="page-header"><span>البيانات البنكية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 12: قنوات السداد والحسابات البنكية المعتمدة</h2>
+                <h2 class="section-heading">قنوات السداد والحسابات البنكية المعتمدة</h2>
                 <p class="static-paragraph">يرجى إيداع المبالغ المالية والشيكات الرسمية باسم (مؤسسة البقمي) حصراً على الحساب البنكي المعتمد التالي:</p>
                 <div class="bank-wrapper-box">
                     <div class="bank-title-display"><i class="fa-solid fa-building-columns"></i> ${bName}</div>
@@ -688,26 +774,60 @@
                     <p style="font-size:13px; font-weight:bold; color:var(--gold-royal); margin-top:10px;">امسح الرمز للتواصل المباشر مع الدعم الفني والمبيعات عبر واتساب</p>
                 </div>
             </div>
-            <div class="page-footer"><span>لوحة م/ محمد اشرف (FARESPCB)</span><span>صفحة 13 من 13</span></div>
+            <div class="page-footer"><span>Mohamed Ashraf</span><span>صفحة 13 من 13</span></div>
         </div>
 
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
-    <script>
-        try {
-            new QRCode(document.getElementById("qrcode"), {
-                text: "${qrLink}",
-                width: 130,
-                height: 130
+<script>
+
+try {
+    new QRCode(document.getElementById("qrcode"), {
+        text: "${qrLink}",
+        width: 130,
+        height: 130
+    });
+} catch(e){
+    console.log(e);
+}
+
+async function waitImages(){
+
+    const imgs=document.images;
+
+    await Promise.all(
+        [...imgs].map(img=>{
+
+            if(img.complete){
+                return Promise.resolve();
+            }
+
+            return new Promise(resolve=>{
+                img.onload=resolve;
+                img.onerror=resolve;
             });
-        } catch(e) { console.log(e); }
-        
-        // تتبع حالة الطباعة الفورية
-        if ("${mode}" === "print") {
-            setTimeout(() => { window.print(); }, 1000);
-        }
-    <\/script>
+
+        })
+    );
+
+}
+
+(async()=>{
+
+    if("${mode}"==="print"){
+
+        await waitImages();
+
+        setTimeout(()=>{
+            window.print();
+        },500);
+
+    }
+
+})();
+
+<\/script>
 </body>
 </html>`;
 
