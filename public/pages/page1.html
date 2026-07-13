@@ -419,18 +419,18 @@
             z-index: -5;
         }
 
-        .container { width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; align-items: center; justify-content: center; padding: 20px 0; }
+        .container { width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; padding: 20px 0; }
 
         .digital-page { 
             background: var(--card-dark) !important; 
             color: var(--text-main) !important;
             border-radius: 20px; 
-            padding: 18mm; 
+            padding: 12mm 15mm; 
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); 
             border: 2px solid var(--gold-royal) !important;
             position: relative; 
             width: 190mm;
-            min-height: 277mm;
+            height: 277mm;
             max-width: 100%;
             display: flex; 
             flex-direction: column; 
@@ -445,8 +445,8 @@
 
         .company-logo,
         .cover-logo {
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             object-fit: contain;
             object-position: center;
@@ -467,55 +467,53 @@
             width: 100%;
         }
 
-        .page-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border-color); padding-bottom: 15px; margin-bottom: 30px; color: var(--gold-royal); width: 100%; box-sizing: border-box; }
-        .page-header .web-link { font-size: 14px; color: var(--gold-bright); font-weight: 600; text-decoration: none; }
-        .page-header .company-logo { width: 65px; height: 65px; border-radius: 50%; object-fit: contain; border: 2px solid var(--gold-royal); background: transparent; padding: 3px; margin: 0; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 15px; color: var(--gold-royal); width: 100%; box-sizing: border-box; }
+        .page-header .web-link { font-size: 13px; color: var(--gold-bright); font-weight: 600; text-decoration: none; }
+        .page-header .company-logo { width: 55px; height: 55px; border-radius: 50%; object-fit: contain; border: 2px solid var(--gold-royal); background: transparent; padding: 3px; margin: 0; }
 
-        .page-body { flex: 1; display: flex; flex-direction: column; width: 100%; }
-        .section-heading { font-size: 24px; font-weight: 900; color: var(--gold-bright); border-right: 6px solid var(--gold-royal); padding-right: 12px; margin-bottom: 30px; text-align: right; }
+        .page-body { flex: 1; display: flex; flex-direction: column; width: 100%; overflow: hidden; justify-content: flex-start; }
+        .section-heading { font-size: 20px; font-weight: 900; color: var(--gold-bright); border-right: 5px solid var(--gold-royal); padding-right: 10px; margin-bottom: 15px; text-align: right; }
 
-        .static-paragraph { font-size: 16px; line-height: 2; color: #cbd5e1; text-align: justify; margin-bottom: 20px; }
-        .highlight-box { background: #1e2942; border-right: 4px solid var(--gold-royal); padding: 18px; border-radius: 6px; margin: 20px 0; font-weight: 600; color: var(--gold-bright); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); text-align: right; }
+        .static-paragraph { font-size: 14px; line-height: 1.8; color: #cbd5e1; text-align: justify; margin-bottom: 15px; }
+        .highlight-box { background: #1e2942; border-right: 4px solid var(--gold-royal); padding: 12px; border-radius: 6px; margin: 15px 0; font-size: 13px; font-weight: 600; color: var(--gold-bright); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); text-align: right; }
 
-        .client-info-table, .financial-table, .features-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .client-info-table td { border: 1px solid var(--border-color); padding: 14px 18px; font-size: 15px; font-weight: bold; color: var(--text-main); background: #141c2e; text-align: right; }
+        .client-info-table, .financial-table, .features-table { width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed; }
+        .client-info-table td { border: 1px solid var(--border-color); padding: 10px 14px; font-size: 14px; font-weight: bold; color: var(--text-main); background: #141c2e; text-align: right; }
         .client-info-table td.label-side { color: var(--gold-royal); font-weight: 600; width: 35%; background: #1e2942; text-align: right; }
         
-        .financial-table { width: 100%; border-collapse: collapse; page-break-inside: auto; }
-        .financial-table thead { display: table-header-group; }
-        .financial-table tfoot { display: table-footer-group; }
-        .financial-table tr { page-break-inside: avoid; break-inside: avoid; }
-        .financial-table th, .financial-table td { border: 1px solid var(--border-color); padding: 12px; font-size: 13px; font-weight: bold; text-align: center; page-break-inside: avoid; break-inside: avoid; }
+        .financial-table th, .financial-table td { border: 1px solid var(--border-color); padding: 10px; font-size: 12px; font-weight: bold; text-align: center; overflow: hidden; text-overflow: ellipsis; }
         .financial-table th { background: #1e2942; color: var(--gold-bright); }
         .financial-table td { background: #141c2e; }
 
-        .features-table th, .features-table td { border: 1px solid var(--border-color); padding: 8px 10px; font-size: 12px; text-align: center; }
+        /* تعديل المسافات والأحجام لجداول المميزات لتكفي صفحة واحدة تماماً */
+        .features-table th, .features-table td { border: 1px solid var(--border-color); padding: 4.5px 6px; font-size: 10.5px; text-align: center; word-wrap: break-word; }
         .features-table th { background: #1e2942; color: var(--gold-bright); font-weight: 700; }
         .features-table td { background: #141c2e; color: var(--text-main); }
-        .features-table td.feature-text { text-align: right; font-weight: 600; color: #cbd5e1; }
-        .features-table td.highlight-accent { background: rgba(245, 200, 66, 0.05); color: var(--gold-bright); }
-        .check-icon { color: #10b981; font-weight: bold; font-size: 14px; }
-        .cross-icon { color: #ef4444; font-weight: bold; font-size: 14px; }
+        .features-table td.feature-text { text-align: right; font-weight: 600; color: #cbd5e1; font-size: 10.5px; line-height: 1.4; }
+        .features-table td.highlight-accent { background: rgba(245, 200, 66, 0.05); color: var(--gold-bright); font-weight: bold; }
+        .check-icon { color: #10b981; font-weight: bold; font-size: 13px; }
+        .cross-icon { color: #ef4444; font-weight: bold; font-size: 13px; }
         
-        img { max-width: 100%; height: auto; page-break-inside: avoid; }
-        .device-preview-img { width: 65px; height: 55px; object-fit: contain; background: transparent; display: block; margin: auto; }
+        img { max-width: 100%; height: auto; }
+        .device-preview-img { width: 55px; height: 45px; object-fit: contain; background: transparent; display: block; margin: auto; }
         .total-row-highlight { font-weight: 900; }
         .total-row-highlight td { background: #1e2942 !important; color: var(--gold-bright) !important; }
 
-        .bank-wrapper-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; background: #141c2e; margin-top: 20px; text-align: right; }
-        .bank-title-display { font-size: 16px; color: var(--gold-bright); font-weight: 900; margin-bottom: 8px; }
+        .bank-wrapper-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; background: #141c2e; margin-top: 15px; text-align: right; }
+        .bank-title-display { font-size: 15px; color: var(--gold-bright); font-weight: 900; margin-bottom: 6px; }
         
-        .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px; gap: 8px; width: 100%; }
-        .page-footer { border-top: 1px solid var(--border-color); padding-top: 15px; font-size: 13px; color: var(--gold-royal); display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
+        .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 20px; gap: 8px; width: 100%; }
+        .page-footer { border-top: 1px solid var(--border-color); padding-top: 10px; font-size: 12px; color: var(--gold-royal); display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
 
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 10mm;
+                margin: 0;
             }
 
             html, body {
                 width: 210mm;
+                height: 297mm;
                 margin: 0;
                 padding: 0;
                 background: #090d16 !important;
@@ -523,56 +521,24 @@
                 print-color-adjust: exact !important;
             }
 
-            body {
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-
-            .page-bg-effect,
-            .print-btn-floating {
-                display: none !important;
-            }
-
-            .container {
-                width: 100%;
-                margin: 0 auto;
-                display: block !important;
-                padding: 0 !important;
-            }
+            .page-bg-effect { display: none !important; }
+            .container { width: 100%; margin: 0 auto; display: block !important; padding: 0 !important; }
 
             .digital-page {
-                width: 190mm;
-                min-height: 277mm;
-                margin: 0 auto 8mm auto;
-                padding: 15mm 18mm;
+                width: 210mm;
+                height: 297mm;
+                margin: 0 auto;
+                padding: 15mm 20mm;
                 box-shadow: none !important;
                 background: #111726 !important;
-                border: 2px solid #dbb339 !important;
+                border: none !important;
+                border-radius: 0 !important;
                 page-break-after: always;
                 page-break-inside: avoid;
                 overflow: hidden;
                 box-sizing: border-box;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
-            }
-
-            .digital-page:last-child {
-                margin-bottom: 0 !important;
-                page-break-after: auto;
-            }
-
-            table {
-                page-break-inside: auto;
-                width: 100%;
-            }
-
-            tr {
-                page-break-inside: avoid;
-                page-break-after: auto;
-            }
-
-            td, th {
-                page-break-inside: avoid;
             }
         }
     </style>
@@ -590,14 +556,14 @@
             
             <div class="cover-page-center">
                 <img src="${logo}" alt="شعار مؤسسة البقمي" class="cover-logo">
-                <h1 style="font-size: 36px; font-weight: 900; color: var(--gold-bright); margin-top: 20px; margin-bottom: 10px;">مؤسسة البقمي</h1>
-                <p style="font-size: 18px; color: var(--text-secondary); font-weight: bold; margin-bottom: 40px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
+                <h1 style="font-size: 32px; font-weight: 900; color: var(--gold-bright); margin-top: 15px; margin-bottom: 5px;">مؤسسة البقمي</h1>
+                <p style="font-size: 16px; color: var(--text-secondary); font-weight: bold; margin-bottom: 30px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
                 
-                <div style="background: #141c2e; padding: 30px; border-radius: 16px; border: 2px solid rgba(219,179,57,0.4); width: 100%; max-width: 550px; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.4); box-sizing: border-box;">
-                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>📦 موجه إلى:</strong> ${custName}</p>
-                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>👤 عناية الأستاذ:</strong> ${custContact}</p>
-                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>📅 تاريخ العرض:</strong> ${date}</p>
-                    <p style="font-size:16px; color:var(--text-main); text-align: right;"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
+                <div style="background: #141c2e; padding: 25px; border-radius: 16px; border: 2px solid rgba(219,179,57,0.4); width: 100%; max-width: 500px; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.4); box-sizing: border-box;">
+                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main); text-align: right;"><strong>📦 موجه إلى:</strong> ${custName}</p>
+                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main); text-align: right;"><strong>👤 عناية الأستاذ:</strong> ${custContact}</p>
+                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main); text-align: right;"><strong>📅 تاريخ العرض:</strong> ${date}</p>
+                    <p style="font-size:15px; color:var(--text-main); text-align: right;"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
                 </div>
             </div>
             <div class="page-footer"><span>مؤسسة البقمي لأنظمة إنترنت الأشياء</span><span>صفحة 1 من 13</span></div>
@@ -639,10 +605,10 @@
                 <table class="features-table">
                     <thead>
                         <tr>
-                            <th style="width:45px;">Basic</th>
-                            <th style="width:55px;">Advance</th>
-                            <th style="width:45px;">F.M.S</th>
-                            <th>المواصفات</th>
+                            <th style="width:50px;">الأساسية</th>
+                            <th style="width:50px;">المتقدمة</th>
+                            <th style="width:50px;">إدارة الأساطيل</th>
+                            <th>المواصفات والخصائص المعتمدة الفنية</th>
                             <th style="width:40px;">الرقم</th>
                         </tr>
                     </thead>
@@ -658,7 +624,7 @@
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة المركبات من خلال تطبيق الهواتف الذكية (Ios/Android).</td><td class="highlight-accent">9</td></tr>
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">توفير معلومات و استخراج تقارير عن كل رحلة تقوم بها المركبة مثل مكان و زمان بداية الرحلة و انتهائها، الوقت المستغرق، معدل السرعة و اعلى سرعة خلال الرحلة.</td><td class="highlight-accent">10</td></tr>
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">التنبيه في حال العبث بالجهاز.</td><td class="highlight-accent">11</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">متابعة سلوك السائقين من خلال التنبيهات الفورية لكل من:<br>- التسارع المفاجئ Harsh Acceleration.<br>- التباطؤ المفاجئ Harsh Breaking.<br>- السرعة الزائدة Over Speeding.</td><td class="highlight-accent">12</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">متابعة سلوك السائقين من خلال التنبيهات الفورية (التسارع المفاجئ، التباطؤ، السرعة الزائدة).</td><td class="highlight-accent">12</td></tr>
                         <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية انشاء أي تقرير حسب رغبة العميل.</td><td class="highlight-accent">13</td></tr>
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية استخراج التقارير بصيغ مختلفة تتناسب و طبيعة العمل بالمنشأة (Excel/PDF/HTML).</td><td class="highlight-accent">14</td></tr>
                     </tbody>
@@ -675,10 +641,10 @@
                 <table class="features-table">
                     <thead>
                         <tr>
-                            <th style="width:45px;">Basic</th>
-                            <th style="width:55px;">Advance</th>
-                            <th style="width:45px;">F.M.S</th>
-                            <th>المواصفات</th>
+                            <th style="width:50px;">الأساسية</th>
+                            <th style="width:50px;">المتقدمة</th>
+                            <th style="width:50px;">إدارة الأساطيل</th>
+                            <th>المواصفات والخصائص المعتمدة الفنية</th>
                             <th style="width:40px;">الرقم</th>
                         </tr>
                     </thead>
@@ -686,17 +652,17 @@
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">معرفة حالات التوقف الطويل للمركبة في حال عدم مسيرها و هي تعمل (Idling Time).</td><td class="highlight-accent">15</td></tr>
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية تقسيم المركبات الى مجموعات لتسهيل عملية المراقبة و المتابعة من مستخدم النظام.</td><td class="highlight-accent">16</td></tr>
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء اسماء مستخدمين و اعطائهم صلاحيات مختلفة من قبل مستخدم النظام.</td><td class="highlight-accent">17</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء تنبيهات على جميع القراءات المرسلة من المركبة من قبل مستخدم النظام بالإضافة الى التنبيهات الرئيسية المعرفة مسبقاً.</td><td class="highlight-accent">18</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">مراقبة الدخول و/او الخروج للمناطق المحددة بسياج وهمي على الخريطة سواء بالسماح او المنع (Geo-fencing).</td><td class="highlight-accent">19</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء تنبيهات على جميع القراءات المرسلة من المركبة من قبل مستخدم النظام.</td><td class="highlight-accent">18</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">مراقبة الدخول و/او الخروج للمناطق المحددة بسياج وهمي على الخريطة (Geo-fencing).</td><td class="highlight-accent">19</td></tr>
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية اضافة مواقع الاهتمام (POI) الخاصة بالعميل و ظهورها بالتقارير و العناوين.</td><td class="highlight-accent">20</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية اضافة نقاط الاهتمام و نقاط البيع على الخريطة و بناء تنبيهات و استخراج تقارير وقت الدخول / الخروج و مدة المكوث داخل هذه المناطق المحددة مسبقاً من قبل مستخدم.</td><td class="highlight-accent">21</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">المساعدة في عملية إدارة المركبات و التخطيط المستقبلي من خلال النظام باسترجاع أية معلومات عن المركبة في الماضي من خلال إعادة مشاهدة مسار المركبة فيديو لسنة كامله.</td><td class="highlight-accent">22</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية اضافة نقاط الاهتمام ونقاط البيع وبناء تنبيهات و استخراج تقارير الدخول والخروج.</td><td class="highlight-accent">21</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">المساعدة في إدارة المركبات والتخطيط المستقبلي باسترجاع الرحلات السابقة لسنة كاملة فيديو.</td><td class="highlight-accent">22</td></tr>
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية تعريف اسماء السائقين و تقسيمه الى مجموعات من قبل مستخدم النظام.</td><td class="highlight-accent">23</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية ربط المركبة بأكثر من سائق في حال اعتماد نظام الورديات (Shifts) بالعمل.</td><td class="highlight-accent">24</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء وظائف لإرسال تقارير يومية للأشخاص المعنيين بالمنشأة من قبل مستخدم النظام.</td><td class="highlight-accent">25</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية التميز برمز المركبة من حيث اللون و الشكل لتسهيل المراقبة.</td><td class="highlight-accent">26</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة الصيانة الدورية للمركبة من خلال نظام التتبع و برمجة تقارير بذلك و تنبيهات فورية تصل لمستخدم النظام، لتوفير الجهد والوقت و تخفيض التكاليف المخصصة للصيانة.</td><td class="highlight-accent">27</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة الصيانة الدورية للمركبة من خلال (Fleet Management System) الذي يدعمه نظام التتبع وإدخال لكافة قطع الصيانة و عمل تقارير توضح المصاريف والكلف الفعلية التي تم صرفها على مستوى المركبة.</td><td class="highlight-accent">28</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية ربط المركبة بأكثر من سائق في حال اعتماد نظام الورديات (Shifts) بالعمل.</td><td class="highlight-accent">24</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية انشاء وظائف لإرسال تقارير يومية للأشخاص المعنيين بالمنشأة من قبل مستخدم النظام.</td><td class="highlight-accent">25</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية التميز برمز المركبة من حيث اللون و الشكل لتسهيل المراقبة.</td><td class="highlight-accent">26</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية مراقبة الصيانة الدورية للمركبة من خلال نظام التتبع و برمجة تقارير وتنبيهات بذلك.</td><td class="highlight-accent">27</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة الصيانة الدورية للمركبة وإدخال عمل تقارير توضح المصاريف والكلف الفعلية.</td><td class="highlight-accent">28</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -711,19 +677,19 @@
                 <table class="features-table">
                     <thead>
                         <tr>
-                            <th style="width:45px;">Basic</th>
-                            <th style="width:55px;">Advance</th>
-                            <th style="width:45px;">F.M.S</th>
-                            <th>المواصفات</th>
+                            <th style="width:50px;">الأساسية</th>
+                            <th style="width:50px;">المتقدمة</th>
+                            <th style="width:50px;">إدارة الأساطيل</th>
+                            <th>المواصفات والخصائص المعتمدة الفنية</th>
                             <th style="width:40px;">الرقم</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية النظام على مساعدة العملاء في التخطيط للمسارات التي ستسلكها المركبة في مناطق العمل المحددة (Route Optimization) من قبل مستخدم النظام.</td><td class="highlight-accent">30</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية النظام على مساعدة العملاء في التخطيط للمسارات التي ستسلكها المركبة (Route Optimization).</td><td class="highlight-accent">30</td></tr>
                         <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء تقرير و/او تنبيه يحدد المواقع التي لم تزر ضمن الخطة.</td><td class="highlight-accent">31</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط ما بين القاطرة و المقطورة.</td><td class="highlight-accent">32</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية الربط ما بين القاطرة و المقطورة.</td><td class="highlight-accent">32</td></tr>
                         <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية ربط نظام التتبع مع انظمة اخرى مثل (ERP) تعتمد على المعلومات المستخرجة من نظام التتبع.</td><td class="highlight-accent">33</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">عرض البيانات عن طريق (DashBoard) لصانع القرار.</td><td class="highlight-accent">34</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">عرض البيانات عن طريق (DashBoard) لصانع القرار.</td><td class="highlight-accent">34</td></tr>
                         <tr><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشار رابط مؤقت لتتبع رحلة محددة والغائه عند انتهاء الرحلة اتوماتيكيا.</td><td class="highlight-accent">35</td></tr>
                         <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط مع الكاميرات MDVR لعرض الصور على النظام.</td><td class="highlight-accent">37</td></tr>
                     </tbody>
@@ -732,28 +698,28 @@
             <div class="page-footer"><span>أنظمة متقدمة متكاملة</span><span>صفحة 6 من 13</span></div>
         </div>
 
-        <!-- الصفحة 7: خدمات إضافية (يقرتب عليها مبالغ اضافية) -->
+        <!-- الصفحة 7: خدمات إضافية (يترتب عليها مبالغ اضافية) -->
         <div class="digital-page">
             <div class="page-header"><span>خدمات إضافية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading" style="margin-bottom:5px;">خدمات إضافية</h2>
-                <p style="color:var(--gold-bright); font-weight:700; margin-bottom:25px; font-size:14px; text-align:right;">(يترتب عليها مبالغ اضافية)</p>
+                <h2 class="section-heading" style="margin-bottom:3px;">خدمات إضافية اختيارية</h2>
+                <p style="color:var(--gold-bright); font-weight:700; margin-bottom:15px; font-size:13px; text-align:right;">(يترتب عليها مبالغ مالية إضافية)</p>
                 <table class="features-table">
                     <thead>
                         <tr>
-                            <th style="width:45px;">Basic</th>
-                            <th style="width:55px;">Advance</th>
-                            <th style="width:45px;">F.M.S</th>
-                            <th>المواصفات</th>
+                            <th style="width:50px;">الأساسية</th>
+                            <th style="width:50px;">المتقدمة</th>
+                            <th style="width:50px;">إدارة الأساطيل</th>
+                            <th>المواصفات والخصائص المعتمدة الفنية</th>
                             <th style="width:40px;">الرقم</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">عدم السماح بتشغيل المركبة إلا من خلال الشخص المخول باستخدام بطاقة تعريف خاصة بالسائق RFID.</td><td class="highlight-accent">1</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية مراقبة درجة الحرارة و نسبة الرطوبة و إرسال تنبيهات فورية عند اختلافها عن المحدد مسبقاً تصل الى مسؤول النظام فور حدوثها.</td><td class="highlight-accent">2</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط مع كمبيوتر المركبة عن طريق (CAN-Bus) والذي يساعد في أخذ قراءات حقيقية من لوحة العدادات بالمركبة.</td><td class="highlight-accent">3</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة مستوى الوقود بالمركبة من خلال (Fuel Level Sensor).</td><td class="highlight-accent">4</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية مراقبة وإدارة صرفيات الوقود.</td><td class="highlight-accent">5</td></tr>
+                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية مراقبة درجة الحرارة و نسبة الرطوبة و إرسال تنبيهات فورية عند اختلافها عن المحدد مسبقاً.</td><td class="highlight-accent">2</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط مع كمبيوتر المركبة عن طريق (CAN-Bus) والذي يساعد في أخذ قراءات حقيقية من لوحة العدادات.</td><td class="highlight-accent">3</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة مستوى الوقود بالمركبة من خلال حسّاسات (Fuel Level Sensor).</td><td class="highlight-accent">4</td></tr>
+                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية مراقبة وإدارة صرفيات الوقود الإجمالية للأسطول بشكل كامل ودقيق.</td><td class="highlight-accent">5</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -839,7 +805,7 @@
         <div class="digital-page">
             <div class="page-header"><span>الاتصال والتواصل</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body" style="text-align: center; justify-content: center; align-items: center;">
-                <h2 style="font-size: 26px; font-weight: 900; color: var(--gold-bright); margin-bottom: 10px;">نشكركم على ثقتكم الغالية بمؤسسة البقمي</h2>
+                <h2 style="font-size: 24px; font-weight: 900; color: var(--gold-bright); margin-bottom: 10px;">نشكركم على ثقتكم الغالية بمؤسسة البقمي</h2>
                 <p class="static-paragraph" style="text-align: center;">نتطلع للعمل معكم كشركاء نجاح دائمين وتوفير أفضل أنظمة إنترنت الأشياء والتكامل الذكي لأعمالكم.</p>
                 
                 <div class="qr-section-wrapper">
@@ -857,8 +823,8 @@
     try {
         new QRCode(document.getElementById("qrcode"), {
             text: "${qrLink}",
-            width: 130,
-            height: 130
+            width: 120,
+            height: 120
         });
     } catch(e){
         console.log(e);
