@@ -281,7 +281,6 @@
     <p class="preview-notice">المنظومة مجهزة بالكامل لتعمل على الهواتف الذكية والكمبيوتر بتصميم ملكي فاخر ومستقر بالكامل.</p>
 
     <script>
-        // مصفوفة محاكاة لملفات الصور المحفوظة في مسار GitHub الخاص بك لضمان السرعة وعدم الاعتماد التام على الـ Token
         const githubImages = [
             { name: "fmc130 جهاز تتبع", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/1.png" },
             { name: "fmc920 جهاز تتبع", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/2.png" },
@@ -414,7 +413,7 @@
         }
         
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-        body { background-color: #090d16; color: #f8fafc; padding: 25px 15px; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { background-color: #090d16; color: #f8fafc; padding: 0; margin: 0; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
         /* تأثير الخلفية الفخمة المتحركة في العرض النهائي */
         .page-bg-effect {
@@ -424,72 +423,84 @@
             z-index: -5;
         }
 
-        .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 50px; }
+        .container { width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; align-items: center; justify-content: center; padding: 20px 0; }
 
         .digital-page { 
             background: var(--card-dark) !important; 
             color: var(--text-main) !important;
             border-radius: 20px; 
-            padding: 50px 40px; 
+            padding: 18mm; 
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); 
             border: 2px solid var(--gold-royal) !important;
             position: relative; 
-            min-height: 1050px;
+            width: 190mm;
+            min-height: 277mm;
+            max-width: 100%;
             display: flex; 
             flex-direction: column; 
             justify-content: space-between;
             page-break-after: always;
+            page-break-inside: avoid;
+            overflow: hidden;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            box-sizing: border-box;
         }
 
-        .page-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border-color); padding-bottom: 15px; margin-bottom: 30px; color: var(--gold-royal); }
-        .page-header .web-link { font-size: 14px; color: var(--gold-bright); font-weight: 600; text-decoration: none; }
-        .page-header .company-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-royal); background-color: #1a2236; }
+        /* تنسيق وإصلاح اللوجو والشعار الدائري الفاخر في الصفحة الأولى والصفحات الأخرى */
+        .company-logo,
+        .cover-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: contain;
+            object-position: center;
+            background: transparent;
+            border: 4px solid #f5c842;
+            display: block;
+            margin: 0 auto;
+            padding: 6px;
+        }
 
-        .page-body { flex: 1; display: flex; flex-direction: column; }
-        .section-heading { font-size: 24px; font-weight: 900; color: var(--gold-bright); border-right: 6px solid var(--gold-royal); padding-right: 12px; margin-bottom: 30px; }
+        .cover-page-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .page-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border-color); padding-bottom: 15px; margin-bottom: 30px; color: var(--gold-royal); width: 100%; box-sizing: border-box; }
+        .page-header .web-link { font-size: 14px; color: var(--gold-bright); font-weight: 600; text-decoration: none; }
+        .page-header .company-logo { width: 65px; height: 65px; border-radius: 50%; object-fit: contain; border: 2px solid var(--gold-royal); background: transparent; padding: 3px; margin: 0; }
+
+        .page-body { flex: 1; display: flex; flex-direction: column; width: 100%; }
+        .section-heading { font-size: 24px; font-weight: 900; color: var(--gold-bright); border-right: 6px solid var(--gold-royal); padding-right: 12px; margin-bottom: 30px; text-align: right; }
 
         .static-paragraph { font-size: 16px; line-height: 2; color: #cbd5e1; text-align: justify; margin-bottom: 20px; }
-        .highlight-box { background: #1e2942; border-right: 4px solid var(--gold-royal); padding: 18px; border-radius: 6px; margin: 20px 0; font-weight: 600; color: var(--gold-bright); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); }
+        .highlight-box { background: #1e2942; border-right: 4px solid var(--gold-royal); padding: 18px; border-radius: 6px; margin: 20px 0; font-weight: 600; color: var(--gold-bright); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); text-align: right; }
 
         .client-info-table, .financial-table, .check-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .client-info-table td { border: 1px solid var(--border-color); padding: 14px 18px; font-size: 15px; font-weight: bold; color: var(--text-main); background: #141c2e; }
-        .client-info-table td.label-side { color: var(--gold-royal); font-weight: 600; width: 35%; background: #1e2942; }
+        .client-info-table td { border: 1px solid var(--border-color); padding: 14px 18px; font-size: 15px; font-weight: bold; color: var(--text-main); background: #141c2e; text-align: right; }
+        .client-info-table td.label-side { color: var(--gold-royal); font-weight: 600; width: 35%; background: #1e2942; text-align: right; }
         
-.financial-table{
-    width:100%;
-    border-collapse:collapse;
-    page-break-inside:auto;
-}
-
-.financial-table thead{
-    display:table-header-group;
-}
-
-.financial-table tfoot{
-    display:table-footer-group;
-}
-
-.financial-table tr{
-    page-break-inside:avoid;
-    break-inside:avoid;
-}
-
-.financial-table td,
-.financial-table th{
-    page-break-inside:avoid;
-    break-inside:avoid;
-}
-        .financial-table th, .financial-table td { border: 1px solid var(--border-color); padding: 12px; font-size: 13px; font-weight: bold; text-align: center; }
+        .financial-table { width: 100%; border-collapse: collapse; page-break-inside: auto; }
+        .financial-table thead { display: table-header-group; }
+        .financial-table tfoot { display: table-footer-group; }
+        .financial-table tr { page-break-inside: avoid; break-inside: avoid; }
+        .financial-table th, .financial-table td { border: 1px solid var(--border-color); padding: 12px; font-size: 13px; font-weight: bold; text-align: center; page-break-inside: avoid; break-inside: avoid; }
         .financial-table th { background: #1e2942; color: var(--gold-bright); }
         .financial-table td { background: #141c2e; }
-        .device-preview-img { width: 65px; height: 55px; object-fit: contain; background: transparent; }
+        
+        img { max-width: 100%; height: auto; page-break-inside: avoid; }
+        .device-preview-img { width: 65px; height: 55px; object-fit: contain; background: transparent; display: block; margin: auto; }
         .total-row-highlight { font-weight: 900; }
         .total-row-highlight td { background: #1e2942 !important; color: var(--gold-bright) !important; }
 
-        .feature-card-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
-        .feature-item-card { background: #141c2e; border: 1px solid var(--border-color); padding: 18px; border-radius: 12px; transition: all 0.3s; }
+        .feature-card-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; width: 100%; }
+        .feature-item-card { background: #141c2e; border: 1px solid var(--border-color); padding: 18px; border-radius: 12px; transition: all 0.3s; text-align: right; break-inside: avoid; }
         .feature-item-card:hover { transform: translateY(-3px); border-color: var(--gold-royal); }
         .feature-num { font-size: 16px; font-weight: 900; color: var(--gold-bright); display: block; margin-bottom: 4px; }
         .feature-title { font-size: 15px; font-weight: 700; color: var(--gold-royal); }
@@ -500,95 +511,80 @@
         .check-table td { background: #141c2e; color: var(--text-main); }
         .check-icon { color: #10b981; font-weight: bold; }
 
-        .bank-wrapper-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; background: #141c2e; margin-top: 20px; }
+        .bank-wrapper-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; background: #141c2e; margin-top: 20px; text-align: right; }
         .bank-title-display { font-size: 16px; color: var(--gold-bright); font-weight: 900; margin-bottom: 8px; }
         
-        .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px; gap: 8px; }
-        .page-footer { border-top: 1px solid var(--border-color); padding-top: 15px; font-size: 13px; color: var(--gold-royal); display: flex; justify-content: space-between; align-items: center; }
+        .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px; gap: 8px; width: 100%; }
+        .page-footer { border-top: 1px solid var(--border-color); padding-top: 15px; font-size: 13px; color: var(--gold-royal); display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
 
-        /* تخصيص الطباعة لضمان خروج الـ 13 صفحة بدقة عالية جداً بالخلفية الفخمة */
+        /* تخصيص الطباعة الاحترافي لضمان توسط الصفحات وعدم ميلها لليسار */
         @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
 
-    @page{
-        size:A4 portrait;
-        margin:10mm;
-    }
+            html, body {
+                width: 210mm;
+                margin: 0;
+                padding: 0;
+                background: #090d16 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
 
-    html,body{
-        width:210mm;
-        background:#090d16 !important;
-        -webkit-print-color-adjust:exact !important;
-        print-color-adjust:exact !important;
-    }
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
 
-    body{
-        padding:0 !important;
-        margin:0 !important;
-    }
+            .page-bg-effect,
+            .print-btn-floating {
+                display: none !important;
+            }
 
-    .page-bg-effect,
-    .print-btn-floating{
-        display:none !important;
-    }
+            .container {
+                width: 100%;
+                margin: 0 auto;
+                display: block !important;
+                padding: 0 !important;
+            }
 
-    .container{
-        display:block !important;
-    }
+            .digital-page {
+                width: 190mm;
+                min-height: 277mm;
+                margin: 0 auto 8mm auto;
+                padding: 18mm;
+                box-shadow: none !important;
+                background: #111726 !important;
+                border: 2px solid #dbb339 !important;
+                page-break-after: always;
+                page-break-inside: avoid;
+                overflow: hidden;
+                box-sizing: border-box;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
 
-    .digital-page{
+            .digital-page:last-child {
+                margin-bottom: 0 !important;
+                page-break-after: auto;
+            }
 
-        width:190mm;
-        min-height:277mm;
+            table {
+                page-break-inside: auto;
+                width: 100%;
+            }
 
-        margin:0 auto !important;
-        padding:18mm !important;
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
 
-        page-break-after:always;
-        page-break-inside:avoid;
-
-        overflow:hidden;
-
-        background:#111726 !important;
-        border:2px solid #dbb339 !important;
-        box-shadow:none !important;
-
-        -webkit-print-color-adjust:exact !important;
-        print-color-adjust:exact !important;
-    }
-
-    .digital-page:last-child{
-        page-break-after:auto;
-    }
-
-    table{
-        page-break-inside:auto;
-    }
-
-    tr{
-        page-break-inside:avoid;
-        page-break-after:auto;
-    }
-
-    td,th{
-        page-break-inside:avoid;
-    }
-
-    img{
-        max-width:100%;
-        page-break-inside:avoid;
-    }
-
-    .financial-table,
-    .client-info-table,
-    .check-table{
-        width:100%;
-    }
-
-    .feature-item-card{
-        break-inside:avoid;
-    }
-
-}
+            td, th {
+                page-break-inside: avoid;
+            }
+        }
     </style>
 </head>
 <body>
@@ -596,41 +592,33 @@
     
     <div class="container">
 
+        <!-- الصفحة 1: الغلاف الفاخر (تم توسيطها بالكامل وإصلاح الشعار) -->
         <div class="digital-page">
             <div class="page-header">
                 <a href="https://${web}" target="_blank" class="web-link">${web}</a>
                 <img src="${logo}" class="company-logo" alt="Logo">
             </div>
-            <div class="page-body" style="justify-content: center; text-align: center;">
-                <div class="page-body" style="justify-content:center; text-align:center;">
+            
+            <div class="cover-page-center">
+                <img src="${logo}" alt="شعار مؤسسة البقمي" class="cover-logo">
 
-    <img src="${logo}"
-     alt="شعار مؤسسة البقمي"
-     style="
-        width:180px;
-        height:180px;
-        border-radius:50%;
-        object-fit:cover;
-        object-position:center;
-        border:4px solid #f5c842;
-        display:block;
-        margin:0 auto 25px;
-     ">
-
-    <h1 style="font-size:34px;font-weight:900;color:var(--gold-bright);margin-bottom:5px;">
-        مؤسسة البقمي
-    </h1>
-                <p style="font-size: 16px; color: var(--text-secondary); font-weight: bold; margin-bottom: 40px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
-                <div style="background: #141c2e; padding: 30px; border-radius: 16px; border: 2px solid rgba(219,179,57,0.4); max-width: 550px; margin: 0 auto; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main);"><strong>📦 موجه إلى:</strong> ${custName}</p>
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main);"><strong>👤 عناية الأستاذ:</strong> ${custContact}</p>
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main);"><strong>📅 تاريخ العرض:</strong> ${date}</p>
-                    <p style="font-size:15px; color:var(--text-main);"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
+                <h1 style="font-size: 36px; font-weight: 900; color: var(--gold-bright); margin-top: 20px; margin-bottom: 10px;">
+                    مؤسسة البقمي
+                </h1>
+                <p style="font-size: 18px; color: var(--text-secondary); font-weight: bold; margin-bottom: 40px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
+                
+                <div style="background: #141c2e; padding: 30px; border-radius: 16px; border: 2px solid rgba(219,179,57,0.4); width: 100%; max-width: 550px; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.4); box-sizing: border-box;">
+                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>📦 موجه إلى:</strong> ${custName}</p>
+                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>👤 عناية الأستاذ:</strong> ${custContact}</p>
+                    <p style="margin-bottom: 14px; font-size:16px; color:var(--text-main); text-align: right;"><strong>📅 تاريخ العرض:</strong> ${date}</p>
+                    <p style="font-size:16px; color:var(--text-main); text-align: right;"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
                 </div>
             </div>
+            
             <div class="page-footer"><span>مؤسسة البقمي لأنظمة إنترنت الأشياء</span><span>صفحة 1 من 13</span></div>
         </div>
 
+        <!-- الصفحة 2 -->
         <div class="digital-page">
             <div class="page-header"><span>تتبع المركبات وإنترنت الأشياء</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -641,6 +629,7 @@
             <div class="page-footer"><span>الرقم الموحد: ${phone1}</span><span>صفحة 2 من 13</span></div>
         </div>
 
+        <!-- الصفحة 3 -->
         <div class="digital-page">
             <div class="page-header"><span>وثيقة العرض الفني</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -657,6 +646,7 @@
             <div class="page-footer"><span>تاريخ الإصدار: ${date}</span><span>صفحة 3 من 13</span></div>
         </div>
 
+        <!-- الصفحة 4 -->
         <div class="digital-page">
             <div class="page-header"><span>النطاق الفني والحلول</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -670,6 +660,7 @@
             <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 4 من 13</span></div>
         </div>
 
+        <!-- الصفحة 5 -->
         <div class="digital-page">
             <div class="page-header"><span>الأجهزة المعتمدة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -687,6 +678,7 @@
             <div class="page-footer"><span>إدارة التقنية والأنظمة</span><span>صفحة 5 من 13</span></div>
         </div>
 
+        <!-- الصفحة 6 -->
         <div class="digital-page">
             <div class="page-header"><span>الأنظمة المدمجة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -697,6 +689,7 @@
             <div class="page-footer"><span>بإشراف م/ محمد اشرف</span><span>صفحة 6 من 13</span></div>
         </div>
 
+        <!-- الصفحة 7 -->
         <div class="digital-page">
             <div class="page-header"><span>برمجيات المنصة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -710,6 +703,7 @@
             <div class="page-footer"><span>تطوير ونمذجة FARESPCB</span><span>صفحة 7 من 13</span></div>
         </div>
 
+        <!-- الصفحة 8 -->
         <div class="digital-page">
             <div class="page-header"><span>الاعتمادات الرسمية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -720,6 +714,7 @@
             <div class="page-footer"><span>امتثال كامل 100%</span><span>صفحة 8 من 13</span></div>
         </div>
 
+        <!-- الصفحة 9 -->
         <div class="digital-page">
             <div class="page-header"><span>العرض المالي المالي</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -746,6 +741,7 @@
             <div class="page-footer"><span>العرض المالي الرسمي</span><span>صفحة 9 من 13</span></div>
         </div>
 
+        <!-- الصفحة 10 -->
         <div class="digital-page">
             <div class="page-header"><span>الشروط القانونية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -755,6 +751,7 @@
             <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 10 من 13</span></div>
         </div>
 
+        <!-- الصفحة 11 -->
         <div class="digital-page">
             <div class="page-header"><span>الضمان والصيانة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -765,6 +762,7 @@
             <div class="page-footer"><span>ضمان لمدة سنتين</span><span>صفحة 11 من 13</span></div>
         </div>
 
+        <!-- الصفحة 12 -->
         <div class="digital-page">
             <div class="page-header"><span>البيانات البنكية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -780,9 +778,10 @@
             <div class="page-footer"><span>مصرفية معتمدة ورسمية</span><span>صفحة 12 من 13</span></div>
         </div>
 
-        <div class="digital-page" style="justify-content: space-between;">
+        <!-- الصفحة 13 -->
+        <div class="digital-page">
             <div class="page-header"><span>الاتصال والتواصل</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body" style="text-align: center; justify-content: center;">
+            <div class="page-body" style="text-align: center; justify-content: center; align-items: center;">
                 <h2 style="font-size: 26px; font-weight: 900; color: var(--gold-bright); margin-bottom: 10px;">نشكركم على ثقتكم الغالية بمؤسسة البقمي</h2>
                 <p class="static-paragraph" style="text-align: center;">نتطلع للعمل معكم كشركاء نجاح دائمين وتوفير أفضل أنظمة إنترنت الأشياء والتكامل الذكي لأعمالكم.</p>
                 
@@ -798,7 +797,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
 <script>
-
 try {
     new QRCode(document.getElementById("qrcode"), {
         text: "${qrLink}",
@@ -810,57 +808,28 @@ try {
 }
 
 async function waitImages(){
-
     const imgs=document.images;
-
     await Promise.all(
         [...imgs].map(img=>{
-
             if(img.complete){
                 return Promise.resolve();
             }
-
             return new Promise(resolve=>{
                 img.onload=resolve;
                 img.onerror=resolve;
             });
-
         })
     );
-
 }
 
 (async()=>{
-
-    if("${mode}"==="print"){
-
+    if("${mode}"===="print"){
         await waitImages();
-
         setTimeout(()=>{
             window.print();
         },500);
-
     }
-
 })();
-
 <\/script>
 </body>
 </html>`;
-
-            if(mode === 'html') {
-                const blob = new Blob([clientPageCode], { type: 'text/html;charset=utf-8;' });
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = `عرض_مؤسسة_البقمي_${custName}.html`;
-                link.click();
-            } else if(mode === 'print') {
-                const printWindow = window.open('', '_blank');
-                printWindow.document.open();
-                printWindow.document.write(clientPageCode);
-                printWindow.document.close();
-            }
-        }
-    </script>
-</body>
-</html>
