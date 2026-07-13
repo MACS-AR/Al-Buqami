@@ -3,48 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم وإصدار العروض الرقمية الفخمة | مؤسسة البقامي</title>
+    <title>منظومة إصدار العروض الرقمية الفخمة | مؤسسة البقمي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-dark: #0f1219;
-            --card-bg: #161b26;
-            --gold-bright: #f3c63f;
-            --gold-royal: #d4af37;
-            --gold-dark: #aa8416;
-            --text-light: #f5f7fa;
-            --text-muted: #a0aec0;
-            --border-color: rgba(212, 175, 55, 0.25);
+            --bg-dark: #090d16;
+            --card-bg: #111726;
+            --gold-bright: #f5c842;
+            --gold-royal: #dbb339;
+            --gold-dark: #b38f19;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(219, 179, 57, 0.25);
         }
 
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-        body { background-color: var(--bg-dark); color: var(--text-light); padding: 20px; }
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--text-light); 
+            padding: 15px; 
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-        .control-panel { max-width: 1000px; margin: 0 auto 40px auto; background: var(--card-bg); border: 2px solid var(--gold-royal); border-radius: 16px; padding: 30px; box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
-        .panel-title { color: var(--gold-bright); font-size: 24px; font-weight: 900; text-align: center; margin-bottom: 25px; border-bottom: 2px dashed var(--gold-royal); padding-bottom: 20px; }
-        .section-title { color: var(--gold-royal); font-size: 16px; font-weight: 700; margin: 25px 0 15px 0; border-right: 4px solid var(--gold-bright); padding-right: 10px; }
+        /* تأثير الخلفية المتحركة الملكية الفخمة */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(219, 179, 57, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(17, 23, 38, 0.8) 0%, #090d16 100%);
+            z-index: -2;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .control-panel { 
+            max-width: 1100px; 
+            margin: 20px auto 40px auto; 
+            background: var(--card-bg); 
+            border: 2px solid var(--gold-royal); 
+            border-radius: 20px; 
+            padding: 25px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+        }
         
-        .grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .panel-title { 
+            color: var(--gold-bright); 
+            font-size: 22px; 
+            font-weight: 900; 
+            text-align: center; 
+            margin-bottom: 25px; 
+            border-bottom: 2px dashed var(--gold-royal); 
+            padding-bottom: 20px; 
+        }
+        
+        .section-title { 
+            color: var(--gold-royal); 
+            font-size: 15px; 
+            font-weight: 700; 
+            margin: 25px 0 15px 0; 
+            border-right: 4px solid var(--gold-bright); 
+            padding-right: 10px; 
+        }
+        
+        .grid-inputs { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 15px; 
+        }
+        
         .input-group { display: flex; flex-direction: column; gap: 6px; }
         label { color: var(--text-muted); font-size: 13px; font-weight: 600; }
-        input, select, textarea { background-color: #1e2533; border: 1px solid var(--border-color); color: var(--text-light); padding: 10px 14px; border-radius: 8px; font-size: 14px; transition: border-color 0.3s; }
-        input:focus { outline: none; border-color: var(--gold-bright); }
         
-        .table-wrapper { overflow-x: auto; margin-top: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
-        .control-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: center; }
-        .control-table th { background: #222a3a; color: var(--gold-bright); padding: 12px; font-weight: 700; border: 1px solid var(--border-color); }
-        .control-table td { border: 1px solid var(--border-color); padding: 10px; background: #1a202c; }
+        input, select, textarea { 
+            background-color: #1a2236; 
+            border: 1px solid var(--border-color); 
+            color: var(--text-light); 
+            padding: 12px 14px; 
+            border-radius: 10px; 
+            font-size: 14px; 
+            transition: all 0.3s; 
+        }
+        input:focus { outline: none; border-color: var(--gold-bright); box-shadow: 0 0 10px rgba(245, 200, 66, 0.2); }
         
-        .btn-add { background: transparent; border: 1px solid var(--gold-royal); color: var(--gold-bright); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 15px; font-size: 13px; transition: background 0.3s; }
-        .btn-add:hover { background: rgba(243, 198, 63, 0.1); }
-        .btn-del { background: transparent; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
-        .btn-del:hover { background: #ff4d4d; color: #fff; }
+        .table-wrapper { overflow-x: auto; margin-top: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .control-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 700px; }
+        .control-table th { background: #1e2942; color: var(--gold-bright); padding: 14px; font-weight: 700; border: 1px solid var(--border-color); text-align: center; }
+        .control-table td { border: 1px solid var(--border-color); padding: 12px; background: #141c2e; text-align: center; }
+        
+        .img-selector-btn {
+            background: #1e2942;
+            border: 1px solid var(--gold-royal);
+            color: var(--gold-bright);
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .img-selector-btn:hover { background: var(--gold-royal); color: var(--bg-dark); }
 
-        .btn-build-container { text-align: center; margin-top: 35px; padding-top: 25px; border-top: 1px solid var(--border-color); }
-        .btn-download-client { background: linear-gradient(135deg, var(--gold-dark), var(--gold-royal), var(--gold-bright)); color: #0f1219; border: none; padding: 15px 45px; font-size: 18px; font-weight: 900; border-radius: 30px; cursor: pointer; box-shadow: 0 6px 25px rgba(243, 198, 63, 0.3); transition: all 0.3s ease; }
-        .btn-download-client:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(243, 198, 63, 0.5); }
+        .btn-add { background: transparent; border: 1px solid var(--gold-royal); color: var(--gold-bright); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; font-size: 13px; transition: all 0.3s; }
+        .btn-add:hover { background: rgba(245, 200, 66, 0.1); transform: translateY(-1px); }
+        .btn-del { background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .btn-del:hover { background: #ef4444; color: #fff; }
+
+        .btn-build-container { 
+            display: flex; 
+            flex-wrap: wrap;
+            justify-content: center; 
+            gap: 15px;
+            margin-top: 35px; 
+            padding-top: 25px; 
+            border-top: 1px solid var(--border-color); 
+        }
+        
+        .btn-action { 
+            border: none; 
+            padding: 14px 35px; 
+            font-size: 16px; 
+            font-weight: 900; 
+            border-radius: 30px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-html {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-royal), var(--gold-bright)); 
+            color: #0f1219; 
+            box-shadow: 0 6px 20px rgba(245, 200, 66, 0.25);
+        }
+        .btn-html:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(245, 200, 66, 0.4); }
+        
+        .btn-pdf {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: #fff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .btn-pdf:hover { transform: translateY(-3px); background: linear-gradient(135deg, #334155, #475569); }
+
+        /* نافذة اختيار الصور من المعرض (Modal) */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; opacity: 0; pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: var(--card-bg);
+            border: 2px solid var(--gold-royal);
+            border-radius: 16px;
+            width: 90%; max-width: 600px;
+            padding: 25px; max-height: 80vh; overflow-y: auto;
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
+        .modal-close { color: #ef4444; cursor: pointer; font-size: 20px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
+        .gallery-item { border: 1px solid var(--border-color); padding: 10px; border-radius: 10px; cursor: pointer; text-align: center; background: #141c2e; transition: all 0.2s; }
+        .gallery-item:hover { border-color: var(--gold-bright); transform: scale(1.05); }
+        .gallery-item img { width: 100%; height: 80px; object-fit: contain; margin-bottom: 8px; }
+        .gallery-item span { font-size: 11px; color: var(--text-light); font-weight: bold; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
         .live-preview-title { text-align: center; color: var(--gold-royal); font-weight: 900; margin: 50px 0 10px 0; font-size: 22px; }
         .preview-notice { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
@@ -52,12 +190,18 @@
 </head>
 <body>
 
+    <svg class="animated-bg" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10%" cy="20%" r="2" fill="#dbb339" opacity="0.5"><animate attributeName="cy" values="20%;80%;20%" dur="15s" repeatCount="indefinite"/></circle>
+        <circle cx="80%" cy="10%" r="3" fill="#dbb339" opacity="0.3"><animate attributeName="cy" values="10%;90%;10%" dur="20s" repeatCount="indefinite"/></circle>
+        <circle cx="50%" cy="50%" r="1.5" fill="#fff" opacity="0.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="5s" repeatCount="indefinite"/></circle>
+    </svg>
+
     <div class="control-panel">
-        <div class="panel-title">منظومة إنتاج وتوليد العروض الرقمية الفخمة والمتحركة | مؤسسة البقامي</div>
+        <div class="panel-title">منظومة إنتاج وتوليد العروض الرقمية الفخمة والمتحركة | مؤسسة البقمي</div>
         
         <div class="section-title">1️⃣ الإعدادات العامة للموقع وشعار الشركة البديل</div>
         <div class="grid-inputs">
-            <div class="input-group"><label>رابط شعار مؤسسة البقامي (أو مسار محلي):</label><input type="text" id="inLogo" value="assets/al_baqami_logo.png" placeholder="ضع مسار أو رابط الشعار"></div>
+            <div class="input-group"><label>رابط شعار مؤسسة البقمي (أو مسار محلي):</label><input type="text" id="inLogo" value="https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/al_baqami_logo.png" placeholder="ضع مسار أو رابط الشعار"></div>
             <div class="input-group"><label>الرقم الموحد للمؤسسة:</label><input type="text" id="inPhone1" value="+966 920000000"></div>
             <div class="input-group"><label>الموقع الإلكتروني للمؤسسة:</label><input type="text" id="inWeb" value="www.al-baqami.com"></div>
             <div class="input-group"><label>رابط مسح الدعم الفني والواتساب (QR Code):</label><input type="text" id="inQrLink" value="https://wa.me/966920000000"></div>
@@ -82,21 +226,25 @@
             <table class="control-table" id="controlTable">
                 <thead>
                     <tr>
-                        <th>صورة المنتج</th>
+                        <th style="width: 160px;">صورة المنتج (من جيت هاب)</th>
                         <th>اسم المنتج والجهاز</th>
                         <th>المواصفات الفنية المعتمدة</th>
-                        <th>السعر (ريال)</th>
-                        <th>الكمية</th>
-                        <th>إجراء</th>
+                        <th style="width: 110px;">السعر (ريال)</th>
+                        <th style="width: 90px;">الكمية</th>
+                        <th style="width: 80px;">إجراء</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text" value="assets/devices/fmc130.png" class="c-img" style="width:100px;"></td>
-                        <td><input type="text" value="جهاز تتبع 4G متقدم يدعم 1 شريحة ويدعم CAN-BUS" class="c-name"></td>
-                        <td><input type="text" value="قراءة كمبيوتر المركبة بدقة عالية وحقن فوري للبيانات لسرعات متناهية." class="c-desc"></td>
-                        <td><input type="number" value="350" class="c-rate" style="width:80px;"></td>
-                        <td><input type="number" value="10" class="c-qty" style="width:65px;"></td>
+                        <td>
+                            <button class="img-selector-btn" onclick="openGallery(this)">📁 اختر من المعرض</button>
+                            <input type="hidden" class="c-img" value="https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/fmc130.png">
+                            <div class="img-preview-text" style="font-size:10px; color:var(--gold-bright); margin-top:4px;">fmc130.png</div>
+                        </td>
+                        <td><input type="text" value="جهاز تتبع 4G متقدم يدعم 1 شريحة ويدعم CAN-BUS" class="c-name" style="width:100%;"></td>
+                        <td><input type="text" value="قراءة كمبيوتر المركبة بدقة عالية وحقن فوري للبيانات لسرعات متناهية." class="c-desc" style="width:100%;"></td>
+                        <td><input type="number" value="350" class="c-rate" style="width:100%;"></td>
+                        <td><input type="number" value="10" class="c-qty" style="width:100%;"></td>
                         <td><button class="btn-del" onclick="removeRow(this)">حذف</button></td>
                     </tr>
                 </tbody>
@@ -104,7 +252,7 @@
         </div>
         <button class="btn-add" onclick="addRow()">➕ إضافة منتج أو حل إضافي للجدول</button>
 
-        <div class="section-title">4️⃣ السجل التجاري والحساب البنكي الرسمي لمؤسسة البقامي</div>
+        <div class="section-title">4️⃣ السجل التجاري والحساب البنكي الرسمي لمؤسسة البقمي</div>
         <div class="grid-inputs">
             <div class="input-group"><label>رقم السجل التجاري:</label><input type="text" id="inCr" value="رقم السجل التجاري المعتمد: 1010000000"></div>
             <div class="input-group"><label>اسم البنك:</label><input type="text" id="inBankName" value="مصرف الراجحي الرسمي"></div>
@@ -113,21 +261,78 @@
         </div>
 
         <div class="btn-build-container">
-            <button class="btn-download-client" onclick="buildAndDownloadClientFile()">🚀 إنشاء وتحميل ملف العرض الرقمي المتكامل (13 صفحة) للعميل (`.html`)</button>
+            <button class="btn-action btn-html" onclick="buildAndDownloadClientFile('html')"><i class="fa-solid fa-code"></i> 🚀 إنشاء وتحميل ملف العرض الرقمي (.html)</button>
+            <button class="btn-action btn-pdf" onclick="buildAndDownloadClientFile('print')"><i class="fa-solid fa-file-pdf"></i> 🖨️ فتح نافذة الطباعة وحفظ PDF فوري</button>
+        </div>
+    </div>
+
+    <div class="modal" id="galleryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color:var(--gold-bright);">📁 معرض أجهزة ومفاتيح مؤسسة البقمي المعتمدة</h3>
+                <span class="modal-close" onclick="closeGallery()">&times;</span>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                </div>
         </div>
     </div>
 
     <div class="live-preview-title">👁️ وضع التجهيز والمعاينة</div>
-    <p class="preview-notice">اضغط على الزر الذهبي بالأعلى لتوليد عرض متكامل مكون من 13 صفحة فخمة متحركة وإرساله للعميل مباشرة.</p>
+    <p class="preview-notice">المنظومة مجهزة بالكامل لتعمل على الهواتف الذكية والكمبيوتر بتصميم ملكي فاخر ومستقر بالكامل.</p>
 
     <script>
+        // مصفوفة محاكاة لملفات الصور المحفوظة في مسار GitHub الخاص بك لضمان السرعة وعدم الاعتماد التام على الـ Token
+        const githubImages = [
+            { name: "fmc130.png", url: "https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/fmc130.png" },
+            { name: "fmc920.png", url: "https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/fmc920.png" },
+            { name: "relay.png", url: "https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/relay.png" },
+            { name: "sensor.png", url: "https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/sensor.png" },
+            { name: "router.png", url: "https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/router.png" },
+            { name: "default.png", url: "https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/default.png" }
+        ];
+
+        let activeImgButton = null;
+
+        function openGallery(btn) {
+            activeImgButton = btn;
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+            
+            githubImages.forEach(img => {
+                grid.innerHTML += `
+                    <div class="gallery-item" onclick="selectImage('${img.url}', '${img.name}')">
+                        <img src="${img.url}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'40\'><rect width=\'50\' height=\'40\' fill=\'%23222\'/><text x=\'5\' y=\'25\' fill=\'%23fff\' font-size=\'8\'>Image</text></svg>'">
+                        <span>${img.name}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('galleryModal').classList.add('active');
+        }
+
+        function closeGallery() {
+            document.getElementById('galleryModal').classList.remove('active');
+        }
+
+        function selectImage(url, name) {
+            if (activeImgButton) {
+                const parent = activeImgButton.parentElement;
+                parent.querySelector('.c-img').value = url;
+                parent.querySelector('.img-preview-text').innerText = name;
+            }
+            closeGallery();
+        }
+
         function addRow() {
             const tbody = document.getElementById('controlTable').getElementsByTagName('tbody')[0];
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><input type="text" value="assets/devices/default.png" class="c-img" style="width:100px;"></td>
-                <td><input type="text" value="جهاز تتبع متطور" class="c-name"></td>
-                <td><input type="text" value="مواصفات فنية إضافية ملائمة لحاجة أسطول المركبات" class="c-desc"></td>
+                <td>
+                    <button class="img-selector-btn" onclick="openGallery(this)">📁 اختر من المعرض</button>
+                    <input type="hidden" class="c-img" value="https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/default.png">
+                    <div class="img-preview-text" style="font-size:10px; color:var(--gold-bright); margin-top:4px;">default.png</div>
+                </td>
+                <td><input type="text" value="جهاز تتبع متطور" class="c-name" style="width:100%;"></td>
+                <td><input type="text" value="مواصفات فنية إضافية ملائمة لحاجة أسطول المركبات" class="c-desc" style="width:100%;"></td>
                 <td><input type="number" value="0" class="c-rate" style="width:80px;"></td>
                 <td><input type="number" value="0" class="c-qty" style="width:65px;"></td>
                 <td><button class="btn-del" onclick="removeRow(this)">حذف</button></td>
@@ -139,7 +344,7 @@
             btn.closest('tr').remove();
         }
 
-        function buildAndDownloadClientFile() {
+        function buildAndDownloadClientFile(mode) {
             const logo = document.getElementById('inLogo').value;
             const phone1 = document.getElementById('inPhone1').value;
             const web = document.getElementById('inWeb').value;
@@ -179,7 +384,7 @@
                         <td style="text-align: right; color: #475569;">${desc}</td>
                         <td style="font-weight: bold; color: #1e293b;">${rate.toFixed(2)}</td>
                         <td style="font-weight: bold; color: #1e293b;">${qty}</td>
-                        <td style="font-weight: 900; color: #aa8416;">${total.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+                        <td style="font-weight: 900; color: #b38f19;">${total.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
                     </tr>
                 `;
             });
@@ -193,29 +398,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض العرض الرقمي المتكامل | مؤسسة البقامي</title>
+    <title>العرض الرقمي المتكامل | مؤسسة البقمي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --gold-royal: #cda226;
             --gold-dark: #aa8416;
-            --bg-calm: #f4f6f9;
+            --bg-calm: #090d16;
             --card-white: #ffffff;
             --text-main: #1e293b;
             --text-secondary: #475569;
         }
         
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-        body { background-color: var(--bg-calm); color: var(--text-main); padding: 25px 15px; }
+        body { background-color: #090d16; color: #fff; padding: 25px 15px; position: relative; }
 
-        .container { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; gap: 50px; }
+        /* تأثير الخلفية الفخمة المتحركة في العرض النهائي */
+        .page-bg-effect {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 80% 20%, rgba(205, 162, 38, 0.08) 0%, transparent 50%), #090d16;
+            z-index: -5;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 50px; }
 
         .digital-page { 
             background: var(--card-white); 
-            border-radius: 16px; 
+            color: var(--text-main);
+            border-radius: 20px; 
             padding: 50px 40px; 
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05); 
-            border: 1px solid rgba(205, 162, 38, 0.15);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); 
+            border: 1px solid rgba(205, 162, 38, 0.25);
             position: relative; 
             min-height: 1050px;
             display: flex; 
@@ -226,7 +441,7 @@
 
         .page-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 30px; }
         .page-header .web-link { font-size: 14px; color: var(--text-secondary); font-weight: 600; text-decoration: none; }
-        .page-header .company-logo { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-royal); }
+        .page-header .company-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-royal); }
 
         .page-body { flex: 1; display: flex; flex-direction: column; }
         .section-heading { font-size: 24px; font-weight: 900; color: #0f172a; border-right: 6px solid var(--gold-royal); padding-right: 12px; margin-bottom: 30px; }
@@ -235,21 +450,22 @@
         .highlight-box { background: #fffbeb; border-right: 4px solid var(--gold-royal); padding: 18px; border-radius: 6px; margin: 20px 0; font-weight: 600; color: #78350f; }
 
         .client-info-table, .financial-table, .check-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .client-info-table td { border: 1px solid #e2e8f0; padding: 14px 18px; font-size: 15px; font-weight: bold; }
+        .client-info-table td { border: 1px solid #e2e8f0; padding: 14px 18px; font-size: 15px; font-weight: bold; color: var(--text-main); }
         .client-info-table td.label-side { color: var(--text-secondary); font-weight: 600; width: 35%; background: #f8fafc; }
 
         .financial-table th, .financial-table td { border: 1px solid #cbd5e1; padding: 12px; font-size: 13px; font-weight: bold; text-align: center; }
         .financial-table th { background: #f1f5f9; color: #0f172a; }
-        .device-preview-img { width: 60px; height: 50px; object-fit: contain; }
+        .device-preview-img { width: 65px; height: 55px; object-fit: contain; }
         .total-row-highlight { background: #fffbeb !important; font-weight: 900; }
 
-        .feature-card-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .feature-item-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 10px; }
+        .feature-card-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .feature-item-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 12px; transition: all 0.3s; }
+        .feature-item-card:hover { transform: translateY(-3px); border-color: var(--gold-royal); }
         .feature-num { font-size: 16px; font-weight: 900; color: var(--gold-dark); }
         .feature-title { font-size: 15px; font-weight: 700; color: #0f172a; }
         .feature-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
 
-        .check-table th, .check-table td { border: 1px solid #e2e8f0; padding: 10px; font-weight: bold; font-size: 13px; text-align: center; }
+        .check-table th, .check-table td { border: 1px solid #e2e8f0; padding: 12px; font-weight: bold; font-size: 13px; text-align: center; }
         .check-table th { background: #f8fafc; }
         .check-icon { color: #10b981; }
 
@@ -258,42 +474,55 @@
         
         .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px; gap: 8px; }
         .page-footer { border-top: 1px solid #f1f5f9; padding-top: 15px; font-size: 13px; color: var(--text-secondary); display: flex; justify-content: space-between; align-items: center; }
+
+        /* تخصيص الطباعة لضمان خروج الـ 13 صفحة بدقة عالية جداً */
+        @media print {
+            body { background: #fff; color: #000; padding: 0; }
+            .page-bg-effect, .print-btn-floating { display: none !important; }
+            .digital-page { 
+                box-shadow: none !important; 
+                border: none !important; 
+                padding: 20px !important; 
+                margin: 0 !important;
+                page-break-after: always !important;
+                min-height: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="page-bg-effect"></div>
+    
     <div class="container">
 
-        <!-- صفحة 1: الغلاف والترحيب -->
         <div class="digital-page">
             <div class="page-header">
                 <a href="https://${web}" target="_blank" class="web-link">${web}</a>
                 <img src="${logo}" class="company-logo" alt="Logo">
             </div>
             <div class="page-body" style="justify-content: center; text-align: center;">
-                <h1 style="font-size: 36px; font-weight: 900; color: var(--gold-dark); margin-bottom: 15px;">مؤسسة البقامي للتجارة</h1>
-                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 40px;">الملف التعريفي الفني والمالي المتكامل</p>
-                <div style="background: #f8fafc; padding: 30px; border-radius: 12px; border: 1px solid rgba(205,162,38,0.2); max-width: 500px; margin: 0 auto; text-align: right;">
-                    <p style="margin-bottom: 10px;"><strong>موجه إلى:</strong> ${custName}</p>
-                    <p style="margin-bottom: 10px;"><strong>عناية الأستاذ:</strong> ${custContact}</p>
-                    <p style="margin-bottom: 10px;"><strong>تاريخ العرض:</strong> ${date}</p>
-                    <p><strong>المستشار الفني:</strong> ${sales}</p>
+                <h1 style="font-size: 34px; font-weight: 900; color: var(--gold-dark); margin-bottom: 5px;">مؤسسة البقمي</h1>
+                <p style="font-size: 16px; color: var(--text-secondary); font-weight: bold; margin-bottom: 40px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
+                <div style="background: #f8fafc; padding: 30px; border-radius: 16px; border: 1px solid rgba(205,162,38,0.3); max-width: 550px; margin: 0 auto; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                    <p style="margin-bottom: 12px; font-size:15px;"><strong>📦 موجه إلى:</strong> ${custName}</p>
+                    <p style="margin-bottom: 12px; font-size:15px;"><strong>👤 عناية الأستاذ:</strong> ${custContact}</p>
+                    <p style="margin-bottom: 12px; font-size:15px;"><strong>📅 تاريخ العرض:</strong> ${date}</p>
+                    <p style="font-size:15px;"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
                 </div>
             </div>
-            <div class="page-footer"><span>مؤسسة البقامي للتجارة</span><span>صفحة 1 من 13</span></div>
+            <div class="page-footer"><span>مؤسسة البقمي لأنظمة إنترنت الأشياء</span><span>صفحة 1 من 13</span></div>
         </div>
 
-        <!-- صفحة 2: نبذة عن المؤسسة -->
         <div class="digital-page">
             <div class="page-header"><span>تتبع المركبات وإنترنت الأشياء</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
-                <h2 class="section-heading">صفحة 2: نبذة عن مؤسسة البقامي للتجارة</h2>
-                <p class="static-paragraph">تعتبر مؤسسة البقامي للتجارة إحدى المؤسسات الرائدة في المملكة العربية السعودية في تقديم أحدث حلول الاتصالات وتقنية المعلومات، متخصصة في أنظمة إدارة الأساطيل وتتبع المركبات عن بُعد وحلول إنترنت الأشياء (IoT). نعمل جاهدين على تزويد قطاع الأعمال بأحدث التقنيات لرفع الكفاءة التشغيلية وتقليل التكاليف الزائدة لحماية الأصول المتحركة.</p>
+                <h2 class="section-heading">صفحة 2: نبذة عن مؤسسة البقمي</h2>
+                <p class="static-paragraph">تعتبر مؤسسة البقمي إحدى المؤسسات الرائدة والموثوقة في المملكة العربية السعودية في تقديم أحدث حلول الاتصالات وتقنية المعلومات، متخصصة بالكامل في أنظمة إدارة الأساطيل وتتبع المركبات عن بُعد وحلول إنترنت الأشياء (IoT) والتكامل الذكي. نعمل جاهدين على تزويد قطاع الأعمال بأحدث التقنيات لرفع الكفاءة التشغيلية وتقليل التكاليف الزائدة لحماية الأصول المتحركة.</p>
                 <div class="highlight-box">رؤيتنا: الريادة في تقديم الأنظمة الرقمية والحلول الذكية وتطوير البنية التحتية لإدارة النقل في المملكة وفق رؤية 2030.</div>
             </div>
             <div class="page-footer"><span>الرقم الموحد: ${phone1}</span><span>صفحة 2 من 13</span></div>
         </div>
 
-        <!-- صفحة 3: بيانات العميل والتعاقد -->
         <div class="digital-page">
             <div class="page-header"><span>وثيقة العرض الفني</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -310,7 +539,6 @@
             <div class="page-footer"><span>تاريخ الإصدار: ${date}</span><span>صفحة 3 من 13</span></div>
         </div>
 
-        <!-- صفحة 4: النطاق الفني للمشروع -->
         <div class="digital-page">
             <div class="page-header"><span>النطاق الفني والحلول</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -321,10 +549,9 @@
                     <div class="feature-item-card"><span class="feature-num">02</span><span class="feature-title">إدارة استهلاك الوقود</span><span class="feature-desc">حسابات دقيقة لمعدلات الاستهلاك والوقود المهدر.</span></div>
                 </div>
             </div>
-            <div class="page-footer"><span>مؤسسة البقامي للتجارة</span><span>صفحة 4 من 13</span></div>
+            <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 4 من 13</span></div>
         </div>
 
-        <!-- صفحة 5: مواصفات جهاز FMC130 المتقدم -->
         <div class="digital-page">
             <div class="page-header"><span>الأجهزة المعتمدة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -333,16 +560,15 @@
                 <table class="check-table">
                     <thead><tr><th>الميزة الفنية</th><th>الدعم الفني والتقني</th><th>الحالة</th></tr></thead>
                     <tbody>
-                        <tr><td class="text-right-aligned">دعم شبكات الجيل الرابع LTE Cat M1/NB-IoT</td><td>مدمج بالكامل لسرعات عالية</td><td><span class="check-icon">✔</span></td></tr>
-                        <tr><td class="text-right-aligned">قراءة كمبيوتر المركبة والـ CANBUS</td><td>دعم قراءة حرارة المحرك والوقود</td><td><span class="check-icon">✔</span></td></tr>
-                        <tr><td class="text-right-aligned">بطارية طوارئ داخلية ومقاومة الصدمات</td><td>تصل إلى 4 ساعات عمل عند فصل بطارية السيارة</td><td><span class="check-icon">✔</span></td></tr>
+                        <tr><td style="text-align: right; padding-right:15px;">دعم شبكات الجيل الرابع LTE Cat M1/NB-IoT</td><td>مدمج بالكامل لسرعات عالية</td><td><span class="check-icon">✔</span></td></tr>
+                        <tr><td style="text-align: right; padding-right:15px;">قراءة كمبيوتر المركبة والـ CANBUS</td><td>دعم قراءة حرارة المحرك والوقود</td><td><span class="check-icon">✔</span></td></tr>
+                        <tr><td style="text-align: right; padding-right:15px;">بطارية طوارئ داخلية ومقاومة الصدمات</td><td>تصل إلى 4 ساعات عمل عند فصل بطارية السيارة</td><td><span class="check-icon">✔</span></td></tr>
                     </tbody>
                 </table>
             </div>
             <div class="page-footer"><span>إدارة التقنية والأنظمة</span><span>صفحة 5 من 13</span></div>
         </div>
 
-        <!-- صفحة 6: مواصفات جهاز FMC920 الذكي -->
         <div class="digital-page">
             <div class="page-header"><span>الأنظمة المدمجة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -350,35 +576,32 @@
                 <p class="static-paragraph">يمتاز جهاز FMC920 بالحجم الصغير والقدرة الفائقة على التخفي داخل السيارة لضمان تتبع دقيق وحماية متكاملة ضد السرقة مع إرسال إشعارات فورية عند تشغيل أو إطفاء المركبة.</p>
                 <div class="highlight-box">يمتاز هذا الجهاز باستهلاك منخفض جداً لبطارية المركبة مع حساسية هوائي عالية لالتقاط أقمار الـ GPS في أصعب الظروف المناخية.</div>
             </div>
-            <div class="page-footer"><span>لوحة م/ محمد اشرف</span><span>صفحة 6 من 13</span></div>
+            <div class="page-footer"><span>بإشراف م/ محمد اشرف</span><span>صفحة 6 من 13</span></div>
         </div>
 
-        <!-- صفحة 7: مميزات منصة التتبع والخرائط الرقمية -->
         <div class="digital-page">
             <div class="page-header"><span>برمجيات المنصة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
                 <h2 class="section-heading">صفحة 7: مميزات السيرفر الموحد وتطبيق الجوال للتحكم</h2>
-                <p class="static-paragraph">تقدم منصة البقامي واجهة مستخدم متكاملة وسلسة تعمل على جميع المتصفحات وتطبيقات الهواتف الذكية (iOS & Android)، ومزودة بنظام تنبيهات فوري لمديري الأساطيل.</p>
+                <p class="static-paragraph">تقدم منصة البقمي واجهة مستخدم متكاملة وسلسة تعمل على جميع المتصفحات وتطبيقات الهواتف الذكية (iOS & Android)، ومزودة بنظام تنبيهات فوري لمديري الأساطيل.</p>
                 <div class="feature-card-list">
                     <div class="feature-item-card"><span class="feature-num">01</span><span class="feature-title">تحديد النطاق الجغرافي (Geofencing)</span><span class="feature-desc">تنبيه فوري عند خروج السيارة عن مسارها المحدد.</span></div>
                     <div class="feature-item-card"><span class="feature-num">02</span><span class="feature-title">التقارير الدورية المؤتمتة</span><span class="feature-desc">توليد تقارير PDF وإرسالها بريدياً بشكل تلقائي.</span></div>
                 </div>
             </div>
-            <div class="page-footer"><span>تطبيق FARESPCB المطور</span><span>صفحة 7 من 13</span></div>
+            <div class="page-footer"><span>تطوير ونمذجة FARESPCB</span><span>صفحة 7 من 13</span></div>
         </div>
 
-        <!-- صفحة 8: الامتثال لهيئة النقل والمواصفات السعودية -->
         <div class="digital-page">
             <div class="page-header"><span>الاعتمادات الرسمية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
                 <h2 class="section-heading">صفحة 8: الربط بمنصة وصل (هيئة النقل العام بالمملكة)</h2>
-                <p class="static-paragraph">تضمن مؤسسة البقامي للتجارة ربطاً وتكاملاً مباشراً مع منصة "وصل" التابعة للهيئة العامة للنقل لضمان توافق شاحنات النقل والتوجيه مع الأنظمة واللوائح الرسمية بالمملكة وتفادي المخالفات.</p>
+                <p class="static-paragraph">تضمن مؤسسة البقمي ربطاً وتكاملاً مباشراً مع منصة "وصل" التابعة للهيئة العامة للنقل لضمان توافق شاحنات النقل والتوجيه مع الأنظمة واللوائح الرسمية بالمملكة وتفادي المخالفات.</p>
                 <div class="highlight-box" style="background:#f0fdf4; border-color:#10b981; color:#14532d;">جميع الأنظمة والأجهزة والشرائح المستخدمة مرخصة بالكامل من هيئة الاتصالات والفضاء والتقنية السعودية.</div>
             </div>
             <div class="page-footer"><span>امتثال كامل 100%</span><span>صفحة 8 من 13</span></div>
         </div>
 
-        <!-- صفحة 9: جدول التسعير المالي التفاعلي المعتمد -->
         <div class="digital-page">
             <div class="page-header"><span>العرض المالي المالي</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -388,7 +611,7 @@
                         <tr>
                             <th>المنتج</th>
                             <th>البيان والاسم</th>
-                            <th>المواصفات</th>
+                            <th>المواصفات المعتمدة</th>
                             <th>السعر</th>
                             <th>الكمية</th>
                             <th>الإجمالي</th>
@@ -398,40 +621,37 @@
                         ${tableRowsHtml}
                         <tr class="total-row-highlight"><td colspan="5" style="text-align: left;">المجموع الفرعي (ريال سعودي):</td><td>${subTotal.toFixed(2)}</td></tr>
                         <tr class="total-row-highlight"><td colspan="5" style="text-align: left;">ضريبة القيمة المضافة (${taxPercent}%):</td><td>${taxAmount.toFixed(2)}</td></tr>
-                        <tr class="total-row-highlight" style="background:#f3c63f !important;"><td colspan="5" style="text-align: left; font-weight:900;">الإجمالي النهائي الشامل للضريبة:</td><td style="font-weight:900; color:#0f172a;">${grandTotal.toFixed(2)} ريال</td></tr>
+                        <tr class="total-row-highlight" style="background:#f5c842 !important;"><td colspan="5" style="text-align: left; font-weight:900;">الإجمالي النهائي الشامل للضريبة:</td><td style="font-weight:900; color:#0f172a;">${grandTotal.toFixed(2)} ريال</td></tr>
                     </tbody>
                 </table>
             </div>
             <div class="page-footer"><span>العرض المالي الرسمي</span><span>صفحة 9 من 13</span></div>
         </div>
 
-        <!-- صفحة 10: الشروط والأحكام العامة للتوريد -->
         <div class="digital-page">
             <div class="page-header"><span>الشروط القانونية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
                 <h2 class="section-heading">صفحة 10: الشروط والأحكام وآلية التوريد</h2>
                 <p class="static-paragraph">1. مدة صلاحية هذا العرض المالي والفني هي 30 يوماً من تاريخ الإصدار المدون في الصفحة الأولى.<br>2. تلتزم المؤسسة ببدء التوريد والتركيب خلال 5 أيام عمل من تعميد العرض وتوقيع العقد الرسمي.<br>3. طريقة الدفع: يتم سداد دفعة مقدمة بنسبة 50% عند التعميد، والمتبقي 50% بعد إتمام التركيب والتشغيل الفعلي للمنصة وسيرفر التحكم.</p>
             </div>
-            <div class="page-footer"><span>مؤسسة البقامي للتجارة</span><span>صفحة 10 من 13</span></div>
+            <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 10 من 13</span></div>
         </div>
 
-        <!-- صفحة 11: الضمان والدعم الفني المستمر -->
         <div class="digital-page">
             <div class="page-header"><span>الضمان والصيانة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
                 <h2 class="section-heading">صفحة 11: سياسة الضمان الذهبي والصيانة والدعم الفني</h2>
-                <p class="static-paragraph">تضمن مؤسسة البقامي للتجارة الأجهزة الموردة ضد العيوب المصنعية لمدة سنتين كاملة (ضمان استبدال). كما يتضمن العقد دعماً فنياً مجانياً عن بُعد وعلى مدار الساعة لحل أي مشكلات برمجية في لوحة التحكم وتحديث الخرائط الفورية.</p>
+                <p class="static-paragraph">تضمن مؤسسة البقمي الأجهزة الموردة ضد العيوب المصنعية لمدة سنتين كاملة (ضمان استبدال). كما يتضمن العقد دعماً فنياً مجانياً عن بُعد وعلى مدار الساعة لحل أي مشكلات برمجية في لوحة التحكم وتحديث الخرائط الفورية.</p>
                 <div class="highlight-box">نوفر فريق صيانة متنقل للوصول إلى مواقع العميل وصيانة الأجهزة في الميدان لضمان استمرارية العمل.</div>
             </div>
             <div class="page-footer"><span>ضمان لمدة سنتين</span><span>صفحة 11 من 13</span></div>
         </div>
 
-        <!-- صفحة 12: الحسابات البنكية الرسمية للمؤسسة -->
         <div class="digital-page">
             <div class="page-header"><span>البيانات البنكية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
                 <h2 class="section-heading">صفحة 12: قنوات السداد والحسابات البنكية المعتمدة</h2>
-                <p class="static-paragraph">يرجى إيداع المبالغ المالية والشيكات الرسمية باسم (مؤسسة البقامي للتجارة) حصراً على الحساب البنكي المعتمد التالي:</p>
+                <p class="static-paragraph">يرجى إيداع المبالغ المالية والشيكات الرسمية باسم (مؤسسة البقمي) حصراً على الحساب البنكي المعتمد التالي:</p>
                 <div class="bank-wrapper-box">
                     <div class="bank-title-display"><i class="fa-solid fa-building-columns"></i> ${bName}</div>
                     <p style="margin-bottom:6px; font-size:14px;"><strong>رقم الحساب:</strong> ${bAcc}</p>
@@ -442,12 +662,11 @@
             <div class="page-footer"><span>مصرفية معتمدة ورسمية</span><span>صفحة 12 من 13</span></div>
         </div>
 
-        <!-- صفحة 13: الخاتمة ورمز الاستجابة السريع QR -->
         <div class="digital-page" style="justify-content: space-between;">
             <div class="page-header"><span>الاتصال والتواصل</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body" style="text-align: center; justify-content: center;">
-                <h2 style="font-size: 26px; font-weight: 900; color: var(--gold-dark); margin-bottom: 10px;">نشكركم على ثقتكم الغالية بـ مؤسسة البقامي</h2>
-                <p class="static-paragraph" style="text-align: center;">نحن نتطلع للعمل معكم كشركاء نجاح دائمين وتوفير أفضل الأنظمة والحلول التقنية لأعمالكم.</p>
+                <h2 style="font-size: 26px; font-weight: 900; color: var(--gold-dark); margin-bottom: 10px;">نشكركم على ثقتكم الغالية بمؤسسة البقمي</h2>
+                <p class="static-paragraph" style="text-align: center;">نتطلع للعمل معكم كشركاء نجاح دائمين وتوفير أفضل أنظمة إنترنت الأشياء والتكامل الذكي لأعمالكم.</p>
                 
                 <div class="qr-section-wrapper">
                     <div id="qrcode" style="padding:15px; background:#fff; border:1px solid #cbd5e1; border-radius:12px; display:inline-block;"></div>
@@ -459,23 +678,36 @@
 
     </div>
 
-    <!-- توليد رمز الـ QR تلقائياً عند تحميل العرض للعميل -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
     <script>
-        new QRCode(document.getElementById("qrcode"), {
-            text: "${qrLink}",
-            width: 140,
-            height: 140
-        });
+        try {
+            new QRCode(document.getElementById("qrcode"), {
+                text: "${qrLink}",
+                width: 130,
+                height: 130
+            });
+        } catch(e) { console.log(e); }
+        
+        // تفعيل الطباعة الفورية إذا تم اختيار وضع الطباعة
+        if ("${mode}" === "print") {
+            setTimeout(() => { window.print(); }, 1000);
+        }
     <\/script>
 </body>
 </html>`;
 
-            const blob = new Blob([clientPageCode], { type: 'text/html;charset=utf-8;' });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = `عرض_رقمي_فخم_${custName}.html`;
-            link.click();
+            if(mode === 'html') {
+                const blob = new Blob([clientPageCode], { type: 'text/html;charset=utf-8;' });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = `عرض_مؤسسة_البقمي_${custName}.html`;
+                link.click();
+            } else if(mode === 'print') {
+                const printWindow = window.open('', '_blank');
+                printWindow.document.open();
+                printWindow.document.write(clientPageCode);
+                printWindow.document.close();
+            }
         }
     </script>
 </body>
