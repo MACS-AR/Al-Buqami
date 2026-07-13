@@ -3,883 +3,792 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منظومة إصدار العروض الرقمية الفخمة | مؤسسة البقمي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title id="site-title-meta">مؤسسة البقمي للحلول الذكية وإنترنت الأشياء</title>
+    <meta name="description" content="منصة متكاملة لبيع أجهزة التتبع الذكية، أنظمة الحماية، وحلول إنترنت الأشياء والتحكم بالمركبات والأجهزة.">
     
+    <!-- Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
-            --bg-dark: #090d16;
-            --card-bg: #111726;
-            --gold-bright: #f5c842;
-            --gold-royal: #dbb339;
-            --gold-dark: #b38f19;
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(219, 179, 57, 0.25);
+            --bg-dark: #0B0B0C;
+            --bg-card: rgba(15, 15, 17, 0.75);
+            --gold: #D4AF37;
+            --gold-hover: #AA7C11;
+            --white: #FFFFFF;
+            --gray-light: #E0E0E0;
+            --gray-muted: #888888;
+            --border-gold: rgba(212, 175, 55, 0.15);
+            --font-main: 'Cairo', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-        body { 
-            background-color: var(--bg-dark); 
-            color: var(--text-light); 
-            padding: 15px; 
-            min-height: 100vh;
-            position: relative;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--white);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(219, 179, 57, 0.05) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 70%, rgba(17, 23, 38, 0.8) 0%, #090d16 100%);
-            z-index: -2;
+        /* Glass UI Styles */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            transition: var(--transition);
         }
 
-        .animated-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.6;
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
         }
 
-        .control-panel { 
-            max-width: 1100px; 
-            margin: 20px auto 40px auto; 
-            background: var(--card-bg); 
-            border: 2px solid var(--gold-royal); 
-            border-radius: 20px; 
-            padding: 25px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            backdrop-filter: blur(10px);
+        /* Typography & Buttons */
+        .gold-text { color: var(--gold) !important; }
+        
+        .gold-btn {
+            background: linear-gradient(135deg, var(--gold), #F3E5AB);
+            color: #050505;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
         }
-        
-        .panel-title { 
-            color: var(--gold-bright); 
-            font-size: 22px; 
-            font-weight: 900; 
-            text-align: center; 
-            margin-bottom: 25px; 
-            border-bottom: 2px dashed var(--gold-royal); 
-            padding-bottom: 20px; 
+
+        .gold-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(214, 175, 55, 0.4);
         }
-        
-        .section-title { 
-            color: var(--gold-royal); 
-            font-size: 15px; 
-            font-weight: 700; 
-            margin: 25px 0 15px 0; 
-            border-right: 4px solid var(--gold-bright); 
-            padding-right: 10px; 
-        }
-        
-        .grid-inputs { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
-            gap: 15px; 
-        }
-        
-        .input-group { display: flex; flex-direction: column; gap: 6px; }
-        label { color: var(--text-muted); font-size: 13px; font-weight: 600; }
-        
-        input, select, textarea { 
-            background-color: #1a2236; 
-            border: 1px solid var(--border-color); 
-            color: var(--text-light); 
-            padding: 12px 14px; 
-            border-radius: 10px; 
-            font-size: 14px; 
-            transition: all 0.3s; 
-        }
-        input:focus { outline: none; border-color: var(--gold-bright); box-shadow: 0 0 10px rgba(245, 200, 66, 0.2); }
-        
-        .table-wrapper { overflow-x: auto; margin-top: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .control-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 700px; }
-        .control-table th { background: #1e2942; color: var(--gold-bright); padding: 14px; font-weight: 700; border: 1px solid var(--border-color); text-align: center; }
-        .control-table td { border: 1px solid var(--border-color); padding: 12px; background: #141c2e; text-align: center; }
-        
-        .img-selector-btn {
-            background: #1e2942;
-            border: 1px solid var(--gold-royal);
-            color: var(--gold-bright);
-            padding: 8px;
+
+        .gold-btn-outline {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            font-weight: 700;
+            padding: 10px 26px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-            width: 100%;
-            transition: all 0.2s;
-        }
-        .img-selector-btn:hover { background: var(--gold-royal); color: var(--bg-dark); }
-
-        .btn-add { background: transparent; border: 1px solid var(--gold-royal); color: var(--gold-bright); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; font-size: 13px; transition: all 0.3s; }
-        .btn-add:hover { background: rgba(245, 200, 66, 0.1); transform: translateY(-1px); }
-        .btn-del { background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-        .btn-del:hover { background: #ef4444; color: #fff; }
-
-        .btn-build-container { 
-            display: flex; 
-            flex-wrap: wrap;
-            justify-content: center; 
-            gap: 15px;
-            margin-top: 35px; 
-            padding-top: 25px; 
-            border-top: 1px solid var(--border-color); 
-        }
-        
-        .btn-action { 
-            border: none; 
-            padding: 14px 35px; 
-            font-size: 16px; 
-            font-weight: 900; 
-            border-radius: 30px; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            display: flex;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
-        .btn-html {
-            background: linear-gradient(135deg, var(--gold-dark), var(--gold-royal), var(--gold-bright)); 
-            color: #0f1219; 
-            box-shadow: 0 6px 20px rgba(245, 200, 66, 0.25);
-        }
-        .btn-html:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(245, 200, 66, 0.4); }
-        
-        .btn-pdf {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            color: #fff;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        .btn-pdf:hover { transform: translateY(-3px); background: linear-gradient(135deg, #334155, #475569); }
 
-        .modal {
+        .gold-btn-outline:hover {
+            background: var(--gold);
+            color: #050505;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1000; opacity: 0; pointer-events: none;
-            transition: all 0.3s ease;
+            background: #050505;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease;
         }
-        .modal.active { opacity: 1; pointer-events: auto; }
-        .modal-content {
-            background: var(--card-bg);
-            border: 2px solid var(--gold-royal);
-            border-radius: 16px;
-            width: 90%; max-width: 600px;
-            padding: 25px; max-height: 80vh; overflow-y: auto;
-        }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
-        .modal-close { color: #ef4444; cursor: pointer; font-size: 20px; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
-        .gallery-item { border: 1px solid var(--border-color); padding: 10px; border-radius: 10px; cursor: pointer; text-align: center; background: #141c2e; transition: all 0.2s; }
-        .gallery-item:hover { border-color: var(--gold-bright); transform: scale(1.05); }
-        .gallery-item img { width: 100%; height: 80px; object-fit: contain; margin-bottom: 8px; }
-        .gallery-item span { font-size: 11px; color: var(--text-light); font-weight: bold; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-        .live-preview-title { text-align: center; color: var(--gold-royal); font-weight: 900; margin: 50px 0 10px 0; font-size: 22px; }
-        .preview-notice { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+        .loader {
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
+        }
+
+        .loader-ring {
+            width: 70px; height: 70px;
+            border: 4px solid var(--bg-dark);
+            border-top: 4px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Toast Notifications */
+        #toast-container {
+            position: fixed; bottom: 25px; left: 25px; z-index: 99999;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .toast {
+            background: rgba(11, 11, 12, 0.95);
+            border-right: 5px solid var(--gold);
+            padding: 15px 25px;
+            border-radius: 6px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Header / Navigation */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            background: rgba(11, 11, 12, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-gold);
+        }
+
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 22px; font-weight: 800; text-decoration: none; color: var(--white);
+        }
+
+        .logo img {
+            height: 45px; width: auto; max-width: 150px; object-fit: contain;
+        }
+
+        .nav-links {
+            list-style: none; display: flex; gap: 20px; align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white); text-decoration: none; font-weight: 600; font-size: 14px; transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+
+        .cart-trigger {
+            background: none; border: none; color: var(--white); font-size: 22px; cursor: pointer; position: relative;
+        }
+
+        .cart-count {
+            position: absolute; top: -8px; right: -8px; background: var(--gold); color: #000;
+            font-size: 11px; font-weight: 800; width: 18px; height: 18px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            margin-top: 80px; height: 50vh; background-size: cover; background-position: center;
+            position: relative; display: flex; align-items: center; justify-content: center; text-align: center;
+        }
+
+        .hero-banner::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 11, 12, 0.75);
+        }
+
+        .hero-content { position: relative; z-index: 5; max-width: 800px; padding: 20px; }
+        .hero-content h1 { font-size: 38px; font-weight: 800; margin-bottom: 10px; }
+
+        /* Store Layout */
+        .store-container {
+            max-width: 1300px; margin: 40px auto; display: grid; grid-template-columns: 280px 1fr; gap: 30px; padding: 0 20px;
+        }
+
+        .sidebar-filters { height: fit-content; padding: 20px; }
+        .sidebar-filters h3 { margin-bottom: 20px; border-bottom: 2px solid var(--gold); padding-bottom: 8px; }
+        
+        .filter-item { margin-bottom: 20px; }
+        .filter-item label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+        .filter-item input, .filter-item select {
+            width: 100%; padding: 10px; background: #141416; border: 1px solid var(--border-gold);
+            border-radius: 8px; color: var(--white); outline: none; font-size: 14px;
+        }
+
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;
+        }
+
+        /* Product Card */
+        .product-card {
+            display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 15px;
+        }
+
+        .prod-img-container {
+            width: 100%; height: 200px; border-radius: 10px; overflow: hidden; position: relative; background: #141416;
+        }
+
+        .prod-img-container img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .product-card:hover .prod-img-container img { transform: scale(1.08); }
+
+        .discount-tag {
+            position: absolute; top: 10px; right: 10px; background: #E03E3E; color: #fff;
+            padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;
+        }
+
+        .prod-details { margin-top: 15px; }
+        .prod-details h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; height: 48px; overflow: hidden; }
+        
+        .prod-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .prod-price-row .new-price { font-size: 18px; font-weight: 800; color: var(--gold); }
+        .prod-price-row .old-price { font-size: 13px; text-decoration: line-through; color: var(--gray-muted); }
+
+        /* Detail/Social View Modal */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85);
+            display: flex; justify-content: center; align-items: center; z-index: 9999;
+            opacity: 0; pointer-events: none; transition: var(--transition); padding: 15px;
+        }
+
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content { width: 100%; max-width: 850px; max-height: 90vh; overflow-y: auto; padding: 30px; }
+        .close-modal-btn { float: left; font-size: 28px; cursor: pointer; color: var(--gold); }
+
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+        .gallery-main { width: 100%; height: 280px; border-radius: 10px; overflow: hidden; background: #141416; }
+        .gallery-main img { width: 100%; height: 100%; object-fit: contain; }
+        
+        /* Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #121214 25%, #1D1D21 50%, #121214 75%);
+            background-size: 200% 100%; animation: skeleton-load 1.5s infinite; border-radius: 12px; height: 350px;
+        }
+        @keyframes skeleton-load { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* Sliding Cart Drawer */
+        .cart-drawer {
+            position: fixed; top: 0; left: -400px; width: 380px; height: 100vh;
+            background: var(--bg-dark); border-right: 2px solid var(--gold); z-index: 10000;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 25px;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+
+        .cart-drawer.active { left: 0; }
+        .cart-items-box { flex-grow: 1; overflow-y: auto; margin: 20px 0; }
+        
+        .cart-item-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Invoice Screen Styles */
+        #invoice-screen { display: none; padding: 40px 20px; background: #F8F9FA; color: #1a1a1a; min-height: 100vh; }
+        .invoice-box { max-width: 800px; margin: 40px auto; background: #FFF; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .invoice-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .invoice-table th, .invoice-table td { padding: 12px; border-bottom: 1px solid #E0E0E0; text-align: right; }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .store-container { grid-template-columns: 1fr; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .cart-drawer { width: 100%; left: -100%; }
+        }
     </style>
 </head>
 <body>
 
-    <svg class="animated-bg" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="10%" cy="20%" r="2" fill="#dbb339" opacity="0.5"><animate attributeName="cy" values="20%;80%;20%" dur="15s" repeatCount="indefinite"/></circle>
-        <circle cx="80%" cy="10%" r="3" fill="#dbb339" opacity="0.3"><animate attributeName="cy" values="10%;90%;10%" dur="20s" repeatCount="indefinite"/></circle>
-        <circle cx="50%" cy="50%" r="1.5" fill="#fff" opacity="0.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="5s" repeatCount="indefinite"/></circle>
-    </svg>
-
-    <div class="control-panel">
-        <div class="panel-title">منظومة إنتاج وتوليد العروض الرقمية الفخمة والمتحركة | مؤسسة البقمي</div>
-        
-        <div class="section-title">1️⃣ الإعدادات العامة للموقع وشعار الشركة البديل</div>
-        <div class="grid-inputs">
-            <div class="input-group"><label>رابط شعار مؤسسة البقمي (أو مسار محلي):</label><input type="text" id="inLogo" value="https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/logo1.png" placeholder="ضع مسار أو رابط الشعار"></div>
-            <div class="input-group"><label>الرقم الموحد للمؤسسة:</label><input type="text" id="inPhone1" value="0548138548"></div>
-            <div class="input-group"><label>الموقع الإلكتروني للمؤسسة:</label><input type="text" id="inWeb" value="w9103W@gmail.com"></div>
-            <div class="input-group"><label>رابط مسح الدعم الفني والواتساب (QR Code):</label><input type="text" id="inQrLink" value="https://wa.me/966548138548"></div>
-        </div>
-
-        <div class="section-title">2️⃣ بيانات وثيقة التعاقد العامة والعميل اليوم</div>
-        <div class="grid-inputs">
-            <div class="input-group"><label>اسم العميل / الشركة المستهدفة:</label><input type="text" id="inCustName" value="شركة المقاولات والنقليات المعتمدة"></div>
-            <div class="input-group"><label>المسؤول المتابع للعميل:</label><input type="text" id="inCustContact" value="الأستاذ / عبد الرحمن الحربي"></div>
-            <div class="input-group"><label>رقم جوال العميل:</label><input type="text" id="inCustMobile" value="+966 500 000 000"></div>
-            <div class="input-group"><label>البريد الإلكتروني للعميل:</label><input type="text" id="inCustEmail" value="client@company.com"></div>
-            <div class="input-group"><label>الغرض الأساسي للنظام الفني والتوريد:</label><input type="text" id="inCustOffer" value="نظام التتبع المتقدم وحلول إنترنت الأشياء الذكية لأسطول النقل"></div>
-            <div class="input-group"><label>إجمالي عدد السيارات / الشاحنات:</label><input type="number" id="inCustVehicles" value="10"></div>
-            <div class="input-group"><label>مهندس المبيعات والمستشار المتابع:</label><input type="text" id="inSales" value="م / محمد اشرف (FARESPCB)"></div>
-            <div class="input-group"><label>تاريخ إصدار العرض الرقمي:</label><input type="date" id="inDate" value="2026-07-13"></div>
-        </div>
-
-        <div class="section-title">3️⃣ جدول التسعير المالي التفاعلي والأجهزة المختارة</div>
-        <div style="margin-bottom: 15px;" class="input-group"><label>نسبة ضريبة القيمة المضافة المعتمدة (%):</label><input type="number" id="inTax" value="15" style="width: 150px;"></div>
-        
-        <div class="table-wrapper">
-            <table class="control-table" id="controlTable">
-                <thead>
-                    <tr>
-                        <th style="width: 160px;">صورة المنتج (من جيت هاب)</th>
-                        <th>اسم المنتج والجهاز</th>
-                        <th>المواصفات الفنية المعتمدة</th>
-                        <th style="width: 110px;">السعر (ريال)</th>
-                        <th style="width: 90px;">الكمية</th>
-                        <th style="width: 80px;">إجراء</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <button class="img-selector-btn" onclick="openGallery(this)">📁 اختر من المعرض</button>
-                            <input type="hidden" class="c-img" value="https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/fmc130.png">
-                            <div class="img-preview-text" style="font-size:10px; color:var(--gold-bright); margin-top:4px;">fmc130.png</div>
-                        </td>
-                        <td><input type="text" value="جهاز تتبع 4G متقدم يدعم 1 شريحة ويدعم CAN-BUS" class="c-name" style="width:100%;"></td>
-                        <td><input type="text" value="قراءة كمبيوتر المركبة بدقة عالية وحقن فوري للبيانات لسرعات متناهية." class="c-desc" style="width:100%;"></td>
-                        <td><input type="number" value="350" class="c-rate" style="width:100%;"></td>
-                        <td><input type="number" value="10" class="c-qty" style="width:100%;"></td>
-                        <td><button class="btn-del" onclick="removeRow(this)">حذف</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <button class="btn-add" onclick="addRow()">➕ إضافة منتج أو حل إضافي للجدول</button>
-
-        <div class="section-title">4️⃣ السجل التجاري والحساب البنكي الرسمي لمؤسسة البقمي</div>
-        <div class="grid-inputs">
-            <div class="input-group"><label>رقم السجل التجاري:</label><input type="text" id="inCr" value="رقم السجل التجاري المعتمد: 310805755800003"></div>
-            <div class="input-group"><label>اسم البنك:</label><input type="text" id="inBankName" value="مصرف الراجحي الرسمي"></div>
-            <div class="input-group"><label>رقم الحساب:</label><input type="text" id="inBankAcc" value="123456789012345"></div>
-            <div class="input-group"><label>الآيبان الدولي (IBAN):</label><input type="text" id="inBankIban" value="SA9380000012345678901234"></div>
-        </div>
-
-        <div class="btn-build-container">
-            <button class="btn-action btn-html" onclick="buildAndDownloadClientFile('html')"><i class="fa-solid fa-code"></i> 🚀 إنشاء وتحميل ملف العرض الرقمي (.html)</button>
-            <button class="btn-action btn-pdf" onclick="buildAndDownloadClientFile('print')"><i class="fa-solid fa-file-pdf"></i> 🖨️ فتح نافذة الطباعة وحفظ PDF فوري</button>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <span class="gold-text" style="font-weight: 700;">منصة البقمي للحلول الذكية</span>
         </div>
     </div>
 
-    <div class="modal" id="galleryModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 style="color:var(--gold-bright);">📁 معرض أجهزة ومفاتيح مؤسسة البقمي المعتمدة</h3>
-                <span class="modal-close" onclick="closeGallery()">&times;</span>
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo" id="site-logo-link">
+                <!-- سيتم استبداله باللوجو من الفايربيس ديناميكياً -->
+                <i class="fa-solid fa-microchip gold-text"></i> <span id="site-name-display">البقمي IoT</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showHomeView()">الرئيسية والمتجر</a></li>
+                <li><a href="admin.html" class="gold-btn-outline" style="padding: 5px 15px; font-size: 13px;">لوحة الإدارة</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="cart-trigger" onclick="toggleCart(true)">
+                    <i class="fa-solid fa-shopping-basket"></i>
+                    <span class="cart-count" id="cart-counter">0</span>
+                </button>
             </div>
-            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </nav>
+
+    <!-- MAIN CUSTOMER INTERFACE VIEW -->
+    <div id="customer-main-view">
+        <!-- Banner Section -->
+        <header class="hero-banner" id="hero-bg-section" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80');">
+            <div class="hero-content">
+                <h1 id="banner-title">حلول تتبع ذكية وإنترنت الأشياء بأعلى جودة</h1>
+                <p id="banner-desc">تصفح متجرنا الحصري لشراء أحدث الأجهزة الفنية وتصميم اللوحات الإلكترونية</p>
+            </div>
+        </header>
+
+        <!-- Store Area -->
+        <div class="store-container">
+            <!-- Filters -->
+            <aside class="sidebar-filters glass-card">
+                <h3>تصفية المنتجات</h3>
+                <div class="filter-item">
+                    <label>البحث السريع</label>
+                    <input type="text" id="search-input" placeholder="اكتب اسم المنتج...">
+                </div>
+                <div class="filter-item">
+                    <label>القسم</label>
+                    <select id="category-filter">
+                        <option value="all">جميع الأقسام</option>
+                        <option value="tracking">أجهزة التتبع</option>
+                        <option value="security">أجهزة الحماية والإنذار</option>
+                        <option value="iot">حلول إنترنت الأشياء IoT</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>الترتيب حسب</label>
+                    <select id="sort-filter">
+                        <option value="newest">الأحدث أولاً</option>
+                        <option value="price-asc">السعر: من الأقل إلى الأعلى</option>
+                        <option value="price-desc">السعر: من الأعلى إلى الأقل</option>
+                    </select>
+                </div>
+            </aside>
+
+            <!-- Grid Items -->
+            <main>
+                <div class="products-grid" id="products-render-area">
+                    <!-- Skeletons loaded via JS before Firebase fetch -->
+                    <div class="skeleton"></div>
+                    <div class="skeleton"></div>
+                    <div class="skeleton"></div>
+                </div>
+            </main>
         </div>
     </div>
 
-    <div class="live-preview-title">👁️ وضع التجهيز والمعاينة</div>
-    <p class="preview-notice">المنظومة مجهزة بالكامل لتعمل على الهواتف الذكية والكمبيوتر بتصميم ملكي فاخر ومستقر بالكامل.</p>
+    <!-- PRODUCT DETAILS MODAL VIEW -->
+    <div class="modal" id="details-modal">
+        <div class="modal-content glass-card">
+            <span class="close-modal-btn" onclick="toggleDetailsModal(false)">&times;</span>
+            <div id="modal-product-data">
+                <!-- Dynamically Rendered Details -->
+            </div>
+        </div>
+    </div>
 
-    <script>
-        const githubImages = [
-            { name: "fmc130 جهاز تتبع", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/1.png" },
-            { name: "fmc920 جهاز تتبع", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/2.png" },
-            { name: "FMC650 جهاز ادارة المركبات", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/3.png" },
-            { name: "Teltonika CAN-CONTROL", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/4.png" },
-            { name: "router.png", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/5.png" },
-            { name: "default.png", url: "https://raw.githubusercontent.com/MACS-AR/Al-Buqami/refs/heads/main/public/assets/devices/6.png" }
-        ];
+    <!-- CART DRAWER -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>سلة الشراء</h3>
+                <span style="font-size: 24px; cursor: pointer;" onclick="toggleCart(false)">&times;</span>
+            </div>
+            <div class="cart-items-box" id="cart-items-container">
+                <p style="text-align: center; color: var(--gray-muted);">السلة فارغة حالياً.</p>
+            </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 700;">
+                <span>المجموع الفرعي:</span>
+                <span id="cart-total-display">0.00 ر.س</span>
+            </div>
+            <button class="gold-btn w-100" id="checkout-btn" style="width: 100%; justify-content: center;" onclick="openCheckoutForm()">طلب وتأكيد الشراء</button>
+        </div>
+    </div>
 
-        let activeImgButton = null;
+    <!-- CHECKOUT MODAL -->
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content glass-card" style="max-width: 550px;">
+            <span class="close-modal-btn" onclick="toggleCheckoutModal(false)">&times;</span>
+            <h2 style="margin-bottom: 20px;">تفاصيل الشحن والتوصيل</h2>
+            <form id="checkout-form" onsubmit="processOrder(event)">
+                <div class="filter-item">
+                    <label>الاسم بالكامل</label>
+                    <input type="text" id="cust-name" required placeholder="مثال: عبدالله البقمي">
+                </div>
+                <div class="filter-item">
+                    <label>رقم الجوال</label>
+                    <input type="tel" id="cust-phone" required placeholder="05xxxxxxxx" pattern="[0-5][0-9]{8}">
+                </div>
+                <div class="filter-item">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="cust-email" required placeholder="mail@example.com">
+                </div>
+                <div class="filter-item">
+                    <label>المدينة</label>
+                    <input type="text" id="cust-city" required placeholder="مثال: الرياض">
+                </div>
+                <div class="filter-item">
+                    <label>العنوان بالكامل</label>
+                    <input type="text" id="cust-address" required placeholder="الشارع، الحي، رقم المنزل">
+                </div>
+                <button type="submit" class="gold-btn" style="width: 100%; justify-content: center;">إرسال الطلب الآن</button>
+            </form>
+        </div>
+    </div>
 
-        function openGallery(btn) {
-            activeImgButton = btn;
-            const grid = document.getElementById('galleryGrid');
-            grid.innerHTML = '';
-            
-            githubImages.forEach(img => {
-                grid.innerHTML += `
-                    <div class="gallery-item" onclick="selectImage('${img.url}', '${img.name}')">
-                        <img src="${img.url}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'40\'><rect width=\'50\' height=\'40\' fill=\'%23222\'/><text x=\'5\' y=\'25\' fill=\'%23fff\' font-size=\'8\'>Image</text></svg>'">
-                        <span>${img.name}</span>
+    <!-- INVOICE SCREEN (For Printing) -->
+    <div id="invoice-screen">
+        <div class="invoice-box" id="invoice-paper-content">
+            <!-- Rendered Dynamically -->
+        </div>
+        <div style="text-align: center; margin-top: 20px;" class="no-print">
+            <button class="gold-btn" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة الفاتورة الإلكترونية</button>
+            <button class="gold-btn-outline" onclick="showHomeView()">العودة للمتجر</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Modular Import -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get, set, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // ==========================================
+        // تكوين قاعدة بيانات FIREBASE الخاصة بك
+        // يمكنك إدخال مفاتيحك مباشرة هنا
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let activeProducts = [];
+        let cart = [];
+
+        // Toast Messages Helper
+        window.showToast = function(message) {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.innerText = message;
+            container.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 3500);
+        };
+
+        // Screen Loader handling
+        window.addEventListener("DOMContentLoaded", async () => {
+            await loadSiteSettings();
+            await fetchProducts();
+            const loader = document.getElementById("loading-screen");
+            loader.style.opacity = "0";
+            setTimeout(() => { loader.style.display = "none"; }, 500);
+        });
+
+        // Load Global Settings
+        async function loadSiteSettings() {
+            try {
+                const settingsRef = ref(db, "siteSettings");
+                const snap = await get(settingsRef);
+                if (snap.exists()) {
+                    const data = snap.val();
+                    if (data.logoUrl) {
+                        document.getElementById("site-logo-link").innerHTML = `<img src="${data.logoUrl}" alt="Logo">`;
+                    }
+                    if (data.siteName) {
+                        document.getElementById("site-name-display").innerText = data.siteName;
+                        document.getElementById("site-title-meta").innerText = data.siteName;
+                    }
+                    if (data.heroBannerUrl) {
+                        document.getElementById("hero-bg-section").style.backgroundImage = `url('${data.heroBannerUrl}')`;
+                    }
+                    if (data.heroTitle) document.getElementById("banner-title").innerText = data.heroTitle;
+                    if (data.heroDesc) document.getElementById("banner-desc").innerText = data.heroDesc;
+                }
+            } catch(e) { console.log("Firebase config simulation mode activated."); }
+        }
+
+        // Fetch Products from Realtime Database
+        async function fetchProducts() {
+            const renderArea = document.getElementById("products-render-area");
+            try {
+                const pRef = ref(db, "products");
+                const snap = await get(pRef);
+                if (snap.exists()) {
+                    activeProducts = Object.entries(snap.val()).map(([key, val]) => ({ id: key, ...val }));
+                    renderProducts(activeProducts);
+                } else {
+                    renderArea.innerHTML = `<p style='grid-column: 1/-1; text-align:center; color:var(--gold);'>لا توجد منتجات معروضة حالياً، يمكنك إضافتها من لوحة التحكم.</p>`;
+                }
+            } catch (err) {
+                // Fallback simulation
+                activeProducts = [
+                    { id: "demo1", sku: "SKU-909", name: "جهاز تتبع الشاحنات GPS SIM7600 4G", price: 549, oldPrice: 650, category: "tracking", qty: 10, images: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80", desc: "جهاز احترافي يعمل على شبكة الجيل الرابع." },
+                    { id: "demo2", sku: "SKU-808", name: "لوحة تحكم ذكية ESP32 Smart IoT Board", price: 320, category: "iot", qty: 5, images: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80", desc: "لوحة تطوير متكاملة للتحكم بجهد الأجهزة والمحركات برمجياً." }
+                ];
+                renderProducts(activeProducts);
+            }
+        }
+
+        // Render Cards
+        function renderProducts(productsList) {
+            const renderArea = document.getElementById("products-render-area");
+            renderArea.innerHTML = "";
+            productsList.forEach(p => {
+                const discount = p.oldPrice ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
+                renderArea.innerHTML += `
+                    <div class="glass-card product-card">
+                        <div class="prod-img-container">
+                            ${discount > 0 ? `<div class="discount-tag">خصم ${discount}%</div>` : ""}
+                            <img src="${p.images || 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80'}" alt="${p.name}">
+                        </div>
+                        <div class="prod-details">
+                            <span class="gold-text" style="font-size: 11px; text-transform: uppercase;">${p.category}</span>
+                            <h4>${p.name}</h4>
+                            <div class="prod-price-row">
+                                <span class="new-price">${p.price} ر.س</span>
+                                ${p.oldPrice ? `<span class="old-price">${p.oldPrice} ر.س</span>` : ""}
+                            </div>
+                            <div style="display:flex; gap:10px;">
+                                <button class="gold-btn-outline" style="flex:1;" onclick="viewProductDetails('${p.id}')">تفاصيل</button>
+                                <button class="gold-btn" onclick="addToCart('${p.id}')"><i class="fa-solid fa-cart-plus"></i></button>
+                            </div>
+                        </div>
                     </div>
                 `;
             });
-            document.getElementById('galleryModal').classList.add('active');
         }
 
-        function closeGallery() {
-            document.getElementById('galleryModal').classList.remove('active');
-        }
+        // Live Filters Implementation
+        document.getElementById("search-input").addEventListener("input", filterNow);
+        document.getElementById("category-filter").addEventListener("change", filterNow);
+        document.getElementById("sort-filter").addEventListener("change", filterNow);
 
-        function selectImage(url, name) {
-            if (activeImgButton) {
-                const parent = activeImgButton.parentElement;
-                parent.querySelector('.c-img').value = url;
-                parent.querySelector('.img-preview-text').innerText = name;
+        function filterNow() {
+            let filtered = [...activeProducts];
+            const search = document.getElementById("search-input").value.toLowerCase();
+            const category = document.getElementById("category-filter").value;
+            const sort = document.getElementById("sort-filter").value;
+
+            if (search) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.sku && p.sku.toLowerCase().includes(search)));
             }
-            closeGallery();
+            if (category !== "all") {
+                filtered = filtered.filter(p => p.category === category);
+            }
+            if (sort === "price-asc") {
+                filtered.sort((a,b) => a.price - b.price);
+            } else if (sort === "price-desc") {
+                filtered.sort((a,b) => b.price - a.price);
+            } else {
+                filtered.reverse(); // Newest
+            }
+            renderProducts(filtered);
         }
 
-        function addRow() {
-            const tbody = document.getElementById('controlTable').getElementsByTagName('tbody')[0];
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>
-                    <button class="img-selector-btn" onclick="openGallery(this)">📁 اختر من المعرض</button>
-                    <input type="hidden" class="c-img" value="https://raw.githubusercontent.com/FARESPCB/portfolio/main/assets/devices/default.png">
-                    <div class="img-preview-text" style="font-size:10px; color:var(--gold-bright); margin-top:4px;">default.png</div>
-                </td>
-                <td><input type="text" value="جهاز تتبع متطور" class="c-name" style="width:100%;"></td>
-                <td><input type="text" value="مواصفات فنية إضافية ملائمة لحاجة أسطول المركبات" class="c-desc" style="width:100%;"></td>
-                <td><input type="number" value="0" class="c-rate" style="width:80px;"></td>
-                <td><input type="number" value="0" class="c-qty" style="width:65px;"></td>
-                <td><button class="btn-del" onclick="removeRow(this)">حذف</button></td>
+        // Product details modal renderer
+        window.viewProductDetails = function(id) {
+            const prod = activeProducts.find(p => p.id === id);
+            if(!prod) return;
+            const container = document.getElementById("modal-product-data");
+            container.innerHTML = `
+                <div class="detail-grid">
+                    <div class="gallery-main">
+                        <img src="${prod.images}" alt="Product">
+                    </div>
+                    <div>
+                        <span class="gold-text">رمز السلعة: ${prod.sku || 'N/A'}</span>
+                        <h2 style="margin: 15px 0;">${prod.name}</h2>
+                        <div class="prod-price-row">
+                            <span class="new-price" style="font-size: 26px;">${prod.price} ر.س</span>
+                        </div>
+                        <p style="color: var(--gray-light); margin-bottom: 20px;">${prod.desc || 'لا يوجد وصف للمنتج حالياً.'}</p>
+                        <p style="font-size:13px; color:var(--gray-muted); margin-bottom:20px;">الضمان والمواصفات: ${prod.specs || 'ضمان سنتين للمؤسسة'}</p>
+                        <button class="gold-btn" style="width: 100%; justify-content:center;" onclick="addToCart('${prod.id}'); toggleDetailsModal(false);">إضافة المنتج للسلة</button>
+                    </div>
+                </div>
             `;
-            tbody.appendChild(tr);
-        }
+            toggleDetailsModal(true);
+        };
 
-        function removeRow(btn) {
-            btn.closest('tr').remove();
-        }
+        window.toggleDetailsModal = function(show) {
+            document.getElementById("details-modal").classList.toggle("active", show);
+        };
 
-        function buildAndDownloadClientFile(mode) {
-            const logo = document.getElementById('inLogo').value;
-            const phone1 = document.getElementById('inPhone1').value;
-            const web = document.getElementById('inWeb').value;
-            const qrLink = document.getElementById('inQrLink').value;
+        // Cart Mechanisms
+        window.toggleCart = function(show) {
+            document.getElementById("cart-drawer").classList.toggle("active", show);
+        };
 
-            const custName = document.getElementById('inCustName').value;
-            const custContact = document.getElementById('inCustContact').value;
-            const custMobile = document.getElementById('inCustMobile').value;
-            const custEmail = document.getElementById('inCustEmail').value;
-            const custOffer = document.getElementById('inCustOffer').value;
-            const custVehicles = document.getElementById('inCustVehicles').value;
-            const sales = document.getElementById('inSales').value;
-            const date = document.getElementById('inDate').value;
-
-            const cr = document.getElementById('inCr').value;
-            const bName = document.getElementById('inBankName').value;
-            const bAcc = document.getElementById('inBankAcc').value;
-            const bIban = document.getElementById('inBankIban').value;
-
-            const rows = document.querySelectorAll('#controlTable tbody tr');
-            let tableRowsHtml = '';
-            let subTotal = 0;
-
-            rows.forEach(r => {
-                const img = r.querySelector('.c-img').value;
-                const name = r.querySelector('.c-name').value;
-                const desc = r.querySelector('.c-desc').value;
-                const rate = parseFloat(r.querySelector('.c-rate').value) || 0;
-                const qty = parseFloat(r.querySelector('.c-qty').value) || 0;
-                const total = rate * qty;
-                subTotal += total;
-
-                tableRowsHtml += `
-                    <tr>
-                        <td><img src="${img}" class="device-preview-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'40\'><rect width=\'50\' height=\'40\' fill=\'%23333\'/><text x=\'10\' y=\'25\' fill=\'%23fff\' font-size=\'10\'>No Img</text></svg>'"></td>
-                        <td style="font-weight: bold; color: #f8fafc;">${name}</td>
-                        <td style="text-align: right; color: #cbd5e1;">${desc}</td>
-                        <td style="font-weight: bold; color: #f5c842;">${rate.toFixed(2)}</td>
-                        <td style="font-weight: bold; color: #f8fafc;">${qty}</td>
-                        <td style="font-weight: 900; color: #dbb339;">${total.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    </tr>
-                `;
-            });
-
-            const taxPercent = parseFloat(document.getElementById('inTax').value) || 0;
-            const taxAmount = subTotal * (taxPercent / 100);
-            const grandTotal = subTotal + taxAmount;
-
-            const clientPageCode = `<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>العرض الرقمي المتكامل | مؤسسة البقمي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --gold-bright: #f5c842;
-            --gold-royal: #dbb339;
-            --gold-dark: #b38f19;
-            --bg-calm: #090d16;
-            --card-dark: #111726;
-            --text-main: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: rgba(219, 179, 57, 0.25);
-        }
-        
-        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-        body { background-color: #090d16; color: #f8fafc; padding: 0; margin: 0; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-        .page-bg-effect {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 80% 20%, rgba(219, 179, 57, 0.08) 0%, transparent 50%), #090d16;
-            z-index: -5;
-        }
-
-        .container { width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; padding: 20px 0; }
-
-        .digital-page { 
-            background: var(--card-dark) !important; 
-            color: var(--text-main) !important;
-            border-radius: 20px; 
-            padding: 12mm 15mm; 
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); 
-            border: 2px solid var(--gold-royal) !important;
-            position: relative; 
-            width: 190mm;
-            height: 277mm;
-            max-width: 100%;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between;
-            page-break-after: always;
-            page-break-inside: avoid;
-            overflow: hidden;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            box-sizing: border-box;
-        }
-
-        .company-logo {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    object-fit: contain;
-    object-position: center;
-    background: transparent;
-    border: 2px solid #f5c842;
-    padding: 3px;
-}
-
-.cover-logo {
-    width: 200px;   /* غيّر الرقم كما تريد */
-    height: 200px;  /* غيّر الرقم كما تريد */
-    border-radius: 50%;
-    object-fit: contain;
-    object-position: center;
-    background: transparent;
-    border: 4px solid #f5c842;
-    display: block;
-    margin: 0 auto;
-    padding: 6px;
-}
-
-        .cover-page-center {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        .page-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 15px; color: var(--gold-royal); width: 100%; box-sizing: border-box; }
-        .page-header .web-link { font-size: 13px; color: var(--gold-bright); font-weight: 600; text-decoration: none; }
-        .page-header .company-logo { width: 55px; height: 55px; border-radius: 50%; object-fit: contain; border: 2px solid var(--gold-royal); background: transparent; padding: 3px; margin: 0; }
-
-        .page-body { flex: 1; display: flex; flex-direction: column; width: 100%; overflow: hidden; justify-content: flex-start; }
-        .section-heading { font-size: 20px; font-weight: 900; color: var(--gold-bright); border-right: 5px solid var(--gold-royal); padding-right: 10px; margin-bottom: 15px; text-align: right; }
-
-        .static-paragraph { font-size: 14px; line-height: 1.8; color: #cbd5e1; text-align: justify; margin-bottom: 15px; }
-        .highlight-box { background: #1e2942; border-right: 4px solid var(--gold-royal); padding: 12px; border-radius: 6px; margin: 15px 0; font-size: 13px; font-weight: 600; color: var(--gold-bright); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); border-left: 1px solid var(--border-color); text-align: right; }
-
-        .client-info-table, .financial-table, .features-table { width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed; }
-        .client-info-table td { border: 1px solid var(--border-color); padding: 10px 14px; font-size: 14px; font-weight: bold; color: var(--text-main); background: #141c2e; text-align: right; }
-        .client-info-table td.label-side { color: var(--gold-royal); font-weight: 600; width: 35%; background: #1e2942; text-align: right; }
-        
-        .financial-table th, .financial-table td { border: 1px solid var(--border-color); padding: 10px; font-size: 12px; font-weight: bold; text-align: center; overflow: hidden; text-overflow: ellipsis; }
-        .financial-table th { background: #1e2942; color: var(--gold-bright); }
-        .financial-table td { background: #141c2e; }
-
-        /* تعديل المسافات والأحجام لجداول المميزات لتكفي صفحة واحدة تماماً */
-        .features-table th, .features-table td { border: 1px solid var(--border-color); padding: 4.5px 6px; font-size: 10.5px; text-align: center; word-wrap: break-word; }
-        .features-table th { background: #1e2942; color: var(--gold-bright); font-weight: 700; }
-        .features-table td { background: #141c2e; color: var(--text-main); }
-        .features-table td.feature-text { text-align: right; font-weight: 600; color: #cbd5e1; font-size: 10.5px; line-height: 1.4; }
-        .features-table td.highlight-accent { background: rgba(245, 200, 66, 0.05); color: var(--gold-bright); font-weight: bold; }
-        .check-icon { color: #10b981; font-weight: bold; font-size: 13px; }
-        .cross-icon { color: #ef4444; font-weight: bold; font-size: 13px; }
-        
-        img { max-width: 100%; height: auto; }
-        .device-preview-img { width: 55px; height: 45px; object-fit: contain; background: transparent; display: block; margin: auto; }
-        .total-row-highlight { font-weight: 900; }
-        .total-row-highlight td { background: #1e2942 !important; color: var(--gold-bright) !important; }
-
-        .bank-wrapper-box { border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; background: #141c2e; margin-top: 15px; text-align: right; }
-        .bank-title-display { font-size: 15px; color: var(--gold-bright); font-weight: 900; margin-bottom: 6px; }
-        
-        .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 20px; gap: 8px; width: 100%; }
-        .page-footer { border-top: 1px solid var(--border-color); padding-top: 10px; font-size: 12px; color: var(--gold-royal); display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
-
-        @media print {
-            @page {
-                size: A4 portrait;
-                margin: 0;
+        window.addToCart = function(id) {
+            const prod = activeProducts.find(p => p.id === id);
+            if(!prod) return;
+            const inCart = cart.find(item => item.id === id);
+            if (inCart) {
+                inCart.qty++;
+            } else {
+                cart.push({ ...prod, qty: 1 });
             }
+            updateCart();
+            showToast("تمت إضافة المنتج بنجاح للسلة!");
+        };
 
-            html, body {
-                width: 210mm;
-                height: 297mm;
-                margin: 0;
-                padding: 0;
-                background: #090d16 !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            .page-bg-effect { display: none !important; }
-            .container { width: 100%; margin: 0 auto; display: block !important; padding: 0 !important; }
-
-            .digital-page {
-                width: 210mm;
-                height: 297mm;
-                margin: 0 auto;
-                padding: 15mm 20mm;
-                box-shadow: none !important;
-                background: #111726 !important;
-                border: none !important;
-                border-radius: 0 !important;
-                page-break-after: always;
-                page-break-inside: avoid;
-                overflow: hidden;
-                box-sizing: border-box;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="page-bg-effect"></div>
-    <div class="container">
-
-        <!-- الصفحة 1: الغلاف -->
-        <div class="digital-page">
-            <div class="page-header">
-                <a href="https://${web}" target="_blank" class="web-link">${web}</a>
-                <img src="${logo}" class="company-logo" alt="Logo">
-            </div>
+        function updateCart() {
+            const container = document.getElementById("cart-items-container");
+            const counter = document.getElementById("cart-counter");
+            const totalDisplay = document.getElementById("cart-total-display");
             
-            <div class="cover-page-center">
-                <img src="${logo}" alt="شعار مؤسسة البقمي" class="cover-logo">
-                <h1 style="font-size: 32px; font-weight: 900; color: var(--gold-bright); margin-top: 15px; margin-bottom: 5px;">مؤسسة البقمي</h1>
-                <p style="font-size: 16px; color: var(--text-secondary); font-weight: bold; margin-bottom: 30px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
-                
-                <div style="background: #141c2e; padding: 25px; border-radius: 16px; border: 2px solid rgba(219,179,57,0.4); width: 100%; max-width: 500px; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.4); box-sizing: border-box;">
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main); text-align: right;"><strong>📦 موجه إلى:</strong> ${custName}</p>
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main); text-align: right;"><strong>👤 عناية الأستاذ:</strong> ${custContact}</p>
-                    <p style="margin-bottom: 12px; font-size:15px; color:var(--text-main); text-align: right;"><strong>📅 تاريخ العرض:</strong> ${date}</p>
-                    <p style="font-size:15px; color:var(--text-main); text-align: right;"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
-                </div>
-            </div>
-            <div class="page-footer"><span>مؤسسة البقمي لأنظمة إنترنت الأشياء</span><span>صفحة 1 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 2: نبذة عن المؤسسة -->
-        <div class="digital-page">
-            <div class="page-header"><span>تتبع المركبات وإنترنت الأشياء</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">نبذة عن مؤسسة البقمي</h2>
-                <p class="static-paragraph">تعتبر مؤسسة البقمي إحدى المؤسسات الرائدة والموثوقة في المملكة العربية السعودية في تقديم أحدث حلول الاتصالات وتقنية المعلومات، متخصصة بالكامل في أنظمة إدارة الأساطيل وتتبع المركبات عن بُعد وحلول إنترنت الأشياء (IoT) والتكامل الذكي.</p>
-                <div class="highlight-box">رؤيتنا: الريادة في تقديم الأنظمة الرقمية والحلول الذكية وتطوير البنية التحتية لإدارة النقل في المملكة وفق رؤية 2030.</div>
-            </div>
-            <div class="page-footer"><span>الرقم الموحد: ${phone1}</span><span>صفحة 2 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 3: وثيقة التعاقد والبيانات العامة -->
-        <div class="digital-page">
-            <div class="page-header"><span>وثيقة العرض الفني</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">وثيقة التعاقد وبيانات العميل المستهدف</h2>
-                <table class="client-info-table">
-                    <tr><td class="label-side">اسم الشركة / العميل:</td><td>${custName}</td></tr>
-                    <tr><td class="label-side">المسؤول المتابع:</td><td>${custContact}</td></tr>
-                    <tr><td class="label-side">جوال التواصل المعتمد:</td><td>${custMobile}</td></tr>
-                    <tr><td class="label-side">البريد الإلكتروني للعميل:</td><td>${custEmail}</td></tr>
-                    <tr><td class="label-side">عدد الشاحنات المستهدفة:</td><td>${custVehicles} مركبة / شاحنة</td></tr>
-                    <tr><td class="label-side">مستشار الحلول الفنية:</td><td>${sales}</td></tr>
-                </table>
-            </div>
-            <div class="page-footer"><span>تاريخ الإصدار: ${date}</span><span>صفحة 3 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 4: جدول مميزات نظام التتبع (الجزء الأول: 1-14) -->
-        <div class="digital-page">
-            <div class="page-header"><span>مميزات نظام التتبع</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">مميزات نظام التتبع (1)</h2>
-                <table class="features-table">
-                    <thead>
-                        <tr>
-                            <th style="width:50px;">الأساسية</th>
-                            <th style="width:50px;">المتقدمة</th>
-                            <th style="width:50px;">إدارة الأساطيل</th>
-                            <th>المواصفات والخصائص المعتمدة الفنية</th>
-                            <th style="width:40px;">الرقم</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">النظام متوفر باللغتين العربية والانجليزية.</td><td class="highlight-accent">1</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">تحديد موقع المركبة كل 2 دقيقه.</td><td class="highlight-accent">2</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">معرفة مسار وسرعة المركبة على مدار الساعة.</td><td class="highlight-accent">3</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية متابعة مسار اكثر من مركبة في نفس الوقت ومعرفة اماكن الوقوف والتوقف تجاوز السرعة المحددة على الخريطة لكل مركبة.</td><td class="highlight-accent">4</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء 32 شاشات فرعية بنفس الوقت لمراقبة 32 مركبات بشكل منفصل.</td><td class="highlight-accent">5</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">معرفة اوقات تشغيل او اطفاء المحرك من قبل السائق.</td><td class="highlight-accent">6</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية التنقل بين اكثر من نوع من الخرائط.</td><td class="highlight-accent">7</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية اطفاء المركبة Immobilizer من خلال النظام او تطبيق الهاتف.</td><td class="highlight-accent">8</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة المركبات من خلال تطبيق الهواتف الذكية (Ios/Android).</td><td class="highlight-accent">9</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">توفير معلومات و استخراج تقارير عن كل رحلة تقوم بها المركبة مثل مكان و زمان بداية الرحلة و انتهائها، الوقت المستغرق، معدل السرعة و اعلى سرعة خلال الرحلة.</td><td class="highlight-accent">10</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">التنبيه في حال العبث بالجهاز.</td><td class="highlight-accent">11</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">متابعة سلوك السائقين من خلال التنبيهات الفورية (التسارع المفاجئ، التباطؤ، السرعة الزائدة).</td><td class="highlight-accent">12</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية انشاء أي تقرير حسب رغبة العميل.</td><td class="highlight-accent">13</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية استخراج التقارير بصيغ مختلفة تتناسب و طبيعة العمل بالمنشأة (Excel/PDF/HTML).</td><td class="highlight-accent">14</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="page-footer"><span>منظومة تتبع المركبات الفخمة</span><span>صفحة 4 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 5: جدول مميزات نظام التتبع (الجزء الثاني: 15-28) -->
-        <div class="digital-page">
-            <div class="page-header"><span>مميزات نظام التتبع</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">مميزات نظام التتبع (2)</h2>
-                <table class="features-table">
-                    <thead>
-                        <tr>
-                            <th style="width:50px;">الأساسية</th>
-                            <th style="width:50px;">المتقدمة</th>
-                            <th style="width:50px;">إدارة الأساطيل</th>
-                            <th>المواصفات والخصائص المعتمدة الفنية</th>
-                            <th style="width:40px;">الرقم</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">معرفة حالات التوقف الطويل للمركبة في حال عدم مسيرها و هي تعمل (Idling Time).</td><td class="highlight-accent">15</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية تقسيم المركبات الى مجموعات لتسهيل عملية المراقبة و المتابعة من مستخدم النظام.</td><td class="highlight-accent">16</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء اسماء مستخدمين و اعطائهم صلاحيات مختلفة من قبل مستخدم النظام.</td><td class="highlight-accent">17</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء تنبيهات على جميع القراءات المرسلة من المركبة من قبل مستخدم النظام.</td><td class="highlight-accent">18</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">مراقبة الدخول و/او الخروج للمناطق المحددة بسياج وهمي على الخريطة (Geo-fencing).</td><td class="highlight-accent">19</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية اضافة مواقع الاهتمام (POI) الخاصة بالعميل و ظهورها بالتقارير و العناوين.</td><td class="highlight-accent">20</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية اضافة نقاط الاهتمام ونقاط البيع وبناء تنبيهات و استخراج تقارير الدخول والخروج.</td><td class="highlight-accent">21</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">المساعدة في إدارة المركبات والتخطيط المستقبلي باسترجاع الرحلات السابقة لسنة كاملة فيديو.</td><td class="highlight-accent">22</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية تعريف اسماء السائقين و تقسيمه الى مجموعات من قبل مستخدم النظام.</td><td class="highlight-accent">23</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية ربط المركبة بأكثر من سائق في حال اعتماد نظام الورديات (Shifts) بالعمل.</td><td class="highlight-accent">24</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية انشاء وظائف لإرسال تقارير يومية للأشخاص المعنيين بالمنشأة من قبل مستخدم النظام.</td><td class="highlight-accent">25</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية التميز برمز المركبة من حيث اللون و الشكل لتسهيل المراقبة.</td><td class="highlight-accent">26</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية مراقبة الصيانة الدورية للمركبة من خلال نظام التتبع و برمجة تقارير وتنبيهات بذلك.</td><td class="highlight-accent">27</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة الصيانة الدورية للمركبة وإدخال عمل تقارير توضح المصاريف والكلف الفعلية.</td><td class="highlight-accent">28</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="page-footer"><span>تقارير وحلول ذكية ممتدة</span><span>صفحة 5 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 6: تابع مميزات نظام التتبع (30-37) -->
-        <div class="digital-page">
-            <div class="page-header"><span>تابع مميزات نظام التتبع</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">مميزات نظام التتبع (3)</h2>
-                <table class="features-table">
-                    <thead>
-                        <tr>
-                            <th style="width:50px;">الأساسية</th>
-                            <th style="width:50px;">المتقدمة</th>
-                            <th style="width:50px;">إدارة الأساطيل</th>
-                            <th>المواصفات والخصائص المعتمدة الفنية</th>
-                            <th style="width:40px;">الرقم</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية النظام على مساعدة العملاء في التخطيط للمسارات التي ستسلكها المركبة (Route Optimization).</td><td class="highlight-accent">30</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشاء تقرير و/او تنبيه يحدد المواقع التي لم تزر ضمن الخطة.</td><td class="highlight-accent">31</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">امكانية الربط ما بين القاطرة و المقطورة.</td><td class="highlight-accent">32</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية ربط نظام التتبع مع انظمة اخرى مثل (ERP) تعتمد على المعلومات المستخرجة من نظام التتبع.</td><td class="highlight-accent">33</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="cross-icon">✕</span></td><td class="feature-text">عرض البيانات عن طريق (DashBoard) لصانع القرار.</td><td class="highlight-accent">34</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية انشار رابط مؤقت لتتبع رحلة محددة والغائه عند انتهاء الرحلة اتوماتيكيا.</td><td class="highlight-accent">35</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط مع الكاميرات MDVR لعرض الصور على النظام.</td><td class="highlight-accent">37</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="page-footer"><span>أنظمة متقدمة متكاملة</span><span>صفحة 6 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 7: خدمات إضافية (يترتب عليها مبالغ اضافية) -->
-        <div class="digital-page">
-            <div class="page-header"><span>خدمات إضافية</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading" style="margin-bottom:3px;">خدمات إضافية اختيارية</h2>
-                <p style="color:var(--gold-bright); font-weight:700; margin-bottom:15px; font-size:13px; text-align:right;">(يترتب عليها مبالغ مالية إضافية)</p>
-                <table class="features-table">
-                    <thead>
-                        <tr>
-                            <th style="width:50px;">الأساسية</th>
-                            <th style="width:50px;">المتقدمة</th>
-                            <th style="width:50px;">إدارة الأساطيل</th>
-                            <th>المواصفات والخصائص المعتمدة الفنية</th>
-                            <th style="width:40px;">الرقم</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">عدم السماح بتشغيل المركبة إلا من خلال الشخص المخول باستخدام بطاقة تعريف خاصة بالسائق RFID.</td><td class="highlight-accent">1</td></tr>
-                        <tr><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية مراقبة درجة الحرارة و نسبة الرطوبة و إرسال تنبيهات فورية عند اختلافها عن المحدد مسبقاً.</td><td class="highlight-accent">2</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية الربط مع كمبيوتر المركبة عن طريق (CAN-Bus) والذي يساعد في أخذ قراءات حقيقية من لوحة العدادات.</td><td class="highlight-accent">3</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">امكانية مراقبة مستوى الوقود بالمركبة من خلال حسّاسات (Fuel Level Sensor).</td><td class="highlight-accent">4</td></tr>
-                        <tr><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td class="feature-text">إمكانية مراقبة وإدارة صرفيات الوقود الإجمالية للأسطول بشكل كامل ودقيق.</td><td class="highlight-accent">5</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="page-footer"><span>خدمات وحلول اختيارية</span><span>صفحة 7 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 8: الربط بمنصة وصل -->
-        <div class="digital-page">
-            <div class="page-header"><span>الاعتمادات الرسمية</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">الربط بمنصة وصل (هيئة النقل العام بالمملكة)</h2>
-                <p class="static-paragraph">تضمن مؤسسة البقمي ربطاً وتكاملاً مباشراً مع منصة "وصل" التابعة للهيئة العامة للنقل لضمان توافق شاحنات النقل والتوجيه مع الأنظمة واللوائح الرسمية بالمملكة وتفادي المخالفات.</p>
-                <div class="highlight-box" style="background:#1e2942; border-color:#dbb339; color:#f5c842;">جميع الأنظمة والأجهزة والشرائح المستخدمة مرخصة بالكامل من هيئة الاتصالات والفضاء والتقنية السعودية.</div>
-            </div>
-            <div class="page-footer"><span>امتثال كامل 100%</span><span>صفحة 8 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 9: العرض المالي الشامل -->
-        <div class="digital-page">
-            <div class="page-header"><span>العرض المالي</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">المقايسة المالية وجدول تسعير الأجهزة والتركيب</h2>
-                <table class="financial-table">
-                    <thead>
-                        <tr>
-                            <th>المنتج</th>
-                            <th>البيان والاسم</th>
-                            <th>المواصفات المعتمدة</th>
-                            <th>السعر</th>
-                            <th>الكمية</th>
-                            <th>الإجمالي</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${tableRowsHtml}
-                        <tr class="total-row-highlight"><td colspan="5" style="text-align: left;">المجموع الفرعي (ريال سعودي):</td><td style="color:#f5c842 !important;">${subTotal.toFixed(2)}</td></tr>
-                        <tr class="total-row-highlight"><td colspan="5" style="text-align: left;">ضريبة القيمة المضافة (${taxPercent}%):</td><td style="color:#f5c842 !important;">${taxAmount.toFixed(2)}</td></tr>
-                        <tr class="total-row-highlight"><td colspan="5" style="text-align: left; font-weight:900;">الإجمالي النهائي الشامل للضريبة:</td><td style="font-weight:900; color:#f5c842 !important;">${grandTotal.toFixed(2)} ريال</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="page-footer"><span>العرض المالي الرسمي</span><span>صفحة 9 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 10: الشروط والأحكام -->
-        <div class="digital-page">
-            <div class="page-header"><span>الشروط القانونية</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">الشروط والأحكام وآلية التوريد</h2>
-                <p class="static-paragraph">1. مدة صلاحية هذا العرض المالي والفني هي 30 يوماً من تاريخ الإصدار المدون في الصفحة الأولى.<br>2. تلتزم المؤسسة ببدء التوريد والتركيب خلال 5 أيام عمل من تعميد العرض وتوقيع العقد الرسمي.<br>3. طريقة الدفع: يتم سداد دفعة مقدمة بنسبة 50% عند التعميد، والمتبقي 50% بعد إتمام التركيب والتشغيل الفعلي للمنصة وسيرفر التحكم.</p>
-            </div>
-            <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 10 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 11: الضمان والسياسة الذهبية -->
-        <div class="digital-page">
-            <div class="page-header"><span>الضمان والصيانة</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">سياسة الضمان الذهبي والصيانة والدعم الفني</h2>
-                <p class="static-paragraph">تضمن مؤسسة البقمي الأجهزة الموردة ضد العيوب المصنعية لمدة سنتين كاملة (ضمان استبدال).</p>
-                <div class="highlight-box">نوفر فريق صيانة متنقل للوصول إلى مواقع العميل وصيانة الأجهزة في الميدان لضمان استمرارية العمل.</div>
-            </div>
-            <div class="page-footer"><span>ضمان لمدة سنتين</span><span>صفحة 11 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 12: قنوات السداد والبيانات البنكية -->
-        <div class="digital-page">
-            <div class="page-header"><span>البيانات البنكية</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body">
-                <h2 class="section-heading">قنوات السداد والحسابات البنكية المعتمدة</h2>
-                <p class="static-paragraph">يرجى إيداع المبالغ المالية والشيكات الرسمية باسم (مؤسسة البقمي) حصراً على الحساب البنكي المعتمد التالي:</p>
-                <div class="bank-wrapper-box">
-                    <div class="bank-title-display"><i class="fa-solid fa-building-columns"></i> ${bName}</div>
-                    <p style="margin-bottom:6px; font-size:14px; color:var(--text-main);"><strong>رقم الحساب:</strong> ${bAcc}</p>
-                    <p style="margin-bottom:6px; font-size:14px; font-family:monospace; color:var(--gold-bright);"><strong>الآيبان الدولي (IBAN):</strong> ${bIban}</p>
-                    <p style="font-size:12px; color:var(--text-secondary); font-weight:bold;">${cr}</p>
-                </div>
-            </div>
-            <div class="page-footer"><span>مصرفية معتمدة ورسمية</span><span>صفحة 12 من 13</span></div>
-        </div>
-
-        <!-- الصفحة 13: الخاتمة والتواصل الفوري -->
-        <div class="digital-page">
-            <div class="page-header"><span>الاتصال والتواصل</span><img src="${logo}" class="company-logo"></div>
-            <div class="page-body" style="text-align: center; justify-content: center; align-items: center;">
-                <h2 style="font-size: 24px; font-weight: 900; color: var(--gold-bright); margin-bottom: 10px;">نشكركم على ثقتكم الغالية بمؤسسة البقمي</h2>
-                <p class="static-paragraph" style="text-align: center;">نتطلع للعمل معكم كشركاء نجاح دائمين وتوفير أفضل أنظمة إنترنت الأشياء والتكامل الذكي لأعمالكم.</p>
-                
-                <div class="qr-section-wrapper">
-                    <div id="qrcode" style="padding:15px; background:#fff; border:1px solid #cbd5e1; border-radius:12px; display:inline-block;"></div>
-                    <p style="font-size:13px; font-weight:bold; color:var(--gold-royal); margin-top:10px;">امسح الرمز للتواصل المباشر مع الدعم الفني والمبيعات عبر واتساب</p>
-                </div>
-            </div>
-            <div class="page-footer"><span>Mohamed Ashraf</span><span>صفحة 13 من 13</span></div>
-        </div>
-
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
-    <script>
-    try {
-        new QRCode(document.getElementById("qrcode"), {
-            text: "${qrLink}",
-            width: 120,
-            height: 120
-        });
-    } catch(e){
-        console.log(e);
-    }
-
-    async function waitImages(){
-        const imgs = document.images;
-        await Promise.all(
-            [...imgs].map(img => {
-                if(img.complete){
-                    return Promise.resolve();
-                }
-                return new Promise(resolve => {
-                    img.onload = resolve;
-                    img.onerror = resolve;
+            let total = 0;
+            let count = 0;
+            
+            if (cart.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: var(--gray-muted);">السلة فارغة حالياً.</p>`;
+            } else {
+                container.innerHTML = "";
+                cart.forEach((item, idx) => {
+                    total += (item.price * item.qty);
+                    count += item.qty;
+                    container.innerHTML += `
+                        <div class="cart-item-row">
+                            <div>
+                                <h4>${item.name}</h4>
+                                <small class="gold-text">${item.price} ر.س × ${item.qty}</small>
+                            </div>
+                            <i class="fa-solid fa-trash-can" style="color:red; cursor:pointer;" onclick="removeFromCart(${idx})"></i>
+                        </div>
+                    `;
                 });
-            })
-        );
-    }
-
-    (async () => {
-        if ("` + mode + `" === "print") {
-            await waitImages();
-            setTimeout(() => {
-                window.print();
-            }, 500);
-        }
-    })();
-    <\/script>
-</body>
-</html>`;
-
-            if (mode === 'html') {
-                const blob = new Blob([clientPageCode], { type: 'text/html;charset=utf-8' });
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = `عرض_رقمي_${custName}.html`;
-                link.click();
-            } else if (mode === 'print') {
-                const printWindow = window.open('', '_blank');
-                printWindow.document.open();
-                printWindow.document.write(clientPageCode);
-                printWindow.document.close();
             }
+            counter.innerText = count;
+            totalDisplay.innerText = `${total.toFixed(2)} ر.س`;
         }
+
+        window.removeFromCart = function(idx) {
+            cart.splice(idx, 1);
+            updateCart();
+        };
+
+        window.openCheckoutForm = function() {
+            if(cart.length === 0) return alert("سلة الشراء فارغة!");
+            toggleCart(false);
+            toggleCheckoutModal(true);
+        };
+
+        window.toggleCheckoutModal = function(show) {
+            document.getElementById("checkout-modal").classList.toggle("active", show);
+        };
+
+        // Order & E-Invoice Execution
+        window.processOrder = async function(e) {
+            e.preventDefault();
+            const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
+            const name = document.getElementById("cust-name").value;
+            const phone = document.getElementById("cust-phone").value;
+            const email = document.getElementById("cust-email").value;
+            const city = document.getElementById("cust-city").value;
+            const address = document.getElementById("cust-address").value;
+            
+            const totalSum = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            const orderObj = {
+                orderId,
+                customerName: name,
+                phone,
+                email,
+                city,
+                address,
+                products: cart,
+                total: totalSum,
+                date: new Date().toLocaleDateString("ar-SA"),
+                status: "جديد"
+            };
+
+            try {
+                // حفظ الطلب في Firebase Realtime Database
+                await set(ref(db, `orders/${orderId}`), orderObj);
+                showToast("تم إرسال طلبك وحفظه بالنظام بنجاح!");
+                
+                // الانتقال لعرض الفاتورة الإلكترونية المباشرة للعميل
+                generateEInvoice(orderObj);
+                cart = [];
+                updateCart();
+                toggleCheckoutModal(false);
+            } catch (err) {
+                alert("لم يتم الربط بالفايربيس بالكامل بعد، سيتم عرض الفاتورة تجريبياً.");
+                generateEInvoice(orderObj);
+                cart = [];
+                updateCart();
+                toggleCheckoutModal(false);
+            }
+        };
+
+        function generateEInvoice(order) {
+            document.getElementById("customer-main-view").style.display = "none";
+            const invoiceScreen = document.getElementById("invoice-screen");
+            invoiceScreen.style.display = "block";
+
+            const paper = document.getElementById("invoice-paper-content");
+            const tax = order.total * 0.15;
+            const grandTotal = order.total + tax;
+
+            paper.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gold); padding-bottom:15px;">
+                    <div>
+                        <h2>فاتورة ضريبية مبسطة</h2>
+                        <p>رقم الطلب: <strong>${order.orderId}</strong></p>
+                        <p>التاريخ: ${order.date}</p>
+                    </div>
+                    <div style="text-align:left;">
+                        <h3>مؤسسة البقمي للحلول الذكية</h3>
+                        <p>الرقم الضريبي: 310005544200003</p>
+                    </div>
+                </div>
+                <div style="margin:20px 0;">
+                    <h4>بيانات العميل:</h4>
+                    <p>الاسم: ${order.customerName}</p>
+                    <p>رقم الجوال: ${order.phone}</p>
+                    <p>العنوان: ${order.city} - ${order.address}</p>
+                </div>
+                <table class="invoice-table">
+                    <thead>
+                        <tr style="background:#f2f2f2;">
+                            <th>المنتج</th>
+                            <th>الكمية</th>
+                            <th>السعر</th>
+                            <th>المجموع</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${order.products.map(item => `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.qty}</td>
+                                <td>${item.price} ر.س</td>
+                                <td>${item.price * item.qty} ر.س</td>
+                            </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+                <div style="margin-top:20px; text-align:left; border-top:1px solid #ddd; padding-top:15px;">
+                    <p>المجموع (غير شامل الضريبة): <strong>${order.total.toFixed(2)} ر.س</strong></p>
+                    <p>ضريبة القيمة المضافة (15%): <strong>${tax.toFixed(2)} ر.س</strong></p>
+                    <h3 style="color:var(--gold-hover);">الإجمالي النهائي: ${(grandTotal).toFixed(2)} ر.س</h3>
+                </div>
+            `;
+        }
+
+        window.showHomeView = function() {
+            document.getElementById("customer-main-view").style.display = "grid";
+            document.getElementById("invoice-screen").style.display = "none";
+        };
     </script>
 </body>
 </html>
