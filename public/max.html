@@ -29,7 +29,6 @@
             overflow-x: hidden;
         }
 
-        /* تأثير الخلفية المتحركة الملكية الفخمة */
         body::before {
             content: "";
             position: fixed;
@@ -159,7 +158,6 @@
         }
         .btn-pdf:hover { transform: translateY(-3px); background: linear-gradient(135deg, #334155, #475569); }
 
-        /* نافذة اختيار الصور من المعرض (Modal) */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -272,8 +270,7 @@
                 <h3 style="color:var(--gold-bright);">📁 معرض أجهزة ومفاتيح مؤسسة البقمي المعتمدة</h3>
                 <span class="modal-close" onclick="closeGallery()">&times;</span>
             </div>
-            <div class="gallery-grid" id="galleryGrid">
-                </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
         </div>
     </div>
 
@@ -415,7 +412,6 @@
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
         body { background-color: #090d16; color: #f8fafc; padding: 0; margin: 0; position: relative; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
-        /* تأثير الخلفية الفخمة المتحركة في العرض النهائي */
         .page-bg-effect {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -447,7 +443,6 @@
             box-sizing: border-box;
         }
 
-        /* تنسيق وإصلاح اللوجو والشعار الدائري الفاخر في الصفحة الأولى والصفحات الأخرى */
         .company-logo,
         .cover-logo {
             width: 150px;
@@ -517,7 +512,6 @@
         .qr-section-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px; gap: 8px; width: 100%; }
         .page-footer { border-top: 1px solid var(--border-color); padding-top: 15px; font-size: 13px; color: var(--gold-royal); display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; }
 
-        /* تخصيص الطباعة الاحترافي لضمان توسط الصفحات وعدم ميلها لليسار */
         @media print {
             @page {
                 size: A4 portrait;
@@ -589,10 +583,8 @@
 </head>
 <body>
     <div class="page-bg-effect"></div>
-    
     <div class="container">
 
-        <!-- الصفحة 1: الغلاف الفاخر (تم توسيطها بالكامل وإصلاح الشعار) -->
         <div class="digital-page">
             <div class="page-header">
                 <a href="https://${web}" target="_blank" class="web-link">${web}</a>
@@ -601,10 +593,7 @@
             
             <div class="cover-page-center">
                 <img src="${logo}" alt="شعار مؤسسة البقمي" class="cover-logo">
-
-                <h1 style="font-size: 36px; font-weight: 900; color: var(--gold-bright); margin-top: 20px; margin-bottom: 10px;">
-                    مؤسسة البقمي
-                </h1>
+                <h1 style="font-size: 36px; font-weight: 900; color: var(--gold-bright); margin-top: 20px; margin-bottom: 10px;">مؤسسة البقمي</h1>
                 <p style="font-size: 18px; color: var(--text-secondary); font-weight: bold; margin-bottom: 40px;">لأنظمة إنترنت الأشياء والتكامل الذكي</p>
                 
                 <div style="background: #141c2e; padding: 30px; border-radius: 16px; border: 2px solid rgba(219,179,57,0.4); width: 100%; max-width: 550px; text-align: right; box-shadow: 0 4px 15px rgba(0,0,0,0.4); box-sizing: border-box;">
@@ -614,22 +603,19 @@
                     <p style="font-size:16px; color:var(--text-main); text-align: right;"><strong>🛠️ المستشار الفني:</strong> ${sales}</p>
                 </div>
             </div>
-            
             <div class="page-footer"><span>مؤسسة البقمي لأنظمة إنترنت الأشياء</span><span>صفحة 1 من 13</span></div>
         </div>
 
-        <!-- الصفحة 2 -->
         <div class="digital-page">
             <div class="page-header"><span>تتبع المركبات وإنترنت الأشياء</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
                 <h2 class="section-heading">نبذة عن مؤسسة البقمي</h2>
-                <p class="static-paragraph">تعتبر مؤسسة البقمي إحدى المؤسسات الرائدة والموثوقة في المملكة العربية السعودية في تقديم أحدث حلول الاتصالات وتقنية المعلومات، متخصصة بالكامل في أنظمة إدارة الأساطيل وتتبع المركبات عن بُعد وحلول إنترنت الأشياء (IoT) والتكامل الذكي. نعمل جاهدين على تزويد قطاع الأعمال بأحدث التقنيات لرفع الكفاءة التشغيلية وتقليل التكاليف الزائدة لحماية الأصول المتحركة.</p>
+                <p class="static-paragraph">تعتبر مؤسسة البقمي إحدى المؤسسات الرائدة والموثوقة في المملكة العربية السعودية في تقديم أحدث حلول الاتصالات وتقنية المعلومات، متخصصة بالكامل في أنظمة إدارة الأساطيل وتتبع المركبات عن بُعد وحلول إنترنت الأشياء (IoT) والتكامل الذكي.</p>
                 <div class="highlight-box">رؤيتنا: الريادة في تقديم الأنظمة الرقمية والحلول الذكية وتطوير البنية التحتية لإدارة النقل في المملكة وفق رؤية 2030.</div>
             </div>
             <div class="page-footer"><span>الرقم الموحد: ${phone1}</span><span>صفحة 2 من 13</span></div>
         </div>
 
-        <!-- الصفحة 3 -->
         <div class="digital-page">
             <div class="page-header"><span>وثيقة العرض الفني</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -646,12 +632,11 @@
             <div class="page-footer"><span>تاريخ الإصدار: ${date}</span><span>صفحة 3 من 13</span></div>
         </div>
 
-        <!-- الصفحة 4 -->
         <div class="digital-page">
             <div class="page-header"><span>النطاق الفني والحلول</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
                 <h2 class="section-heading">نطاق المشروع والأهداف الرئيسية</h2>
-                <p class="static-paragraph">يتمحور هذا المشروع حول توريد وتركيب وتشغيل ${custOffer} لعدد ${custVehicles} مركبة تابعة لشركتكم الموقرة. يهدف النظام إلى إعطائكم السيطرة التامة واللحظية للتحكم بالأسطول ومعرفة المسارات بدقة تامة لتفادي أي هدر في الموارد.</p>
+                <p class="static-paragraph">يتمحور هذا المشروع حول توريد وتركيب وتشغيل ${custOffer} لعدد ${custVehicles} مركبة تابعة لشركتكم الموقرة.</p>
                 <div class="feature-card-list">
                     <div class="feature-item-card"><span class="feature-num">01</span><span class="feature-title">مراقبة حية 24/7</span><span class="feature-desc">تحديث فوري للموقع على الخريطة كل بضع ثوانٍ.</span></div>
                     <div class="feature-item-card"><span class="feature-num">02</span><span class="feature-title">إدارة استهلاك الوقود</span><span class="feature-desc">حسابات دقيقة لمعدلات الاستهلاك والوقود المهدر.</span></div>
@@ -660,7 +645,6 @@
             <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 4 من 13</span></div>
         </div>
 
-        <!-- الصفحة 5 -->
         <div class="digital-page">
             <div class="page-header"><span>الأجهزة المعتمدة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -678,7 +662,6 @@
             <div class="page-footer"><span>إدارة التقنية والأنظمة</span><span>صفحة 5 من 13</span></div>
         </div>
 
-        <!-- الصفحة 6 -->
         <div class="digital-page">
             <div class="page-header"><span>الأنظمة المدمجة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -689,7 +672,6 @@
             <div class="page-footer"><span>بإشراف م/ محمد اشرف</span><span>صفحة 6 من 13</span></div>
         </div>
 
-        <!-- الصفحة 7 -->
         <div class="digital-page">
             <div class="page-header"><span>برمجيات المنصة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -703,7 +685,6 @@
             <div class="page-footer"><span>تطوير ونمذجة FARESPCB</span><span>صفحة 7 من 13</span></div>
         </div>
 
-        <!-- الصفحة 8 -->
         <div class="digital-page">
             <div class="page-header"><span>الاعتمادات الرسمية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -714,7 +695,6 @@
             <div class="page-footer"><span>امتثال كامل 100%</span><span>صفحة 8 من 13</span></div>
         </div>
 
-        <!-- الصفحة 9 -->
         <div class="digital-page">
             <div class="page-header"><span>العرض المالي المالي</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -741,7 +721,6 @@
             <div class="page-footer"><span>العرض المالي الرسمي</span><span>صفحة 9 من 13</span></div>
         </div>
 
-        <!-- الصفحة 10 -->
         <div class="digital-page">
             <div class="page-header"><span>الشروط القانونية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -751,18 +730,16 @@
             <div class="page-footer"><span>مؤسسة البقمي للحلول الذكية</span><span>صفحة 10 من 13</span></div>
         </div>
 
-        <!-- الصفحة 11 -->
         <div class="digital-page">
             <div class="page-header"><span>الضمان والصيانة</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
                 <h2 class="section-heading">سياسة الضمان الذهبي والصيانة والدعم الفني</h2>
-                <p class="static-paragraph">تضمن مؤسسة البقمي الأجهزة الموردة ضد العيوب المصنعية لمدة سنتين كاملة (ضمان استبدال). كما يتضمن العقد دعماً فنياً مجانياً عن بُعد وعلى مدار الساعة لحل أي مشكلات برمجية في لوحة التحكم وتحديث الخرائط الفورية.</p>
+                <p class="static-paragraph">تضمن مؤسسة البقمي الأجهزة الموردة ضد العيوب المصنعية لمدة سنتين كاملة (ضمان استبدال).</p>
                 <div class="highlight-box">نوفر فريق صيانة متنقل للوصول إلى مواقع العميل وصيانة الأجهزة في الميدان لضمان استمرارية العمل.</div>
             </div>
             <div class="page-footer"><span>ضمان لمدة سنتين</span><span>صفحة 11 من 13</span></div>
         </div>
 
-        <!-- الصفحة 12 -->
         <div class="digital-page">
             <div class="page-header"><span>البيانات البنكية</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body">
@@ -778,7 +755,6 @@
             <div class="page-footer"><span>مصرفية معتمدة ورسمية</span><span>صفحة 12 من 13</span></div>
         </div>
 
-        <!-- الصفحة 13 -->
         <div class="digital-page">
             <div class="page-header"><span>الاتصال والتواصل</span><img src="${logo}" class="company-logo"></div>
             <div class="page-body" style="text-align: center; justify-content: center; align-items: center;">
@@ -796,40 +772,57 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
-<script>
-try {
-    new QRCode(document.getElementById("qrcode"), {
-        text: "${qrLink}",
-        width: 130,
-        height: 130
-    });
-} catch(e){
-    console.log(e);
-}
-
-async function waitImages(){
-    const imgs=document.images;
-    await Promise.all(
-        [...imgs].map(img=>{
-            if(img.complete){
-                return Promise.resolve();
-            }
-            return new Promise(resolve=>{
-                img.onload=resolve;
-                img.onerror=resolve;
-            });
-        })
-    );
-}
-
-(async()=>{
-    if("${mode}"===="print"){
-        await waitImages();
-        setTimeout(()=>{
-            window.print();
-        },500);
+    <script>
+    try {
+        new QRCode(document.getElementById("qrcode"), {
+            text: "${qrLink}",
+            width: 130,
+            height: 130
+        });
+    } catch(e){
+        console.log(e);
     }
-})();
-<\/script>
+
+    async function waitImages(){
+        const imgs = document.images;
+        await Promise.all(
+            [...imgs].map(img => {
+                if(img.complete){
+                    return Promise.resolve();
+                }
+                return new Promise(resolve => {
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                });
+            })
+        );
+    }
+
+    (async () => {
+        if ("` + mode + `" === "print") {
+            await waitImages();
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
+    })();
+    <\/script>
 </body>
 </html>`;
+
+            if (mode === 'html') {
+                const blob = new Blob([clientPageCode], { type: 'text/html;charset=utf-8' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `عرض_رقمي_${custName}.html`;
+                link.click();
+            } else if (mode === 'print') {
+                const printWindow = window.open('', '_blank');
+                printWindow.document.open();
+                printWindow.document.write(clientPageCode);
+                printWindow.document.close();
+            }
+        }
+    </script>
+</body>
+</html>
