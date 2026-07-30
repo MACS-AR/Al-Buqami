@@ -139,43 +139,30 @@
                     <label class="block text-xs font-semibold text-amber-300 mb-2">طريقة تحديد موقع العميل *</label>
                     <div class="grid grid-cols-2 gap-2 mb-3">
                         <button type="button" id="tabAuto" onclick="switchLocationTab('auto')" 
-                            class="py-2 px-3 text-xs font-bold rounded-lg border border-amber-500 bg-amber-500/20 text-amber-300 transition">
+                            class="py-2.5 px-3 text-xs font-bold rounded-lg border border-amber-500 bg-amber-500/20 text-amber-300 transition">
                             <i class="fa-solid fa-location-crosshairs ml-1"></i> أوتوماتيكي (GPS)
                         </button>
                         <button type="button" id="tabManual" onclick="switchLocationTab('manual')" 
-                            class="py-2 px-3 text-xs font-bold rounded-lg border border-slate-700 bg-slate-800 text-slate-400 transition">
-                            <i class="fa-solid fa-keyboard ml-1"></i> إدخال يدوي / رابط
+                            class="py-2.5 px-3 text-xs font-bold rounded-lg border border-slate-700 bg-slate-800 text-slate-400 transition">
+                            <i class="fa-solid fa-link ml-1"></i> إدخال رابط خارجي
                         </button>
                     </div>
 
                     <!-- Auto GPS Section -->
                     <div id="secAuto" class="space-y-2">
                         <button type="button" onclick="getCurrentLocation()" id="locBtn"
-                            class="w-full bg-slate-800 hover:bg-slate-700 gold-border text-amber-300 font-semibold p-3 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            class="w-full bg-slate-800 hover:bg-slate-700 gold-border text-amber-300 font-semibold p-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2">
                             <i class="fa-solid fa-street-view text-amber-400 text-base"></i>
                             <span id="locBtnText">التقاط موقع الجوال الحالي الآن</span>
                         </button>
                     </div>
 
-                    <!-- Manual Input Section -->
-                    <div id="secManual" class="hidden space-y-3">
-                        <div>
-                            <label class="block text-[11px] text-slate-400 mb-1">رابط موقع خرائط جوجل (Google Maps Link):</label>
-                            <input type="text" id="custMapUrl" oninput="parseMapUrl()" placeholder="انسخ رابط خرائط جوجل هنا..." 
-                                class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="block text-[11px] text-slate-400 mb-1">خط العرض (Latitude):</label>
-                                <input type="number" step="any" id="custLatInput" oninput="manualCoordsChanged()" placeholder="30.0444" 
-                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-slate-400 mb-1">خط الطول (Longitude):</label>
-                                <input type="number" step="any" id="custLngInput" oninput="manualCoordsChanged()" placeholder="31.2357" 
-                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-amber-400">
-                            </div>
-                        </div>
+                    <!-- Manual Link Section -->
+                    <div id="secManual" class="hidden space-y-2">
+                        <label class="block text-[11px] text-slate-400 mb-1">انسخ رابط خرائط جوجل (Google Maps Link) هنا:</label>
+                        <input type="text" id="custMapUrl" oninput="parseMapUrl()" placeholder="مثال: https://maps.app.goo.gl/... أو رابط خرائط جوجل" 
+                            class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-amber-400">
+                        <p class="text-[10px] text-slate-400">💡 يمكنك فتح تطبيق Google Maps، الضغط على مشاركة المكان، ونسخ الرابط ولصقه هنا مباشرة.</p>
                     </div>
 
                     <input type="hidden" id="custLat">
@@ -199,7 +186,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Firebase Configuration (تفعيل المفاتيح المباشرة الخاصة بك)
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBgRkceRq7FRbhCevLlULYNy-A5Tl_cr0w",
             authDomain: "sr-test-c9e06.firebaseapp.com",
@@ -211,7 +198,6 @@
             measurementId: "G-3ZZV344NDK"
         };
 
-        // Initialize App & Firestore Database
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const customersCol = collection(db, "customers");
@@ -224,15 +210,23 @@
             const btnManual = document.getElementById('tabManual');
             const secAuto = document.getElementById('secAuto');
             const secManual = document.getElementById('secManual');
+            const locStatus = document.getElementById('locStatus');
+            const saveBtn = document.getElementById('saveBtn');
+
+            // Reset current saved coords when switching
+            document.getElementById('custLat').value = '';
+            document.getElementById('custLng').value = '';
+            locStatus.innerText = '';
+            saveBtn.disabled = true;
 
             if (type === 'auto') {
-                btnAuto.className = "py-2 px-3 text-xs font-bold rounded-lg border border-amber-500 bg-amber-500/20 text-amber-300 transition";
-                btnManual.className = "py-2 px-3 text-xs font-bold rounded-lg border border-slate-700 bg-slate-800 text-slate-400 transition";
+                btnAuto.className = "py-2.5 px-3 text-xs font-bold rounded-lg border border-amber-500 bg-amber-500/20 text-amber-300 transition";
+                btnManual.className = "py-2.5 px-3 text-xs font-bold rounded-lg border border-slate-700 bg-slate-800 text-slate-400 transition";
                 secAuto.classList.remove('hidden');
                 secManual.classList.add('hidden');
             } else {
-                btnManual.className = "py-2 px-3 text-xs font-bold rounded-lg border border-amber-500 bg-amber-500/20 text-amber-300 transition";
-                btnAuto.className = "py-2 px-3 text-xs font-bold rounded-lg border border-slate-700 bg-slate-800 text-slate-400 transition";
+                btnManual.className = "py-2.5 px-3 text-xs font-bold rounded-lg border border-amber-500 bg-amber-500/20 text-amber-300 transition";
+                btnAuto.className = "py-2.5 px-3 text-xs font-bold rounded-lg border border-slate-700 bg-slate-800 text-slate-400 transition";
                 secManual.classList.remove('hidden');
                 secAuto.classList.add('hidden');
             }
@@ -243,6 +237,12 @@
             const modal = document.getElementById('addModal');
             modal.classList.toggle('hidden');
             modal.classList.toggle('flex');
+            // Reset form on close
+            if(modal.classList.contains('hidden')) {
+                document.getElementById('customerForm').reset();
+                document.getElementById('saveBtn').disabled = true;
+                document.getElementById('locStatus').innerText = '';
+            }
         };
 
         // Auto GPS Capture
@@ -268,7 +268,7 @@
                     document.getElementById('custLng').value = lng;
 
                     locBtnText.innerText = "تم التقاط موقعك بنجاح ✓";
-                    locStatus.innerText = `الموقع جاهز: (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
+                    locStatus.innerText = `الموقع جاهز للحفظ (GPS)`;
                     locStatus.className = "text-[11px] text-emerald-400 mt-2 text-center font-bold";
                     saveBtn.disabled = false;
                 },
@@ -281,41 +281,44 @@
             );
         };
 
-        // Manual Coords & URL Handler
+        // Parse Map URL (Handles standard google maps & short links)
         window.parseMapUrl = () => {
             const url = document.getElementById('custMapUrl').value.trim();
             const locStatus = document.getElementById('locStatus');
             const saveBtn = document.getElementById('saveBtn');
 
-            // Extract lat, lng using Regex from Google Maps link formats
-            const match = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || url.match(/q=(-?\d+\.\d+),(-?\d+\.\d+)/);
+            if (!url) {
+                document.getElementById('custLat').value = '';
+                document.getElementById('custLng').value = '';
+                saveBtn.disabled = true;
+                locStatus.innerText = '';
+                return;
+            }
+
+            // Direct coords check in URL (e.g. @30.044,31.235 or q=30.044,31.235)
+            const match = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || url.match(/q=(-?\d+\.\d+),(-?\d+\.\d+)/) || url.match(/destination=(-?\d+\.\d+),(-?\d+\.\d+)/);
+            
             if (match) {
                 const lat = parseFloat(match[1]);
                 const lng = parseFloat(match[2]);
-                document.getElementById('custLatInput').value = lat;
-                document.getElementById('custLngInput').value = lng;
                 document.getElementById('custLat').value = lat;
                 document.getElementById('custLng').value = lng;
 
-                locStatus.innerText = `تم استخراج الإحداثيات بنجاح من الرابط: (${lat}, ${lng})`;
+                locStatus.innerText = `تم قراءة مكان العميل من الرابط بنجاح ✓`;
                 locStatus.className = "text-[11px] text-emerald-400 mt-2 text-center font-bold";
                 saveBtn.disabled = false;
-            }
-        };
-
-        window.manualCoordsChanged = () => {
-            const lat = parseFloat(document.getElementById('custLatInput').value);
-            const lng = parseFloat(document.getElementById('custLngInput').value);
-            const saveBtn = document.getElementById('saveBtn');
-            const locStatus = document.getElementById('locStatus');
-
-            if (!isNaN(lat) && !isNaN(lng)) {
-                document.getElementById('custLat').value = lat;
-                document.getElementById('custLng').value = lng;
-                locStatus.innerText = `إحداثيات يدوية معتمدة: (${lat}, ${lng})`;
+            } else if (url.includes('goo.gl') || url.includes('maps.app.goo.gl')) {
+                // For short links, we store the full link directly or parse generic format as custom fallback flag
+                // Google Maps short links can be parsed directly by saving a flag or we can extract if numbers present, 
+                // but standard Google Maps URLs containing coordinates are fully parsed. Let's provide universal fallback.
+                document.getElementById('custLat').value = "link_mode";
+                document.getElementById('custLng').value = url; // Save the raw link as location target if short link used
+                locStatus.innerText = `تم قبول رابط المشاركة بنجاح ✓`;
                 locStatus.className = "text-[11px] text-emerald-400 mt-2 text-center font-bold";
                 saveBtn.disabled = false;
             } else {
+                locStatus.innerText = "الرابط غير واضح، تأكد من نسخه كاملاً من خرائط جوجل.";
+                locStatus.className = "text-[11px] text-amber-400 mt-2 text-center";
                 saveBtn.disabled = true;
             }
         };
@@ -326,28 +329,34 @@
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const notes = document.getElementById('custNotes').value.trim();
-            const lat = parseFloat(document.getElementById('custLat').value);
-            const lng = parseFloat(document.getElementById('custLng').value);
+            const latVal = document.getElementById('custLat').value;
+            const lngVal = document.getElementById('custLng').value;
 
-            if (!lat || !lng) {
-                alert('يرجى تحديد إحداثيات الموقع أو إضافة الرابط بنجاح');
+            if (!latVal || !lngVal) {
+                alert('يرجى تحديد موقع العميل أوتوماتيكياً أو إدخال الرابط بشكل صحيح');
                 return;
             }
 
+            let customerData = {
+                name,
+                phone,
+                notes: notes || "لا يوجد",
+                createdAt: new Date()
+            };
+
+            if (latVal === "link_mode") {
+                customerData.isCustomLink = true;
+                customerData.mapUrl = lngVal; // Store raw link
+            } else {
+                customerData.isCustomLink = false;
+                customerData.lat = parseFloat(latVal);
+                customerData.lng = parseFloat(lngVal);
+            }
+
             try {
-                await addDoc(customersCol, {
-                    name,
-                    phone,
-                    notes: notes || "لا يوجد",
-                    lat,
-                    lng,
-                    createdAt: new Date()
-                });
-                
+                await addDoc(customersCol, customerData);
                 document.getElementById('customerForm').reset();
                 document.getElementById('saveBtn').disabled = true;
-                document.getElementById('locBtnText').innerText = "التقاط موقع الجوال الحالي الآن";
-                document.getElementById('locStatus').innerText = "";
                 toggleAddModal();
             } catch (err) {
                 alert('حدث خطأ أثناء الحفظ في قاعدة البيانات: ' + err.message);
@@ -403,7 +412,9 @@
                 return;
             }
 
-            container.innerHTML = list.map(c => `
+            container.innerHTML = list.map(c => {
+                let mapLink = c.isCustomLink ? c.mapUrl : `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}`;
+                return `
                 <div class="glass-card gold-border rounded-2xl p-4 md:p-5 gold-shadow hover:border-amber-500/50 transition">
                     <div class="flex justify-between items-start mb-3">
                         <div>
@@ -428,13 +439,14 @@
                             <i class="fa-solid fa-phone-volume text-emerald-400"></i>
                             اتصال مباشر
                         </a>
-                        <a href="https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}" target="_blank" class="flex-1 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-md">
+                        <a href="${mapLink}" target="_blank" class="flex-1 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-md">
                             <i class="fa-solid fa-location-arrow"></i>
                             فتح الخريطة والتنقل
                         </a>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
     </script>
 </body>
