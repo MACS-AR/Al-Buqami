@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المجد للأعلاف | لوحة الإدارة والموظفين</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { royal: { dark: '#070A13', card: '#131A2E', gold: '#D4AF37' } },
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Cairo', sans-serif; min-height: 100vh; }
+        .dark body { background: #070A13; color: #E2E8F0; }
+        .light body { background: #F8FAFC; color: #1E293B; }
+        .gold-gradient-text { background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gold-border { border: 1px solid rgba(212, 175, 55, 0.35); }
+        .dark .glass-card { background: rgba(19, 26, 46, 0.9); }
+        .light .glass-card { background: rgba(255, 255, 255, 0.95); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="p-3 md:p-6 pb-20">
+
+    <header class="max-w-6xl mx-auto glass-card gold-border rounded-2xl p-4 mb-6 flex justify-between items-center shadow-xl">
+        <h1 class="text-xl font-black gold-gradient-text">لوحة إدارة مصنع المجد</h1>
+        <a href="index.html" class="text-xs bg-slate-800 text-amber-400 px-3 py-2 rounded-xl border gold-border">الذهاب لبوابة العملاء</a>
+    </header>
+
+    <main class="max-w-6xl mx-auto">
+        <!-- شاشة تسجيل دخول الموظفين / الآدمن -->
+        <div id="adminLoginSec" class="glass-card gold-border rounded-2xl p-8 max-w-md mx-auto text-center space-y-4 shadow-2xl">
+            <h2 class="text-xl font-bold gold-gradient-text">تسجيل دخول طاقم الإدارة</h2>
+            <form onsubmit="adminLogin(event)" class="space-y-3">
+                <input type="text" id="admUser" required placeholder="اسم المستخدم للموظف" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-sm text-center">
+                <input type="password" id="admPass" required placeholder="كلمة المرور" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-sm text-center">
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl text-sm">دخول النظام</button>
+            </form>
+            <p class="text-[11px] text-slate-500">الافتراضي للآدمن الرئيسي: اسم المستخدم <b>admin</b> وكلمة المرور <b>1234</b></p>
+        </div>
+
+        <!-- لوحة التحكم الكاملة -->
+        <div id="adminPanelSec" class="hidden space-y-6">
+            <div class="flex justify-between items-center glass-card gold-border p-4 rounded-2xl">
+                <span id="welcomeUser" class="font-bold text-amber-400 text-sm">مرحباً بك</span>
+                <button onclick="adminLogout()" class="bg-rose-500/10 text-rose-400 px-3 py-1.5 rounded-xl text-xs font-semibold">تسجيل خروج</button>
+            </div>
+
+            <!-- تبويبات لوحة التحكم -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <button onclick="switchTab('clients')" id="tClients" class="py-3 rounded-xl text-xs font-bold bg-amber-500 text-slate-950">إدارة العملاء والحسابات</button>
+                <button onclick="switchTab('products')" id="tProducts" class="py-3 rounded-xl text-xs font-bold dark:bg-slate-900 border gold-border">الأصناف والأسعار</button>
+                <button onclick="switchTab('ledger')" id="tLedger" class="py-3 rounded-xl text-xs font-bold dark:bg-slate-900 border gold-border">تسجيل دفعة أو فاتورة</button>
+                <button onclick="switchTab('staff')" id="tStaff" class="py-3 rounded-xl text-xs font-bold dark:bg-slate-900 border gold-border">الموظفين والصلاحيات</button>
+            </div>
+
+            <!-- القسم 1: إدارة العملاء -->
+            <div id="secClients" class="glass-card gold-border rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold gold-gradient-text">إضافة عميل جديد (مزرعة / محل)</h3>
+                <form onsubmit="saveClient(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <input type="text" id="clName" required placeholder="اسم العميل" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <input type="tel" id="clPhone" required placeholder="رقم التليفون الأساسي" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs text-right">
+                    <input type="number" step="any" id="clInitBal" placeholder="الرصيد الافتتاحي (إن وجد)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <button type="submit" class="md:col-span-3 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl text-xs">حفظ العميل</button>
+                </form>
+                <div class="pt-4 border-t dark:border-slate-800" id="clientsListContainer"></div>
+            </div>
+
+            <!-- القسم 2: الأصناف والأسعار -->
+            <div id="secProducts" class="hidden glass-card gold-border rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold gold-gradient-text">إدارة أصناف الأعلاف وأسعارها</h3>
+                <form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <input type="text" id="prName" required placeholder="اسم الصنف (مثال: بياض 21%)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <input type="number" step="any" id="prPrice" required placeholder="سعر الطن (ج.م)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <input type="number" step="any" id="prDisc" placeholder="نسبة الخصم %" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <button type="submit" class="md:col-span-3 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl text-xs">حفظ الصنف</button>
+                </form>
+                <div class="pt-4 border-t dark:border-slate-800" id="productsListContainer"></div>
+            </div>
+
+            <!-- القسم 3: تسجيل دفعة نقدية أو فاتورة يدوية -->
+            <div id="secLedger" class="hidden glass-card gold-border rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold gold-gradient-text">تسجيل حركة مالية (فاتورة بضاعة أو سند قبض دفعة)</h3>
+                <form onsubmit="saveLedgerEntry(event)" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <select id="ledClient" required class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                        <option value="">اختر العميل...</option>
+                    </select>
+                    <select id="ledType" required class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                        <option value="invoice">فاتورة مبيعات بضاعة (تزيد الدين)</option>
+                        <option value="payment">سند قبض دفعة نقدية (تقلل الدين)</option>
+                    </select>
+                    <input type="number" step="any" id="ledAmount" required placeholder="المبلغ بالجنيه" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <input type="text" id="ledDesc" required placeholder="البيان (مثال: دفعة نقداً لخزنة المصنع / نجلية 3 طن)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <button type="submit" class="md:col-span-2 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-bold py-3 rounded-xl text-xs">تسجيل الحركة في الحساب</button>
+                </form>
+            </div>
+
+            <!-- القسم 4: الموظفين وصلاحياتهم -->
+            <div id="secStaff" class="hidden glass-card gold-border rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold gold-gradient-text">إدارة الموظفين ويوزرات الدخول</h3>
+                <form onsubmit="saveStaff(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <input type="text" id="stName" required placeholder="اسم الموظف" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <input type="text" id="stUser" required placeholder="اسم المستخدم (Username)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <input type="password" id="stPass" required placeholder="كلمة المرور" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <button type="submit" class="md:col-span-3 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl text-xs">إضافة موظف جديد</button>
+                </form>
+                <div class="pt-4 border-t dark:border-slate-800" id="staffListContainer"></div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, push, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgRkceRq7FRbhCevLlULYNy-A5Tl_cr0w",
+            authDomain: "sr-test-c9e06.firebaseapp.com",
+            databaseURL: "https://sr-test-c9e06-default-rtdb.firebaseio.com",
+            projectId: "sr-test-c9e06",
+            storageBucket: "sr-test-c9e06.firebasestorage.app",
+            messagingSenderId: "658396508062",
+            appId: "1:658396508062:web:c56cd84f93daa2e176308f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let staffData = {};
+        let clientsData = {};
+        let productsData = {};
+
+        onValue(ref(db, 'erp_staff'), (snap) => { staffData = snap.val() || {}; });
+        onValue(ref(db, 'erp_clients'), (snap) => {
+            clientsData = snap.val() || {};
+            const select = document.getElementById('ledClient');
+            select.innerHTML = `<option value="">اختر العميل...</option>` + Object.keys(clientsData).map(k => `<option value="${clientsData[k].phone}">${clientsData[k].name} (${clientsData[k].phone})</option>`).join('');
+            
+            document.getElementById('clientsListContainer').innerHTML = Object.keys(clientsData).map(k => `
+                <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-xl text-xs mb-2">
+                    <span><b>${clientsData[k].name}</b> - التليفون: ${clientsData[k].phone}</span>
+                    <button onclick="deleteItem('erp_clients', '${k}')" class="text-rose-400"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('') || '<p class="text-xs text-slate-400">مافيش عملاء مسجلين.</p>';
+        });
+
+        onValue(ref(db, 'erp_products'), (snap) => {
+            productsData = snap.val() || {};
+            document.getElementById('productsListContainer').innerHTML = Object.keys(productsData).map(k => `
+                <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-xl text-xs mb-2">
+                    <span><b>${productsData[k].name}</b> - السعر: ${productsData[k].price} ج.م | الخصم: ${productsData[k].discount}%</span>
+                    <button onclick="deleteItem('erp_products', '${k}')" class="text-rose-400"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('') || '<p class="text-xs text-slate-400">مافيش أصناف مسجلة.</p>';
+        });
+
+        onValue(ref(db, 'erp_staff'), (snap) => {
+            const data = snap.val() || {};
+            document.getElementById('staffListContainer').innerHTML = Object.keys(data).map(k => `
+                <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-xl text-xs mb-2">
+                    <span><b>${data[k].name}</b> (يوزر: ${data[k].username})</span>
+                    <button onclick="deleteItem('erp_staff', '${k}')" class="text-rose-400"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('') || '<p class="text-xs text-slate-400">مافيش موظفين مسجلين.</p>';
+        });
+
+        window.adminLogin = (e) => {
+            e.preventDefault();
+            const u = document.getElementById('admUser').value.trim();
+            const p = document.getElementById('admPass').value.trim();
+
+            if(u === 'admin' && p === '1234') {
+                startAdminSession("الآدمن الرئيسي");
+                return;
+            }
+
+            const staffKey = Object.keys(staffData).find(k => staffData[k].username === u && staffData[k].password === p);
+            if(staffKey) {
+                startAdminSession(staffData[staffKey].name);
+            } else {
+                alert('اسم المستخدم أو كلمة المرور خطأ يا باشا!');
+            }
+        };
+
+        function startAdminSession(name) {
+            document.getElementById('adminLoginSec').classList.add('hidden');
+            document.getElementById('adminPanelSec').classList.remove('hidden');
+            document.getElementById('welcomeUser').innerText = `مرحباً بك يا ${name}`;
+        }
+
+        window.adminLogout = () => {
+            document.getElementById('adminPanelSec').classList.add('hidden');
+            document.getElementById('adminLoginSec').classList.remove('hidden');
+        };
+
+        window.switchTab = (tab) => {
+            ['secClients', 'secProducts', 'secLedger', 'secStaff'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            ['tClients', 'tProducts', 'tLedger', 'tStaff'].forEach(t => {
+                document.getElementById(t).className = "py-3 rounded-xl text-xs font-bold dark:bg-slate-900 border gold-border text-slate-400";
+            });
+
+            if(tab === 'clients') { document.getElementById('secClients').classList.remove('hidden'); document.getElementById('tClients').className = "py-3 rounded-xl text-xs font-bold bg-amber-500 text-slate-950"; }
+            if(tab === 'products') { document.getElementById('secProducts').classList.remove('hidden'); document.getElementById('tProducts').className = "py-3 rounded-xl text-xs font-bold bg-amber-500 text-slate-950"; }
+            if(tab === 'ledger') { document.getElementById('secLedger').classList.remove('hidden'); document.getElementById('tLedger').className = "py-3 rounded-xl text-xs font-bold bg-amber-500 text-slate-950"; }
+            if(tab === 'staff') { document.getElementById('secStaff').classList.remove('hidden'); document.getElementById('tStaff').className = "py-3 rounded-xl text-xs font-bold bg-amber-500 text-slate-950"; }
+        };
+
+        window.saveClient = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('clName').value.trim();
+            const phone = document.getElementById('clPhone').value.trim();
+            const initialBalance = document.getElementById('clInitBal').value.trim() || 0;
+
+            await set(ref(db, 'erp_clients/' + phone), { name, phone, initialBalance });
+            alert('تم حفظ العميل بنجاح!');
+            document.getElementById('clName').value = '';
+            document.getElementById('clPhone').value = '';
+            document.getElementById('clInitBal').value = '';
+        };
+
+        window.saveProduct = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('prName').value.trim();
+            const price = document.getElementById('prPrice').value.trim();
+            const discount = document.getElementById('prDisc').value.trim() || 0;
+
+            await push(ref(db, 'erp_products'), { name, price, discount });
+            alert('تم حفظ الصنف بنجاح!');
+            document.getElementById('prName').value = '';
+            document.getElementById('prPrice').value = '';
+            document.getElementById('prDisc').value = '';
+        };
+
+        window.saveLedgerEntry = async (e) => {
+            e.preventDefault();
+            const clientPhone = document.getElementById('ledClient').value;
+            const type = document.getElementById('ledType').value;
+            const amount = document.getElementById('ledAmount').value;
+            const description = document.getElementById('ledDesc').value.trim();
+
+            const clientObj = Object.values(clientsData).find(c => c.phone === clientPhone);
+
+            await push(ref(db, 'erp_ledger'), {
+                clientPhone,
+                clientName: clientObj ? clientObj.name : 'عميل',
+                type,
+                amount,
+                description,
+                status: 'معتمد من الإدارة',
+                createdAt: Date.now()
+            });
+
+            alert('تم تسجيل الحركة بنجاح في حساب العميل!');
+            document.getElementById('ledAmount').value = '';
+            document.getElementById('ledDesc').value = '';
+        };
+
+        window.saveStaff = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('stName').value.trim();
+            const username = document.getElementById('stUser').value.trim();
+            const password = document.getElementById('stPass').value.trim();
+
+            await push(ref(db, 'erp_staff'), { name, username, password });
+            alert('تم إضافة الموظف بنجاح!');
+            document.getElementById('stName').value = '';
+            document.getElementById('stUser').value = '';
+            document.getElementById('stPass').value = '';
+        };
+
+        window.deleteItem = async (path, id) => {
+            if(confirm('متأكد من الحذف؟')) {
+                await remove(ref(db, `${path}/${id}`));
+            }
+        };
+    </script>
+</body>
+</html>
