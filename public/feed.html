@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المجد للأعلاف | بوابة الطلبات والحسابات</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        royal: {
+                            dark: '#070A13',
+                            card: '#131A2E',
+                            accent: '#1C2642',
+                            gold: '#D4AF37',
+                            goldHover: '#B89028',
+                            goldLight: '#F3E5AB'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .dark body {
+            background: linear-gradient(-45deg, #070A13, #111827, #0A0F1D, #161F33);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #E2E8F0;
+        }
+        .light body {
+            background: linear-gradient(-45deg, #F8FAFC, #F1F5F9, #E2E8F0, #CBD5E1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #1E293B;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border {
+            border: 1px solid rgba(212, 175, 55, 0.35);
+        }
+        .gold-shadow {
+            box-shadow: 0 4px 20px -2px rgba(212, 175, 55, 0.15);
+        }
+        .dark .glass-card {
+            background: rgba(19, 26, 46, 0.85);
+            backdrop-filter: blur(14px);
+        }
+        .light .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="p-3 md:p-6 pb-20">
+
+    <!-- Header Section -->
+    <header class="max-w-4xl mx-auto glass-card gold-border rounded-2xl p-4 mb-6 shadow-2xl flex items-center justify-between">
+        <div class="flex items-center gap-3 md:gap-4">
+            <div class="w-14 h-14 md:w-16 md:h-16 rounded-xl gold-border overflow-hidden p-1 bg-black/50 flex justify-center items-center shadow-inner">
+                <img id="appLogo" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png" alt="شعار المجد للأعلاف" class="object-cover w-full h-full rounded-lg">
+            </div>
+            <div>
+                <h1 class="text-xl md:text-2xl font-black gold-gradient-text">المجد للأعلاف</h1>
+                <p class="text-xs text-slate-400 font-semibold">بوابة طلبات الأعلاف والحسابات المالية</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()" title="تغيير المظهر" class="bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-amber-400 w-10 h-10 rounded-xl flex items-center justify-center gold-border transition hover:scale-105">
+                <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+            </button>
+            <!-- Admin Switch Button -->
+            <button onclick="openAdminLogin()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold px-3 py-2.5 rounded-xl border gold-border transition flex items-center gap-1.5">
+                <i class="fa-solid fa-user-shield"></i>
+                <span class="hidden sm:inline">دخول الآدمن</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto">
+
+        <!---------------- SECTION 1: CLIENT LOGIN PORTAL ---------------->
+        <div id="sectionClientLogin" class="glass-card gold-border rounded-2xl p-6 md:p-8 max-w-md mx-auto shadow-2xl text-center space-y-6">
+            <div class="w-16 h-16 bg-amber-500/10 border border-amber-500/30 rounded-2xl mx-auto flex items-center justify-center text-amber-500 text-2xl">
+                <i class="fa-solid fa-store"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-black gold-gradient-text mb-2">أهلاً بك يا باشا</h2>
+                <p class="text-xs text-slate-400">ادخل برقم تليفونك المسجل في المصنع عشان تتابع طلباتك وكشف حسابك.</p>
+            </div>
+
+            <form onsubmit="clientLogin(event)" class="space-y-4">
+                <div>
+                    <input type="tel" id="loginPhone" required placeholder="اكتب رقم تليفونك هنا (مثال: 010xxxxxxxx)" 
+                        class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3.5 text-sm text-center dark:text-white light:text-slate-900 focus:outline-none focus:border-amber-400 font-bold">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:opacity-90 text-slate-950 font-bold p-3.5 rounded-xl shadow-lg transition text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket"></i> فتح حسابي وطلباتي
+                </button>
+            </form>
+        </div>
+
+
+        <!---------------- SECTION 2: CLIENT DASHBOARD (ORDERS & ACCOUNTS) ---------------->
+        <div id="sectionClientDashboard" class="hidden space-y-6">
+            <!-- Client Info Card -->
+            <div class="glass-card gold-border rounded-2xl p-5 flex justify-between items-center shadow-xl">
+                <div>
+                    <span class="text-[10px] text-amber-500 font-bold bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">حساب عميل معتمد</span>
+                    <h2 id="clientNameDisplay" class="text-xl font-bold text-white mt-1">اسم العميل</h2>
+                    <p id="clientPhoneDisplay" class="text-xs text-slate-400" dir="ltr"></p>
+                </div>
+                <button onclick="clientLogout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-3.5 py-2 rounded-xl text-xs font-semibold transition">
+                    <i class="fa-solid fa-right-from-bracket ml-1"></i> خروج
+                </button>
+            </div>
+
+            <!-- Financial Summary Box -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card gold-border rounded-2xl p-5">
+                    <h3 class="text-xs text-slate-400 mb-1 flex items-center gap-1.5"><i class="fa-solid fa-wallet text-amber-500"></i> إجمالي الحساب والمديونية</h3>
+                    <p id="clientTotalBalance" class="text-2xl font-black text-amber-400">0.00 ج.م</p>
+                </div>
+                <div class="glass-card gold-border rounded-2xl p-5 flex flex-col justify-between">
+                    <h3 class="text-xs text-slate-400 mb-1 flex items-center gap-1.5"><i class="fa-solid fa-file-pdf text-amber-500"></i> كشف الحساب الفاتورة المعتمدة</h3>
+                    <div id="clientPdfContainer">
+                        <span class="text-xs text-slate-500 italic">مافيش كشف حساب مرفوع حالياً.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Order Form Box -->
+            <div class="glass-card gold-border rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-lg font-bold gold-gradient-text flex items-center gap-2 border-b dark:border-slate-800 pb-2">
+                    <i class="fa-solid fa-cart-plus text-amber-500"></i> طلب أعلاف جديد من المصنع
+                </h3>
+
+                <form onsubmit="submitClientOrder(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold mb-1">اختر صنف العلف *</label>
+                            <select id="orderFeedSelect" required onchange="updateFeedPrice()" class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3 text-sm focus:outline-none focus:border-amber-400">
+                                <option value="">اختر الصنف المطلوب...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-1">الكمية (بالطُن أو الشكاير) *</label>
+                            <input type="text" id="orderFeedQuantity" required placeholder="مثال: 3 طن أو 50 شكارة" 
+                                class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3 text-sm focus:outline-none focus:border-amber-400">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">ملاحظات العنوان أو الشحن (اختياري)</label>
+                        <input type="text" id="orderFeedNotes" placeholder="مثال: التوصيل للمزرعة الرئيسية في الطريق الصحراوي" 
+                            class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3 text-sm focus:outline-none focus:border-amber-400">
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:opacity-90 text-slate-950 font-bold p-3.5 rounded-xl shadow-lg transition text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> إرسال الأوردر للمصنع
+                    </button>
+                </form>
+            </div>
+
+            <!-- Client Orders History -->
+            <div class="glass-card gold-border rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2 border-b dark:border-slate-800 pb-2">
+                    <i class="fa-solid fa-list-check text-amber-500"></i> سجل طلباتك السابقة
+                </h3>
+                <div id="clientOrdersList" class="space-y-3">
+                    <p class="text-xs text-slate-400 text-center py-4">جاري تحميل طلباتك...</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!---------------- SECTION 3: ADMIN PANEL (FACTORY DASHBOARD) ---------------->
+        <div id="sectionAdminPanel" class="hidden space-y-6">
+            <div class="glass-card gold-border rounded-2xl p-5 flex justify-between items-center shadow-xl">
+                <div>
+                    <span class="text-[10px] text-amber-500 font-bold bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">لوحة تحكم الإدارة (الآدمن)</span>
+                    <h2 class="text-xl font-bold text-white mt-1">إدارة مصنع المجد للأعلاف</h2>
+                </div>
+                <button onclick="adminLogout()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border gold-border px-3.5 py-2 rounded-xl text-xs font-semibold transition">
+                    <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i> الخروج للعملاء
+                </button>
+            </div>
+
+            <!-- Admin Sub-tabs Navigation -->
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="switchAdminTab('products')" id="admTabProd" class="py-2.5 rounded-xl text-xs font-bold gold-border bg-amber-500 text-slate-950 transition">إدارة الأصناف والأسعار</button>
+                <button onclick="switchAdminTab('orders')" id="admTabOrd" class="py-2.5 rounded-xl text-xs font-bold gold-border dark:bg-slate-900 light:bg-white dark:text-slate-300 transition">إدارة الطلبات</button>
+                <button onclick="switchAdminTab('accounts')" id="admTabAcc" class="py-2.5 rounded-xl text-xs font-bold gold-border dark:bg-slate-900 light:bg-white dark:text-slate-300 transition">الحسابات والمديونيات</button>
+            </div>
+
+            <!-- Admin Tab 1: Products & Prices -->
+            <div id="adminSecProducts" class="glass-card gold-border rounded-2xl p-6 space-y-4 shadow-xl">
+                <h3 class="text-lg font-bold gold-gradient-text">إضافة صنف علف جديد أو تعديل أسعاره</h3>
+                <form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                    <input type="text" id="prodName" required placeholder="اسم العلف (مثال: تسمين 23%)" class="dark:bg-slate-900 light:bg-white border dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none">
+                    <input type="number" id="prodPrice" required placeholder="سعر الطن (ج.م)" class="dark:bg-slate-900 light:bg-white border dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none">
+                    <input type="text" id="prodDiscount" placeholder="نسبة الخصم (مثال: 5%)" class="dark:bg-slate-900 light:bg-white border dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none">
+                    <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs py-3 shadow">حفظ الصنف</button>
+                </form>
+
+                <div class="pt-4 border-t dark:border-slate-800">
+                    <h4 class="text-xs font-bold text-slate-400 mb-2">الأصناف المتاحة حالياً:</h4>
+                    <div id="adminProductsList" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- Admin Tab 2: Orders Management -->
+            <div id="adminSecOrders" class="hidden glass-card gold-border rounded-2xl p-6 space-y-4 shadow-xl">
+                <h3 class="text-lg font-bold gold-gradient-text">طلبات الأعلاف الواردة من العملاء</h3>
+                <div id="adminOrdersList" class="space-y-3"></div>
+            </div>
+
+            <!-- Admin Tab 3: Accounts Management -->
+            <div id="adminSecAccounts" class="hidden glass-card gold-border rounded-2xl p-6 space-y-4 shadow-xl">
+                <h3 class="text-lg font-bold gold-gradient-text">إدارة الحسابات والمديونيات وكشوفات PDF</h3>
+                <form onsubmit="saveClientAccount(event)" class="space-y-3 bg-black/20 p-4 rounded-xl border dark:border-slate-800">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <input type="text" id="accClientName" required placeholder="اسم العميل أو المزرعة" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none">
+                        <input type="tel" id="accClientPhone" required placeholder="رقم التليفون الأساسي" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs text-right focus:outline-none">
+                        <input type="number" id="accBalance" required placeholder="إجمالي الحساب / المديونية (ج.م)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none">
+                    </div>
+                    <input type="url" id="accPdfUrl" placeholder="رابط كشف الحساب أو الفاتورة (PDF Link من جوجل درايف)" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none">
+                    <button type="submit" class="bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-bold px-6 py-3 rounded-xl text-xs shadow">حفظ وتحديث بيانات الحساب والـ PDF</button>
+                </form>
+
+                <div class="pt-4 border-t dark:border-slate-800">
+                    <h4 class="text-xs font-bold text-slate-400 mb-2">حسابات العملاء المسجلة:</h4>
+                    <div id="adminAccountsList" class="space-y-2"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="glass-card gold-border rounded-2xl w-full max-w-sm p-6 relative shadow-2xl text-center space-y-4">
+            <button onclick="closeAdminLogin()" class="absolute left-4 top-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-bold gold-gradient-text">تسجيل دخول الآدمن</h3>
+            <input type="password" id="adminPassInput" placeholder="اكتب كلمة المرور..." class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 rounded-xl p-3 text-sm text-center focus:outline-none">
+            <button onclick="verifyAdminPass()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl text-sm shadow">دخول لوحة التحكم</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v10 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, remove, update, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Firebase Configuration الصحيحة بتاعت حضرتك
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgRkceRq7FRbhCevLlULYNy-A5Tl_cr0w",
+            authDomain: "sr-test-c9e06.firebaseapp.com",
+            databaseURL: "https://sr-test-c9e06-default-rtdb.firebaseio.com",
+            projectId: "sr-test-c9e06",
+            storageBucket: "sr-test-c9e06.firebasestorage.app",
+            messagingSenderId: "658396508062",
+            appId: "1:658396508062:web:c56cd84f93daa2e176308f",
+            measurementId: "G-3ZZV344NDK"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let currentClient = null;
+        let allProducts = [];
+        let allOrders = [];
+        let allAccounts = [];
+
+        // Theme Toggle
+        window.toggleTheme = () => {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark'); html.classList.add('light');
+                icon.className = "fa-solid fa-sun text-sm";
+                localStorage.setItem('almagd_theme', 'light');
+            } else {
+                html.classList.remove('light'); html.classList.add('dark');
+                icon.className = "fa-solid fa-moon text-sm";
+                localStorage.setItem('almagd_theme', 'dark');
+            }
+        };
+        if (localStorage.getItem('almagd_theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            document.getElementById('themeIcon').className = "fa-solid fa-sun text-sm";
+        }
+
+        // --- Client Login & Dashboard ---
+        window.clientLogin = (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('loginPhone').value.trim();
+            const account = allAccounts.find(a => a.phone === phone);
+
+            if (!account) {
+                alert('رقم التليفون مش مسجل في حسابات المصنع يا باشا. تواصل مع الإدارة لتسجيل حسابك.');
+                return;
+            }
+
+            currentClient = account;
+            document.getElementById('sectionClientLogin').classList.add('hidden');
+            document.getElementById('sectionClientDashboard').classList.remove('hidden');
+            document.getElementById('clientNameDisplay').innerText = account.name;
+            document.getElementById('clientPhoneDisplay').innerText = account.phone;
+            document.getElementById('clientTotalBalance').innerText = Number(account.balance || 0).toLocaleString() + " ج.م";
+
+            const pdfBox = document.getElementById('clientPdfContainer');
+            if (account.pdfUrl) {
+                pdfBox.innerHTML = `
+                    <div class="flex gap-2 mt-2">
+                        <a href="${account.pdfUrl}" target="_blank" class="flex-1 bg-emerald-600 text-white py-2 px-3 rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow">
+                            <i class="fa-solid fa-file-pdf"></i> فتح كشف الحساب (PDF)
+                        </a>
+                        <a href="${account.pdfUrl}" download class="bg-slate-800 text-amber-400 py-2 px-3 rounded-lg text-xs flex items-center justify-center"><i class="fa-solid fa-download"></i></a>
+                    </div>`;
+            } else {
+                pdfBox.innerHTML = `<span class="text-xs text-slate-500 italic">مافيش كشف حساب مرفوع حالياً.</span>`;
+            }
+
+            renderClientOrders();
+        };
+
+        window.clientLogout = () => {
+            currentClient = null;
+            document.getElementById('sectionClientDashboard').classList.add('hidden');
+            document.getElementById('sectionClientLogin').classList.remove('hidden');
+            document.getElementById('loginPhone').value = '';
+        };
+
+        // Submit Order from Client
+        window.submitClientOrder = async (e) => {
+            e.preventDefault();
+            const feedSelect = document.getElementById('orderFeedSelect');
+            const feedName = feedSelect.value;
+            const quantity = document.getElementById('orderFeedQuantity').value.trim();
+            const notes = document.getElementById('orderFeedNotes').value.trim();
+
+            if (!feedName) {
+                alert('من فضلك اختر صنف العلف.');
+                return;
+            }
+
+            const newOrder = {
+                clientName: currentClient.name,
+                clientPhone: currentClient.phone,
+                feedName,
+                quantity,
+                notes: notes || "مافيش ملاحظات",
+                status: "قيد المراجعة",
+                createdAt: Date.now()
+            };
+
+            try {
+                await push(ref(db, 'store_orders'), newOrder);
+                alert('تم إرسال طلبك للمصنع بنجاح يا باشا!');
+                document.getElementById('orderFeedQuantity').value = '';
+                document.getElementById('orderFeedNotes').value = '';
+            } catch (err) {
+                alert('خطأ أثناء إرسال الطلب: ' + err.message);
+            }
+        };
+
+        function renderClientOrders() {
+            const container = document.getElementById('clientOrdersList');
+            if (!currentClient) return;
+            const myOrders = allOrders.filter(o => o.clientPhone === currentClient.phone);
+
+            if (myOrders.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">مافيش طلبات سابقة مسجلة.</p>`;
+                return;
+            }
+
+            container.innerHTML = myOrders.map(o => `
+                <div class="dark:bg-slate-900 light:bg-white p-3 rounded-xl border dark:border-slate-800 flex justify-between items-center text-xs">
+                    <div>
+                        <p class="font-bold text-amber-500 text-sm">${o.feedName}</p>
+                        <p class="text-slate-400">الكمية: <b>${o.quantity}</b> | ${new Date(o.createdAt).toLocaleDateString('ar-EG')}</p>
+                        ${o.notes !== "مافيش ملاحظات" ? `<p class="text-[11px] text-slate-500">ملاحظات: ${o.notes}</p>` : ''}
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20">${o.status}</span>
+                </div>
+            `).join('');
+        }
+
+
+        // --- Admin Authentication & Controls ---
+        window.openAdminLogin = () => document.getElementById('adminLoginModal').classList.remove('hidden');
+        window.closeAdminLogin = () => document.getElementById('adminLoginModal').classList.add('hidden');
+        window.verifyAdminPass = () => {
+            const pass = document.getElementById('adminPassInput').value;
+            if (pass === "1234") { // كلمة مرور الآدمن (يمكنك تعديلها)
+                closeAdminLogin();
+                document.getElementById('sectionClientLogin').classList.add('hidden');
+                document.getElementById('sectionClientDashboard').classList.add('hidden');
+                document.getElementById('sectionAdminPanel').classList.remove('hidden');
+                document.getElementById('adminPassInput').value = '';
+            } else {
+                alert('كلمة المرور خطأ يا باشا!');
+            }
+        };
+        window.adminLogout = () => {
+            document.getElementById('sectionAdminPanel').classList.add('hidden');
+            document.getElementById('sectionClientLogin').classList.remove('hidden');
+        };
+
+        window.switchAdminTab = (tab) => {
+            document.getElementById('adminSecProducts').classList.add('hidden');
+            document.getElementById('adminSecOrders').classList.add('hidden');
+            document.getElementById('adminSecAccounts').classList.add('hidden');
+            
+            document.getElementById('admTabProd').className = "py-2.5 rounded-xl text-xs font-bold gold-border dark:bg-slate-900 light:bg-white dark:text-slate-300 transition";
+            document.getElementById('admTabOrd').className = "py-2.5 rounded-xl text-xs font-bold gold-border dark:bg-slate-900 light:bg-white dark:text-slate-300 transition";
+            document.getElementById('admTabAcc').className = "py-2.5 rounded-xl text-xs font-bold gold-border dark:bg-slate-900 light:bg-white dark:text-slate-300 transition";
+
+            if(tab==='products'){
+                document.getElementById('adminSecProducts').classList.remove('hidden');
+                document.getElementById('admTabProd').className = "py-2.5 rounded-xl text-xs font-bold gold-border bg-amber-500 text-slate-950 transition";
+            }else if(tab==='orders'){
+                document.getElementById('adminSecOrders').classList.remove('hidden');
+                document.getElementById('admTabOrd').className = "py-2.5 rounded-xl text-xs font-bold gold-border bg-amber-500 text-slate-950 transition";
+            }else if(tab==='accounts'){
+                document.getElementById('adminSecAccounts').classList.remove('hidden');
+                document.getElementById('admTabAcc').className = "py-2.5 rounded-xl text-xs font-bold gold-border bg-amber-500 text-slate-950 transition";
+            }
+        };
+
+        // Admin: Save Product
+        window.saveProduct = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('prodName').value.trim();
+            const price = document.getElementById('prodPrice').value.trim();
+            const discount = document.getElementById('prodDiscount').value.trim();
+
+            try {
+                await push(ref(db, 'store_products'), { name, price, discount: discount || "0%" });
+                document.getElementById('prodName').value = '';
+                document.getElementById('prodPrice').value = '';
+                document.getElementById('prodDiscount').value = '';
+                alert('تم حفظ صنف العلف بنجاح!');
+            } catch(err) { alert('خطأ: ' + err.message); }
+        };
+
+        window.deleteProduct = async (id) => { if(confirm('حذف الصنف؟')) await remove(ref(db, 'store_products/'+id)); };
+
+        // Admin: Save Client Account & PDF
+        window.saveClientAccount = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('accClientName').value.trim();
+            const phone = document.getElementById('accClientPhone').value.trim();
+            const balance = document.getElementById('accBalance').value.trim();
+            const pdfUrl = document.getElementById('accPdfUrl').value.trim();
+
+            const key = phone; // استخدام رقم التليفون كمفتاح أساسي للعميل
+            try {
+                await set(ref(db, 'store_accounts/' + key), { name, phone, balance, pdfUrl });
+                alert('تم حفظ وتحديث حساب العميل وربط الـ PDF بنجاح!');
+                document.getElementById('accClientName').value = '';
+                document.getElementById('accClientPhone').value = '';
+                document.getElementById('accBalance').value = '';
+                document.getElementById('accPdfUrl').value = '';
+            } catch(err) { alert('خطأ: ' + err.message); }
+        };
+
+        window.deleteAccount = async (phone) => { if(confirm('حذف الحساب؟')) await remove(ref(db, 'store_accounts/'+phone)); };
+
+        // Admin: Update Order Status
+        window.updateOrderStatus = async (id, status) => { await update(ref(db, 'store_orders/'+id), { status }); };
+        window.deleteOrder = async (id) => { if(confirm('حذف الطلب؟')) await remove(ref(db, 'store_orders/'+id)); };
+
+
+        // --- Realtime Listeners ---
+        onValue(ref(db, 'store_products'), (snap) => {
+            const data = snap.val();
+            allProducts = data ? Object.keys(data).map(k => ({id: k, ...data[k]})) : [];
+            
+            // Populate select dropdown for clients
+            const select = document.getElementById('orderFeedSelect');
+            select.innerHTML = `<option value="">اختر صنف العلف المطلوب...</option>` + allProducts.map(p => `<option value="${p.name} - ${p.price} ج.م للطن">${p.name} (السعر: ${p.price} ج.م | خصم: ${p.discount})</option>`).join('');
+            
+            // Populate admin products list
+            document.getElementById('adminProductsList').innerHTML = allProducts.map(p => `
+                <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-lg text-xs">
+                    <span><b>${p.name}</b> - السعر: ${p.price} ج.م | الخصم: ${p.discount}</span>
+                    <button onclick="deleteProduct('${p.id}')" class="text-rose-400 hover:text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        });
+
+        onValue(ref(db, 'store_orders'), (snap) => {
+            const data = snap.val();
+            allOrders = data ? Object.keys(data).map(k => ({id: k, ...data[k]})).sort((a,b)=>b.createdAt-a.createdAt) : [];
+            if(currentClient) renderClientOrders();
+
+            // Populate admin orders list
+            document.getElementById('adminOrdersList').innerHTML = allOrders.length ? allOrders.map(o => `
+                <div class="glass-card border dark:border-slate-800 p-3.5 rounded-xl text-xs space-y-2">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="font-bold text-amber-500 text-sm">${o.clientName}</span>
+                            <span class="text-slate-400 mr-2" dir="ltr">(${o.clientPhone})</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-400 font-bold">${o.status}</span>
+                    </div>
+                    <p><b>الطلب:</b> ${o.feedName} | الكمية: <b>${o.quantity}</b></p>
+                    <p class="text-slate-400">ملاحظات: ${o.notes}</p>
+                    <div class="flex gap-2 pt-2 border-t dark:border-slate-800">
+                        <button onclick="updateOrderStatus('${o.id}', 'جاري التجهيز')" class="bg-blue-600/20 text-blue-400 px-2.5 py-1 rounded">جاري التجهيز</button>
+                        <button onclick="updateOrderStatus('${o.id}', 'تم التسليم')" class="bg-emerald-600/20 text-emerald-400 px-2.5 py-1 rounded">تم التسليم</button>
+                        <button onclick="deleteOrder('${o.id}')" class="text-rose-400 mr-auto"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('') : `<p class="text-xs text-slate-400 text-center py-4">مافيش طلبات جديدة.</p>`;
+        });
+
+        onValue(ref(db, 'store_accounts'), (snap) => {
+            const data = snap.val();
+            allAccounts = data ? Object.keys(data).map(k => data[k]) : [];
+
+            document.getElementById('adminAccountsList').innerHTML = allAccounts.length ? allAccounts.map(a => `
+                <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-lg text-xs">
+                    <div>
+                        <span class="font-bold text-white">${a.name}</span> - <span dir="ltr" class="text-amber-400">${a.phone}</span> | المديونية: <b>${Number(a.balance).toLocaleString()} ج.م</b>
+                        ${a.pdfUrl ? `<a href="${a.pdfUrl}" target="_blank" class="text-emerald-400 underline mr-2">[ملف PDF مرفق]</a>` : ''}
+                    </div>
+                    <button onclick="deleteAccount('${a.phone}')" class="text-rose-400 hover:text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('') : `<p class="text-xs text-slate-400 text-center">مافيش حسابات مسجلة.</p>`;
+        });
+    </script>
+</body>
+</html>
