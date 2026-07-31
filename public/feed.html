@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المجد للأعلاف | بوابة العملاء والمديونيات الفورية</title>
+    <title>المجد للأعلاف | بوابة المزارع والمحلات المركزية</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,219 +12,175 @@
             theme: {
                 extend: {
                     colors: {
-                        royal: {
-                            dark: '#070A13',
-                            card: '#131A2E',
-                            accent: '#1C2642',
-                            gold: '#D4AF37',
-                            goldHover: '#B89028',
-                            goldLight: '#F3E5AB'
-                        }
+                        royal: { dark: '#070A13', card: '#131A2E', gold: '#D4AF37', goldHover: '#B89028' }
                     },
-                    fontFamily: {
-                        cairo: ['Cairo', 'sans-serif']
-                    }
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] }
                 }
             }
         }
     </script>
-    <!-- Google Fonts (Cairo) -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            min-height: 100vh;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-        .dark body {
-            background: linear-gradient(-45deg, #070A13, #111827, #0A0F1D, #161F33);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #E2E8F0;
-        }
-        .light body {
-            background: linear-gradient(-45deg, #F8FAFC, #F1F5F9, #E2E8F0, #CBD5E1);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #1E293B;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gold-border {
-            border: 1px solid rgba(212, 175, 55, 0.35);
-        }
-        .gold-shadow {
-            box-shadow: 0 4px 20px -2px rgba(212, 175, 55, 0.15);
-        }
-        .dark .glass-card {
-            background: rgba(19, 26, 46, 0.85);
-            backdrop-filter: blur(14px);
-        }
-        .light .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(14px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-        }
+        body { font-family: 'Cairo', sans-serif; min-height: 100vh; transition: background 0.3s ease; }
+        .dark body { background: linear-gradient(-45deg, #070A13, #111827, #0A0F1D); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: #E2E8F0; }
+        .light body { background: linear-gradient(-45deg, #F8FAFC, #F1F5F9, #E2E8F0); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: #1E293B; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .gold-gradient-text { background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gold-border { border: 1px solid rgba(212, 175, 55, 0.35); }
+        .dark .glass-card { background: rgba(19, 26, 46, 0.85); backdrop-filter: blur(14px); }
+        .light .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(14px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body class="p-3 md:p-6 pb-20">
 
-    <!-- Header Section -->
     <header class="max-w-4xl mx-auto glass-card gold-border rounded-2xl p-4 mb-6 shadow-2xl flex items-center justify-between">
-        <div class="flex items-center gap-3 md:gap-4">
-            <div class="w-14 h-14 md:w-16 md:h-16 rounded-xl gold-border overflow-hidden p-1 bg-black/50 flex justify-center items-center shadow-inner">
-                <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png" alt="شعار المجد للأعلاف" class="object-cover w-full h-full rounded-lg">
+        <div class="flex items-center gap-3">
+            <div class="w-14 h-14 rounded-xl gold-border overflow-hidden p-1 bg-black/50 flex justify-center items-center">
+                <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png" alt="Logo" class="object-cover w-full h-full rounded-lg">
             </div>
             <div>
-                <h1 class="text-xl md:text-2xl font-black gold-gradient-text">المجد للأعلاف</h1>
-                <p class="text-xs text-slate-400 font-semibold">بوابة المزارع والمحلات الرسمية للحسابات</p>
+                <h1 class="text-xl font-black gold-gradient-text">المجد للأعلاف</h1>
+                <p class="text-xs text-slate-400 font-semibold">بوابة الحسابات وطلب الأعلاف بالمنتجات المتعددة</p>
             </div>
         </div>
-
         <div class="flex items-center gap-2">
-            <!-- Theme Toggle Button -->
-            <button onclick="toggleTheme()" title="تغيير المظهر" class="bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-amber-400 w-10 h-10 rounded-xl flex items-center justify-center gold-border transition hover:scale-105">
+            <button onclick="toggleTheme()" class="bg-slate-800 text-amber-400 w-10 h-10 rounded-xl flex items-center justify-center gold-border">
                 <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
             </button>
-            <!-- Admin Link Button -->
-            <a href="admin.html" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold px-3.5 py-2.5 rounded-xl border gold-border transition flex items-center gap-1.5 shadow">
-                <i class="fa-solid fa-user-shield"></i>
-                <span class="hidden sm:inline">دخول الإدارة</span>
+            <a href="admin.html" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold px-3 py-2.5 rounded-xl border gold-border">
+                <i class="fa-solid fa-user-shield"></i> دخول الإدارة
             </a>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto">
-
-        <!---------------- SECTION 1: CLIENT LOGIN PORTAL ---------------->
+        <!-- شاشة تسجيل الدخول برقم التليفون / UID -->
         <div id="loginSection" class="glass-card gold-border rounded-2xl p-6 md:p-10 max-w-md mx-auto text-center space-y-6 shadow-2xl">
-            <div class="w-16 h-16 bg-amber-500/10 border border-amber-500/30 rounded-2xl mx-auto flex items-center justify-center text-amber-500 text-2xl shadow-inner">
+            <div class="w-16 h-16 bg-amber-500/10 border border-amber-500/30 rounded-2xl mx-auto flex items-center justify-center text-amber-500 text-2xl">
                 <i class="fa-solid fa-store"></i>
             </div>
             <div>
                 <h2 class="text-2xl font-black gold-gradient-text mb-2">أهلاً بك يا باشا</h2>
-                <p class="text-xs text-slate-400 leading-relaxed">اكتب رقم تليفونك المسجل في المصنع عشان تفتح حسابك الشخصي وتتابع مديونياتك وطلباتك.</p>
+                <p class="text-xs text-slate-400">اكتب رقم تليفونك المسجل في المصنع لفتح سجلك المالي ومعرفك الخاص (UID).</p>
             </div>
-
             <form onsubmit="clientLogin(event)" class="space-y-4">
-                <div>
-                    <input type="tel" id="loginPhone" required placeholder="مثال: 010xxxxxxxx" 
-                        class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3.5 text-sm text-center font-bold dark:text-white light:text-slate-900 focus:outline-none focus:border-amber-400 shadow-inner">
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:opacity-90 text-slate-950 font-bold p-3.5 rounded-xl shadow-lg transition text-sm flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-right-to-bracket"></i> فتح حسابي وطلباتي
+                <input type="tel" id="loginPhone" required placeholder="رقم التليفون (مثال: 010xxxxxxxx)" 
+                    class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 rounded-xl p-3.5 text-sm text-center font-bold focus:outline-none focus:border-amber-400">
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-bold p-3.5 rounded-xl shadow-lg text-sm">
+                    دخول الحساب الشخصي
                 </button>
             </form>
         </div>
 
-
-        <!---------------- SECTION 2: CLIENT DASHBOARD (ACCOUNT & ORDERS) ---------------->
+        <!-- لوحة تحكم العميل المتكاملة -->
         <div id="dashboardSection" class="hidden space-y-6">
-            <!-- Client Header Card -->
             <div class="glass-card gold-border rounded-2xl p-5 flex justify-between items-center shadow-xl">
                 <div>
-                    <span class="text-[10px] text-amber-500 font-bold bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">حساب معتمد من المصنع</span>
-                    <h2 id="cName" class="text-xl font-bold dark:text-white light:text-slate-900 mt-1">اسم العميل</h2>
+                    <span id="cUidBadge" class="text-[10px] text-amber-500 font-bold bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">UID: ---</span>
+                    <h2 id="cName" class="text-xl font-bold text-white mt-1">اسم العميل</h2>
                     <p id="cPhone" class="text-xs text-slate-400" dir="ltr"></p>
                 </div>
-                <button onclick="clientLogout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-3.5 py-2 rounded-xl text-xs font-semibold transition">
-                    <i class="fa-solid fa-right-from-bracket ml-1"></i> خروج
+                <button onclick="clientLogout()" class="bg-rose-500/10 text-rose-400 border border-rose-500/30 px-3.5 py-2 rounded-xl text-xs font-semibold">
+                    <i class="fa-solid fa-right-from-bracket"></i> خروج
                 </button>
             </div>
 
-            <!-- Financial Ledger Balance Box -->
+            <!-- إجمالي الحساب والمديونية -->
             <div class="glass-card gold-border rounded-2xl p-6 shadow-xl text-center space-y-1">
-                <h3 class="text-xs text-slate-400 flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-wallet text-amber-500"></i> إجمالي الحساب والمديونية المستحقة
-                </h3>
+                <h3 class="text-xs text-slate-400"><i class="fa-solid fa-wallet text-amber-500"></i> إجمالي الحساب والمديونية المستحقة</h3>
                 <p id="cBalance" class="text-3xl md:text-4xl font-black text-amber-400">0.00 ج.م</p>
-                <p class="text-[11px] text-slate-500">المبلغ الإجمالي المتبقي عليك لصالح مصنع المجد للأعلاف</p>
+                <p class="text-[11px] text-slate-500">محدث لحظياً من قاعدة البيانات</p>
             </div>
 
-            <!-- New Order Form Box -->
+            <!-- نظام السلة المتعددة (إضافة أكثر من منتج في الفاتورة) -->
             <div class="glass-card gold-border rounded-2xl p-6 shadow-xl space-y-4">
-                <h3 class="text-lg font-bold gold-gradient-text border-b dark:border-slate-800 light:border-slate-200 pb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-cart-plus text-amber-500"></i> طلب أوردر أعلاف جديد
-                </h3>
-
-                <form onsubmit="submitOrder(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold dark:text-slate-300 light:text-slate-700 mb-1">اختر صنف العلف *</label>
-                            <select id="orderProduct" required class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3 text-sm dark:text-white light:text-slate-900 focus:outline-none focus:border-amber-400">
-                                <option value="">جاري تحميل الأصناف المتاحة...</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold dark:text-slate-300 light:text-slate-700 mb-1">وحدة القياس *</label>
-                            <select id="orderUnit" class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3 text-sm dark:text-white light:text-slate-900 focus:outline-none focus:border-amber-400">
-                                <option value="طن">طن</option>
-                                <option value="شكارة">شكارة</option>
-                            </select>
-                        </div>
+                <h3 class="text-lg font-bold gold-gradient-text border-b dark:border-slate-800 pb-2"><i class="fa-solid fa-cart-shopping"></i> إنشاء طلب أعلاف متعدد المنتجات</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-black/20 p-4 rounded-xl border dark:border-slate-800">
+                    <div class="md:col-span-2">
+                        <label class="block text-[11px] font-semibold mb-1">اختر الصنف</label>
+                        <select id="cartProduct" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-2.5 text-xs">
+                            <option value="">اختر الصنف...</option>
+                        </select>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold dark:text-slate-300 light:text-slate-700 mb-1">الكمية المطلوبة *</label>
-                            <input type="number" step="any" id="orderQty" required placeholder="مثال: 5" 
-                                class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3 text-sm dark:text-white light:text-slate-900 focus:outline-none focus:border-amber-400">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold dark:text-slate-300 light:text-slate-700 mb-1">ملاحظات العنوان أو التوصيل</label>
-                            <input type="text" id="orderNotes" placeholder="مثال: التسليم للمزرعة مباشر" 
-                                class="w-full dark:bg-slate-900 light:bg-white border dark:border-slate-700 light:border-slate-300 rounded-xl p-3 text-sm dark:text-white light:text-slate-900 focus:outline-none focus:border-amber-400">
-                        </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold mb-1">الوحدة</label>
+                        <select id="cartUnit" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-2.5 text-xs">
+                            <option value="طن">طن</option>
+                            <option value="شكارة">شكارة</option>
+                        </select>
                     </div>
-
-                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:opacity-90 text-slate-950 font-bold p-3.5 rounded-xl shadow-lg transition text-sm flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-paper-plane"></i> إرسال الطلب وحسابه أوتوماتيك
+                    <div>
+                        <label class="block text-[11px] font-semibold mb-1">الكمية</label>
+                        <input type="number" step="any" id="cartQty" placeholder="مثال: 3" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-2.5 text-xs">
+                    </div>
+                    <button type="button" onclick="addToCart()" class="md:col-span-4 bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold py-2.5 rounded-xl text-xs border gold-border">
+                        <i class="fa-solid fa-plus"></i> إضافة المنتج للسلة
                     </button>
-                </form>
-            </div>
+                </div>
 
-            <!-- Dynamic Statement Table (كشف الحساب الأوتوماتيكي) -->
-            <div class="glass-card gold-border rounded-2xl p-6 shadow-xl space-y-4">
-                <h3 class="text-lg font-bold dark:text-white light:text-slate-900 border-b dark:border-slate-800 light:border-slate-200 pb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-file-invoice-dollar text-amber-500"></i> كشف الحساب الأوتوماتيكي المفصل
-                </h3>
+                <!-- جدول محتويات السلة الحالية -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-right text-xs">
                         <thead>
-                            <tr class="border-b dark:border-slate-800 light:border-slate-200 text-amber-500">
-                                <th class="p-3">التاريخ والوقت</th>
-                                <th class="p-3">بيان الحركة / الفاتورة</th>
-                                <th class="p-3">القيمة / المبلغ</th>
+                            <tr class="border-b dark:border-slate-800 text-amber-500">
+                                <th class="p-2">الصنف</th>
+                                <th class="p-2">الكمية</th>
+                                <th class="p-2">الإداة التقديرية</th>
+                                <th class="p-2">إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartTableBody">
+                            <tr><td colspan="4" class="text-center py-4 text-slate-400">السلة فارغة حالياً، أضف منتجات للفاتورة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold mb-1">ملاحظات التوصيل أو العنوان للمصنع</label>
+                    <input type="text" id="orderNotes" placeholder="مثال: التوصيل للمزرعة بالطريق الصحراوي" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                </div>
+
+                <button onclick="submitCartOrder()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-bold p-3.5 rounded-xl shadow-lg text-sm">
+                    <i class="fa-solid fa-paper-plane"></i> إرسال الفاتورة المتعددة للمصنع والمبيعات
+                </button>
+            </div>
+
+            <!-- سجل الطلبات ومتابعة الردود (العلف في الطريق ليك) -->
+            <div class="glass-card gold-border rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-lg font-bold text-white border-b dark:border-slate-800 pb-2"><i class="fa-solid fa-truck-fast text-amber-500"></i> متابعة طلباتك وردود قسم المبيعات</h3>
+                <div id="ordersTrackingList" class="space-y-3">
+                    <p class="text-xs text-slate-400 text-center py-3">جاري تحميل سجل الطلبات...</p>
+                </div>
+            </div>
+
+            <!-- سجل الحسابات والمعاملات بالكامل بالتفصيل الممل -->
+            <div class="glass-card gold-border rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-lg font-bold text-white border-b dark:border-slate-800 pb-2"><i class="fa-solid fa-file-invoice text-amber-500"></i> سجل الحسابات والمعاملات بالتفصيل الممل</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs">
+                        <thead>
+                            <tr class="border-b dark:border-slate-800 text-amber-500">
+                                <th class="p-3">التاريخ واليوم</th>
+                                <th class="p-3">البيان / تفاصيل النقلة أو الحركة</th>
+                                <th class="p-3">المبلغ</th>
                                 <th class="p-3">الحالة</th>
                             </tr>
                         </thead>
-                        <tbody id="statementTableBody">
-                            <tr><td colspan="4" class="text-center py-6 text-slate-400">جاري تحميل بيانات كشف الحساب...</td></tr>
+                        <tbody id="fullStatementBody">
+                            <tr><td colspan="4" class="text-center py-4 text-slate-400">جاري تحميل المعاملات...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
     </main>
 
-    <!-- Firebase SDK v10 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // إعدادات فايربيس الخاصة بمصنع المجد للأعلاف
         const firebaseConfig = {
             apiKey: "AIzaSyBgRkceRq7FRbhCevLlULYNy-A5Tl_cr0w",
             authDomain: "sr-test-c9e06.firebaseapp.com",
@@ -242,84 +198,124 @@
         let productsList = [];
         let clientsData = {};
         let ledgerData = [];
+        let cartItems = [];
 
-        // Dark / Light Mode Toggle Logic
         window.toggleTheme = () => {
             const html = document.documentElement;
-            if(html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                localStorage.setItem('almagd_theme', 'light');
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                localStorage.setItem('almagd_theme', 'dark');
-            }
+            if(html.classList.contains('dark')) { html.classList.remove('dark'); html.classList.add('light'); localStorage.setItem('theme', 'light'); }
+            else { html.classList.remove('light'); html.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
         };
+        if(localStorage.getItem('theme') === 'light') { document.documentElement.classList.remove('dark'); document.documentElement.classList.add('light'); }
 
-        if(localStorage.getItem('almagd_theme') === 'light') {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-            document.getElementById('themeIcon').className = "fa-solid fa-sun text-sm";
-        }
-
-        // Realtime Listeners for Products, Clients, and Ledger
         onValue(ref(db, 'erp_products'), (snap) => {
             const data = snap.val();
             productsList = data ? Object.keys(data).map(k => ({id: k, ...data[k]})) : [];
-            const select = document.getElementById('orderProduct');
-            select.innerHTML = `<option value="">اختر صنف العلف المطلوب...</option>` + productsList.map(p => `
-                <option value="${p.name}|${p.price}|${p.discount}">${p.name} - ${Number(p.price).toLocaleString()} ج.م للطن (خصم: ${p.discount}%)</option>
-            `).join('');
+            const select = document.getElementById('cartProduct');
+            select.innerHTML = `<option value="">اختر صنف العلف...</option>` + productsList.map(p => `<option value="${p.name}|${p.price}|${p.discount}">${p.name} - ${Number(p.price).toLocaleString()} ج.م للطن (خصم: ${p.discount}%)</option>`).join('');
         });
 
-        onValue(ref(db, 'erp_clients'), (snap) => {
-            clientsData = snap.val() || {};
-            if(currentUser) verifyAndUpdateSession();
-        });
-
+        onValue(ref(db, 'erp_clients'), (snap) => { clientsData = snap.val() || {}; if(currentUser) syncUser(); });
         onValue(ref(db, 'erp_ledger'), (snap) => {
             const data = snap.val();
             ledgerData = data ? Object.keys(data).map(k => ({id: k, ...data[k]})) : [];
             if(currentUser) updateDashboard();
         });
 
-        function verifyAndUpdateSession() {
+        function syncUser() {
             const matched = Object.values(clientsData).find(c => c.phone === currentUser.phone);
-            if(matched) {
-                currentUser = matched;
-                document.getElementById('cName').innerText = currentUser.name;
-                updateDashboard();
-            }
+            if(matched) { currentUser = matched; updateDashboard(); }
         }
 
-        // Client Login Handler
         window.clientLogin = (e) => {
             e.preventDefault();
-            const phoneInput = document.getElementById('loginPhone').value.trim();
-            const matchedClient = Object.values(clientsData).find(c => c.phone === phoneInput);
+            const phone = document.getElementById('loginPhone').value.trim();
+            const matchedClient = Object.values(clientsData).find(c => c.phone === phone);
 
-            if(!matchedClient) {
-                alert('يا باشا رقم التليفون ده مش مسجل في حسابات المصنع! راجع الإدارة لتسجيل حسابك.');
-                return;
-            }
-
+            if(!matchedClient) { alert('رقم التليفون غير مسجل في قاعدة بيانات المصنع!'); return; }
             currentUser = matchedClient;
+            
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
             document.getElementById('cName').innerText = currentUser.name;
             document.getElementById('cPhone').innerText = currentUser.phone;
+            document.getElementById('cUidBadge').innerText = `UID: ${currentUser.uid || currentUser.phone}`;
             updateDashboard();
         };
 
         window.clientLogout = () => {
             currentUser = null;
+            cartItems = [];
             document.getElementById('dashboardSection').classList.add('hidden');
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('loginPhone').value = '';
         };
 
-        // Render Dashboard & Dynamic Statement
+        window.addToCart = () => {
+            const prodVal = document.getElementById('cartProduct').value;
+            const unit = document.getElementById('cartUnit').value;
+            const qty = parseFloat(document.getElementById('cartQty').value);
+
+            if(!prodVal || !qty || qty <= 0) { alert('اختر صنف صحيح واكتب كمية مظبوطة'); return; }
+            const [name, price, discount] = prodVal.split('|');
+
+            let itemPrice = Number(price);
+            if(unit === 'شكارة') itemPrice = itemPrice / 20;
+            let sub = qty * itemPrice;
+            let total = sub - (sub * (Number(discount)/100));
+
+            cartItems.push({ name, unit, qty, total: total.toFixed(2) });
+            renderCart();
+            document.getElementById('cartQty').value = '';
+        };
+
+        window.removeFromCart = (index) => {
+            cartItems.splice(index, 1);
+            renderCart();
+        };
+
+        function renderCart() {
+            const tbody = document.getElementById('cartTableBody');
+            if(cartItems.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400">السلة فارغة حالياً.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = cartItems.map((item, idx) => `
+                <tr class="border-b dark:border-slate-800">
+                    <td class="p-2 font-bold">${item.name}</td>
+                    <td class="p-2">${item.qty} ${item.unit}</td>
+                    <td class="p-2 text-amber-400">${item.total} ج.م</td>
+                    <td class="p-2"><button onclick="removeFromCart(${idx})" class="text-rose-400"><i class="fa-solid fa-xmark"></i></button></td>
+                </tr>
+            `).join('');
+        }
+
+        window.submitCartOrder = async () => {
+            if(cartItems.length === 0) { alert('السلة فاضية! أضف منتجات للفاتورة الأول'); return; }
+            const notes = document.getElementById('orderNotes').value.trim();
+
+            let summaryText = cartItems.map(i => `${i.qty} ${i.unit} ${i.name}`).join(' + ');
+            let grandTotal = cartItems.reduce((sum, i) => sum + Number(i.total), 0);
+
+            const orderEntry = {
+                clientPhone: currentUser.phone,
+                clientName: currentUser.name,
+                uid: currentUser.uid || currentUser.phone,
+                description: `فاتورة طلبات متعددة: [ ${summaryText} ] ${notes ? '- ملاحظة: ' + notes : ''}`,
+                amount: grandTotal.toFixed(2),
+                type: 'invoice',
+                status: 'قيد المراجعة بالمبيعات ⏳',
+                createdAt: Date.now()
+            };
+
+            try {
+                await push(ref(db, 'erp_ledger'), orderEntry);
+                alert('تم إرسال الفاتورة المتعددة للمصنع والمبيعات بنجاح!');
+                cartItems = [];
+                renderCart();
+                document.getElementById('orderNotes').value = '';
+            } catch(err) { alert('خطأ: ' + err.message); }
+        };
+
         function updateDashboard() {
             const myLedger = ledgerData.filter(l => l.clientPhone === currentUser.phone);
             let totalBalance = Number(currentUser.initialBalance || 0);
@@ -331,67 +327,39 @@
 
             document.getElementById('cBalance').innerText = totalBalance.toLocaleString() + " ج.م";
 
-            const tbody = document.getElementById('statementTableBody');
+            // تتبع الطلبات والردود
+            const trackingList = document.getElementById('ordersTrackingList');
+            const ordersOnly = myLedger.filter(l => l.type === 'invoice');
+            if(ordersOnly.length === 0) {
+                trackingList.innerHTML = `<p class="text-xs text-slate-400 text-center py-3">مافيش طلبات مرسلة حالياً.</p>`;
+            } else {
+                trackingList.innerHTML = ordersOnly.slice(-5).reverse().map(o => `
+                    <div class="bg-black/20 p-3 rounded-xl border dark:border-slate-800 text-xs flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-white">${o.description}</p>
+                            <p class="text-[10px] text-slate-400">${new Date(o.createdAt).toLocaleString('ar-EG')}</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">${o.status}</span>
+                    </div>
+                `).join('');
+            }
+
+            // سجل الحسابات بالتفصيل الممل
+            const fullBody = document.getElementById('fullStatementBody');
             if(myLedger.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-slate-400">مافيش حركات مالية مسجلة في كشف حسابك حتى الآن.</td></tr>`;
+                fullBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-slate-400">مافيش معاملات مسجلة.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = myLedger.sort((a,b)=>b.createdAt-a.createdAt).map(l => `
-                <tr class="border-b dark:border-slate-800/60 light:border-slate-200 hover:bg-amber-500/5 transition">
+            fullBody.innerHTML = myLedger.sort((a,b)=>b.createdAt-a.createdAt).map(l => `
+                <tr class="border-b dark:border-slate-800">
                     <td class="p-3">${new Date(l.createdAt).toLocaleString('ar-EG')}</td>
                     <td class="p-3 font-bold">${l.description}</td>
-                    <td class="p-3 ${l.type==='invoice' ? 'text-rose-500 font-black' : 'text-emerald-500 font-black'}">
-                        ${l.type==='invoice' ? '+' : '-'}${Number(l.amount).toLocaleString()} ج.م
-                    </td>
-                    <td class="p-3"><span class="px-2.5 py-1 rounded-full text-[10px] bg-amber-500/10 text-amber-500 font-bold border border-amber-500/20">${l.status || 'معتمد'}</span></td>
+                    <td class="p-3 ${l.type==='invoice'?'text-rose-500':'text-emerald-500'} font-black">${l.type==='invoice'?'+':'-'}${Number(l.amount).toLocaleString()} ج.م</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/10 text-amber-500 font-bold">${l.status || 'معتمد'}</span></td>
                 </tr>
             `).join('');
         }
-
-        // Submit Order & Auto Calculate Invoice
-        window.submitOrder = async (e) => {
-            e.preventDefault();
-            const prodVal = document.getElementById('orderProduct').value;
-            const unit = document.getElementById('orderUnit').value;
-            const qty = parseFloat(document.getElementById('orderQty').value);
-            const notes = document.getElementById('orderNotes').value.trim();
-
-            if(!prodVal) {
-                alert('يا باشا من فضلك اختر صنف العلف أولاً.');
-                return;
-            }
-
-            const [prodName, basePrice, discount] = prodVal.split('|');
-            let itemPrice = Number(basePrice);
-
-            // لو اختار شكارة، بنقسم سعر الطن على 20 شكارة (أو حسب النظام المعياري)
-            if(unit === 'شكارة') {
-                itemPrice = itemPrice / 20;
-            }
-
-            let subTotal = qty * itemPrice;
-            let finalAmount = subTotal - (subTotal * (Number(discount) / 100));
-
-            const orderLedgerEntry = {
-                clientPhone: currentUser.phone,
-                clientName: currentUser.name,
-                description: `طلب أوردر: ${qty} ${unit} ${prodName} ${notes ? '(ملاحظة: ' + notes + ')' : ''}`,
-                amount: finalAmount.toFixed(2),
-                type: 'invoice',
-                status: 'قيد المراجعة والترحيل بالمصنع',
-                createdAt: Date.now()
-            };
-
-            try {
-                await push(ref(db, 'erp_ledger'), orderLedgerEntry);
-                alert('تم إرسال الأوردر للمصنع وحسابه أوتوماتيك بنجاح يا باشا!');
-                document.getElementById('orderQty').value = '';
-                document.getElementById('orderNotes').value = '';
-            } catch(err) {
-                alert('حصل خطأ أثناء إرسال الأوردر: ' + err.message);
-            }
-        };
     </script>
 </body>
 </html>
