@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المجد للأعلاف | لوحة الإدارة والموظفين</title>
+    <title>المجد للأعلاف | لوحة الإدارة الشاملة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -36,33 +36,36 @@
     </header>
 
     <main class="max-w-6xl mx-auto">
-        <!-- شاشة تسجيل دخول الموظفين / الآدمن -->
+        <!-- شاشة تسجيل دخول الآدمن / الموظف -->
         <div id="adminLoginSec" class="glass-card gold-border rounded-2xl p-8 max-w-md mx-auto text-center space-y-4 shadow-2xl">
             <h2 class="text-xl font-bold gold-gradient-text">تسجيل دخول طاقم الإدارة</h2>
             <form onsubmit="adminLogin(event)" class="space-y-3">
-                <input type="text" id="admUser" required placeholder="اسم المستخدم للموظف" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-sm text-center">
+                <input type="text" id="admUser" required placeholder="اسم المستخدم" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-sm text-center">
                 <input type="password" id="admPass" required placeholder="كلمة المرور" class="w-full dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-sm text-center">
                 <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl text-sm">دخول النظام</button>
             </form>
-            <p class="text-[11px] text-slate-500">الافتراضي للآدمن الرئيسي: اسم المستخدم <b>admin</b> وكلمة المرور <b>1234</b></p>
+            <p class="text-[11px] text-slate-500">الآدمن الرئيسي: <b>admin</b> | كلمة المرور: <b>1234</b></p>
         </div>
 
-        <!-- لوحة التحكم الكاملة -->
+        <!-- لوحة التحكم -->
         <div id="adminPanelSec" class="hidden space-y-6">
             <div class="flex justify-between items-center glass-card gold-border p-4 rounded-2xl">
-                <span id="welcomeUser" class="font-bold text-amber-400 text-sm">مرحباً بك</span>
+                <div>
+                    <span id="welcomeUser" class="font-bold text-amber-400 text-sm">مرحباً بك</span>
+                    <span id="userRoleBadge" class="mr-2 px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 font-bold">صلاحية كاملة</span>
+                </div>
                 <button onclick="adminLogout()" class="bg-rose-500/10 text-rose-400 px-3 py-1.5 rounded-xl text-xs font-semibold">تسجيل خروج</button>
             </div>
 
-            <!-- تبويبات لوحة التحكم -->
+            <!-- التبويبات -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                 <button onclick="switchTab('clients')" id="tClients" class="py-3 rounded-xl text-xs font-bold bg-amber-500 text-slate-950">إدارة العملاء والحسابات</button>
                 <button onclick="switchTab('products')" id="tProducts" class="py-3 rounded-xl text-xs font-bold dark:bg-slate-900 border gold-border">الأصناف والأسعار</button>
                 <button onclick="switchTab('ledger')" id="tLedger" class="py-3 rounded-xl text-xs font-bold dark:bg-slate-900 border gold-border">تسجيل دفعة أو فاتورة</button>
-                <button onclick="switchTab('staff')" id="tStaff" class="py-3 rounded-xl text-xs font-bold dark:bg-slate-900 border gold-border">الموظفين والصلاحيات</button>
+                <button onclick="switchTab('staff')" id="tStaff" class="py-3 rounded-xl text-xs font-bold dark:bg-slate-900 border gold-border">إدارة الموظفين</button>
             </div>
 
-            <!-- القسم 1: إدارة العملاء -->
+            <!-- تبويب 1: العملاء -->
             <div id="secClients" class="glass-card gold-border rounded-2xl p-6 space-y-4">
                 <h3 class="text-lg font-bold gold-gradient-text">إضافة عميل جديد (مزرعة / محل)</h3>
                 <form onsubmit="saveClient(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -74,11 +77,11 @@
                 <div class="pt-4 border-t dark:border-slate-800" id="clientsListContainer"></div>
             </div>
 
-            <!-- القسم 2: الأصناف والأسعار -->
+            <!-- تبويب 2: الأصناف -->
             <div id="secProducts" class="hidden glass-card gold-border rounded-2xl p-6 space-y-4">
                 <h3 class="text-lg font-bold gold-gradient-text">إدارة أصناف الأعلاف وأسعارها</h3>
                 <form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <input type="text" id="prName" required placeholder="اسم الصنف (مثال: بياض 21%)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <input type="text" id="prName" required placeholder="اسم الصنف" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
                     <input type="number" step="any" id="prPrice" required placeholder="سعر الطن (ج.م)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
                     <input type="number" step="any" id="prDisc" placeholder="نسبة الخصم %" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
                     <button type="submit" class="md:col-span-3 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl text-xs">حفظ الصنف</button>
@@ -86,9 +89,9 @@
                 <div class="pt-4 border-t dark:border-slate-800" id="productsListContainer"></div>
             </div>
 
-            <!-- القسم 3: تسجيل دفعة نقدية أو فاتورة يدوية -->
+            <!-- تبويب 3: الحركات المالية -->
             <div id="secLedger" class="hidden glass-card gold-border rounded-2xl p-6 space-y-4">
-                <h3 class="text-lg font-bold gold-gradient-text">تسجيل حركة مالية (فاتورة بضاعة أو سند قبض دفعة)</h3>
+                <h3 class="text-lg font-bold gold-gradient-text">تسجيل حركة مالية (فاتورة مبيعات أو سند قبض دفعة)</h3>
                 <form onsubmit="saveLedgerEntry(event)" class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <select id="ledClient" required class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
                         <option value="">اختر العميل...</option>
@@ -98,20 +101,22 @@
                         <option value="payment">سند قبض دفعة نقدية (تقلل الدين)</option>
                     </select>
                     <input type="number" step="any" id="ledAmount" required placeholder="المبلغ بالجنيه" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
-                    <input type="text" id="ledDesc" required placeholder="البيان (مثال: دفعة نقداً لخزنة المصنع / نجلية 3 طن)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                    <input type="text" id="ledDesc" required placeholder="البيان (مثال: دفعة نقداً لخزنة المصنع)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
                     <button type="submit" class="md:col-span-2 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-bold py-3 rounded-xl text-xs">تسجيل الحركة في الحساب</button>
                 </form>
             </div>
 
-            <!-- القسم 4: الموظفين وصلاحياتهم -->
+            <!-- تبويب 4: إدارة الموظفين (للارئيسي فقط) -->
             <div id="secStaff" class="hidden glass-card gold-border rounded-2xl p-6 space-y-4">
-                <h3 class="text-lg font-bold gold-gradient-text">إدارة الموظفين ويوزرات الدخول</h3>
-                <form onsubmit="saveStaff(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <input type="text" id="stName" required placeholder="اسم الموظف" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
-                    <input type="text" id="stUser" required placeholder="اسم المستخدم (Username)" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
-                    <input type="password" id="stPass" required placeholder="كلمة المرور" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
-                    <button type="submit" class="md:col-span-3 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl text-xs">إضافة موظف جديد</button>
-                </form>
+                <h3 class="text-lg font-bold gold-gradient-text">إدارة الموظفين (حصرًا للآدمن الرئيسي)</h3>
+                <div id="staffOnlyAdminBox">
+                    <form onsubmit="saveStaff(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                        <input type="text" id="stName" required placeholder="اسم الموظف" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                        <input type="text" id="stUser" required placeholder="اسم المستخدم" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                        <input type="password" id="stPass" required placeholder="كلمة المرور" class="dark:bg-slate-900 border dark:border-slate-700 rounded-xl p-3 text-xs">
+                        <button type="submit" class="md:col-span-3 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl text-xs">إضافة موظف جديد للنظام</button>
+                    </form>
+                </div>
                 <div class="pt-4 border-t dark:border-slate-800" id="staffListContainer"></div>
             </div>
         </div>
@@ -137,6 +142,7 @@
         let staffData = {};
         let clientsData = {};
         let productsData = {};
+        let loggedInAdminRole = '';
 
         onValue(ref(db, 'erp_staff'), (snap) => { staffData = snap.val() || {}; });
         onValue(ref(db, 'erp_clients'), (snap) => {
@@ -167,7 +173,7 @@
             document.getElementById('staffListContainer').innerHTML = Object.keys(data).map(k => `
                 <div class="flex justify-between items-center bg-black/20 p-2.5 rounded-xl text-xs mb-2">
                     <span><b>${data[k].name}</b> (يوزر: ${data[k].username})</span>
-                    <button onclick="deleteItem('erp_staff', '${k}')" class="text-rose-400"><i class="fa-solid fa-trash"></i></button>
+                    ${loggedInAdminRole === 'admin' ? `<button onclick="deleteItem('erp_staff', '${k}')" class="text-rose-400"><i class="fa-solid fa-trash"></i></button>` : ''}
                 </div>
             `).join('') || '<p class="text-xs text-slate-400">مافيش موظفين مسجلين.</p>';
         });
@@ -178,27 +184,39 @@
             const p = document.getElementById('admPass').value.trim();
 
             if(u === 'admin' && p === '1234') {
-                startAdminSession("الآدمن الرئيسي");
+                loggedInAdminRole = 'admin';
+                startAdminSession("الآدمن الرئيسي", "صلاحيات مطلقة");
                 return;
             }
 
             const staffKey = Object.keys(staffData).find(k => staffData[k].username === u && staffData[k].password === p);
             if(staffKey) {
-                startAdminSession(staffData[staffKey].name);
+                loggedInAdminRole = 'staff';
+                startAdminSession(staffData[staffKey].name, "موظف مبيعات وحسابات");
             } else {
                 alert('اسم المستخدم أو كلمة المرور خطأ يا باشا!');
             }
         };
 
-        function startAdminSession(name) {
+        function startAdminSession(name, roleDesc) {
             document.getElementById('adminLoginSec').classList.add('hidden');
             document.getElementById('adminPanelSec').classList.remove('hidden');
             document.getElementById('welcomeUser').innerText = `مرحباً بك يا ${name}`;
+            document.getElementById('userRoleBadge').innerText = roleDesc;
+
+            if(loggedInAdminRole !== 'admin') {
+                document.getElementById('staffOnlyAdminBox').style.display = 'none';
+            } else {
+                document.getElementById('staffOnlyAdminBox').style.display = 'block';
+            }
         }
 
         window.adminLogout = () => {
+            loggedInAdminRole = '';
             document.getElementById('adminPanelSec').classList.add('hidden');
             document.getElementById('adminLoginSec').classList.remove('hidden');
+            document.getElementById('admUser').value = '';
+            document.getElementById('admPass').value = '';
         };
 
         window.switchTab = (tab) => {
@@ -265,6 +283,7 @@
 
         window.saveStaff = async (e) => {
             e.preventDefault();
+            if(loggedInAdminRole !== 'admin') { alert('عذراً، هذه الصلاحية للآدمن الرئيسي فقط!'); return; }
             const name = document.getElementById('stName').value.trim();
             const username = document.getElementById('stUser').value.trim();
             const password = document.getElementById('stPass').value.trim();
@@ -277,6 +296,7 @@
         };
 
         window.deleteItem = async (path, id) => {
+            if(path === 'erp_staff' && loggedInAdminRole !== 'admin') { alert('غير مسموح لك بحذف الموظفين!'); return; }
             if(confirm('متأكد من الحذف؟')) {
                 await remove(ref(db, `${path}/${id}`));
             }
