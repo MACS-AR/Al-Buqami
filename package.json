@@ -1,13 +1,13 @@
 {
   "name": "albuqami-platform",
-  "version": "1.0.0",
-  "description": "منصة مؤسسة البقمي المتكاملة - تخزين ملفات",
+  "version": "2.0.0",
+  "private": true,
+  "description": "منصة مؤسسة البقمي للخدمات التجارية والحلول الذكية",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js"
   },
-  "dependencies": {
-    "express": "^4.19.2"
-  }
+  "engines": { "node": ">=18" },
+  "dependencies": { "express": "^4.19.2" }
 }
-
