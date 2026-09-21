@@ -3,9 +3,13 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWith
 import { getDatabase, ref, set, get, update, remove, child, onValue, push } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBgRkceRq7FRbhCevLlYNy-A5Tl_cr0w',
-  authDomain: 'sr-test-c9e06.firebaseapp.com', databaseURL: 'https://sr-test-c9e06-default-rtdb.firebaseio.com',
-  projectId: 'sr-test-c9e06', storageBucket: 'sr-test-c9e06.firebasestorage.app', messagingSenderId: '658396508062', appId: '1:658396508062:web:ca94047d35122e2876308f'
+  apiKey: "AIzaSyC9cmh_bzA4ZeV8bYlbqaGrmIri2PUGx2A",
+  authDomain: "voip17.firebaseapp.com",
+  projectId: "voip17",
+  storageBucket: "voip17.firebasestorage.app",
+  messagingSenderId: "608379006778",
+  appId: "1:608379006778:web:51fe8032d09fbd5b556a03",
+  measurementId: "G-GZNJZLM701"
 };
 const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getDatabase(app);
 function showToast(message, type = 'success') {
