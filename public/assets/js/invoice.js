@@ -1,110 +1,23 @@
-import { db, ref, get, child, showToast } from "./firebase.js";
+import { db, ref, get, child, showToast } from './firebase.js';
 
-document.addEventListener("DOMContentLoaded", () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('orderId');
-
-    if (orderId) {
-        document.getElementById("input-search-invoice").value = orderId;
-        fetchInvoiceData(orderId);
-    } else {
-        document.getElementById("loading-screen").style.display = "none";
-    }
-
-    const btnFetch = document.getElementById("btn-fetch-invoice");
-    if (btnFetch) {
-        btnFetch.addEventListener("click", () => {
-            const id = document.getElementById("input-search-invoice").value.trim();
-            if (id) {
-                fetchInvoiceData(id);
-            } else {
-                showToast("الرجاء إدخال رقم الطلب للبحث عن الفاتورة", "error");
-            }
-        });
-    }
-});
-
-function fetchInvoiceData(orderId) {
-    const loader = document.getElementById("loading-screen");
-    if (loader) loader.style.display = "flex";
-
-    get(child(ref(db), `invoices/${orderId}`)).then((snapshot) => {
-        if (loader) loader.style.display = "none";
-
-        if (snapshot.exists()) {
-            const invoice = snapshot.val();
-            renderInvoice(invoice);
-        } else {
-            showToast("لم يتم العثور على فاتورة لهذا الطلب. تأكد من الرقم وصلاحيته.", "error");
-        }
-    }).catch((err) => {
-        if (loader) loader.style.display = "none";
-        showToast("حدث خطأ أثناء البحث عن الفاتورة.", "error");
-    });
+const byId = id => document.getElementById(id);
+const money = value => (Number.isFinite(Number(value)) ? Number(value) : 0);
+function hideLoader() { const loader = byId('loading-screen'); if (loader) loader.style.display = 'none'; }
+async function fetchInvoiceData(orderId) {
+  const loader = byId('loading-screen'); if (loader) loader.style.display = 'flex';
+  try { const snapshot = await get(child(ref(db), `invoices/${orderId}`)); if (!snapshot.exists()) throw new Error('missing'); renderInvoice(snapshot.val() || {}); }
+  catch { showToast('لم يتم العثور على فاتورة لهذا الطلب أو تعذر الاتصال.', 'error'); }
+  finally { hideLoader(); }
 }
-
 function renderInvoice(invoice) {
-    document.getElementById("lbl-invoice-id").textContent = invoice.invoiceId || `INV-${invoice.orderId}`;
-    
-    // Formatting date neatly
-    const dateObj = new Date(invoice.date);
-    document.getElementById("lbl-invoice-date").textContent = `التاريخ: ${dateObj.toLocaleDateString('ar-EG')}`;
-    
-    document.getElementById("lbl-cust-name").textContent = invoice.customerName;
-    document.getElementById("lbl-cust-phone").textContent = `جوال: ${invoice.customerPhone || 'متاح بطلب الشراء'}`;
-    document.getElementById("lbl-cust-address").textContent = `المدينة: ${invoice.city || 'الرياض'} - العنوان: ${invoice.address || 'توصيل للموقع'}`;
-    
-    const statusLbl = document.getElementById("lbl-invoice-status");
-    statusLbl.textContent = invoice.status || "بانتظار الدفع";
-    if (invoice.status === "مدفوعة") {
-        statusLbl.style.backgroundColor = "#2ecc71";
-    } else {
-        statusLbl.style.backgroundColor = "#e67e22";
-    }
-
-    // Load Products into the table rows
-    const tbody = document.getElementById("invoice-items-body");
-    tbody.innerHTML = "";
-    
-    let subtotal = 0;
-    const products = invoice.products || [];
-
-    products.forEach(p => {
-        const rowTotal = parseFloat(p.price) * parseInt(p.quantity);
-        subtotal += rowTotal;
-
-        const tr = document.createElement("tr");
-        tr.style.borderBottom = "1px solid var(--glass-border)";
-        tr.innerHTML = `
-            <td style="padding: 15px 12px; color: #fff;">${p.name}</td>
-            <td style="padding: 15px 12px; text-align: center; color: #fff;">${p.quantity}</td>
-            <td style="padding: 15px 12px; text-align: center; color: #fff;">${parseFloat(p.price).toFixed(2)} ر.س</td>
-            <td style="padding: 15px 12px; text-align: left; color: #fff;">${rowTotal.toFixed(2)} ر.س</td>
-        `;
-        tbody.appendChild(tr);
-    });
-
-    // Tax calculation (15% Saudi VAT)
-    const taxValue = subtotal * 0.15;
-    const grandTotal = subtotal + taxValue;
-
-    document.getElementById("invoice-subtotal").textContent = `${subtotal.toFixed(2)} ر.س`;
-    document.getElementById("invoice-tax").textContent = `${taxValue.toFixed(2)} ر.س`;
-    document.getElementById("invoice-grand-total").textContent = `${grandTotal.toFixed(2)} ر.س`;
-
-    // Generate ZATCA-compliant mock QR Code
-    const qrContainer = document.getElementById("invoice-qrcode");
-    qrContainer.innerHTML = ""; // Clear old QR Code if exists
-    
-    // ZATCA dynamic string format: Seller Name | Tax Number | Timestamp | Grand Total | Tax Amount
-    const qrText = `Al-Buqami Smart Solutions | VAT: 310XXXXXXXXXXXX | Time: ${invoice.date} | Total: ${grandTotal.toFixed(2)} SAR | VAT: ${taxValue.toFixed(2)} SAR`;
-    
-    new QRCode(qrContainer, {
-        text: qrText,
-        width: 100,
-        height: 100,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-    });
+  const setText = (id, value) => { const el = byId(id); if (el) el.textContent = value; };
+  setText('lbl-invoice-id', invoice.invoiceId || `INV-${invoice.orderId || 'UNKNOWN'}`);
+  const date = invoice.date ? new Date(invoice.date) : new Date(); setText('lbl-invoice-date', `التاريخ: ${Number.isNaN(date.getTime()) ? 'غير محدد' : date.toLocaleDateString('ar-SA')}`);
+  setText('lbl-cust-name', invoice.customerName || 'عميل كريم'); setText('lbl-cust-phone', `جوال: ${invoice.customerPhone || 'غير مسجل'}`); setText('lbl-cust-address', `المدينة: ${invoice.city || 'غير محددة'} - العنوان: ${invoice.address || 'توصيل للموقع'}`);
+  const status = byId('lbl-invoice-status'); if (status) { status.textContent = invoice.status || 'بانتظار الدفع'; status.style.backgroundColor = invoice.status === 'مدفوعة' || invoice.status === 'تم التوصيل' ? '#2ecc71' : invoice.status === 'ملغي' ? '#e74c3c' : '#e67e22'; }
+  const tbody = byId('invoice-items-body'); if (!tbody) return; tbody.replaceChildren(); let subtotal = 0;
+  (Array.isArray(invoice.products) ? invoice.products : []).forEach(item => { const qty = Math.max(1, Number(item.quantity) || 1), unit = money(item.price), rowTotal = qty * unit; subtotal += rowTotal; const tr = document.createElement('tr'); [['name', item.name || 'منتج'], ['qty', String(qty)], ['unit', `${unit.toFixed(2)} ر.س`], ['total', `${rowTotal.toFixed(2)} ر.س`]].forEach(({ key, value }) => { const td = document.createElement('td'); td.textContent = value; td.style.cssText = 'padding:15px 12px;color:#fff'; if (key === 'qty' || key === 'unit') td.style.textAlign = 'center'; if (key === 'total') td.style.textAlign = 'left'; tr.appendChild(td); }); tbody.appendChild(tr); });
+  const tax = subtotal * 0.15; setText('invoice-subtotal', `${subtotal.toFixed(2)} ر.س`); setText('invoice-tax', `${tax.toFixed(2)} ر.س`); setText('invoice-grand-total', `${(subtotal + tax).toFixed(2)} ر.س`);
+  const qr = byId('invoice-qrcode'); if (qr && window.QRCode) { qr.replaceChildren(); new QRCode(qr, { text: `Al-Buqami|${invoice.invoiceId || invoice.orderId || ''}|${date.toISOString()}|${(subtotal + tax).toFixed(2)}|${tax.toFixed(2)}`, width: 100, height: 100, correctLevel: QRCode.CorrectLevel.H }); }
 }
+document.addEventListener('DOMContentLoaded', () => { const id = new URLSearchParams(location.search).get('orderId'); const input = byId('input-search-invoice'); if (id && input) { input.value = id; fetchInvoiceData(id); } else hideLoader(); byId('btn-fetch-invoice')?.addEventListener('click', () => { const value = input?.value.trim(); if (value) fetchInvoiceData(value); else showToast('الرجاء إدخال رقم الطلب.', 'error'); }); });
